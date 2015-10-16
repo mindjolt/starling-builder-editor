@@ -1,0 +1,4 @@
+{
+    "hello":{"en_US":"hello", "de_DE":"hallo", "es_ES":"hola", "fr_FR":"bonjour"},
+    "world":{"en_US":"world", "de_DE":"wereld", "es_ES":"mundo", "fr_FR":"monde"}
+}

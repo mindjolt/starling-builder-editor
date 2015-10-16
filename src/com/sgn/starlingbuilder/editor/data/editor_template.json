@@ -1,0 +1,323 @@
+{
+
+    "supported_components":[
+        {
+            "cls":"starling.display.Image",
+            "params":[
+                {"name":"width", "component":"slider", "min":1, "max":2000, "step":1},
+                {"name":"height", "component":"slider", "min":1, "max":2000, "step":1},
+                {"name":"scaleX", "step":0.01, "default_value":1},
+                {"name":"scaleY", "step":0.01, "default_value":1},
+                {"name":"color", "component":"colorPicker", "default_value":16777215}
+            ],
+            "constructorParams":
+            [
+                {"cls":"starling.textures.Texture"}
+            ],
+            "tag":"asset"
+        },
+        {
+            "cls":"starling.display.Quad",
+            "params":[
+                {"name":"width", "component":"slider", "min":1, "max":2000, "step":1},
+                {"name":"height", "component":"slider", "min":1, "max":2000, "step":1},
+                {"name":"color", "component":"colorPicker", "default_value":16777215}
+            ],
+            "constructorParams":
+            [
+                {"type":"Number", "value":50},
+                {"type":"Number", "value":50}
+            ],
+            "createButton":true,
+            "tag":"asset"
+        },
+        {
+            "cls":"starling.display.Button",
+            "params":[
+                {"name":"width", "component":"slider", "min":1, "max":2000, "step":1},
+                {"name":"height", "component":"slider", "min":1, "max":2000, "step":1},
+                {"name":"text", "default_value":""},
+                {"name":"fontName", "component":"textInput", "options":[], "default_value":"Verdana"},
+                {"name":"fontSize", "component":"slider", "min":1, "max":100, "step":1, "default_value":12},
+                {"name":"fontColor", "component":"colorPicker", "default_value":0},
+                {"name":"scaleX", "step":0.01, "default_value":1},
+                {"name":"scaleY", "step":0.01, "default_value":1},
+                {"name":"downState", "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"com.sgn.starlingbuilder.editor.ui.TexturePropertyPopup"}
+            ],
+            "constructorParams":
+            [
+                {"cls":"starling.textures.Texture"}
+            ],
+            "tag":"asset"
+        },
+
+        {
+            "cls":"starling.text.TextField",
+            "params":[
+                {"name":"width", "component":"slider", "min":1, "max":2000, "step":1},
+                {"name":"height", "component":"slider", "min":1, "max":2000, "step":1},
+                {"name":"text"},
+                {"name":"fontName", "component":"textInput", "options":[], "default_value":"Verdana"},
+                {"name":"fontSize", "component":"slider", "min":1, "max":100, "step":1},
+                {"name":"color", "component":"colorPicker", "default_value":16777215},
+                {"name":"autoScale", "component":"check", "default_value":false},
+                {"name":"autoSize", "component":"pickerList", "options":["none", "horizontal", "vertical", "bothDirections"], "default_value":"none"},
+                {"name":"hAlign", "component":"pickerList", "options":["left", "center", "right"], "default_value":"center"},
+                {"name":"vAlign", "component":"pickerList", "options":["top", "center", "bottom"], "default_value":"center"}
+            ],
+            "constructorParams":
+            [
+                {"value":200},
+                {"value":100},
+                {"value":""},
+                {"value":"Verdana", "name":"fontName"},
+                {"value":46},
+                {"value":16777215}
+            ],
+            "tag":"text"
+        },
+
+        {
+            "cls":"feathers.display.Scale3Image",
+            "params":[
+                {"name":"width", "component":"slider", "min":1, "max":2000, "step":1},
+                {"name":"height", "component":"slider", "min":1, "max":2000, "step":1},
+                {"name":"color", "component":"colorPicker", "default_value":16777215}
+            ],
+            "constructorParams":
+            [
+                {"cls":"feathers.textures.Scale3Textures"}
+            ],
+            "createComponentClass":"com.sgn.starlingbuilder.editor.ui.ScaleTexturePopup",
+            "scale3Data":true,
+            "tag":"asset"
+        },
+        {
+            "cls":"feathers.display.Scale9Image",
+            "params":[
+                {"name":"width", "component":"slider", "min":1, "max":2000, "step":1},
+                {"name":"height", "component":"slider", "min":1, "max":2000, "step":1},
+                {"name":"color", "component":"colorPicker", "default_value":16777215}
+            ],
+            "constructorParams":
+            [
+                {"cls":"feathers.textures.Scale9Textures"}
+            ],
+            "createComponentClass":"com.sgn.starlingbuilder.editor.ui.ScaleTexturePopup",
+            "scale9Data":true,
+            "tag":"asset"
+        },
+        {
+            "cls":"feathers.display.TiledImage",
+            "params":[
+                {"name":"width", "component":"slider", "min":1, "max":2000, "step":1},
+                {"name":"height", "component":"slider", "min":1, "max":2000, "step":1},
+                {"name":"color", "component":"colorPicker", "default_value":16777215}
+            ],
+            "constructorParams":
+                [
+                    {"cls":"starling.textures.Texture"}
+                ],
+            "tag":"asset"
+        },
+        {
+            "cls":"feathers.controls.List",
+            "params":[
+                {"name":"width", "component":"slider", "min":1, "max":2000, "step":1},
+                {"name":"height", "component":"slider", "min":1, "max":2000, "step":1},
+                {"name":"layoutData", "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"com.sgn.starlingbuilder.editor.ui.DefaultEditPropertyPopup",
+                    "supportedClasses":[null, "feathers.layout.AnchorLayoutData"]},
+                {"name":"includeInLayout", "component":"check", "default_value":true}
+            ],
+            "createButton":true,
+            "tag":"asset"
+        },
+
+        {
+            "cls":"feathers.controls.LayoutGroup",
+            "params":[
+                {"name":"width", "component":"slider", "min":0, "max":2000, "step":1, "default_value":0},
+                {"name":"height", "component":"slider", "min":0, "max":2000, "step":1, "default_value":0},
+                {"name":"layout", "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"com.sgn.starlingbuilder.editor.ui.DefaultEditPropertyPopup",
+                "supportedClasses":[null, "feathers.layout.HorizontalLayout", "feathers.layout.VerticalLayout", "feathers.layout.AnchorLayout", "feathers.layout.TiledRowsLayout", "feathers.layout.TiledColumnsLayout"]},
+                {"name":"layoutData", "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"com.sgn.starlingbuilder.editor.ui.DefaultEditPropertyPopup",
+                    "supportedClasses":[null, "feathers.layout.AnchorLayoutData"]},
+                {"name":"includeInLayout", "component":"check", "default_value":true}
+            ],
+            "container":true,
+            "tag":"container"
+        },
+
+        {
+            "cls":"feathers.controls.ScrollContainer",
+            "params":[
+                {"name":"width", "component":"slider", "min":-2000, "max":2000, "step":1},
+                {"name":"height", "component":"slider", "min":-2000, "max":2000, "step":1},
+                {"name":"layout", "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"com.sgn.starlingbuilder.editor.ui.DefaultEditPropertyPopup",
+                    "supportedClasses":[null, "feathers.layout.HorizontalLayout", "feathers.layout.VerticalLayout", "feathers.layout.AnchorLayout"]},
+                {"name":"layoutData", "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"com.sgn.starlingbuilder.editor.ui.DefaultEditPropertyPopup",
+                    "supportedClasses":[null, "feathers.layout.AnchorLayoutData"]}
+            ],
+            "container":true,
+            "tag":"container"
+        },
+
+        {
+            "cls":"starling.display.Sprite",
+            "container":true,
+            "tag":"container"
+        },
+
+        {
+            "cls":"feathers.controls.Button",
+            "params":[
+                {"name":"label"},
+                {"name":"styleName", "default_value":""},
+                {"name":"layoutData", "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"com.sgn.starlingbuilder.editor.ui.DefaultEditPropertyPopup",
+                    "supportedClasses":[null, "feathers.layout.AnchorLayoutData"]},
+                {"name":"includeInLayout", "component":"check", "default_value":true}
+            ],
+            "createButton":true,
+            "tag":"asset"
+        },
+
+        {
+            "cls":"feathers.controls.Check",
+            "params":[
+                {"name":"label"},
+                {"name":"styleName", "default_value":""},
+                {"name":"layoutData", "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"com.sgn.starlingbuilder.editor.ui.DefaultEditPropertyPopup",
+                    "supportedClasses":[null, "feathers.layout.AnchorLayoutData"]},
+                {"name":"includeInLayout", "component":"check", "default_value":true}
+            ],
+            "createButton":true,
+            "tag":"asset"
+        },
+
+        {
+            "cls":"feathers.controls.Label",
+            "params":[
+                {"name":"text"},
+                {"name":"styleName", "default_value":""},
+                {"name":"layoutData", "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"com.sgn.starlingbuilder.editor.ui.DefaultEditPropertyPopup",
+                    "supportedClasses":[null, "feathers.layout.AnchorLayoutData"]},
+                {"name":"includeInLayout", "component":"check", "default_value":true},
+                {"name":"backgroundSkin", "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"com.sgn.starlingbuilder.editor.ui.DisplayObjectPropertyPopup"}
+            ],
+            "createButton":true,
+            "tag":"asset"
+        },
+
+        {
+            "cls":"feathers.controls.Panel",
+            "params":[
+                {"name":"title"},
+                {"name":"styleName", "default_value":""},
+                {"name":"width", "component":"slider", "min":1, "max":2000, "step":1},
+                {"name":"height", "component":"slider", "min":1, "max":2000, "step":1},
+                {"name":"layoutData", "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"com.sgn.starlingbuilder.editor.ui.DefaultEditPropertyPopup",
+                    "supportedClasses":[null, "feathers.layout.AnchorLayoutData"]},
+                {"name":"includeInLayout", "component":"check", "default_value":true}
+            ],
+            "container":true,
+            "tag":"container"
+        },
+
+
+
+
+
+
+        {
+            "cls":"feathers.layout.HorizontalLayout",
+            "params":[
+                {"name":"gap", "component":"slider", "min":-200, "max":200, "step":1, "default_value":0},
+                {"name":"padding", "component":"slider", "min":-200, "max":200, "step":1, "default_value":0},
+                {"name":"distributeWidths", "component":"check", "default_value":false},
+                {"name":"horizontalAlign", "component":"pickerList", "options":["left", "center", "right"], "default_value":"left"},
+                {"name":"verticalAlign", "component":"pickerList", "options":["top", "middle", "bottom", "justify"], "default_value":"top"}
+            ]
+        },
+
+        {
+            "cls":"feathers.layout.VerticalLayout",
+            "params":[
+                {"name":"gap", "component":"slider", "min":-200, "max":200, "step":1, "default_value":0},
+                {"name":"padding", "component":"slider", "min":-200, "max":200, "step":1, "default_value":0},
+                {"name":"distributeHeights", "component":"check", "default_value":false},
+                {"name":"horizontalAlign", "component":"pickerList", "options":["left", "center", "right", "justify"], "default_value":"left"},
+                {"name":"verticalAlign", "component":"pickerList", "options":["top", "middle", "bottom"], "default_value":"top"}
+            ]
+        },
+
+        {
+            "cls":"feathers.layout.TiledRowsLayout",
+            "params":[
+                {"name":"gap", "component":"slider", "min":-200, "max":200, "step":1, "default_value":0},
+                {"name":"padding", "component":"slider", "min":-200, "max":200, "step":1, "default_value":0},
+                {"name":"horizontalAlign", "component":"pickerList", "options":["left", "center", "right"], "default_value":"center"},
+                {"name":"verticalAlign", "component":"pickerList", "options":["top", "middle", "bottom"], "default_value":"top"}
+            ]
+        },
+
+        {
+            "cls":"feathers.layout.TiledColumnsLayout",
+            "params":[
+                {"name":"gap", "component":"slider", "min":-200, "max":200, "step":1, "default_value":0},
+                {"name":"padding", "component":"slider", "min":-200, "max":200, "step":1, "default_value":0},
+                {"name":"horizontalAlign", "component":"pickerList", "options":["left", "center", "right"], "default_value":"center"},
+                {"name":"verticalAlign", "component":"pickerList", "options":["top", "middle", "bottom"], "default_value":"top"}
+            ]
+        },
+
+
+
+        {
+            "cls":"feathers.layout.AnchorLayoutData",
+            "params":[
+                {"name":"top", "component":"slider", "min":-200, "max":200, "step":1, "default_value":"NaN"},
+                {"name":"right", "component":"slider", "min":-200, "max":200, "step":1, "default_value":"NaN"},
+                {"name":"bottom", "component":"slider", "min":-200, "max":200, "step":1, "default_value":"NaN"},
+                {"name":"left", "component":"slider", "min":-200, "max":200, "step":1, "default_value":"NaN"}
+            ]
+        }
+    ],
+
+
+    "default_component":
+    {
+        "params":[
+            {"name":"name", "default_value":null},
+            {"name":"x", "component":"slider", "min":-2000, "max":2000, "step":0.1, "default_value":0},
+            {"name":"y", "component":"slider", "min":-2000, "max":2000, "step":0.1, "default_value":0},
+            {"name":"pivotX", "default_value":0},
+            {"name":"pivotY", "default_value":0},
+            {"name":"rotation", "component":"slider", "min":-3.14, "max":3.14, "step":0.01, "default_value":0},
+            {"name":"alpha", "component":"slider", "min":0, "max":1, "step":0.01, "default_value":1}
+        ],
+
+        "customParams":[
+            {"name":"customParams", "component":"textArea", "disable":"true"},
+            {"name":"constructorParams", "component":"textArea", "disable":"true"},
+            {"name":"customParams.customComponentClass", "label":"customComponentClass", "component":"textInput", "width":200, "default_value":"null"},
+            {"name":"customParams.forEditor", "label":"forEditor", "component":"check", "default_value":false},
+            {"name":"customParams.localizeKey", "label":"localizeKey", "default_value":"null"}
+        ]
+    },
+
+    "background":
+    {
+        "params":[
+            {"name":"name"},
+            {"name":"x", "component":"slider", "min":-2000, "max":2000, "step":1},
+            {"name":"y", "component":"slider", "min":-2000, "max":2000, "step":1},
+            {"name":"width", "component":"slider", "min":-2000, "max":2000, "step":1},
+            {"name":"height", "component":"slider", "min":-2000, "max":2000, "step":1}
+        ]
+    },
+
+    "version":1.0,
+
+    "revision":9
+
+}

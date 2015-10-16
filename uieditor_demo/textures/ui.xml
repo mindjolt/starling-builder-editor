@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:d7679785083da86dd6a42267db4bc542:bbb5105d713e510d38d00289772a43fe:0dbeed7acf6c3264861a2e70e992bcae$ -->
+<TextureAtlas imagePath="ui.png">
+    <SubTexture name="boostslot_bg_green" x="863" y="306" width="134" height="102"/>
+    <SubTexture name="connectFB_image" x="642" y="2" width="489" height="215" frameX="0" frameY="-8" frameWidth="489" frameHeight="231"/>
+    <SubTexture name="generic_app_icon" x="546" y="408" width="76" height="76"/>
+    <SubTexture name="generic_box_white" x="1074" y="219" width="54" height="57"/>
+    <SubTexture name="generic_button_blue" x="599" y="306" width="262" height="100" frameX="0" frameY="-7" frameWidth="265" frameHeight="110"/>
+    <SubTexture name="generic_check_bg" x="1077" y="329" width="45" height="46"/>
+    <SubTexture name="generic_check_green" x="599" y="107" width="40" height="34"/>
+    <SubTexture name="generic_exit" x="999" y="396" width="77" height="73"/>
+    <SubTexture name="generic_gift" x="999" y="312" width="76" height="82"/>
+    <SubTexture name="generic_panel_darkwood" x="1020" y="219" width="52" height="91"/>
+    <SubTexture name="generic_popup_bg" x="2" y="2" width="638" height="103"/>
+    <SubTexture name="meter_element_bg" x="2" y="336" width="182" height="96" frameX="-229" frameY="-31" frameWidth="640" frameHeight="960"/>
+    <SubTexture name="meter_element_fill" x="186" y="336" width="178" height="89"/>
+    <SubTexture name="meter_element_mask" x="366" y="336" width="178" height="89"/>
+    <SubTexture name="meter_element_star_0" x="1077" y="278" width="51" height="49"/>
+    <SubTexture name="score_element_background" x="2" y="107" width="595" height="227"/>
+    <SubTexture name="settings" x="624" y="408" width="72" height="74"/>
+    <SubTexture name="title_bg" x="599" y="219" width="419" height="85"/>
+</TextureAtlas>
