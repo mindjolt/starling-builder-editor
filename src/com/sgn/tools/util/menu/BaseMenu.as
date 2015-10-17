@@ -92,7 +92,7 @@ package com.sgn.tools.util.menu
             }
             else if (NativeWindow.supportsMenu)
             {
-                attachMenu(Starling.current.nativeStage.nativeWindow.menu);
+                Starling.current.nativeStage.nativeWindow.menu = _rootMenu;
             }
         }
 
