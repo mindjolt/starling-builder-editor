@@ -10,6 +10,7 @@ There are 2 parts in Starling Builder: the engine and editor. The engine is a mo
 
 Normally you don't need to check out the editor source unless you want to expand the tool,
 you can download the latest binary at http://cache.mindjolt.com/starling-builder/v0.5.1/starling-builder.air
+and the demo workspace at http://cache.mindjolt.com/starling-builder/v0.5.1/demo_workspace.zip
 
 ####Check out editor repository:
 ```
