@@ -6,7 +6,7 @@ Starling Builder is a user interface editor for Starling.
 
 It’s built on top of Starling/Feathers UI framework. You can edit your user interfaces in Starling Builder, export them to JSON layout files, and create the starling display objects directly in the game. It provides an WYSIWYG way to create any in-game UI in minutes.
 
-There are 2 parts in Starling Builder: the engine and editor. The engine is a module responsible for converting layout files into display objects. Both the game and the editor rely on it. The editor is a standalone application where you create your UI layouts.
+There are 2 parts in Starling Builder: the [engine](https://github.com/mindjolt/starling-builder-engine) and [editor](https://github.com/mindjolt/starling-builder-editor). The engine is a module responsible for converting layout files into display objects. Both the game and the editor rely on it. The editor is a standalone application where you create your UI layouts.
 
 Normally you don't need to check out the editor source unless you want to expand the tool,
 you can download the latest binary at http://cache.mindjolt.com/starling-builder/v0.5.1/starling-builder.air
