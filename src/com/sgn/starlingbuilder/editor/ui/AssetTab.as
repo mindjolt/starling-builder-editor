@@ -285,16 +285,13 @@ package com.sgn.starlingbuilder.editor.ui
             container.addChild(_createButton);
         }
 
-        private var _currentObjId:int = 0;
-
         private function onCreateButton(event:Event):void
         {
-            ++_currentObjId;
+            var cls:String = _supportedTypes[_typePicker.selectedIndex];
 
-            var name:String = "obj" + _currentObjId;
+            var name:String = ParamUtil.getDisplayObjectName(cls);
 
-            var editorData:Object = {name:name, textureName:name};
-            editorData.cls = _supportedTypes[_typePicker.selectedIndex];
+            var editorData:Object = {name:name, textureName:name, cls:cls};
             UIComponentHelper.createComponent(editorData);
         }
 

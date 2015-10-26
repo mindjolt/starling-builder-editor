@@ -120,18 +120,6 @@
                 ],
             "tag":"asset"
         },
-        {
-            "cls":"feathers.controls.List",
-            "params":[
-                {"name":"width", "component":"slider", "min":1, "max":2000, "step":1},
-                {"name":"height", "component":"slider", "min":1, "max":2000, "step":1},
-                {"name":"layoutData", "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"com.sgn.starlingbuilder.editor.ui.DefaultEditPropertyPopup",
-                    "supportedClasses":[null, "feathers.layout.AnchorLayoutData"]},
-                {"name":"includeInLayout", "component":"check", "default_value":true}
-            ],
-            "createButton":true,
-            "tag":"asset"
-        },
 
         {
             "cls":"feathers.controls.LayoutGroup",
@@ -169,64 +157,178 @@
         },
 
         {
-            "cls":"feathers.controls.Button",
-            "params":[
-                {"name":"label"},
-                {"name":"styleName", "default_value":""},
-                {"name":"layoutData", "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"com.sgn.starlingbuilder.editor.ui.DefaultEditPropertyPopup",
-                    "supportedClasses":[null, "feathers.layout.AnchorLayoutData"]},
-                {"name":"includeInLayout", "component":"check", "default_value":true}
-            ],
-            "createButton":true,
-            "tag":"asset"
-        },
-
-        {
-            "cls":"feathers.controls.Check",
-            "params":[
-                {"name":"label"},
-                {"name":"styleName", "default_value":""},
-                {"name":"layoutData", "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"com.sgn.starlingbuilder.editor.ui.DefaultEditPropertyPopup",
-                    "supportedClasses":[null, "feathers.layout.AnchorLayoutData"]},
-                {"name":"includeInLayout", "component":"check", "default_value":true}
-            ],
-            "createButton":true,
-            "tag":"asset"
-        },
-
-        {
-            "cls":"feathers.controls.Label",
-            "params":[
-                {"name":"text"},
-                {"name":"styleName", "default_value":""},
-                {"name":"layoutData", "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"com.sgn.starlingbuilder.editor.ui.DefaultEditPropertyPopup",
-                    "supportedClasses":[null, "feathers.layout.AnchorLayoutData"]},
-                {"name":"includeInLayout", "component":"check", "default_value":true},
-                {"name":"backgroundSkin", "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"com.sgn.starlingbuilder.editor.ui.DisplayObjectPropertyPopup"}
-            ],
-            "createButton":true,
-            "tag":"asset"
-        },
-
-        {
             "cls":"feathers.controls.Panel",
             "params":[
                 {"name":"title"},
-                {"name":"styleName", "default_value":""},
                 {"name":"width", "component":"slider", "min":1, "max":2000, "step":1},
-                {"name":"height", "component":"slider", "min":1, "max":2000, "step":1},
-                {"name":"layoutData", "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"com.sgn.starlingbuilder.editor.ui.DefaultEditPropertyPopup",
-                    "supportedClasses":[null, "feathers.layout.AnchorLayoutData"]},
-                {"name":"includeInLayout", "component":"check", "default_value":true}
+                {"name":"height", "component":"slider", "min":1, "max":2000, "step":1}
             ],
             "container":true,
             "tag":"container"
         },
 
+        {
+            "cls":"feathers.controls.Button",
+            "params":[
+                {"name":"label"}
+            ],
+            "tag":"feathers"
+        },
+
+        {
+            "cls":"feathers.controls.Check",
+            "params":[
+                {"name":"label"}
+            ],
+            "tag":"feathers"
+        },
+
+        {
+            "cls":"feathers.controls.GroupedList",
+            "params":[
+                {"name":"width", "component":"slider", "min":1, "max":2000, "step":1},
+                {"name":"height", "component":"slider", "min":1, "max":2000, "step":1}
+            ],
+            "tag":"feathers"
+        },
+
+        {
+            "cls":"feathers.controls.Header",
+            "params":[
+                {"name":"title"}
+            ],
+            "tag":"feathers"
+        },
+
+        {
+            "cls":"feathers.controls.ImageLoader",
+            "params":[
+                {"name":"source"}
+            ],
+            "tag":"feathers"
+        },
+
+
+        {
+            "cls":"feathers.controls.Label",
+            "params":[
+                {"name":"text"},
+                {"name":"backgroundSkin", "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"com.sgn.starlingbuilder.editor.ui.DisplayObjectPropertyPopup"}
+            ],
+            "tag":"feathers"
+        },
+
+        {
+            "cls":"feathers.controls.List",
+            "params":[
+                {"name":"width", "component":"slider", "min":1, "max":2000, "step":1},
+                {"name":"height", "component":"slider", "min":1, "max":2000, "step":1}
+            ],
+            "tag":"feathers"
+        },
 
 
 
+        {
+            "cls":"feathers.controls.NumericStepper",
+            "params":[
+                {"name":"width", "component":"slider", "min":0, "max":2000, "step":1, "default_value":0},
+                {"name":"height", "component":"slider", "min":0, "max":2000, "step":1, "default_value":0},
+                {"name":"minimum"},
+                {"name":"maximum"},
+                {"name":"step"},
+                {"name":"value"}
+            ],
+            "tag":"feathers"
+        },
 
+        {
+            "cls":"feathers.controls.PickerList",
+            "params":[
+            ],
+            "tag":"feathers"
+        },
+
+
+
+        {
+            "cls":"feathers.controls.PageIndicator",
+            "params":[
+            ],
+            "tag":"feathers"
+        },
+
+        {
+            "cls":"feathers.controls.ProgressBar",
+            "params":[
+                {"name":"width", "component":"slider", "min":0, "max":2000, "step":1, "default_value":0},
+                {"name":"height", "component":"slider", "min":0, "max":2000, "step":1, "default_value":0},
+                {"name":"minimum"},
+                {"name":"maximum"},
+                {"name":"value"}
+            ],
+            "tag":"feathers"
+        },
+
+        {
+            "cls":"feathers.controls.Radio",
+            "params":[
+                {"name":"label"},
+                {"name":"isSelected", "component":"check", "default_value":false}
+            ],
+            "tag":"feathers"
+        },
+
+        {
+            "cls":"feathers.controls.Slider",
+            "params":[
+                {"name":"width", "component":"slider", "min":0, "max":2000, "step":1, "default_value":0},
+                {"name":"height", "component":"slider", "min":0, "max":2000, "step":1, "default_value":0},
+                {"name":"minimum"},
+                {"name":"maximum"},
+                {"name":"step"},
+                {"name":"value"}
+            ],
+            "tag":"feathers"
+        },
+
+        {
+            "cls":"feathers.controls.TextArea",
+            "params":[
+                {"name":"width", "component":"slider", "min":0, "max":2000, "step":1, "default_value":0},
+                {"name":"height", "component":"slider", "min":0, "max":2000, "step":1, "default_value":0},
+                {"name":"text"}
+            ],
+            "tag":"feathers"
+        },
+
+        {
+            "cls":"feathers.controls.TextInput",
+            "params":[
+                {"name":"width", "component":"slider", "min":0, "max":2000, "step":1, "default_value":0},
+                {"name":"height", "component":"slider", "min":0, "max":2000, "step":1, "default_value":0},
+                {"name":"text"}
+            ],
+            "tag":"feathers"
+        },
+
+        {
+            "cls":"feathers.controls.ToggleButton",
+            "params":[
+                {"name":"label"},
+                {"name":"isSelected", "component":"check", "default_value":false}
+            ],
+            "tag":"feathers"
+        },
+
+        {
+            "cls":"feathers.controls.ToggleSwitch",
+            "params":[
+                {"name":"text"},
+                {"name":"isSelected", "component":"check", "default_value":false}
+            ],
+            "tag":"feathers"
+        },
 
         {
             "cls":"feathers.layout.HorizontalLayout",
@@ -305,6 +407,16 @@
         ]
     },
 
+    "default_feathers_component":
+    {
+        "params":[
+            {"name":"styleName", "default_value":""},
+            {"name":"layoutData", "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"com.sgn.starlingbuilder.editor.ui.DefaultEditPropertyPopup",
+                "supportedClasses":[null, "feathers.layout.AnchorLayoutData"]},
+            {"name":"includeInLayout", "component":"check", "default_value":true}
+        ]
+    },
+
     "background":
     {
         "params":[
@@ -318,6 +430,6 @@
 
     "version":1.0,
 
-    "revision":9
+    "revision":10
 
 }

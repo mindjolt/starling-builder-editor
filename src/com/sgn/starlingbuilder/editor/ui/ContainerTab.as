@@ -10,6 +10,7 @@ package com.sgn.starlingbuilder.editor.ui
     import com.sgn.starlingbuilder.editor.UIEditorApp;
     import com.sgn.starlingbuilder.editor.data.TemplateData;
     import com.sgn.starlingbuilder.editor.helper.UIComponentHelper;
+    import com.sgn.starlingbuilder.engine.util.ParamUtil;
 
     import feathers.controls.LayoutGroup;
     import feathers.controls.List;
@@ -26,7 +27,7 @@ package com.sgn.starlingbuilder.editor.ui
 
         private var _list:List;
 
-        private var _supportedTypes:Array;
+        protected var _supportedTypes:Array;
 
         public function ContainerTab()
         {
@@ -45,7 +46,7 @@ package com.sgn.starlingbuilder.editor.ui
             listAssets();
         }
 
-        private function createPickerList():void
+        protected function createPickerList():void
         {
             _supportedTypes = TemplateData.getSupportedComponent("container");
         }
@@ -55,7 +56,7 @@ package com.sgn.starlingbuilder.editor.ui
             if (_list.selectedIndex != -1)
             {
                 var cls:String = _list.selectedItem.label;
-                var name:String = "container";
+                var name:String = ParamUtil.getDisplayObjectName(cls);
 
                 var editorData:Object = {cls:cls, name:name};
 
@@ -91,10 +92,5 @@ package com.sgn.starlingbuilder.editor.ui
 
             addChild(_list);
         }
-
-
-
-
-
     }
 }

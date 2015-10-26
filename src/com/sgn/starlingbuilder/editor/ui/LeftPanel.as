@@ -13,7 +13,7 @@ package com.sgn.starlingbuilder.editor.ui
         {
             super();
 
-            createTabs([{"label":"layout"}, {"label":"asset"}, {"label":"text"}, {"label":"container"}, {"label":"background"}], [new LayoutTab(), new AssetTab(), new TextTab(), new ContainerTab(), new BackgroundTab()]);
+            createTabs([{"label":"layout"}, {"label":"asset"}, {"label":"text"}, {"label":"container"}, {"label":"feathers"}, {"label":"bg"}], [new LayoutTab(), new AssetTab(), new TextTab(), new ContainerTab(), new FeathersTab(), new BackgroundTab()]);
         }
     }
 }

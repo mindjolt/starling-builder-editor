@@ -209,7 +209,8 @@ package com.sgn.starlingbuilder.editor.controller
 
                 for each (var obj:DisplayObject in objects)
                 {
-                    addFrom(obj, paramDict[obj], null);
+                    if (obj !== root)
+                        addFrom(obj, paramDict[obj], null);
                 }
             }
 
@@ -423,7 +424,7 @@ package com.sgn.starlingbuilder.editor.controller
                 return;
             }
 
-            var parent:DisplayObject = obj.parent;
+            var parent:DisplayObjectContainer = obj.parent;
 
             selectObject(null);
 
@@ -435,16 +436,19 @@ package com.sgn.starlingbuilder.editor.controller
 
             setLayerChanged();
 
-            if (parent === _root)
-            {
-                selectObject(null);
-            }
-            else
-            {
-                selectObject(parent);
-            }
+            selectParent(parent);
 
             setChanged();
+        }
+
+        private function selectParent(parent:DisplayObjectContainer):void
+        {
+            while (_extraParamsDict[parent] == null && parent.parent)
+            {
+                parent = parent.parent;
+            }
+
+            selectObject(parent);
         }
 
         public function remove():void
