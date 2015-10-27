@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?> 
      <update xmlns="http://ns.adobe.com/air/framework/update/description/2.5"> 
-       <versionNumber>0.5.2</versionNumber>
-       <url>http://cache.mindjolt.com/starling-builder/v0.5.2/starling-builder.air</url> 
+       <versionNumber>0.5.3</versionNumber>
+       <url>http://cache.mindjolt.com/starling-builder/v0.5.3/starling-builder.air</url> 
        <description>
-       fix app crashes on Windows
+       Add Feathers tab to left panel
+       Support more Feathers components
        </description>
     </update>
