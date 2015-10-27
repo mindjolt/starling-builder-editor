@@ -20,6 +20,7 @@ package com.sgn.starlingbuilder.editor.ui
         public static const OPTION:String = "Option";
         public static const WORKSPACE:String = "Workspace";
         public static const LOCALIZATION:String = "Localization";
+        public static const HELP:String = "Help";
 
         public static const NEW:String = "New";
         public static const OPEN:String = "Open";
@@ -55,6 +56,10 @@ package com.sgn.starlingbuilder.editor.ui
         public static const OPEN_WORKSPACE:String = "Open workspace";
         public static const EDIT_TEMPLATE:String = "Edit template";
         public static const SETTING:String = "Setting";
+
+        public static const DOCUMENTATION:String = "Documentation";
+        public static const GITHUB_PAGE:String = "Github Page";
+        public static const ABOUT:String = "About";
 
         public static const FILE_MENU:Array = [
             {"label":NEW, "key":"n"},
@@ -102,6 +107,12 @@ package com.sgn.starlingbuilder.editor.ui
         public static const WORKSPACE_MENU:Array = [
             {"label":OPEN_WORKSPACE},
             {"label":EDIT_TEMPLATE},
+        ]
+
+        public static const HELP_MENU:Array = [
+            {"label":DOCUMENTATION},
+            {"label":GITHUB_PAGE},
+            {"label":ABOUT}
         ]
 
         private static var _instance:MainMenu;
