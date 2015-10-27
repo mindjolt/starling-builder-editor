@@ -65,7 +65,7 @@ package com.sgn.starlingbuilder.editor.data
 
             //if file not exist or revision property not exists or external template older than the default template, then overwrite it
             //otherwise use the external template
-            if (!file.exists || !template.hasOwnProperty('revision') || template.revision < editor_template.revision)
+            if (!file.exists || !template.hasOwnProperty('revision') || !editor_template.hasOwnProperty('revision') || template.revision < editor_template.revision)
             {
                 var fs:FileStream = new FileStream();
                 fs.open(file, FileMode.WRITE);

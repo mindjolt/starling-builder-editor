@@ -11,6 +11,7 @@ package com.sgn.starlingbuilder.editor.controller
     import com.sgn.starlingbuilder.editor.UIEditorScreen;
     import com.sgn.starlingbuilder.editor.localization.DefaultLocalizationFileWrapper;
     import com.sgn.starlingbuilder.editor.ui.MainMenu;
+    import com.sgn.starlingbuilder.editor.ui.MainMenu;
     import com.sgn.starlingbuilder.engine.localization.ILocalization;
 
     import starling.events.Event;
@@ -67,6 +68,8 @@ package com.sgn.starlingbuilder.editor.controller
                 menu.getItemByName(currentLocale).checked = true;
                 _localization.locale = currentLocale;
             }
+
+            menu.createSubMenu(MainMenu.HELP_MENU, MainMenu.HELP);
         }
 
         private function sortLocales(locales:Array):void

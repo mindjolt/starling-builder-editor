@@ -23,6 +23,7 @@ package com.sgn.starlingbuilder.editor.ui
     import feathers.controls.ButtonGroup;
     import feathers.controls.LayoutGroup;
     import feathers.controls.TextInput;
+    import feathers.core.PopUpManager;
     import feathers.data.ListCollection;
     import feathers.events.FeathersEventType;
     import feathers.layout.HorizontalLayout;
@@ -32,6 +33,8 @@ package com.sgn.starlingbuilder.editor.ui
     import flash.events.Event;
     import flash.filesystem.File;
     import flash.geom.Point;
+    import flash.net.URLRequest;
+    import flash.net.navigateToURL;
 
     import starling.core.Starling;
     import starling.display.Sprite;
@@ -470,6 +473,9 @@ package com.sgn.starlingbuilder.editor.ui
             menu.registerAction(MainMenu.ZOOM_OUT, onZoomOut);
             menu.registerAction(MainMenu.RESET_ZOOM, onResetZoom);
 
+            menu.registerAction(MainMenu.DOCUMENTATION, onDocumentation);
+            menu.registerAction(MainMenu.GITHUB_PAGE, onGithubPage);
+            menu.registerAction(MainMenu.ABOUT, onAbout);
 
             _documentManager.historyManager.addEventListener(starling.events.Event.CHANGE, updateHistoryManager);
             _documentManager.historyManager.addEventListener(HistoryManager.RESET, updateHistoryManager);
@@ -480,6 +486,23 @@ package com.sgn.starlingbuilder.editor.ui
             return _serializer;
         }
 
+        public static const DOCUMENTATION_PAGE:String = "http://wiki.starling-framework.org/builder/start";
+        public static const GITHUB_PAGE:String = "https://github.com/mindjolt/starling-builder-editor";
 
+        private function onDocumentation():void
+        {
+            navigateToURL(new URLRequest(DOCUMENTATION_PAGE));
+        }
+
+        private function onGithubPage():void
+        {
+            navigateToURL(new URLRequest(GITHUB_PAGE));
+        }
+
+        private function onAbout():void
+        {
+            var popup:AboutPopup = new AboutPopup();
+            PopUpManager.addPopUp(popup);
+        }
     }
 }
