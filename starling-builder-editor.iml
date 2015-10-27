@@ -51,7 +51,7 @@
             <entry key="compiler.debug.swf" value="false" />
           </map>
         </compiler-options>
-        <packaging-air-desktop use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/src/com/sgn/starlingbuilder/editor/UI-editor-app.xml" package-file-name="release">
+        <packaging-air-desktop use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/src/com/sgn/starlingbuilder/editor/UI-editor-app.xml" package-file-name="starling-builder">
           <files-to-package>
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/icons" path-in-package="icons" />
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/src/com/sgn/starlingbuilder/editor/updateConfig.xml" path-in-package="updateConfig.xml" />
