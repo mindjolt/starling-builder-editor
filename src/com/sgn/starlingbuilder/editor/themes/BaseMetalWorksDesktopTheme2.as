@@ -985,7 +985,7 @@ package com.sgn.starlingbuilder.editor.themes
 			layout.verticalAlign = VerticalLayout.VERTICAL_ALIGN_TOP;
 			layout.resetTypicalItemDimensionsOnMeasure = true;
 			list.layout = layout;
-			list.maxHeight = this.wideControlSize;
+			list.maxHeight = this.wideControlSize * 2;
 		}
 
 	//-------------------------
