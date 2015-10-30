@@ -28,6 +28,7 @@ package com.sgn.starlingbuilder.editor.controller
     import com.sgn.starlingbuilder.editor.themes.IUIEditorThemeMediator;
     import com.sgn.starlingbuilder.engine.IUIBuilder;
     import com.sgn.starlingbuilder.engine.UIBuilder;
+    import com.sgn.starlingbuilder.engine.util.ParamUtil;
     import com.sgn.tools.util.feathers.popup.InfoPopup;
     import com.sgn.tools.util.history.HistoryManager;
     import com.sgn.tools.util.history.IHistoryOperation;
@@ -772,15 +773,19 @@ package com.sgn.starlingbuilder.editor.controller
         {
             _assetMediator.file = file;
 
-            var result:Object = _uiBuilder.load(data, false);
-
             var name:String = FileListingHelper.stripPostfix(file.name);
 
-            var container:DisplayObjectContainer = result.object;
-            container.name = name;
-            var param:Object = result.params[container];
-
+            //create a container to hold the external element
+            var containerData:Object = {cls:ParamUtil.getClassName(Sprite), customParams:{}, params:{name:name}};
+            var containerResult:Object = _uiBuilder.createUIElement(containerData);
+            var container:Sprite = containerResult.object;
+            var param:Object = containerResult.params;
             _uiBuilder.setExternalSource(param, name);
+
+            //create the external element
+            var result:Object = _uiBuilder.load(data, false);
+            var root:DisplayObjectContainer = result.object;
+            container.addChild(root);
 
             addFrom(container, param, getParent());
         }
