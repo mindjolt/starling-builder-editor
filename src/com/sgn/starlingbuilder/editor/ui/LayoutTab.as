@@ -17,11 +17,17 @@ package com.sgn.starlingbuilder.editor.ui
     import feathers.controls.List;
     import feathers.controls.renderers.IListItemRenderer;
     import feathers.data.ListCollection;
+    import feathers.events.FeathersEventType;
     import feathers.layout.AnchorLayout;
     import feathers.layout.AnchorLayoutData;
 
+    import flash.ui.Keyboard;
+
+    import starling.core.Starling;
+
     import starling.display.DisplayObject;
     import starling.events.Event;
+    import starling.events.KeyboardEvent;
 
     public class LayoutTab extends LayoutGroup
     {
@@ -67,6 +73,8 @@ package com.sgn.starlingbuilder.editor.ui
             }
 
             _list.addEventListener(Event.CHANGE, onListChange);
+            _list.addEventListener(FeathersEventType.FOCUS_IN, onFocusIn);
+            _list.addEventListener(FeathersEventType.FOCUS_OUT, onFocusOut);
 
             var anchorLayoutData:AnchorLayoutData = new AnchorLayoutData();
             anchorLayoutData.top = 0
@@ -240,12 +248,36 @@ package com.sgn.starlingbuilder.editor.ui
             menu.registerAction(MainMenu.PASTE, paste);
             menu.registerAction(MainMenu.DUPLICATE, duplicate);
 
-            menu.registerAction(MainMenu.DELETE, remove);
             menu.registerAction(MainMenu.DESELECT, deselect);
 
             menu.registerAction(MainMenu.MOVE_UP, moveUp);
             menu.registerAction(MainMenu.MOVE_DOWN, moveDown);
+
+            Starling.current.stage.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
         }
 
+        private function onKeyUp(event:KeyboardEvent):void
+        {
+            switch (event.keyCode)
+            {
+                case Keyboard.BACKSPACE:
+                case Keyboard.DELETE:
+                    if (_documentManager.hasFocus || _focus)
+                        remove();
+                    break;
+            }
+        }
+
+        private var _focus:Boolean = false;
+
+        protected function onFocusIn(event:Event):void
+        {
+            _focus = true;
+        }
+
+        protected function onFocusOut(event:Event):void
+        {
+            _focus = false;
+        }
     }
 }

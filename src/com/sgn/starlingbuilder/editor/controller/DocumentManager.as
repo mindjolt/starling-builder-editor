@@ -419,12 +419,6 @@ package com.sgn.starlingbuilder.editor.controller
 
         public function removeTree(obj:DisplayObject):void
         {
-            if (_root == obj)
-            {
-                info("can't remove root");
-                return;
-            }
-
             var parent:DisplayObjectContainer = obj.parent;
 
             selectObject(null);
@@ -449,19 +443,30 @@ package com.sgn.starlingbuilder.editor.controller
                 parent = parent.parent;
             }
 
-            selectObject(parent);
+            if (parent === _root)
+                selectObject(null);
+            else
+                selectObject(parent);
         }
 
         public function remove():void
         {
             if (_selectedObject)
             {
+                if (_root == _selectedObject)
+                {
+                    info("can't remove root");
+                    return;
+                }
+
                 var newDict:Dictionary = new Dictionary();
                 recreateFromParam(_selectedObject, _extraParamsDict, newDict);
                 _historyManager.add(new DeleteOperation(_selectedObject, newDict, _selectedObject.parent));
                 removeTree(_selectedObject);
             }
         }
+
+
 
         public function move(dx:Number, dy:Number, ignoreSnapPixel:Boolean = false):Boolean
         {
@@ -925,10 +930,15 @@ package com.sgn.starlingbuilder.editor.controller
 
         public function cut():void
         {
-            copy();
-
             if (_selectedObject)
             {
+                if (_root == _selectedObject)
+                {
+                    info("can't remove root");
+                    return;
+                }
+
+                copy();
                 var newDict:Dictionary = new Dictionary();
                 recreateFromParam(_selectedObject, _extraParamsDict, newDict);
                 _historyManager.add(new CutOperation(_selectedObject, newDict, _selectedObject.parent));
