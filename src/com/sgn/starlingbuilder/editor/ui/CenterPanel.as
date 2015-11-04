@@ -53,7 +53,7 @@ package com.sgn.starlingbuilder.editor.ui
 
         override protected function focusOutHandler(event:Event):void
         {
-            super.focusInHandler(event);
+            super.focusOutHandler(event);
             _documentManager.hasFocus = false;
         }
 

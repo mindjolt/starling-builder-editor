@@ -86,7 +86,7 @@ package com.sgn.starlingbuilder.editor.ui
             {"label":PASTE, "key":"V"},
             {"label":DUPLICATE, "key":"d"},
             {"label":DESELECT},
-            {"label":DELETE, "key":String.fromCharCode(Keyboard.BACKSPACE)},
+            {"label":DELETE},
             {"separator":true},
             {"label":MOVE_UP, "key":"["},
             {"label":MOVE_DOWN, "key":"]"},

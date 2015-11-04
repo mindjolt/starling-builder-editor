@@ -28,6 +28,7 @@ package com.sgn.starlingbuilder.editor.controller
     import com.sgn.starlingbuilder.editor.themes.IUIEditorThemeMediator;
     import com.sgn.starlingbuilder.engine.IUIBuilder;
     import com.sgn.starlingbuilder.engine.UIBuilder;
+    import com.sgn.starlingbuilder.engine.util.ParamUtil;
     import com.sgn.tools.util.feathers.popup.InfoPopup;
     import com.sgn.tools.util.history.HistoryManager;
     import com.sgn.tools.util.history.IHistoryOperation;
@@ -418,12 +419,6 @@ package com.sgn.starlingbuilder.editor.controller
 
         public function removeTree(obj:DisplayObject):void
         {
-            if (_root == obj)
-            {
-                info("can't remove root");
-                return;
-            }
-
             var parent:DisplayObjectContainer = obj.parent;
 
             selectObject(null);
@@ -448,19 +443,30 @@ package com.sgn.starlingbuilder.editor.controller
                 parent = parent.parent;
             }
 
-            selectObject(parent);
+            if (parent === _root)
+                selectObject(null);
+            else
+                selectObject(parent);
         }
 
         public function remove():void
         {
             if (_selectedObject)
             {
+                if (_root == _selectedObject)
+                {
+                    info("can't remove root");
+                    return;
+                }
+
                 var newDict:Dictionary = new Dictionary();
                 recreateFromParam(_selectedObject, _extraParamsDict, newDict);
                 _historyManager.add(new DeleteOperation(_selectedObject, newDict, _selectedObject.parent));
                 removeTree(_selectedObject);
             }
         }
+
+
 
         public function move(dx:Number, dy:Number, ignoreSnapPixel:Boolean = false):Boolean
         {
@@ -772,15 +778,19 @@ package com.sgn.starlingbuilder.editor.controller
         {
             _assetMediator.file = file;
 
-            var result:Object = _uiBuilder.load(data, false);
-
             var name:String = FileListingHelper.stripPostfix(file.name);
 
-            var container:DisplayObjectContainer = result.object;
-            container.name = name;
-            var param:Object = result.params[container];
-
+            //create a container to hold the external element
+            var containerData:Object = {cls:ParamUtil.getClassName(Sprite), customParams:{}, params:{name:name}};
+            var containerResult:Object = _uiBuilder.createUIElement(containerData);
+            var container:Sprite = containerResult.object;
+            var param:Object = containerResult.params;
             _uiBuilder.setExternalSource(param, name);
+
+            //create the external element
+            var result:Object = _uiBuilder.load(data, false);
+            var root:DisplayObjectContainer = result.object;
+            container.addChild(root);
 
             addFrom(container, param, getParent());
         }
@@ -920,10 +930,15 @@ package com.sgn.starlingbuilder.editor.controller
 
         public function cut():void
         {
-            copy();
-
             if (_selectedObject)
             {
+                if (_root == _selectedObject)
+                {
+                    info("can't remove root");
+                    return;
+                }
+
+                copy();
                 var newDict:Dictionary = new Dictionary();
                 recreateFromParam(_selectedObject, _extraParamsDict, newDict);
                 _historyManager.add(new CutOperation(_selectedObject, newDict, _selectedObject.parent));
