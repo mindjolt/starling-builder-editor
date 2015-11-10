@@ -369,14 +369,37 @@ package com.sgn.starlingbuilder.editor.ui
                 }
                 else
                 {
-                    InfoPopup.show("Template not found!")
+                    InfoPopup.show("Template not found! Reload Starling Builder to regenerate.");
                 }
             }
             else
             {
                 InfoPopup.show("Workspace not found!");
             }
+        }
 
+        private function onDeleteTemplate():void
+        {
+            var file:File = UIEditorScreen.instance.workspaceDir;
+
+            if (file)
+            {
+                var template:File = file.resolvePath("settings/editor_template.json");
+
+                if (template.exists)
+                {
+                    template.deleteFile();
+                    InfoPopup.show("Template deleted.");
+                }
+                else
+                {
+                    InfoPopup.show("Template not found!");
+                }
+            }
+            else
+            {
+                InfoPopup.show("Workspace not found!");
+            }
         }
 
         private function onUndo():void
@@ -461,6 +484,7 @@ package com.sgn.starlingbuilder.editor.ui
 
             menu.registerAction(MainMenu.OPEN_WORKSPACE, onOpenWorkspace);
             menu.registerAction(MainMenu.EDIT_TEMPLATE, onEditTemplate);
+            menu.registerAction(MainMenu.DELETE_TEMPLATE, onDeleteTemplate);
 
             menu.getItemByName(MainMenu.SHOW_TEXT_BORDER).checked = _documentManager.showTextBorder;
             menu.getItemByName(MainMenu.SNAP_PIXEL).checked = _documentManager.snapPixel;

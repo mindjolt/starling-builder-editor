@@ -54,7 +54,8 @@ package com.sgn.starlingbuilder.editor.ui
         public static const RESIZABLE_BOX:String = "Resizable box";
 
         public static const OPEN_WORKSPACE:String = "Open workspace";
-        public static const EDIT_TEMPLATE:String = "Edit template";
+        public static const EDIT_TEMPLATE:String = "Edit template override";
+        public static const DELETE_TEMPLATE:String = "Delete template override";
         public static const SETTING:String = "Setting";
 
         public static const DOCUMENTATION:String = "Documentation";
@@ -107,6 +108,7 @@ package com.sgn.starlingbuilder.editor.ui
         public static const WORKSPACE_MENU:Array = [
             {"label":OPEN_WORKSPACE},
             {"label":EDIT_TEMPLATE},
+            {"label":DELETE_TEMPLATE},
         ]
 
         public static const HELP_MENU:Array = [

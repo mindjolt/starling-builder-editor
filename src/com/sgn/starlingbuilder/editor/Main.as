@@ -74,7 +74,17 @@ package com.sgn.starlingbuilder.editor
 
         private function onUncaughtError(event:UncaughtErrorEvent):void
         {
-            var message:String = event.error.toString();
+            var message:String;
+
+            if (event.error is Error)
+            {
+                message = Error(event.error).getStackTrace();
+            }
+            else
+            {
+                message = event.error.toString();
+            }
+
             trace(message);
             InfoPopup.show(message);
         }
