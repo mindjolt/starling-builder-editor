@@ -25,6 +25,9 @@ You will need to checkout the engine repo to put it into your game. It also cont
 git clone https://github.com/mindjolt/starling-builder-engine
 ```
 
+If you want to create custom UI components or feathers theme the editor can support, check out the [extension](https://github.com/mindjolt/starling-builder-engine) repository for the usage.
+
+
 ####Documentation
 
 For more information, please visit our wiki page at http://wiki.starling-framework.org/builder/start
