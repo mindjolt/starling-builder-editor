@@ -23,20 +23,6 @@
         <packaging-android />
         <packaging-ios />
       </configuration>
-      <configuration name="theme" target-platform="Mobile" pure-as="true" output-type="RuntimeLoadedModule" main-class="EmbeddedTheme" output-file="EmbeddedTheme.swf" output-folder="$MODULE_DIR$/out/production/starling-builder-editor">
-        <dependencies>
-          <entries>
-            <entry library-id="6e0b25b4-10fc-4f65-89aa-19d26c52c7e1">
-              <dependency linkage="Merged" />
-            </entry>
-          </entries>
-          <sdk name="AIRSDK" />
-        </dependencies>
-        <compiler-options />
-        <packaging-air-desktop />
-        <packaging-android />
-        <packaging-ios />
-      </configuration>
       <configuration name="release" target-platform="Desktop" pure-as="true" main-class="com.sgn.starlingbuilder.editor.Main" output-file="release.swf" output-folder="$MODULE_DIR$/out/production/starling-builder-editor">
         <dependencies>
           <entries>
@@ -67,7 +53,6 @@
     <exclude-output />
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/uieditor_theme/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/starling-builder-engine/src" isTestSource="false" />
     </content>
     <orderEntry type="jdk" jdkName="AIRSDK" jdkType="Flex SDK Type (new)" />
@@ -75,17 +60,6 @@
     <orderEntry type="module-library" exported="">
       <library type="flex">
         <properties id="1b681331-4950-42a7-8e25-11d467985093" />
-        <CLASSES>
-          <root url="file://$MODULE_DIR$/libs" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-        <jarDirectory url="file://$MODULE_DIR$/libs" recursive="false" />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library type="flex">
-        <properties id="6e0b25b4-10fc-4f65-89aa-19d26c52c7e1" />
         <CLASSES>
           <root url="file://$MODULE_DIR$/libs" />
         </CLASSES>
