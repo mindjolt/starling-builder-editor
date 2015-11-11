@@ -11,6 +11,7 @@ package com.sgn.starlingbuilder.editor
 
     import com.sgn.starlingbuilder.editor.data.TemplateData;
     import com.sgn.starlingbuilder.editor.helper.AssetLoaderWithOptions;
+    import com.sgn.starlingbuilder.editor.helper.CustomComponentHelper;
     import com.sgn.starlingbuilder.editor.helper.CustomThemeHelper;
     import com.sgn.starlingbuilder.editor.helper.KeyboardHelper;
     import com.sgn.starlingbuilder.editor.ui.CenterPanel;
@@ -135,7 +136,7 @@ package com.sgn.starlingbuilder.editor
 
                         init();
 
-                        initUI();
+
 
                     }, 1);
                 }
@@ -199,15 +200,23 @@ package com.sgn.starlingbuilder.editor
 
             menu.unregisterAll();
 
-            TemplateData.load(null, _workspaceDir);
+            CustomComponentHelper.load(_assetManager, _workspaceDir, onComplete);
 
-            UIEditorApp.instance.init();
+            function onComplete():void
+            {
+                UIEditorApp.instance.init();
 
-            CustomThemeHelper.load(_assetManager);
+                CustomThemeHelper.load(_assetManager);
 
-            KeyboardHelper.startKeyboard(UIEditorApp.instance.documentManager);
+                KeyboardHelper.startKeyboard(UIEditorApp.instance.documentManager);
 
-            menu.registerAction(MainMenu.SETTING, onSetting);
+                menu.registerAction(MainMenu.SETTING, onSetting);
+
+                initUI();
+
+            }
+
+
         }
 
         private function initUI():void

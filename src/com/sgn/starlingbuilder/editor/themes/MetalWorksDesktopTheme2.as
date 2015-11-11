@@ -44,13 +44,13 @@ package com.sgn.starlingbuilder.editor.themes {
 		/**
 		 * @private
 		 */
-		[Embed(source="/../uieditor_theme/assets/images/metalworks_desktop.xml",mimeType="application/octet-stream")]
+		[Embed(source="/../../assets/images/metalworks_desktop.xml",mimeType="application/octet-stream")]
 		protected static const ATLAS_XML:Class;
 
 		/**
 		 * @private
 		 */
-		[Embed(source="/../uieditor_theme/assets/images/metalworks_desktop.png")]
+		[Embed(source="/../../assets/images/metalworks_desktop.png")]
 		protected static const ATLAS_BITMAP:Class;
 
 		/**

@@ -24,34 +24,23 @@ package com.sgn.starlingbuilder.editor.helper
 
         public function CustomThemeHelper()
         {
-
-
         }
 
         public static function load(assetManager:AssetManager):void
         {
-            var context:LoaderContext = new LoaderContext();
-            context.allowCodeImport = true;
+            LoadSwfHelper.load(NAME, assetManager, onComplete);
 
-            var loader:Loader = new Loader();
-            loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onComplete);
+            function onComplete(loader:Loader):void{
 
-            var byteArray:ByteArray = assetManager.getByteArray(NAME);
+                if (loader)
+                {
+                    var cls:Class = loader.contentLoaderInfo.applicationDomain.getDefinition(NAME) as Class;
+                    new cls.theme(false, UIEditorApp.instance.documentManager);
+                    initializeStage();
+                }
 
-            if (byteArray)
-            {
-                loader.loadBytes(byteArray, context);
-            }
-
-            function onComplete(e:*):void{
-
-                var cls:Class = loader.contentLoaderInfo.applicationDomain.getDefinition(NAME) as Class;
-                new cls.theme(false, UIEditorApp.instance.documentManager);
-
-                initializeStage();
             }
         }
-
 
         protected static function initializeStage():void
         {
