@@ -13,9 +13,13 @@ package com.sgn.tools.util.ui.inspector
 
         private var _initValues:Object = {};
 
-        public function LinkedPropertyPanel(target:Object = null, params:Array = null, propertyRetrieverFactory:Function = null)
+        private var _condition:Function;
+
+        public function LinkedPropertyPanel(target:Object = null, params:Array = null, propertyRetrieverFactory:Function = null, condition:Function = null)
         {
             super(target, params, propertyRetrieverFactory);
+
+            _condition = condition;
 
             PropertyPanel.globalDispatcher.addEventListener(UIMapperEventType.PROPERTY_CHANGE, onPropertyChange);
         }
@@ -42,7 +46,7 @@ package com.sgn.tools.util.ui.inspector
 
         private function onPropertyChange(event:Event):void
         {
-            if (_linkCheck.isSelected)
+            if (_linkCheck.isSelected && (_condition == null || _condition(_target)))
             {
                 var name:String = event.data.propertyName;
 

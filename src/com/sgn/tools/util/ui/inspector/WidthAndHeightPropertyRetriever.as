@@ -12,6 +12,9 @@ package com.sgn.tools.util.ui.inspector
 
         override public function set(name:String, value:Object):void
         {
+            //disable resize when rotation is not 0
+            if (_target.rotation != 0) return;
+
             var sx:Number = sign(_target.scaleX);
             var sy:Number = sign(_target.scaleY);
 

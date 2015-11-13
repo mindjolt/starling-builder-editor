@@ -303,6 +303,9 @@ package com.sgn.starlingbuilder.editor.helper
         {
             //trace("dx:", dx, "dy:", dy);
 
+            //disable resize when rotation is not 0
+            if (_target.rotation != 0) return false;
+
             dx /= UIEditorApp.instance.documentManager.scale;
             dy /= UIEditorApp.instance.documentManager.scale;
 
