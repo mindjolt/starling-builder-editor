@@ -27,6 +27,8 @@ package com.sgn.tools.util.serialize
         public static const CLOSE:String = "close";
         public static const READ:String = "read";
 
+        public static const CHANGE:String = "change";
+
         private var _isDirty:Boolean = false;
 
         private var _file:File;
@@ -126,6 +128,8 @@ package com.sgn.tools.util.serialize
             fs.open(_file, FileMode.WRITE);
             fs.writeUTFBytes(data.toString());
             fs.close();
+
+            setChange(_file.url);
         }
 
         public function openWithFile(file:File):void
@@ -166,6 +170,8 @@ package com.sgn.tools.util.serialize
             _mediator.read(data, _file);
 
             _isDirty = false;
+
+            setChange(_file.url);
         }
 
         public function close():void
@@ -284,6 +290,11 @@ package com.sgn.tools.util.serialize
         private function doCustomAction(customEventType:String):void
         {
             dispatchEventWith(customEventType);
+        }
+
+        private function setChange(url:String):void
+        {
+            dispatchEventWith(CHANGE, false, url);
         }
 
     }

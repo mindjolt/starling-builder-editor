@@ -42,35 +42,46 @@ package com.sgn.tools.util.menu
             {
                 var item:NativeMenuItem;
 
-                if (data.separator)
+                if (data.menu)
                 {
-                    item = new NativeMenuItem("", true);
+                    menu.addSubmenu(new NativeMenu(), data.label);
+                    menu.getItemAt(menu.numItems - 1).name = data.label;
                 }
                 else
                 {
-                    item = new NativeMenuItem(data.label);
-                    item.name = data.label;
-                    item.addEventListener(Event.SELECT, onItemSelect);
-                    if (data.key)
+                    if (data.separator)
                     {
-                        item.keyEquivalent = data.key;
+                        item = new NativeMenuItem("", true);
                     }
-                }
+                    else
+                    {
+                        item = new NativeMenuItem(data.label);
+                        item.name = data.label;
+                        item.addEventListener(Event.SELECT, onItemSelect);
+                        if (data.key)
+                        {
+                            item.keyEquivalent = data.key;
+                        }
+                    }
 
-                if (data.disabled)
-                {
-                    item.enabled = false;
-                }
+                    if (data.disabled)
+                    {
+                        item.enabled = false;
+                    }
 
-                if (data.checked)
-                {
-                    item.checked = true;
-                }
+                    if (data.checked)
+                    {
+                        item.checked = true;
+                    }
 
-                menu.addItem(item);
+                    menu.addItem(item);
+                }
             }
 
             _rootMenu.addSubmenu(menu, label);
+
+            _rootMenu.getItemAt(_rootMenu.numItems - 1).name = label;
+
             _subMenus.push(menu);
         }
 
@@ -138,6 +149,11 @@ package com.sgn.tools.util.menu
             }
 
             return null;
+        }
+
+        public function get root():NativeMenu
+        {
+            return _rootMenu;
         }
     }
 }

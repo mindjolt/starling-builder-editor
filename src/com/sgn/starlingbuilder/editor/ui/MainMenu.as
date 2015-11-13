@@ -24,6 +24,7 @@ package com.sgn.starlingbuilder.editor.ui
 
         public static const NEW:String = "New";
         public static const OPEN:String = "Open";
+        public static const OPEN_RECENT:String = "Open recent";
         public static const SAVE:String = "Save";
         public static const SAVE_AS:String = "Save as";
         public static const LOAD_EXTERNAL:String = "Load external";
@@ -65,6 +66,7 @@ package com.sgn.starlingbuilder.editor.ui
         public static const FILE_MENU:Array = [
             {"label":NEW, "key":"n"},
             {"label":OPEN, "key":"o"},
+            {"label":OPEN_RECENT, "menu":true},
             {"label":SAVE, "key":"s"},
             {"label":SAVE_AS},
             {"label":LOAD_EXTERNAL, "key":"l"},
