@@ -128,6 +128,20 @@ package com.sgn.tools.util.serialize
             fs.close();
         }
 
+        public function openWithFile(file:File):void
+        {
+            _file = file;
+            if (isDirty())
+            {
+                actionForOldFile();
+                _pendingActions.push(READ);
+            }
+            else
+            {
+                read();
+            }
+        }
+
         public function open():void
         {
             if (isDirty())

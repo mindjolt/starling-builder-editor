@@ -11,6 +11,7 @@ package com.sgn.starlingbuilder.editor.ui
     import com.sgn.starlingbuilder.editor.UIEditorScreen;
     import com.sgn.starlingbuilder.editor.controller.DocumentManager;
     import com.sgn.starlingbuilder.editor.events.DocumentEventType;
+    import com.sgn.starlingbuilder.editor.helper.NativeDragAndDropHelper;
     import com.sgn.starlingbuilder.editor.serialize.LoadExternalDocumentMediator;
     import com.sgn.starlingbuilder.editor.serialize.UIEditorDocumentMediator;
     import com.sgn.tools.util.feathers.FeathersUIUtil;
@@ -110,6 +111,10 @@ package com.sgn.starlingbuilder.editor.ui
             createCanvasInput();
 
             registerMenuActions();
+
+            NativeDragAndDropHelper.start(function(file:File):void{
+                _serializer.openWithFile(file);
+            });
         }
 
 
