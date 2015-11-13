@@ -120,9 +120,9 @@ package com.sgn.starlingbuilder.editor.ui
 
             registerMenuActions();
 
-            NativeDragAndDropHelper.start(function(file:File):void{
-                _serializer.openWithFile(file);
-            });
+//            NativeDragAndDropHelper.start(function(file:File):void{
+//                _serializer.openWithFile(file);
+//            });
 
 
         }
