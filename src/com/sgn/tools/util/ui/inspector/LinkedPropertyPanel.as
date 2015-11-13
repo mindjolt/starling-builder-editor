@@ -49,9 +49,10 @@ package com.sgn.tools.util.ui.inspector
             if (_linkCheck.isSelected && (_condition == null || _condition(_target)))
             {
                 var name:String = event.data.propertyName;
+                var param:Object;
 
                 var found:Boolean = false;
-                for each (var param:Object in _params)
+                for each (param in _params)
                 {
                     if (param.name == name)
                     {
@@ -62,7 +63,7 @@ package com.sgn.tools.util.ui.inspector
 
                 if (found)
                 {
-                    for each (var param:Object in _params)
+                    for each (param in _params)
                     {
                         if (param.name == name)
                         {

@@ -85,7 +85,7 @@ package com.sgn.tools.util.menu
             _subMenus.push(menu);
         }
 
-        private function onItemSelect(event:Event)
+        private function onItemSelect(event:Event):void
         {
             var item:NativeMenuItem = event.target as NativeMenuItem;
 

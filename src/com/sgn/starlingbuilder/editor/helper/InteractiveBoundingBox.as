@@ -136,7 +136,7 @@ package com.sgn.starlingbuilder.editor.helper
             }
         }
 
-        private function updateBoundingBox(x:Number, y:Number, width:Number, height:Number, pivotX:Number, pivotY:Number)
+        private function updateBoundingBox(x:Number, y:Number, width:Number, height:Number, pivotX:Number, pivotY:Number):void
         {
             var quad:Quad;
 

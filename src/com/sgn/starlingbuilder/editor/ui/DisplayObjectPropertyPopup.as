@@ -45,7 +45,7 @@ package com.sgn.starlingbuilder.editor.ui
             }
         }
 
-        override protected function setCustomParam(textureName:String)
+        override protected function setCustomParam(textureName:String):void
         {
             /*
              TODO:

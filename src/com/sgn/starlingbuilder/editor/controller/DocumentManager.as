@@ -240,7 +240,7 @@ package com.sgn.starlingbuilder.editor.controller
                     endMove();
                 });
 
-                SelectHelper.startSelect(obj, function(object:DisplayObject){
+                SelectHelper.startSelect(obj, function(object:DisplayObject):void{
                     if (!(selectedObject is DisplayObjectContainer) || !DisplayObjectContainer(selectedObject).contains(object))
                         selectObject(object);
                 });
@@ -1032,7 +1032,7 @@ package com.sgn.starlingbuilder.editor.controller
             return _boundingBox.enable;
         }
 
-        public function set enableBoundingBox(value:Boolean)
+        public function set enableBoundingBox(value:Boolean):void
         {
             _boundingBox.enable = value;
         }

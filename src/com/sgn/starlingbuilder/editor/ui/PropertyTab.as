@@ -193,11 +193,13 @@ package com.sgn.starlingbuilder.editor.ui
 
         private function onChange(event:Event):void
         {
+            var params:Array;
+
             if (UIEditorScreen.instance.leftPanel.currentTab is BackgroundTab)
             {
                 if (_documentManager.background)
                 {
-                    var params:Array = _template.background.params;
+                    params = _template.background.params;
                     _propertiesPanel.reloadData(_documentManager.background, params);
                 }
                 else
@@ -209,7 +211,7 @@ package com.sgn.starlingbuilder.editor.ui
             {
                 if (_documentManager.selectedObject)
                 {
-                    var params:Array = ParamUtil.getParams(_template, _documentManager.selectedObject);
+                    params = ParamUtil.getParams(_template, _documentManager.selectedObject);
 
                     processParamsWithFonts(params);
                     processParamsWithWidthAndHeight(params);
@@ -242,10 +244,11 @@ package com.sgn.starlingbuilder.editor.ui
             var i:int;
 
             var array:Array;
+            var param:Object;
 
             for (i = 0; i < params.length; ++i)
             {
-                var param:Object = params[i];
+                param = params[i];
 
                 if (param.name == "width")
                 {
@@ -256,7 +259,7 @@ package com.sgn.starlingbuilder.editor.ui
 
             for (i = 0; i < params.length; ++i)
             {
-                var param:Object = params[i];
+                param = params[i];
 
                 if (param.name == "height")
                 {
