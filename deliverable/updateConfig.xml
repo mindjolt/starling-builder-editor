@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?> 
      <update xmlns="http://ns.adobe.com/air/framework/update/description/2.5"> 
-       <versionNumber>0.6.0</versionNumber>
-       <url>http://cache.mindjolt.com/starling-builder/v0.6.0/starling-builder.air</url>
+       <versionNumber>0.6.1</versionNumber>
+       <url>http://cache.mindjolt.com/starling-builder/v0.6.1/starling-builder.air</url>
        <description>
        </description>
     </update>
