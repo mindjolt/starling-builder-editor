@@ -10,6 +10,8 @@ package com.sgn.tools.util.ui.inspector
     import feathers.controls.LayoutGroup;
     import feathers.controls.ScrollContainer;
 
+    import starling.display.DisplayObject;
+
     import starling.events.Event;
     import starling.events.EventDispatcher;
 
@@ -64,7 +66,9 @@ package com.sgn.tools.util.ui.inspector
                 {
                     if (param is Array)
                     {
-                        var panel:PropertyPanel = new LinkedPropertyPanel(_target, param as Array, _propertyRetrieverFactory);
+                        var panel:PropertyPanel = new LinkedPropertyPanel(_target, param as Array, _propertyRetrieverFactory, function(target:Object):Boolean {
+                            return target is DisplayObject && target.rotation == 0;
+                        });
                         _container.addChild(panel);
                     }
                     else if (hasProperty(_target, param.name))

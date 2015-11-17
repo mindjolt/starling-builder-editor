@@ -209,6 +209,9 @@ package com.sgn.starlingbuilder.editor.helper
 
         public static function drawSnapLine(container:DisplayObjectContainer, data:PixelSnapperData):void
         {
+            var x1:Number, x2:Number, y1:Number, y2:Number;
+            var global1:Point, global2:Point;
+
             var selectObjXBound:Array = getXBoundary(data.selectObj);
             var selectObjYBound:Array = getYBoundary(data.selectObj);
             var targetXXBound:Array = getXBoundary(data.targetObjX);
@@ -219,28 +222,28 @@ package com.sgn.starlingbuilder.editor.helper
 
             if (data.targetObjX)
             {
-                var x1:Number = selectObjXBound[data.selectObjSnapXType];
-                var y1:Number = selectObjYBound[MIDDLE];
+                x1 = selectObjXBound[data.selectObjSnapXType];
+                y1 = selectObjYBound[MIDDLE];
 
-                var x2:Number = targetXXBound[data.targetObjSnapXType];
-                var y2:Number = targetXYBound[MIDDLE];
+                x2 = targetXXBound[data.targetObjSnapXType];
+                y2 = targetXYBound[MIDDLE];
 
-                var global1:Point = container.globalToLocal(new Point(x1, y1));
-                var global2:Point = container.globalToLocal(new Point(x2, y2));
+                global1 = container.globalToLocal(new Point(x1, y1));
+                global2 = container.globalToLocal(new Point(x2, y2));
 
                 container.addChild(DrawUtil.makeLine(global1.x, global1.y, global2.x, global2.y));
             }
 
             if (data.targetObjY)
             {
-                var x1:Number = selectObjXBound[MIDDLE];
-                var y1:Number = selectObjYBound[data.selectObjSnapYType];
+                x1 = selectObjXBound[MIDDLE];
+                y1 = selectObjYBound[data.selectObjSnapYType];
 
-                var x2:Number = targetYXBound[MIDDLE];
-                var y2:Number = targetYYBound[data.targetObjSnapYType];
+                x2 = targetYXBound[MIDDLE];
+                y2 = targetYYBound[data.targetObjSnapYType];
 
-                var global1:Point = container.globalToLocal(new Point(x1, y1));
-                var global2:Point = container.globalToLocal(new Point(x2, y2));
+                global1 = container.globalToLocal(new Point(x1, y1));
+                global2 = container.globalToLocal(new Point(x2, y2));
 
                 container.addChild(DrawUtil.makeLine(global1.x, global1.y, global2.x, global2.y));
             }

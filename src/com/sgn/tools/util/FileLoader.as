@@ -32,7 +32,7 @@ package com.sgn.tools.util
             file.browse();
 
 
-            function onFileSelected(event:Event)
+            function onFileSelected(event:Event):void
             {
                 name = file["nativePath"];
                 file.removeEventListener(Event.SELECT, onFileSelected);
@@ -106,7 +106,7 @@ package com.sgn.tools.util
             file.addEventListener(Event.CANCEL, onFileCanceled);
             file.browse();
 
-            function onFileSelected(event:Event)
+            function onFileSelected(event:Event):void
             {
                 file.removeEventListener(Event.SELECT, onFileSelected);
                 file.removeEventListener(Event.CANCEL, onFileCanceled);

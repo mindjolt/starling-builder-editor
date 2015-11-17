@@ -75,7 +75,7 @@ package com.sgn.starlingbuilder.editor.controller
         private function sortLocales(locales:Array):void
         {
             //Make sure default locales are on the top
-            locales.sort(function(a:String, b:String){
+            locales.sort(function(a:String, b:String):int{
                 if (a == DEFAULT_LOCALE)
                 {
                     return -1;

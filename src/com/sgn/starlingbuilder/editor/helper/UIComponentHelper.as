@@ -71,7 +71,7 @@ package com.sgn.starlingbuilder.editor.helper
         {
             if (!textureName) return;
 
-            for each (var param in constructorParams)
+            for each (var param:Object in constructorParams)
             {
                 if (ParamUtil.getClassNames([Texture, Scale3Textures, Scale9Textures]).indexOf(param.cls) != -1)
                 {
@@ -84,7 +84,7 @@ package com.sgn.starlingbuilder.editor.helper
         {
             if (!scaleRatio) return;
 
-            for each (var param in constructorParams)
+            for each (var param:Object in constructorParams)
             {
                 if (ParamUtil.getClassNames([Scale3Textures, Scale9Textures]).indexOf(param.cls) != -1)
                 {
@@ -97,7 +97,7 @@ package com.sgn.starlingbuilder.editor.helper
         {
             if (!fontName) return;
 
-            for each (var param in constructorParams)
+            for each (var param:Object in constructorParams)
             {
                 if (param.name == "fontName")
                 {
@@ -106,7 +106,7 @@ package com.sgn.starlingbuilder.editor.helper
             }
         }
 
-        private static function setFontText(params:Object, text:String)
+        private static function setFontText(params:Object, text:String):void
         {
             if (text) params.text = text;
         }

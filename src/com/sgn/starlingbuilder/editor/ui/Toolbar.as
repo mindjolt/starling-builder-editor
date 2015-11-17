@@ -11,11 +11,13 @@ package com.sgn.starlingbuilder.editor.ui
     import com.sgn.starlingbuilder.editor.UIEditorScreen;
     import com.sgn.starlingbuilder.editor.controller.DocumentManager;
     import com.sgn.starlingbuilder.editor.events.DocumentEventType;
+    import com.sgn.starlingbuilder.editor.helper.NativeDragAndDropHelper;
     import com.sgn.starlingbuilder.editor.serialize.LoadExternalDocumentMediator;
     import com.sgn.starlingbuilder.editor.serialize.UIEditorDocumentMediator;
     import com.sgn.tools.util.feathers.FeathersUIUtil;
     import com.sgn.tools.util.feathers.popup.InfoPopup;
     import com.sgn.tools.util.history.HistoryManager;
+    import com.sgn.tools.util.history.OpenRecentManager;
     import com.sgn.tools.util.serialize.DocumentSerializer;
     import com.sgn.tools.util.serialize.IDocumentMediator;
 
@@ -27,6 +29,8 @@ package com.sgn.starlingbuilder.editor.ui
     import feathers.data.ListCollection;
     import feathers.events.FeathersEventType;
     import feathers.layout.HorizontalLayout;
+
+    import flash.display.NativeMenu;
 
     import flash.display.NativeMenuItem;
     import flash.display.NativeWindow;
@@ -51,6 +55,8 @@ package com.sgn.starlingbuilder.editor.ui
 
         private var _serializer:DocumentSerializer;
         private var _mediator:IDocumentMediator;
+
+        private var _recentOpenManager:OpenRecentManager;
 
         private var _workspaceInput:TextInput;
         private var _workspaceButton:Button;
@@ -81,6 +87,9 @@ package com.sgn.starlingbuilder.editor.ui
             _serializer = new DocumentSerializer(_mediator);
             _serializer.addEventListener(BROWSE, doBrowse);
             _serializer.addEventListener(RELOAD, doReload);
+            _serializer.addEventListener(DocumentSerializer.CHANGE, onChange);
+
+            _recentOpenManager = new OpenRecentManager(UIEditorScreen.instance.workspaceDir);
 
             _loadExternalSerializer = new DocumentSerializer(new LoadExternalDocumentMediator(UIEditorApp.instance.documentManager));
 
@@ -110,6 +119,12 @@ package com.sgn.starlingbuilder.editor.ui
             createCanvasInput();
 
             registerMenuActions();
+
+//            NativeDragAndDropHelper.start(function(file:File):void{
+//                _serializer.openWithFile(file);
+//            });
+
+
         }
 
 
@@ -503,6 +518,8 @@ package com.sgn.starlingbuilder.editor.ui
 
             _documentManager.historyManager.addEventListener(starling.events.Event.CHANGE, updateHistoryManager);
             _documentManager.historyManager.addEventListener(HistoryManager.RESET, updateHistoryManager);
+
+            updateRecentOpenMenu();
         }
 
         public function get documentSerializer():DocumentSerializer
@@ -527,6 +544,69 @@ package com.sgn.starlingbuilder.editor.ui
         {
             var popup:AboutPopup = new AboutPopup();
             PopUpManager.addPopUp(popup);
+        }
+
+        private function onChange(e:starling.events.Event):void
+        {
+            _recentOpenManager.open(e.data as String);
+
+            trace(_recentOpenManager.recentFiles);
+
+            updateRecentOpenMenu();
+        }
+
+        public static const RESET:String = "Reset";
+
+        private function updateRecentOpenMenu():void
+        {
+            var menu:NativeMenu = MainMenu.instance.root;
+            var subMenu:NativeMenu = menu.getItemByName(MainMenu.FILE).submenu.getItemByName(MainMenu.OPEN_RECENT).submenu;
+
+            subMenu.removeAllItems();
+
+            var item:NativeMenuItem;
+
+            for each (var url:String in _recentOpenManager.recentFiles)
+            {
+                item = new NativeMenuItem(url);
+                item.name = url;
+                item.addEventListener(flash.events.Event.SELECT, onOpenRecent, false, 0, true);
+                subMenu.addItem(item);
+            }
+
+            item = new NativeMenuItem("", true);
+            subMenu.addItem(item);
+
+            item = new NativeMenuItem(RESET);
+            item.name = RESET;
+            item.addEventListener(flash.events.Event.SELECT, onOpenRecent, false, 0, true);
+            subMenu.addItem(item);
+
+        }
+
+        private function onOpenRecent(e:flash.events.Event):void
+        {
+            var item:NativeMenuItem = e.target as NativeMenuItem;
+
+            if (item.name == RESET)
+            {
+                _recentOpenManager.reset();
+                updateRecentOpenMenu();
+            }
+            else
+            {
+                var file:File = new File();
+                file.url = item.name;
+
+                if (file.exists)
+                {
+                    _serializer.openWithFile(file);
+                }
+                else
+                {
+                    InfoPopup.show("File not found!");
+                }
+            }
         }
     }
 }

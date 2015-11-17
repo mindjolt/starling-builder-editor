@@ -131,7 +131,7 @@ package com.sgn.starlingbuilder.editor.ui
             }
         }
 
-        protected function setCustomParam(textureName:String)
+        protected function setCustomParam(textureName:String):void
         {
             /*
             TODO:

@@ -160,7 +160,7 @@ package com.sgn.tools.util.ui.inspector
             updateColor(_value);
         }
 
-        private function updateColor(color:uint)
+        private function updateColor(color:uint):void
         {
             _colorFilter.reset();
             _colorFilter.tint(color);

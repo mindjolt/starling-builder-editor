@@ -136,7 +136,7 @@ package com.sgn.starlingbuilder.editor.helper
             }
         }
 
-        private function updateBoundingBox(x:Number, y:Number, width:Number, height:Number, pivotX:Number, pivotY:Number)
+        private function updateBoundingBox(x:Number, y:Number, width:Number, height:Number, pivotX:Number, pivotY:Number):void
         {
             var quad:Quad;
 
@@ -302,6 +302,9 @@ package com.sgn.starlingbuilder.editor.helper
         private function onDrag(object:DisplayObject, dx:Number, dy:Number):Boolean
         {
             //trace("dx:", dx, "dy:", dy);
+
+            //disable resize when rotation is not 0
+            if (_target.rotation != 0) return false;
 
             dx /= UIEditorApp.instance.documentManager.scale;
             dy /= UIEditorApp.instance.documentManager.scale;
