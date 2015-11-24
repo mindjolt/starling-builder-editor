@@ -12,39 +12,21 @@ package com.sgn.tools.util.ui.inspector
     {
         protected var _pickerList:PickerList;
 
-        public function PickerListPropertyComponent(propertyRetriever:IPropertyRetriever, param:Object)
+        public function PickerListPropertyComponent()
         {
-            super(propertyRetriever, param);
-
-            var name:String = param.name;
-
-            var options:Array = param["options"];
-            var default_value:Number = param["default"];
-            var component:String = param["component"];
-
             _pickerList = new PickerList();
-            _pickerList.dataProvider = new ListCollection(options);
-
-//                if (!isNaN(default_value))
-//                {
-//                    _propertyRetriever.set(name, default_value);
-//                }
-
-            _pickerList.addEventListener(Event.CHANGE, function(event):void{
-
-                if (_pickerList.selectedItem)
-                {
-                    _oldValue = _propertyRetriever.get(name);
-                    _propertyRetriever.set(name, _pickerList.selectedItem);
-
-                    setChanged();
-                }
-
-            });
-
-            _pickerList.selectedItem = getValue();
-
             addChild(_pickerList);
+        }
+
+        private function onPickerList(event:Event):void
+        {
+            if (_pickerList.selectedItem)
+            {
+                _oldValue = _propertyRetriever.get(_param.name);
+                _propertyRetriever.set(_param.name, _pickerList.selectedItem);
+
+                setChanged();
+            }
         }
 
         override public function update():void
@@ -64,6 +46,25 @@ package com.sgn.tools.util.ui.inspector
             {
                 return String(obj);
             }
+        }
+
+        override public function init(args:Array):void
+        {
+            super.init(args);
+
+            _pickerList.dataProvider = null;
+            _pickerList.dataProvider = new ListCollection(_param["options"]);
+
+            update();
+
+            _pickerList.addEventListener(Event.CHANGE, onPickerList);
+        }
+
+        override public function recycle():void
+        {
+            _pickerList.removeEventListener(Event.CHANGE, onPickerList);
+
+            super.recycle();
         }
     }
 

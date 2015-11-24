@@ -3,22 +3,22 @@
  */
 package com.sgn.tools.util.ui.inspector
 {
+    import com.sgn.tools.util.pool.IPoolable;
+
     import feathers.controls.LayoutGroup;
     import feathers.core.IFeathersControl;
 
     import starling.events.Event;
 
-    public class BasePropertyComponent extends LayoutGroup
+    public class BasePropertyComponent extends LayoutGroup implements IPoolable
     {
         protected var _propertyRetriever:IPropertyRetriever;
         protected var _param:Object;
         protected var _oldValue:Object;
 
-        public function BasePropertyComponent(propertyRetriever:IPropertyRetriever, param:Object)
+        public function BasePropertyComponent()
         {
             super();
-            _propertyRetriever = propertyRetriever;
-            _param = param;
         }
 
         public function update():void
@@ -59,6 +59,18 @@ package com.sgn.tools.util.ui.inspector
         public function get param():Object
         {
             return _param;
+        }
+
+        public function recycle():void
+        {
+            _propertyRetriever = null;
+            _param = null;
+        }
+
+        public function init(args:Array):void
+        {
+            _propertyRetriever = args[0];
+            _param = args[1];
         }
     }
 }

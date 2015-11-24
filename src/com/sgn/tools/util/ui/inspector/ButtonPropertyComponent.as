@@ -17,10 +17,8 @@ package com.sgn.tools.util.ui.inspector
     {
         private var _button:Button;
 
-        public function ButtonPropertyComponent(propertyRetriever:IPropertyRetriever, param:Object)
+        public function ButtonPropertyComponent()
         {
-            super(propertyRetriever, param);
-
             _button = FeathersUIUtil.buttonWithLabel("edit", onEdit);
             addChild(_button);
         }

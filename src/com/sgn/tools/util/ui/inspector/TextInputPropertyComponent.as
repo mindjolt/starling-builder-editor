@@ -13,46 +13,69 @@ package com.sgn.tools.util.ui.inspector
     {
         protected var _textInput:AutoCompleteWithDropDown;
 
-        public function TextInputPropertyComponent(propertyRetriever:IPropertyRetriever, param:Object)
+        public function TextInputPropertyComponent()
         {
-            super(propertyRetriever, param);
-
-            var name:String = param.name;
-
             _textInput = new AutoCompleteWithDropDown();
-            update();
-            _textInput.addEventListener(FeathersEventType.FOCUS_OUT, onTextInput);
-            _textInput.addEventListener(FeathersEventType.ENTER, onTextInput);
-            _textInput.addEventListener(Event.CLOSE, onTextInput);
-
-            if (param.width)
-            {
-                _textInput.width = param.width;
-            }
-
-            if (param.disable)
-            {
-                _textInput.isEnabled = false;
-            }
-
-            if (param.options)
-            {
-                _textInput.autoCompleteSource = param.options;
-            }
-
-            function onTextInput(event):void
-            {
-                _oldValue = _propertyRetriever.get(name);
-                _propertyRetriever.set(name, _textInput.text);
-                setChanged();
-            }
-
             addChild(_textInput);
+        }
+
+        private function onTextInput(event:Event):void
+        {
+            _oldValue = _propertyRetriever.get(_param.name);
+            _propertyRetriever.set(_param.name, _textInput.text);
+            setChanged();
         }
 
         override public function update():void
         {
             _textInput.text = String(_propertyRetriever.get(_param.name));
+        }
+
+        override public function init(args:Array):void
+        {
+            super.init(args);
+
+            if (_param.width)
+            {
+                _textInput.width = _param.width;
+            }
+            else
+            {
+                _textInput.width = 200;
+            }
+
+            if (_param.disable)
+            {
+                _textInput.isEnabled = false;
+            }
+            else
+            {
+                _textInput.isEnabled = true;
+            }
+
+            if (_param.options)
+            {
+                _textInput.autoCompleteSource = _param.options;
+            }
+            else
+            {
+                _textInput.autoCompleteSource = [];
+            }
+
+            update();
+
+            _textInput.addEventListener(FeathersEventType.FOCUS_OUT, onTextInput);
+            _textInput.addEventListener(FeathersEventType.ENTER, onTextInput);
+            _textInput.addEventListener(Event.CLOSE, onTextInput);
+        }
+
+        override public function recycle():void
+        {
+            _textInput.removeEventListener(FeathersEventType.FOCUS_OUT, onTextInput);
+            _textInput.removeEventListener(FeathersEventType.ENTER, onTextInput);
+            _textInput.removeEventListener(Event.CLOSE, onTextInput);
+
+            super.recycle();
         }
 
 
