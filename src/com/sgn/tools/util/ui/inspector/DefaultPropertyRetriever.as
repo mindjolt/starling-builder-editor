@@ -65,7 +65,7 @@ package com.sgn.tools.util.ui.inspector
             if (_param && _param.data_type)
                 return _param.data_type == "Boolean";
 
-            return _target[name] is Boolean;
+            return ObjectLocaterUtil.get(_target, name) is Boolean;
         }
 
         private function isNumber(name:String):Boolean
@@ -73,7 +73,7 @@ package com.sgn.tools.util.ui.inspector
             if (_param && _param.data_type)
                 return _param.data_type == "Number";
 
-            return _target[name] is Number;
+            return ObjectLocaterUtil.get(_target, name) is Number;
         }
 
         public function get target():Object
