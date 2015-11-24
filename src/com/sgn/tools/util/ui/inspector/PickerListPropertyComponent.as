@@ -23,15 +23,52 @@ package com.sgn.tools.util.ui.inspector
             if (_pickerList.selectedItem)
             {
                 _oldValue = _propertyRetriever.get(_param.name);
-                _propertyRetriever.set(_param.name, _pickerList.selectedItem);
+                _propertyRetriever.set(_param.name, getPickerListValue());
 
                 setChanged();
             }
         }
 
+        private function getPickerListValue():String
+        {
+            var item:Object = _pickerList.selectedItem;
+            if (item)
+            {
+                if (item is String)
+                    return item as String;
+                else
+                    return item.value;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         override public function update():void
         {
-            _pickerList.selectedItem = getValue();
+            var value:String = getValue();
+
+            var data:ListCollection = _pickerList.dataProvider;
+
+            for (var i:int = 0; i < data.length; ++i)
+            {
+                var item:Object = data.getItemAt(i);
+
+                if (item is String)
+                {
+                    _pickerList.selectedItem = getValue();
+                    break;
+                }
+                else
+                {
+                    if (item.value == value)
+                    {
+                        _pickerList.selectedIndex = i;
+                        break;
+                    }
+                }
+            }
         }
 
         private function getValue():String
