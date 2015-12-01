@@ -17,6 +17,8 @@ package com.sgn.starlingbuilder.editor.data
         {
         }
 
+        public static const ALWAYS_OVERRIDE:Boolean = false;
+
         public static var editor_template_string:String;
 
         public static var editor_template:Object;
@@ -65,7 +67,7 @@ package com.sgn.starlingbuilder.editor.data
 
             //if file not exist or revision property not exists or external template older than the default template, then overwrite it
             //otherwise use the external template
-            if (!file.exists || !template.hasOwnProperty('revision') || !editor_template.hasOwnProperty('revision') || template.revision < editor_template.revision)
+            if (ALWAYS_OVERRIDE || !file.exists || !template.hasOwnProperty('revision') || !editor_template.hasOwnProperty('revision') || template.revision < editor_template.revision)
             {
                 var fs:FileStream = new FileStream();
                 fs.open(file, FileMode.WRITE);
