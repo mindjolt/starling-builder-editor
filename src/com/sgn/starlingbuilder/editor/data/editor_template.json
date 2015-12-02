@@ -163,6 +163,21 @@
         },
 
         {
+            "cls":"starling.display.Sprite3D",
+            "params":[
+
+                {"name":"z", "component":"slider", "min":-2000, "max":2000, "step":0.1, "default_value":0},
+                {"name":"rotationX", "component":"slider", "min":-3.14, "max":3.14, "step":0.01, "default_value":0},
+                {"name":"rotationY", "component":"slider", "min":-3.14, "max":3.14, "step":0.01, "default_value":0},
+                {"name":"scaleZ", "default_value":1},
+                {"name":"pivotZ", "default_value":0}
+
+            ],
+            "container":true,
+            "tag":"container"
+        },
+
+        {
             "cls":"feathers.controls.Panel",
             "params":[
                 {"name":"title"},
