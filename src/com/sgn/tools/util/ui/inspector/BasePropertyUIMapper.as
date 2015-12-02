@@ -171,11 +171,11 @@ package com.sgn.tools.util.ui.inspector
                 }
                 else
                 {
-                    displayObject.removeFromParent(true);
+                    displayObject.dispose();
                 }
-
             }
 
+            super.dispose();
         }
     }
 }

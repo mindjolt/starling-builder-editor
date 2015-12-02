@@ -7,9 +7,8 @@ package com.sgn.tools.util.pool
 
     public class ObjectPoolFactory
     {
-        private const POOL_SIZE:int = 10000;
-
         private var _pool:Dictionary;
+        private var _poolSize:int = 100;
 
         private static var _instance:ObjectPoolFactory;
 
@@ -36,7 +35,7 @@ package com.sgn.tools.util.pool
 
             var pool:Array = _pool[cls];
 
-            if (pool.length < POOL_SIZE)
+            if (pool.length < _poolSize)
             {
                 obj.recycle();
                 pool.push(obj);
@@ -80,9 +79,14 @@ package com.sgn.tools.util.pool
         }
 
 
+        public function get poolSize():int
+        {
+            return _poolSize;
+        }
 
-
-
-
+        public function set poolSize(value:int):void
+        {
+            _poolSize = value;
+        }
     }
 }
