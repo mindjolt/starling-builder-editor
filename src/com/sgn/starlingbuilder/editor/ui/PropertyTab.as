@@ -35,8 +35,11 @@ package com.sgn.starlingbuilder.editor.ui
 
     import flash.geom.Point;
 
+    import starling.core.Starling;
+
     import starling.display.DisplayObject;
     import starling.display.DisplayObjectContainer;
+    import starling.display.MovieClip;
     import starling.events.Event;
     import starling.utils.AssetManager;
 
@@ -53,6 +56,10 @@ package com.sgn.starlingbuilder.editor.ui
         private var _hAlighPickerList:PickerList;
         private var _vAlighPickerList:PickerList;
         private var _pivotButton:Button;
+
+        private var _movieClipTool:LayoutGroup;
+        private var _playButton:Button;
+        private var _stopButton:Button;
 
         public function PropertyTab()
         {
@@ -84,6 +91,7 @@ package com.sgn.starlingbuilder.editor.ui
             addChild(buttonGroup);
 
             initPivotTools();
+            initMovieClipTool();
         }
 
         public static const LEFT:String = "left";
@@ -113,6 +121,27 @@ package com.sgn.starlingbuilder.editor.ui
             addChild(layoutGroup);
         }
 
+        private function initMovieClipTool():void
+        {
+            _movieClipTool = FeathersUIUtil.layoutGroupWithHorizontalLayout();
+
+            _playButton = FeathersUIUtil.buttonWithLabel("play", onPlayButton);
+            _stopButton = FeathersUIUtil.buttonWithLabel("stop", onStopButton);
+
+            _movieClipTool.addChild(FeathersUIUtil.labelWithText("MovieClip: "))
+            _movieClipTool.addChild(_playButton);
+            _movieClipTool.addChild(_stopButton);
+
+            addChild(_movieClipTool);
+        }
+
+        private function updateMovieClipTool():void
+        {
+            var mv:MovieClip = _documentManager.selectedObject as MovieClip;
+
+            _movieClipTool.visible = (mv != null);
+        }
+
         private function onPivotButton(event:Event):void
         {
             var obj:DisplayObject = _documentManager.selectedObject;
@@ -126,6 +155,30 @@ package com.sgn.starlingbuilder.editor.ui
 
                 var newValue:Point = new Point(obj.pivotX, obj.pivotY);
                 _documentManager.historyManager.add(new MovePivotOperation(obj, oldValue, newValue));
+            }
+        }
+
+        private function onPlayButton(event:Event):void
+        {
+            var mv:MovieClip = _documentManager.selectedObject as MovieClip;
+
+            if (mv)
+            {
+                Starling.current.juggler.add(mv);
+                mv.play();
+                _documentManager.setChanged();
+            }
+        }
+
+        private function onStopButton(event:Event):void
+        {
+            var mv:MovieClip = _documentManager.selectedObject as MovieClip;
+
+            if (mv)
+            {
+                mv.stop();
+                Starling.current.juggler.remove(mv);
+                _documentManager.setChanged();
             }
         }
 
@@ -223,6 +276,8 @@ package com.sgn.starlingbuilder.editor.ui
                     _propertiesPanel.reloadData();
                 }
             }
+
+            updateMovieClipTool();
         }
 
         private function processParamsWithFonts(params:Array):void

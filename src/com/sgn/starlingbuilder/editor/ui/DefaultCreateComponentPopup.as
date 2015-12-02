@@ -82,10 +82,8 @@ package com.sgn.starlingbuilder.editor.ui
                 if (param.hasOwnProperty("textureName"))
                 {
                     _target[param.name] = param.textureName;
-                    continue;
                 }
-
-                if (param.hasOwnProperty("name"))
+                else if (param.hasOwnProperty("name"))
                 {
                     _target[param.name] = param.value;
                 }
@@ -100,21 +98,19 @@ package com.sgn.starlingbuilder.editor.ui
                 if (param.hasOwnProperty("textureName"))
                 {
                     param.textureName = _target[param.name];
-                    continue;
                 }
-
-                if (_target.hasOwnProperty(param.name))
+                else if (_target.hasOwnProperty(param.name))
                 {
                     param.value = _target[param.name];
                 }
-
-
             }
+
+            delete param.options;
         }
 
         private function propertyRetrieverFactory(target:Object, param:Object):IPropertyRetriever
         {
-            if (param.name == "texture")
+            if (param.name == "texture" || param.name == "textures")
             {
                 param.options = toArray(AssetTab.assetList);
             }

@@ -178,6 +178,22 @@
         },
 
         {
+            "cls":"starling.display.MovieClip",
+            "constructorParams": [
+                {"cls":"__AS3__.vec.Vector.<starling.textures.Texture>", "name":"textures", "value":""}
+            ],
+            "params": [
+                {"name":"fps", "component":"slider", "min":1, "max":100, "step":1, "default_value":12},
+                {"name":"loop", "component":"check", "default_value":true},
+                {"name":"currentFrame", "default_value":0},
+                {"name":"numFrames", "read_only":true, "disable":true}
+            ],
+            "createComponentClass":"com.sgn.starlingbuilder.editor.ui.DefaultCreateComponentPopup",
+            "createButton":true,
+            "tag":"asset"
+        },
+
+        {
             "cls":"feathers.controls.Panel",
             "params":[
                 {"name":"title"},
