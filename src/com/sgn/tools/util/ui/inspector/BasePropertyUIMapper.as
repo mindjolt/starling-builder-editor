@@ -5,9 +5,6 @@ package com.sgn.tools.util.ui.inspector
 {
     import com.sgn.starlingbuilder.engine.UIElementFactory;
     import com.sgn.tools.util.feathers.FeathersUIUtil;
-    import com.sgn.tools.util.pool.IPoolable;
-    import com.sgn.tools.util.pool.ObjectPoolFactory;
-    import com.sgn.tools.util.ui.inspector.PoolableLabel;
 
     import feathers.controls.Label;
     import feathers.controls.ScrollContainer;
@@ -27,8 +24,6 @@ package com.sgn.tools.util.ui.inspector
 
         protected var _factory:UIPropertyComponentFactory;
 
-        private var _pool:ObjectPoolFactory;
-
         public function BasePropertyUIMapper(target:Object, param:Object, propertyRetrieverFactory:Function = null)
         {
             var layout:HorizontalLayout = new HorizontalLayout();
@@ -40,8 +35,6 @@ package com.sgn.tools.util.ui.inspector
 
             _factory = new UIPropertyComponentFactory();
 
-            _pool = ObjectPoolFactory.instance;
-
             if (propertyRetrieverFactory)
             {
                 _propertyRetriever = propertyRetrieverFactory(target, param);
@@ -51,7 +44,7 @@ package com.sgn.tools.util.ui.inspector
                 _propertyRetriever = new DefaultPropertyRetriever(_target, param);
             }
 
-            var label:PoolableLabel = _pool.getObject(PoolableLabel, [_param.label ? _param.label : _param.name]) as PoolableLabel;
+            var label:Label = FeathersUIUtil.labelWithText(_param.label ? _param.label : _param.name);
             label.width = 70;
             label.wordWrap = true;
             addChild(label);
@@ -112,8 +105,8 @@ package com.sgn.tools.util.ui.inspector
 
             var cls:Class = _factory.getComponent(type);
 
-            component = ObjectPoolFactory.instance.getObject(cls, [_propertyRetriever, param]) as BasePropertyComponent;
-            //component = new cls(_propertyRetriever, param);
+            component = new cls();
+            component.init([_propertyRetriever, param]);
             component.addEventListener(Event.CHANGE, onChange);
             addChild(component);
         }
@@ -169,36 +162,6 @@ package com.sgn.tools.util.ui.inspector
                 }
                 item.update();
             }
-        }
-
-        override public function dispose():void
-        {
-            while (numChildren)
-            {
-                var displayObject:DisplayObject = getChildAt(0);
-
-                displayObject.removeFromParent();
-
-                var poolable:IPoolable = displayObject as IPoolable;
-
-                var component:BasePropertyComponent = displayObject as BasePropertyComponent;
-
-                if (component)
-                {
-                    component.removeEventListener(Event.CHANGE, onChange);
-                }
-
-                if (poolable)
-                {
-                    _pool.recycleObject(poolable);
-                }
-                else
-                {
-                    displayObject.dispose();
-                }
-            }
-
-            super.dispose();
         }
     }
 }
