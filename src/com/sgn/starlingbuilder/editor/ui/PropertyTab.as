@@ -19,6 +19,7 @@ package com.sgn.starlingbuilder.editor.ui
     import com.sgn.tools.util.ui.inspector.IPropertyRetriever;
     import com.sgn.tools.util.ui.inspector.PropertyComponentType;
     import com.sgn.tools.util.ui.inspector.PropertyPanel;
+    import com.sgn.tools.util.ui.inspector.UIMapperUtil;
     import com.sgn.tools.util.ui.inspector.WidthAndHeightPropertyRetriever;
 
     import feathers.controls.Button;
@@ -38,7 +39,7 @@ package com.sgn.starlingbuilder.editor.ui
 
     public class PropertyTab extends LayoutGroup
     {
-        private var _propertiesPanel:PropertyPanel;
+        private var _propertyPanel:PropertyPanel;
 
         private var _template:Object;
 
@@ -50,10 +51,12 @@ package com.sgn.starlingbuilder.editor.ui
         private var _movieClipTool:MovieClipTool;
 
         private var _paramCache:Dictionary;
+        private var _propertyPanelCache:Dictionary;
 
         public function PropertyTab()
         {
             _paramCache = new Dictionary();
+            _propertyPanelCache = new Dictionary();
 
             _assetManager = UIEditorApp.instance.assetManager;
 
@@ -74,10 +77,6 @@ package com.sgn.starlingbuilder.editor.ui
 
         private function initUI():void
         {
-            _propertiesPanel = new PropertyPanel({}, [], displayObjectPropertyFactory);
-
-            addChild(_propertiesPanel);
-
             var buttonGroup:ButtonGroup = new ButtonGroup();
             buttonGroup.dataProvider = new ListCollection(createButtons());
             addChild(buttonGroup);
@@ -156,8 +155,8 @@ package com.sgn.starlingbuilder.editor.ui
                 {
                     var params:Array = ParamUtil.getParams(_template, _documentManager.selectedObject);
 
-                    processParamsWithFonts(params);
-                    processParamsWithWidthAndHeight(params);
+                    UIMapperUtil.processParamsWithFonts(params, UIEditorScreen.instance.getBitmapFontNames());
+                    UIMapperUtil.processParamsWithWidthAndHeight(params);
 
                     _paramCache[target.constructor] = params;
                 }
@@ -170,84 +169,49 @@ package com.sgn.starlingbuilder.editor.ui
             }
         }
 
+        private function updatePropertyPanel(target:Object):void
+        {
+            if (_propertyPanel === _propertyPanelCache[target.constructor])
+                return;
+
+            if (_propertyPanel)
+                _propertyPanel.removeFromParent();
+
+            if (!_propertyPanelCache[target.constructor])
+            {
+                var propertyPanel:PropertyPanel = new PropertyPanel(null, null, displayObjectPropertyFactory);
+                _propertyPanelCache[target.constructor] = propertyPanel;
+            }
+
+            _propertyPanel =  _propertyPanelCache[target.constructor];
+
+            addChildAt(_propertyPanel, 0);
+        }
 
 
         private function onChange(event:Event):void
         {
-            var params:Array;
+            var obj:DisplayObject = _documentManager.selectedObject;
 
-            if (UIEditorScreen.instance.leftPanel.currentTab is BackgroundTab)
+            if (obj)
             {
-                if (_documentManager.background)
-                {
-                    params = _template.background.params;
-                    _propertiesPanel.reloadData(_documentManager.background, params);
-                }
-                else
-                {
-                    _propertiesPanel.reloadData();
-                }
+                var params:Array = getObjectParams(obj);
+                updatePropertyPanel(obj);
+                _propertyPanel.reloadData(obj, params);
             }
             else
             {
-                if (_documentManager.selectedObject)
+                if (_propertyPanel)
                 {
-                    params = getObjectParams(_documentManager.selectedObject);
-
-                    _propertiesPanel.reloadData(_documentManager.selectedObject, params);
-                }
-                else
-                {
-                    _propertiesPanel.reloadData();
+                    _propertyPanel.removeFromParent();
+                    _propertyPanel = null;
                 }
             }
 
             _movieClipTool.updateMovieClipTool();
         }
 
-        private function processParamsWithFonts(params:Array):void
-        {
-            var fonts:Array = UIEditorScreen.instance.getBitmapFontNames();
 
-            for each (var item:Object in params)
-            {
-                if ((item.component == PropertyComponentType.TEXT_INPUT || item.component == PropertyComponentType.PICKER_LIST) && item.name == "fontName")
-                {
-                    delete item.options;
-                    item.options = fonts;
-                }
-            }
-        }
-
-        private function processParamsWithWidthAndHeight(params:Array):void
-        {
-            var i:int;
-
-            var array:Array;
-            var param:Object;
-
-            for (i = 0; i < params.length; ++i)
-            {
-                param = params[i];
-
-                if (param.name == "width")
-                {
-                    array = [param];
-                    params.splice(i, 1, array);
-                }
-            }
-
-            for (i = 0; i < params.length; ++i)
-            {
-                param = params[i];
-
-                if (param.name == "height")
-                {
-                    params.splice(i, 1);
-                    array.push(param);
-                }
-            }
-        }
 
         private function readjust(container:DisplayObjectContainer):void
         {

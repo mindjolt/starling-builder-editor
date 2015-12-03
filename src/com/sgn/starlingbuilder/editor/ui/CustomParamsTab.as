@@ -39,6 +39,7 @@ package com.sgn.starlingbuilder.editor.ui
             _assetManger = UIEditorApp.instance.assetManager;
 
             _params = ParamUtil.getCustomParams(TemplateData.editor_template);
+            processParams(_params);
 
             _documentManager = UIEditorApp.instance.documentManager;
             _documentManager.addEventListener(DocumentEventType.CHANGE, onChange);
@@ -66,8 +67,6 @@ package com.sgn.starlingbuilder.editor.ui
             if (_documentManager.selectedObject)
             {
                 var target:Object = _documentManager.extraParamsDict[_documentManager.selectedObject];
-
-                processParams(_params);
 
                 _propertiesPanel.reloadData(target, _params);
             }
