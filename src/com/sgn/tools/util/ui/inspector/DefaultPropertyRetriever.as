@@ -81,5 +81,10 @@ package com.sgn.tools.util.ui.inspector
             return _target;
         }
 
+        public function set target(value:Object):void
+        {
+            _target = value;
+        }
+
     }
 }

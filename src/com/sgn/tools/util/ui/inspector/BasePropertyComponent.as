@@ -10,7 +10,7 @@ package com.sgn.tools.util.ui.inspector
 
     import starling.events.Event;
 
-    public class BasePropertyComponent extends LayoutGroup implements IPoolable
+    public class BasePropertyComponent extends LayoutGroup implements IPoolable, IUIMapper
     {
         protected var _propertyRetriever:IPropertyRetriever;
         protected var _param:Object;
@@ -21,9 +21,13 @@ package com.sgn.tools.util.ui.inspector
             super();
         }
 
+        public function set target(value:Object):void
+        {
+            _propertyRetriever.target = value;
+        }
+
         public function update():void
         {
-
         }
 
         public function setChanged():void

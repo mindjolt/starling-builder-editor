@@ -34,6 +34,7 @@ package com.sgn.starlingbuilder.editor.ui
     import feathers.layout.VerticalLayout;
 
     import flash.geom.Point;
+    import flash.utils.Dictionary;
 
     import starling.core.Starling;
 
@@ -61,8 +62,12 @@ package com.sgn.starlingbuilder.editor.ui
         private var _playButton:Button;
         private var _stopButton:Button;
 
+        private var _paramCache:Dictionary;
+
         public function PropertyTab()
         {
+            _paramCache = new Dictionary();
+
             _assetManager = UIEditorApp.instance.assetManager;
 
             _documentManager = UIEditorApp.instance.documentManager;
@@ -242,6 +247,28 @@ package com.sgn.starlingbuilder.editor.ui
 
         }
 
+        private function getObjectParams(target:Object):Array
+        {
+            if (target)
+            {
+                if (!_paramCache[target.constructor])
+                {
+                    var params:Array = ParamUtil.getParams(_template, _documentManager.selectedObject);
+
+                    processParamsWithFonts(params);
+                    processParamsWithWidthAndHeight(params);
+
+                    _paramCache[target.constructor] = params;
+                }
+
+                return _paramCache[target.constructor];
+            }
+            else
+            {
+                return null;
+            }
+        }
+
 
 
         private function onChange(event:Event):void
@@ -264,10 +291,7 @@ package com.sgn.starlingbuilder.editor.ui
             {
                 if (_documentManager.selectedObject)
                 {
-                    params = ParamUtil.getParams(_template, _documentManager.selectedObject);
-
-                    processParamsWithFonts(params);
-                    processParamsWithWidthAndHeight(params);
+                    params = getObjectParams(_documentManager.selectedObject);
 
                     _propertiesPanel.reloadData(_documentManager.selectedObject, params);
                 }
