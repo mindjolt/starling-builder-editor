@@ -12,12 +12,9 @@ package com.sgn.starlingbuilder.editor.ui
     import com.sgn.starlingbuilder.editor.controller.DocumentManager;
     import com.sgn.starlingbuilder.editor.data.TemplateData;
     import com.sgn.starlingbuilder.editor.events.DocumentEventType;
-    import com.sgn.starlingbuilder.editor.history.MovePivotOperation;
     import com.sgn.starlingbuilder.editor.history.ResetOperation;
     import com.sgn.starlingbuilder.editor.themes.UIEditorStyleProvider;
-    import com.sgn.starlingbuilder.engine.util.DisplayObjectUtil;
     import com.sgn.starlingbuilder.engine.util.ParamUtil;
-    import com.sgn.tools.util.feathers.FeathersUIUtil;
     import com.sgn.tools.util.ui.inspector.DefaultPropertyRetriever;
     import com.sgn.tools.util.ui.inspector.IPropertyRetriever;
     import com.sgn.tools.util.ui.inspector.PropertyComponentType;
@@ -27,20 +24,15 @@ package com.sgn.starlingbuilder.editor.ui
     import feathers.controls.Button;
     import feathers.controls.ButtonGroup;
     import feathers.controls.LayoutGroup;
-    import feathers.controls.PickerList;
     import feathers.controls.ScrollContainer;
     import feathers.core.FeathersControl;
     import feathers.data.ListCollection;
     import feathers.layout.VerticalLayout;
 
-    import flash.geom.Point;
     import flash.utils.Dictionary;
-
-    import starling.core.Starling;
 
     import starling.display.DisplayObject;
     import starling.display.DisplayObjectContainer;
-    import starling.display.MovieClip;
     import starling.events.Event;
     import starling.utils.AssetManager;
 
@@ -54,13 +46,8 @@ package com.sgn.starlingbuilder.editor.ui
 
         private var _assetManager:AssetManager;
 
-        private var _hAlighPickerList:PickerList;
-        private var _vAlighPickerList:PickerList;
-        private var _pivotButton:Button;
-
-        private var _movieClipTool:LayoutGroup;
-        private var _playButton:Button;
-        private var _stopButton:Button;
+        private var _pivotTool:PivotTool;
+        private var _movieClipTool:MovieClipTool;
 
         private var _paramCache:Dictionary;
 
@@ -95,98 +82,12 @@ package com.sgn.starlingbuilder.editor.ui
             buttonGroup.dataProvider = new ListCollection(createButtons());
             addChild(buttonGroup);
 
-            initPivotTools();
-            initMovieClipTool();
-        }
+            _pivotTool = new PivotTool();
+            addChild(_pivotTool);
 
-        public static const LEFT:String = "left";
-        public static const CENTER:String = "center";
-        public static const RIGHT:String = "right";
-        public static const TOP:String = "top";
-        public static const BOTTOM:String = "bottom";
-
-        private function initPivotTools():void
-        {
-            var layoutGroup:LayoutGroup = FeathersUIUtil.layoutGroupWithHorizontalLayout();
-
-            _hAlighPickerList = new PickerList();
-            _hAlighPickerList.dataProvider = new ListCollection([LEFT, CENTER, RIGHT]);
-            _hAlighPickerList.selectedIndex = 1;
-
-            _vAlighPickerList = new PickerList();
-            _vAlighPickerList.dataProvider = new ListCollection([TOP, CENTER, BOTTOM]);
-            _vAlighPickerList.selectedIndex = 1;
-
-            _pivotButton = FeathersUIUtil.buttonWithLabel("set pivot to", onPivotButton);
-
-            layoutGroup.addChild(_pivotButton);
-            layoutGroup.addChild(_hAlighPickerList);
-            layoutGroup.addChild(_vAlighPickerList);
-
-            addChild(layoutGroup);
-        }
-
-        private function initMovieClipTool():void
-        {
-            _movieClipTool = FeathersUIUtil.layoutGroupWithHorizontalLayout();
-
-            _playButton = FeathersUIUtil.buttonWithLabel("play", onPlayButton);
-            _stopButton = FeathersUIUtil.buttonWithLabel("stop", onStopButton);
-
-            _movieClipTool.addChild(FeathersUIUtil.labelWithText("MovieClip: "))
-            _movieClipTool.addChild(_playButton);
-            _movieClipTool.addChild(_stopButton);
-
+            _movieClipTool = new MovieClipTool();
             addChild(_movieClipTool);
         }
-
-        private function updateMovieClipTool():void
-        {
-            var mv:MovieClip = _documentManager.selectedObject as MovieClip;
-
-            _movieClipTool.visible = (mv != null);
-        }
-
-        private function onPivotButton(event:Event):void
-        {
-            var obj:DisplayObject = _documentManager.selectedObject;
-
-            if (obj)
-            {
-                var oldValue:Point = new Point(obj.pivotX, obj.pivotY);
-
-                DisplayObjectUtil.movePivotToAlign(obj, String(_hAlighPickerList.selectedItem), String(_vAlighPickerList.selectedItem));
-                _documentManager.setChanged();
-
-                var newValue:Point = new Point(obj.pivotX, obj.pivotY);
-                _documentManager.historyManager.add(new MovePivotOperation(obj, oldValue, newValue));
-            }
-        }
-
-        private function onPlayButton(event:Event):void
-        {
-            var mv:MovieClip = _documentManager.selectedObject as MovieClip;
-
-            if (mv)
-            {
-                Starling.current.juggler.add(mv);
-                mv.play();
-                _documentManager.setChanged();
-            }
-        }
-
-        private function onStopButton(event:Event):void
-        {
-            var mv:MovieClip = _documentManager.selectedObject as MovieClip;
-
-            if (mv)
-            {
-                mv.stop();
-                Starling.current.juggler.remove(mv);
-                _documentManager.setChanged();
-            }
-        }
-
 
         private function displayObjectPropertyFactory(target:Object, param:Object):IPropertyRetriever
         {
@@ -301,7 +202,7 @@ package com.sgn.starlingbuilder.editor.ui
                 }
             }
 
-            updateMovieClipTool();
+            _movieClipTool.updateMovieClipTool();
         }
 
         private function processParamsWithFonts(params:Array):void
