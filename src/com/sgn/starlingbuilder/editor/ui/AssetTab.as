@@ -17,12 +17,15 @@ package com.sgn.starlingbuilder.editor.ui
     import com.sgn.tools.util.feathers.FeathersUIUtil;
 
     import feathers.controls.Button;
+    import feathers.controls.GroupedList;
     import feathers.controls.Label;
     import feathers.controls.LayoutGroup;
     import feathers.controls.List;
     import feathers.controls.PickerList;
     import feathers.controls.TextInput;
+    import feathers.controls.renderers.IGroupedListItemRenderer;
     import feathers.controls.renderers.IListItemRenderer;
+    import feathers.data.HierarchicalCollection;
     import feathers.data.ListCollection;
     import feathers.layout.AnchorLayout;
     import feathers.layout.AnchorLayoutData;
@@ -30,11 +33,14 @@ package com.sgn.starlingbuilder.editor.ui
     import feathers.layout.VerticalLayout;
 
     import flash.filesystem.File;
+    import flash.utils.Dictionary;
 
     import starling.display.Sprite;
     import starling.events.Event;
     import starling.text.TextField;
-    import starling.utils.AssetManager;
+    import com.sgn.starlingbuilder.editor.utils.AssetManager;
+
+    import starling.textures.TextureAtlas;
 
     public class AssetTab extends LayoutGroup
     {
@@ -46,7 +52,7 @@ package com.sgn.starlingbuilder.editor.ui
 
         private var _documentManager:DocumentManager;
 
-        private var _list:List;
+        private var _list:GroupedList;
 
         private var _typePicker:PickerList;
 
@@ -144,7 +150,7 @@ package com.sgn.starlingbuilder.editor.ui
 
         private function onListChange(event:Event):void
         {
-            if (_list.selectedIndex != -1)
+            if (_list.selectedItem)
             {
                 var name:String = _list.selectedItem.label;
 
@@ -157,21 +163,19 @@ package com.sgn.starlingbuilder.editor.ui
 
                 UIComponentHelper.createComponent(editorData);
 
-                _list.selectedIndex = -1;
+                _list.setSelectedLocation(-1, -1);
             }
         }
 
-
-
         private function listAssets():void
         {
-            _list = new List();
+            _list = new GroupedList();
             _list.width = 280;
             _list.height = 800;
-            _list.selectedIndex = -1;
-            _list.itemRendererFactory = function():IListItemRenderer
+            _list.setSelectedLocation(-1, -1);
+            _list.itemRendererFactory = function():IGroupedListItemRenderer
             {
-                return new IconItemRenderer();
+                return new GroupedListIconItemRenderer();
             }
 
             var anchorLayoutData:AnchorLayoutData = new AnchorLayoutData();
@@ -205,18 +209,68 @@ package com.sgn.starlingbuilder.editor.ui
             return array;
         }
 
-        private function refreshAssets():void
+        private function getGroupAssets():HierarchicalCollection
         {
-            var data:ListCollection = new ListCollection();
+            var atlasDict:Dictionary = _assetManager.getTextureAtlasDictionary();
+            var atlasName:String;
+
+            var data:Array = [];
+            var item:Object;
+
+            var atlas:TextureAtlas;
+
+            var itemDict:Dictionary = new Dictionary();
+
+            for (atlasName in atlasDict)
+            {
+                atlas = atlasDict[atlasName];
+
+                item = {header:{label:atlasName}, children:[]};
+                data.push(item);
+                itemDict[atlasName] = item;
+            }
 
             var array:Vector.<String> = filterList(_searchTextInput.text, assetList);
 
+            var found:Boolean;
+
+            var others:Object = {header:{label:"-others-"}, children:[]};
+            data.push(others);
+
             for each (var name:String in array)
             {
-                data.push({label:name});
+                for (atlasName in atlasDict)
+                {
+                    found = false;
+
+                    atlas = atlasDict[atlasName];
+                    if (atlas.getTexture(name))
+                    {
+                        itemDict[atlasName].children.push({label:name});
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (!found)
+                {
+                    others.children.push({label:name});
+                }
             }
 
-            _list.dataProvider = data;
+            for (var i:int = data.length - 1; i >= 0; --i)
+            {
+                item = data[i];
+                if (item.children.length == 0)
+                    data.splice(i, 1);
+            }
+
+            return new HierarchicalCollection(data);
+        }
+
+        private function refreshAssets():void
+        {
+            _list.dataProvider = getGroupAssets();
         }
 
         private function filterList(text:String, array:Vector.<String>):Vector.<String>

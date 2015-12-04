@@ -52,9 +52,9 @@ package com.sgn.tools.util.ui.inspector
             }
         }
 
-        public function reloadTarget(target:Object = null):void
+        public function reloadTarget(target:Object = null, force:Boolean = false):void
         {
-            if (_target !== target)
+            if (_target !== target || force)
             {
                 _target = target;
 
@@ -86,12 +86,31 @@ package com.sgn.tools.util.ui.inspector
 
         public function reloadData(target:Object = null, params:Array = null):void
         {
-            if (_params !== params)
+            if (target !== _target)
             {
-                _params = params;
+                if (params !== _params) //both target and params change
+                {
+                    _params = params;
+                    reloadTarget(target);
+                }
+                else    //only target changes
+                {
+                    _target = target;
+                    BasePropertyUIMapper.updateAll(this, _target);
+                }
             }
+            else
+            {
+                if (params !== _params) //only params changes
+                {
+                    _params = params;
+                }
+                else    //none of them change
+                {
+                }
 
-            reloadTarget(target);
+                reloadTarget(target);
+            }
         }
 
         public function reset():void

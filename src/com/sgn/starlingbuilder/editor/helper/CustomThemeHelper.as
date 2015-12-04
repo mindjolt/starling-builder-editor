@@ -16,7 +16,7 @@ package com.sgn.starlingbuilder.editor.helper
     import flash.utils.ByteArray;
 
     import starling.core.Starling;
-    import starling.utils.AssetManager;
+    import com.sgn.starlingbuilder.editor.utils.AssetManager;
 
     public class CustomThemeHelper
     {

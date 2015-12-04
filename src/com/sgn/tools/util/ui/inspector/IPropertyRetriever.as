@@ -10,5 +10,7 @@ package com.sgn.tools.util.ui.inspector
         function get(name:String):Object;
 
         function get target():Object;
+
+        function set target(value:Object):void;
     }
 }

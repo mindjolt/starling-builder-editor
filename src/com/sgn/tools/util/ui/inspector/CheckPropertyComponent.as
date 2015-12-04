@@ -11,29 +11,28 @@ package com.sgn.tools.util.ui.inspector
     {
         protected var _check:Check;
 
-        public function CheckPropertyComponent(propertyRetriever:IPropertyRetriever, param:Object)
+        public function CheckPropertyComponent(propertyRetriver:IPropertyRetriever, param:Object)
         {
-            super(propertyRetriever, param);
+            super(propertyRetriver, param);
 
             _check = new Check();
-
-            _check.addEventListener(Event.CHANGE, function(event):void{
-                _oldValue = _propertyRetriever.get(_param.name);
-                _propertyRetriever.set(_param.name, _check.isSelected);
-
-                setChanged();
-            });
-
-            _check.isSelected = _propertyRetriever.get(_param.name);
-
             addChild(_check);
+
+            update();
+            _check.addEventListener(Event.CHANGE, onCheck);
+        }
+
+        private function onCheck(event:Event):void
+        {
+            _oldValue = _propertyRetriever.get(_param.name);
+            _propertyRetriever.set(_param.name, _check.isSelected);
+
+            setChanged();
         }
 
         override public function update():void
         {
             _check.isSelected = _propertyRetriever.get(_param.name);
         }
-
-
     }
 }

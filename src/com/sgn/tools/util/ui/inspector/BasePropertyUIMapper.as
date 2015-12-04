@@ -14,7 +14,7 @@ package com.sgn.tools.util.ui.inspector
     import starling.display.DisplayObjectContainer;
     import starling.events.Event;
 
-    public class BasePropertyUIMapper extends ScrollContainer
+    public class BasePropertyUIMapper extends ScrollContainer implements IUIMapper
     {
         protected var _gap:Number = 10;
 
@@ -62,24 +62,29 @@ package com.sgn.tools.util.ui.inspector
             _propertyRetriever = value;
         }
 
+        public function set target(value:Object):void
+        {
+            _target = value;
+        }
+
         public function update():void
         {
 
         }
 
-        private static function getAll(array:Array, container:DisplayObjectContainer):void
+        private static function getAll(array:Array, container:DisplayObjectContainer, cls:Class):void
         {
             for (var i:int = 0; i < container.numChildren; ++i)
             {
                 var child:DisplayObject = container.getChildAt(i);
 
-                if (child is BasePropertyComponent)
+                if (child is cls)
                 {
                     array.push(child);
                 }
                 else if (child is DisplayObjectContainer)
                 {
-                    getAll(array, DisplayObjectContainer(child));
+                    getAll(array, DisplayObjectContainer(child), cls);
                 }
             }
         }
@@ -99,6 +104,7 @@ package com.sgn.tools.util.ui.inspector
             var component:BasePropertyComponent;
 
             var cls:Class = _factory.getComponent(type);
+
             component = new cls(_propertyRetriever, param);
             component.addEventListener(Event.CHANGE, onChange);
             addChild(component);
@@ -126,15 +132,33 @@ package com.sgn.tools.util.ui.inspector
             return _factory;
         }
 
-        public static function updateAll(container:DisplayObjectContainer):void
+        public static function updateAll(container:DisplayObjectContainer, target:Object = null):void
         {
             var array:Array = [];
-            getAll(array, container);
+            getAll(array, container, BasePropertyComponent);
 
             sortBasePropertyComponent(array, UIElementFactory.PARAMS);
 
-            for each (var item:BasePropertyComponent in array)
+            if (target)
             {
+                var array2:Array = [];
+                getAll(array2, container, BasePropertyUIMapper);
+
+                for each (var it:BasePropertyUIMapper in array2)
+                {
+                    if (target)
+                    {
+                        it.target = target;
+                    }
+                }
+            }
+
+            for each (var item:IUIMapper in array)
+            {
+                if (target)
+                {
+                    item.target = target;
+                }
                 item.update();
             }
         }

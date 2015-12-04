@@ -9,24 +9,21 @@ package com.sgn.starlingbuilder.editor.ui
 {
     import com.sgn.starlingbuilder.editor.UIEditorApp;
 
-    import feathers.controls.renderers.DefaultListItemRenderer;
-    import feathers.controls.renderers.IGroupedListItemRenderer;
+    import feathers.controls.renderers.DefaultGroupedListItemRenderer;
 
     import starling.display.DisplayObject;
     import starling.display.Image;
     import starling.textures.Texture;
 
-    public class IconItemRenderer extends DefaultListItemRenderer
+    public class GroupedListIconItemRenderer extends DefaultGroupedListItemRenderer
     {
         private var _image:Image;
 
-        public function IconItemRenderer()
+        public function GroupedListIconItemRenderer()
         {
             super();
             _iconFunction = createIcon;
         }
-
-
 
         private function createIcon(item:Object):DisplayObject
         {

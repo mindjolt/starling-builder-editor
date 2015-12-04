@@ -11,38 +11,35 @@ package com.sgn.tools.util.ui.inspector
     {
         private var _slider:Slider;
 
-        public function SliderPropertyComponent(propertyRetriever:IPropertyRetriever, param:Object)
+        public function SliderPropertyComponent(propertyRetriver:IPropertyRetriever, param:Object)
         {
-            super(propertyRetriever, param);
+            super(propertyRetriver, param);
 
-            var name:String = param.name;
+            _slider = new Slider();
+            addChild(_slider);
 
             var min:Number = param["min"];
             var max:Number = param["max"];
-            var default_value:Number = param["default"];
             var step:Number = param["step"];
-            var component:String = param["component"];
 
-            if (!isNaN(min) && !isNaN(max))
-            {
-                _slider = new Slider();
-                _slider.addEventListener(Event.CHANGE, function(event):void{
-                    _oldValue = _propertyRetriever.get(name);
-                    _propertyRetriever.set(name, _slider.value);
-                    setChanged();
-                });
-                _slider.minimum = min;
-                _slider.maximum = max;
-                _slider.value = Number(_propertyRetriever.get(name));
+            _slider.minimum = min;
+            _slider.maximum = max;
 
-                addChild(_slider);
-                if (!isNaN(step))
-                    _slider.step = step;
-            }
+            if (!isNaN(step))
+                _slider.step = step;
             else
-            {
-                throw new Error("Min and Max have to be defined!")
-            }
+                _slider.step = 0;
+
+            update();
+
+            _slider.addEventListener(Event.CHANGE, onSliderChange);
+        }
+
+        private function onSliderChange(event:Event):void
+        {
+            _oldValue = _propertyRetriever.get(_param.name);
+            _propertyRetriever.set(_param.name, _slider.value);
+            setChanged();
         }
 
         override public function update():void

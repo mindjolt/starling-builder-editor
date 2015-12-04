@@ -6,44 +6,49 @@ package com.sgn.tools.util.ui.inspector
     import feathers.controls.TextArea;
     import feathers.events.FeathersEventType;
 
+    import starling.events.Event;
+
     public class TextAreaPropertyComponent extends BasePropertyComponent
     {
         protected var _textArea:TextArea;
 
-        public function TextAreaPropertyComponent(propertyRetriever:IPropertyRetriever, param:Object)
+        public function TextAreaPropertyComponent(propertyRetriver:IPropertyRetriever, param:Object)
         {
-            super(propertyRetriever, param);
-
-            var name:String = param.name;
+            super(propertyRetriver, param);
 
             _textArea = new TextArea();
             _textArea.maxWidth = 200;
-            _textArea.addEventListener(FeathersEventType.FOCUS_OUT, onTextInput);
-            _textArea.addEventListener(FeathersEventType.ENTER, onTextInput);
+
+            addChild(_textArea);
 
             if (param.disable)
             {
                 _textArea.isEnabled = false;
             }
-
-            function onTextInput(event):void
+            else
             {
-                try
-                {
-                    var value:Object = JSON.parse(_textArea.text);
-                    _oldValue = _propertyRetriever.get(name);
-                    _propertyRetriever.set(name, value);
-                    setChanged();
-                }
-                catch(e:Error)
-                {
-                    trace("Invalid JSON object!")
-                }
+                _textArea.isEnabled = true;
             }
 
-            addChild(_textArea);
-
             update();
+
+            _textArea.addEventListener(FeathersEventType.FOCUS_OUT, onTextInput);
+            _textArea.addEventListener(FeathersEventType.ENTER, onTextInput);
+        }
+
+        private function onTextInput(event:Event):void
+        {
+            try
+            {
+                var value:Object = JSON.parse(_textArea.text);
+                _oldValue = _propertyRetriever.get(_param.name);
+                _propertyRetriever.set(_param.name, value);
+                setChanged();
+            }
+            catch(e:Error)
+            {
+                trace("Invalid JSON object!")
+            }
         }
 
         override public function update():void

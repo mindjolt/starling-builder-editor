@@ -55,7 +55,7 @@ package com.sgn.starlingbuilder.editor.controller
     import starling.events.Event;
     import starling.events.EventDispatcher;
     import starling.text.TextField;
-    import starling.utils.AssetManager;
+    import com.sgn.starlingbuilder.editor.utils.AssetManager;
 
     public class DocumentManager extends EventDispatcher implements IUIEditorThemeMediator
     {

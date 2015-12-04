@@ -12,44 +12,69 @@ package com.sgn.tools.util.ui.inspector
     {
         protected var _pickerList:PickerList;
 
-        public function PickerListPropertyComponent(propertyRetriever:IPropertyRetriever, param:Object)
+        public function PickerListPropertyComponent(propertyRetriver:IPropertyRetriever, param:Object)
         {
-            super(propertyRetriever, param);
-
-            var name:String = param.name;
-
-            var options:Array = param["options"];
-            var default_value:Number = param["default"];
-            var component:String = param["component"];
+            super(propertyRetriver, param);
 
             _pickerList = new PickerList();
-            _pickerList.dataProvider = new ListCollection(options);
-
-//                if (!isNaN(default_value))
-//                {
-//                    _propertyRetriever.set(name, default_value);
-//                }
-
-            _pickerList.addEventListener(Event.CHANGE, function(event):void{
-
-                if (_pickerList.selectedItem)
-                {
-                    _oldValue = _propertyRetriever.get(name);
-                    _propertyRetriever.set(name, _pickerList.selectedItem);
-
-                    setChanged();
-                }
-
-            });
-
-            _pickerList.selectedItem = getValue();
-
             addChild(_pickerList);
+
+            _pickerList.dataProvider = new ListCollection(_param["options"]);
+            update();
+            _pickerList.addEventListener(Event.CHANGE, onPickerList);
+        }
+
+        private function onPickerList(event:Event):void
+        {
+            if (_pickerList.selectedItem)
+            {
+                _oldValue = _propertyRetriever.get(_param.name);
+                _propertyRetriever.set(_param.name, getPickerListValue());
+
+                setChanged();
+            }
+        }
+
+        private function getPickerListValue():String
+        {
+            var item:Object = _pickerList.selectedItem;
+            if (item)
+            {
+                if (item is String)
+                    return item as String;
+                else
+                    return item.value;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         override public function update():void
         {
-            _pickerList.selectedItem = getValue();
+            var value:String = getValue();
+
+            var data:ListCollection = _pickerList.dataProvider;
+
+            for (var i:int = 0; i < data.length; ++i)
+            {
+                var item:Object = data.getItemAt(i);
+
+                if (item is String)
+                {
+                    _pickerList.selectedItem = getValue();
+                    break;
+                }
+                else
+                {
+                    if (item.value == value)
+                    {
+                        _pickerList.selectedIndex = i;
+                        break;
+                    }
+                }
+            }
         }
 
         private function getValue():String

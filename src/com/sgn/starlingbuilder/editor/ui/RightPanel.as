@@ -43,15 +43,7 @@ package com.sgn.starlingbuilder.editor.ui
 
         private function onChange(event:Event):void
         {
-            if (UIEditorScreen.instance.leftPanel.currentTab is BackgroundTab)
-            {
-                _label.text = ParamUtil.getClassName(_documentManager.background);
-            }
-            else
-            {
-                _label.text = ParamUtil.getClassName(_documentManager.selectedObject);
-            }
-
+            _label.text = ParamUtil.getClassName(_documentManager.selectedObject);
         }
     }
 }

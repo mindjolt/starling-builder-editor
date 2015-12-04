@@ -8,7 +8,7 @@ package com.sgn.starlingbuilder.editor.helper
     import flash.display.Loader;
     import flash.filesystem.File;
 
-    import starling.utils.AssetManager;
+    import com.sgn.starlingbuilder.editor.utils.AssetManager;
 
     public class CustomComponentHelper
     {

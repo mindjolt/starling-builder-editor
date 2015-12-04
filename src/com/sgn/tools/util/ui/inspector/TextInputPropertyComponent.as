@@ -13,50 +13,57 @@ package com.sgn.tools.util.ui.inspector
     {
         protected var _textInput:AutoCompleteWithDropDown;
 
-        public function TextInputPropertyComponent(propertyRetriever:IPropertyRetriever, param:Object)
+        public function TextInputPropertyComponent(propertyRetriver:IPropertyRetriever, param:Object)
         {
-            super(propertyRetriever, param);
-
-            var name:String = param.name;
+            super(propertyRetriver, param);
 
             _textInput = new AutoCompleteWithDropDown();
-            update();
-            _textInput.addEventListener(FeathersEventType.FOCUS_OUT, onTextInput);
-            _textInput.addEventListener(FeathersEventType.ENTER, onTextInput);
-            _textInput.addEventListener(Event.CLOSE, onTextInput);
+            addChild(_textInput);
 
-            if (param.width)
+            if (_param.width)
             {
-                _textInput.width = param.width;
+                _textInput.width = _param.width;
+            }
+            else
+            {
+                _textInput.width = 200;
             }
 
-            if (param.disable)
+            if (_param.disable)
             {
                 _textInput.isEnabled = false;
             }
-
-            if (param.options)
+            else
             {
-                _textInput.autoCompleteSource = param.options;
+                _textInput.isEnabled = true;
             }
 
-            function onTextInput(event):void
+            if (_param.options)
             {
-                _oldValue = _propertyRetriever.get(name);
-                _propertyRetriever.set(name, _textInput.text);
-                setChanged();
+                _textInput.autoCompleteSource = _param.options;
+            }
+            else
+            {
+                _textInput.autoCompleteSource = [];
             }
 
-            addChild(_textInput);
+            update();
+
+            _textInput.addEventListener(FeathersEventType.FOCUS_OUT, onTextInput);
+            _textInput.addEventListener(FeathersEventType.ENTER, onTextInput);
+            _textInput.addEventListener(Event.CLOSE, onTextInput);
+        }
+
+        private function onTextInput(event:Event):void
+        {
+            _oldValue = _propertyRetriever.get(_param.name);
+            _propertyRetriever.set(_param.name, _textInput.text);
+            setChanged();
         }
 
         override public function update():void
         {
             _textInput.text = String(_propertyRetriever.get(_param.name));
         }
-
-
-
-
     }
 }

@@ -10,8 +10,14 @@ package com.sgn.starlingbuilder.editor.ui
     import com.sgn.starlingbuilder.editor.UIEditorApp;
     import com.sgn.starlingbuilder.editor.UIEditorScreen;
     import com.sgn.starlingbuilder.editor.controller.DocumentManager;
+    import com.sgn.starlingbuilder.editor.data.TemplateData;
+    import com.sgn.starlingbuilder.editor.events.DocumentEventType;
     import com.sgn.starlingbuilder.editor.helper.FileListingHelper;
     import com.sgn.tools.util.feathers.FeathersUIUtil;
+    import com.sgn.tools.util.ui.inspector.IPropertyRetriever;
+    import com.sgn.tools.util.ui.inspector.PropertyPanel;
+    import com.sgn.tools.util.ui.inspector.UIMapperUtil;
+    import com.sgn.tools.util.ui.inspector.WidthAndHeightPropertyRetriever;
 
     import feathers.controls.Button;
     import feathers.controls.LayoutGroup;
@@ -21,9 +27,11 @@ package com.sgn.starlingbuilder.editor.ui
     import feathers.layout.AnchorLayout;
     import feathers.layout.AnchorLayoutData;
 
+    import org.as3commons.lang.ObjectUtils;
+
     import starling.display.Image;
     import starling.events.Event;
-    import starling.utils.AssetManager;
+    import com.sgn.starlingbuilder.editor.utils.AssetManager;
 
     public class BackgroundTab extends LayoutGroup
     {
@@ -34,10 +42,19 @@ package com.sgn.starlingbuilder.editor.ui
 
         private var _resetButton:Button;
 
+        private var _propertyPanel:PropertyPanel;
+
+        private var _template:Object;
+
+        private var _params:Array;
+
         public function BackgroundTab()
         {
             _assetManager = UIEditorApp.instance.assetManager;
             _documentManager = UIEditorApp.instance.documentManager;
+            _documentManager.addEventListener(DocumentEventType.CHANGE, onChange);
+
+            _template = TemplateData.editor_template;
 
             var anchorLayoutData:AnchorLayoutData = new AnchorLayoutData();
             anchorLayoutData.top = 25;
@@ -47,6 +64,8 @@ package com.sgn.starlingbuilder.editor.ui
             layout = new AnchorLayout();
 
             createResetButton();
+
+            createPropertyPanel();
 
             listAssets();
         }
@@ -65,6 +84,18 @@ package com.sgn.starlingbuilder.editor.ui
                 createComponent(_list.selectedItem.label);
                 _list.selectedIndex = -1;
             }
+        }
+
+        private function createPropertyPanel():void
+        {
+            _propertyPanel = new PropertyPanel(null, null, displayObjectPropertyFactory);
+            var anchorLayoutData:AnchorLayoutData = new AnchorLayoutData();
+            anchorLayoutData.bottom = 10;
+            anchorLayoutData.left = anchorLayoutData.right = 5;
+            anchorLayoutData.bottomAnchorDisplayObject = _resetButton;
+            _propertyPanel.layoutData = anchorLayoutData;
+
+            addChild(_propertyPanel);
         }
 
         private function createResetButton():void
@@ -107,14 +138,11 @@ package com.sgn.starlingbuilder.editor.ui
 
             var anchorLayoutData:AnchorLayoutData = new AnchorLayoutData();
             anchorLayoutData.top = 0;
-            anchorLayoutData.bottom = 0;
-            anchorLayoutData.bottomAnchorDisplayObject = _resetButton;
+            anchorLayoutData.bottom = 10;
+            anchorLayoutData.bottomAnchorDisplayObject = _propertyPanel;
             _list.layoutData = anchorLayoutData;
 
             addChild(_list);
-
-
-
         }
 
         private function createComponent(name:String):void
@@ -123,6 +151,29 @@ package com.sgn.starlingbuilder.editor.ui
             image.name = name;
             _documentManager.background = image;
             _documentManager.setChanged();
+        }
+
+        private function onChange(event:Event):void
+        {
+            if (!_params)
+            {
+                _params = ObjectUtils.clone(_template.background.params);
+                UIMapperUtil.processParamsWithWidthAndHeight(_params);
+            }
+
+            if (_documentManager.background)
+            {
+                _propertyPanel.reloadData(_documentManager.background, _params);
+            }
+            else
+            {
+                _propertyPanel.reloadData();
+            }
+        }
+
+        private function displayObjectPropertyFactory(target:Object, param:Object):IPropertyRetriever
+        {
+            return new WidthAndHeightPropertyRetriever(target, param);
         }
     }
 }

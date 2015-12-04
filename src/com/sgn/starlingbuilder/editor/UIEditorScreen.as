@@ -39,7 +39,7 @@ package com.sgn.starlingbuilder.editor
     import starling.display.Stage;
     import starling.events.Event;
     import starling.events.ResizeEvent;
-    import starling.utils.AssetManager;
+    import com.sgn.starlingbuilder.editor.utils.AssetManager;
 
     public class UIEditorScreen extends LayoutGroup
     {

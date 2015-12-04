@@ -19,6 +19,7 @@ package com.sgn.starlingbuilder.editor
 
     import starling.display.Button;
     import starling.display.Image;
+    import starling.display.MovieClip;
     import starling.display.Quad;
     import starling.display.Sprite;
     import starling.display.Sprite3D;
@@ -60,6 +61,7 @@ package com.sgn.starlingbuilder.editor
             Label,
             LayoutGroup,
             List,
+            MovieClip,
             NumericStepper,
             PageIndicator,
             Panel,

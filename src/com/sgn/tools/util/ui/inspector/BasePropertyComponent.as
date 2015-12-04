@@ -3,27 +3,34 @@
  */
 package com.sgn.tools.util.ui.inspector
 {
+    import com.sgn.tools.util.pool.IPoolable;
+
     import feathers.controls.LayoutGroup;
     import feathers.core.IFeathersControl;
 
     import starling.events.Event;
 
-    public class BasePropertyComponent extends LayoutGroup
+    public class BasePropertyComponent extends LayoutGroup implements IUIMapper
     {
         protected var _propertyRetriever:IPropertyRetriever;
         protected var _param:Object;
         protected var _oldValue:Object;
 
-        public function BasePropertyComponent(propertyRetriever:IPropertyRetriever, param:Object)
+        public function BasePropertyComponent(propertyRetriver:IPropertyRetriever, param:Object)
         {
             super();
-            _propertyRetriever = propertyRetriever;
+
+            _propertyRetriever = propertyRetriver;
             _param = param;
+        }
+
+        public function set target(value:Object):void
+        {
+            _propertyRetriever.target = value;
         }
 
         public function update():void
         {
-
         }
 
         public function setChanged():void
