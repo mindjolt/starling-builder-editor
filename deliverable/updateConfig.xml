@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?> 
      <update xmlns="http://ns.adobe.com/air/framework/update/description/2.5"> 
-       <versionNumber>0.6.1</versionNumber>
-       <url>http://cache.mindjolt.com/starling-builder/v0.6.1/starling-builder.air</url>
+       <versionNumber>0.6.2</versionNumber>
+       <url>http://cache.mindjolt.com/starling-builder/v0.6.2/starling-builder.air</url>
        <description>
+[engine] property won’t be saved when read-only flag is set
+[engine] text won’t be saved when localizedKey is set
+[editor] big performance improvement when selecting elements
+[editor] support Sprite3D and MovieClip
+[editor] group assets by atlases
+[editor] fix rotation issue when scale = 1
        </description>
     </update>
