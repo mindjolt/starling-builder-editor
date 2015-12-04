@@ -13,27 +13,12 @@ package com.sgn.tools.util.ui.inspector
     {
         protected var _textInput:AutoCompleteWithDropDown;
 
-        public function TextInputPropertyComponent()
+        public function TextInputPropertyComponent(propertyRetriver:IPropertyRetriever, param:Object)
         {
+            super(propertyRetriver, param);
+
             _textInput = new AutoCompleteWithDropDown();
             addChild(_textInput);
-        }
-
-        private function onTextInput(event:Event):void
-        {
-            _oldValue = _propertyRetriever.get(_param.name);
-            _propertyRetriever.set(_param.name, _textInput.text);
-            setChanged();
-        }
-
-        override public function update():void
-        {
-            _textInput.text = String(_propertyRetriever.get(_param.name));
-        }
-
-        override public function init(args:Array):void
-        {
-            super.init(args);
 
             if (_param.width)
             {
@@ -69,17 +54,16 @@ package com.sgn.tools.util.ui.inspector
             _textInput.addEventListener(Event.CLOSE, onTextInput);
         }
 
-        override public function recycle():void
+        private function onTextInput(event:Event):void
         {
-            _textInput.removeEventListener(FeathersEventType.FOCUS_OUT, onTextInput);
-            _textInput.removeEventListener(FeathersEventType.ENTER, onTextInput);
-            _textInput.removeEventListener(Event.CLOSE, onTextInput);
-
-            super.recycle();
+            _oldValue = _propertyRetriever.get(_param.name);
+            _propertyRetriever.set(_param.name, _textInput.text);
+            setChanged();
         }
 
-
-
-
+        override public function update():void
+        {
+            _textInput.text = String(_propertyRetriever.get(_param.name));
+        }
     }
 }

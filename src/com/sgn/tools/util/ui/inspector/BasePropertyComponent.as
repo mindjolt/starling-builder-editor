@@ -10,15 +10,18 @@ package com.sgn.tools.util.ui.inspector
 
     import starling.events.Event;
 
-    public class BasePropertyComponent extends LayoutGroup implements IPoolable, IUIMapper
+    public class BasePropertyComponent extends LayoutGroup implements IUIMapper
     {
         protected var _propertyRetriever:IPropertyRetriever;
         protected var _param:Object;
         protected var _oldValue:Object;
 
-        public function BasePropertyComponent()
+        public function BasePropertyComponent(propertyRetriver:IPropertyRetriever, param:Object)
         {
             super();
+
+            _propertyRetriever = propertyRetriver;
+            _param = param;
         }
 
         public function set target(value:Object):void
@@ -63,18 +66,6 @@ package com.sgn.tools.util.ui.inspector
         public function get param():Object
         {
             return _param;
-        }
-
-        public function recycle():void
-        {
-            _propertyRetriever = null;
-            _param = null;
-        }
-
-        public function init(args:Array):void
-        {
-            _propertyRetriever = args[0];
-            _param = args[1];
         }
     }
 }

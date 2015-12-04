@@ -5,9 +5,9 @@ package com.sgn.tools.util.ui.inspector
 {
     public class TextInputPropertyComponentHex extends TextInputPropertyComponent
     {
-        public function TextInputPropertyComponentHex()
+        public function TextInputPropertyComponentHex(propertyRetriver:IPropertyRetriever, param:Object)
         {
-            super();
+            super(propertyRetriver, param);
         }
 
         override public function update():void

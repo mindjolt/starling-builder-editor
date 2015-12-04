@@ -12,14 +12,28 @@ package com.sgn.tools.util.ui.inspector
     {
         protected var _textArea:TextArea;
 
-        public function TextAreaPropertyComponent()
+        public function TextAreaPropertyComponent(propertyRetriver:IPropertyRetriever, param:Object)
         {
-            super();
+            super(propertyRetriver, param);
 
             _textArea = new TextArea();
             _textArea.maxWidth = 200;
 
             addChild(_textArea);
+
+            if (param.disable)
+            {
+                _textArea.isEnabled = false;
+            }
+            else
+            {
+                _textArea.isEnabled = true;
+            }
+
+            update();
+
+            _textArea.addEventListener(FeathersEventType.FOCUS_OUT, onTextInput);
+            _textArea.addEventListener(FeathersEventType.ENTER, onTextInput);
         }
 
         private function onTextInput(event:Event):void
@@ -49,33 +63,6 @@ package com.sgn.tools.util.ui.inspector
             {
                 _textArea.text = JSON.stringify(value);
             }
-        }
-
-        override public function init(args:Array):void
-        {
-            super.init(args);
-
-            if (param.disable)
-            {
-                _textArea.isEnabled = false;
-            }
-            else
-            {
-                _textArea.isEnabled = true;
-            }
-
-            update();
-
-            _textArea.addEventListener(FeathersEventType.FOCUS_OUT, onTextInput);
-            _textArea.addEventListener(FeathersEventType.ENTER, onTextInput);
-        }
-
-        override public function recycle():void
-        {
-            _textArea.removeEventListener(FeathersEventType.FOCUS_OUT, onTextInput);
-            _textArea.removeEventListener(FeathersEventType.ENTER, onTextInput);
-
-            super.recycle();
         }
     }
 }

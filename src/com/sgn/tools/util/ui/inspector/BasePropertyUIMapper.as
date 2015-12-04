@@ -105,8 +105,7 @@ package com.sgn.tools.util.ui.inspector
 
             var cls:Class = _factory.getComponent(type);
 
-            component = new cls();
-            component.init([_propertyRetriever, param]);
+            component = new cls(_propertyRetriever, param);
             component.addEventListener(Event.CHANGE, onChange);
             addChild(component);
         }

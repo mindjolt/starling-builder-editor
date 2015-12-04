@@ -11,33 +11,12 @@ package com.sgn.tools.util.ui.inspector
     {
         private var _slider:Slider;
 
-        public function SliderPropertyComponent()
+        public function SliderPropertyComponent(propertyRetriver:IPropertyRetriever, param:Object)
         {
+            super(propertyRetriver, param);
+
             _slider = new Slider();
             addChild(_slider);
-        }
-
-        private function onSliderChange(event:Event):void
-        {
-            _oldValue = _propertyRetriever.get(_param.name);
-            _propertyRetriever.set(_param.name, _slider.value);
-            setChanged();
-        }
-
-        override public function update():void
-        {
-            //Setting to NaN on slider will always dispatch a change, we need to do this workaround
-            var value:Number = Number(_propertyRetriever.get(_param.name));
-
-            if (!isNaN(value))
-            {
-                _slider.value = value;
-            }
-        }
-
-        override public function init(args:Array):void
-        {
-            super.init(args);
 
             var min:Number = param["min"];
             var max:Number = param["max"];
@@ -56,13 +35,22 @@ package com.sgn.tools.util.ui.inspector
             _slider.addEventListener(Event.CHANGE, onSliderChange);
         }
 
-
-
-        override public function recycle():void
+        private function onSliderChange(event:Event):void
         {
-            _slider.removeEventListener(Event.CHANGE, onSliderChange);
+            _oldValue = _propertyRetriever.get(_param.name);
+            _propertyRetriever.set(_param.name, _slider.value);
+            setChanged();
+        }
 
-            super.recycle();
+        override public function update():void
+        {
+            //Setting to NaN on slider will always dispatch a change, we need to do this workaround
+            var value:Number = Number(_propertyRetriever.get(_param.name));
+
+            if (!isNaN(value))
+            {
+                _slider.value = value;
+            }
         }
     }
 }

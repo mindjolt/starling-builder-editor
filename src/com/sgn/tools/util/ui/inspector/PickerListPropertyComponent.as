@@ -12,10 +12,16 @@ package com.sgn.tools.util.ui.inspector
     {
         protected var _pickerList:PickerList;
 
-        public function PickerListPropertyComponent()
+        public function PickerListPropertyComponent(propertyRetriver:IPropertyRetriever, param:Object)
         {
+            super(propertyRetriver, param);
+
             _pickerList = new PickerList();
             addChild(_pickerList);
+
+            _pickerList.dataProvider = new ListCollection(_param["options"]);
+            update();
+            _pickerList.addEventListener(Event.CHANGE, onPickerList);
         }
 
         private function onPickerList(event:Event):void
@@ -83,25 +89,6 @@ package com.sgn.tools.util.ui.inspector
             {
                 return String(obj);
             }
-        }
-
-        override public function init(args:Array):void
-        {
-            super.init(args);
-
-            _pickerList.dataProvider = null;
-            _pickerList.dataProvider = new ListCollection(_param["options"]);
-
-            update();
-
-            _pickerList.addEventListener(Event.CHANGE, onPickerList);
-        }
-
-        override public function recycle():void
-        {
-            _pickerList.removeEventListener(Event.CHANGE, onPickerList);
-
-            super.recycle();
         }
     }
 

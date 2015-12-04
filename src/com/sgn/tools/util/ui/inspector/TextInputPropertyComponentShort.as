@@ -5,9 +5,9 @@ package com.sgn.tools.util.ui.inspector
 {
     public class TextInputPropertyComponentShort extends TextInputPropertyComponent
     {
-        override public function init(args:Array):void
+        public function TextInputPropertyComponentShort(propertyRetriver:IPropertyRetriever, param:Object)
         {
-            super.init(args);
+            super(propertyRetriver, param);
 
             _textInput.width = 50;
         }

@@ -9,10 +9,15 @@ package com.sgn.tools.util.ui.inspector
     {
         protected var _colorPicker:ColorPicker;
 
-        public function ColorPickerPropertyComponent()
+        public function ColorPickerPropertyComponent(propertyRetriver:IPropertyRetriever, param:Object)
         {
+            super(propertyRetriver, param);
+
             _colorPicker = new ColorPicker();
             addChild(_colorPicker);
+
+            update();
+            _colorPicker.addEventListener(Event.CHANGE, onColorPick);
         }
 
         private function onColorPick(event:Event):void
@@ -26,22 +31,6 @@ package com.sgn.tools.util.ui.inspector
         override public function update():void
         {
             _colorPicker.value = uint(_propertyRetriever.get(_param.name));
-        }
-
-        override public function init(args:Array):void
-        {
-            super.init(args);
-
-            update();
-
-            _colorPicker.addEventListener(Event.CHANGE, onColorPick);
-        }
-
-        override public function recycle():void
-        {
-            _colorPicker.removeEventListener(Event.CHANGE, onColorPick);
-
-            super.recycle();
         }
     }
 }
