@@ -19,7 +19,7 @@ package com.sgn.starlingbuilder.editor.ui
     import feathers.layout.AnchorLayoutData;
 
     import starling.events.Event;
-    import starling.utils.AssetManager;
+    import com.sgn.starlingbuilder.editor.utils.AssetManager;
 
     public class ContainerTab extends LayoutGroup
     {

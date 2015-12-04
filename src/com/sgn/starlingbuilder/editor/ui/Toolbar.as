@@ -43,7 +43,7 @@ package com.sgn.starlingbuilder.editor.ui
     import starling.core.Starling;
     import starling.display.Sprite;
     import starling.events.Event;
-    import starling.utils.AssetManager;
+    import com.sgn.starlingbuilder.editor.utils.AssetManager;
 
     public class Toolbar extends LayoutGroup
     {

@@ -31,7 +31,7 @@ package com.sgn.starlingbuilder.editor.ui
 
     import starling.display.Image;
     import starling.events.Event;
-    import starling.utils.AssetManager;
+    import com.sgn.starlingbuilder.editor.utils.AssetManager;
 
     public class BackgroundTab extends LayoutGroup
     {

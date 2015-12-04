@@ -35,7 +35,7 @@ package com.sgn.starlingbuilder.editor.ui
     import starling.display.DisplayObject;
     import starling.display.DisplayObjectContainer;
     import starling.events.Event;
-    import starling.utils.AssetManager;
+    import com.sgn.starlingbuilder.editor.utils.AssetManager;
 
     public class PropertyTab extends LayoutGroup
     {
