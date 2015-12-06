@@ -21,6 +21,8 @@
             "params":[
                 {"name":"width", "component":"slider", "min":1, "max":2000, "step":1, "read_only":true},
                 {"name":"height", "component":"slider", "min":1, "max":2000, "step":1, "read_only":true},
+                {"name":"scaleX", "step":0.01, "default_value":1},
+                {"name":"scaleY", "step":0.01, "default_value":1},
                 {"name":"color", "component":"colorPicker", "default_value":16777215}
             ],
             "constructorParams":
@@ -467,6 +469,6 @@
 
     "version":1.0,
 
-    "revision":12
+    "revision":13
 
 }
