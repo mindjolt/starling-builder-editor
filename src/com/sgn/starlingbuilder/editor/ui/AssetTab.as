@@ -15,14 +15,17 @@ package com.sgn.starlingbuilder.editor.ui
     import com.sgn.starlingbuilder.editor.helper.UIComponentHelper;
     import com.sgn.starlingbuilder.engine.util.ParamUtil;
     import com.sgn.tools.util.feathers.FeathersUIUtil;
+    import com.sgn.tools.util.ui.list.ExpandableGroupedList;
 
     import feathers.controls.Button;
+    import feathers.controls.ButtonGroup;
     import feathers.controls.GroupedList;
     import feathers.controls.Label;
     import feathers.controls.LayoutGroup;
     import feathers.controls.List;
     import feathers.controls.PickerList;
     import feathers.controls.TextInput;
+    import feathers.controls.renderers.IGroupedListHeaderOrFooterRenderer;
     import feathers.controls.renderers.IGroupedListItemRenderer;
     import feathers.controls.renderers.IListItemRenderer;
     import feathers.data.HierarchicalCollection;
@@ -34,6 +37,8 @@ package com.sgn.starlingbuilder.editor.ui
 
     import flash.filesystem.File;
     import flash.utils.Dictionary;
+
+    import starling.display.DisplayObject;
 
     import starling.display.Sprite;
     import starling.events.Event;
@@ -52,7 +57,7 @@ package com.sgn.starlingbuilder.editor.ui
 
         private var _documentManager:DocumentManager;
 
-        private var _list:GroupedList;
+        private var _list:ExpandableGroupedList;
 
         private var _typePicker:PickerList;
 
@@ -104,14 +109,15 @@ package com.sgn.starlingbuilder.editor.ui
 
         private function createBottomContainer():void
         {
-            _bottomContainer = new LayoutGroup();
-            _bottomContainer.layout = new VerticalLayout();
+            _bottomContainer = FeathersUIUtil.layoutGroupWithVerticalLayout();
 
             var anchorLayoutData:AnchorLayoutData = new AnchorLayoutData();
             anchorLayoutData.bottom = 0;
             _bottomContainer.layoutData = anchorLayoutData;
 
             addChild(_bottomContainer);
+
+            createListButtons(_bottomContainer);
 
             createPickerList(_bottomContainer);
 
@@ -169,7 +175,7 @@ package com.sgn.starlingbuilder.editor.ui
 
         private function listAssets():void
         {
-            _list = new GroupedList();
+            _list = new ExpandableGroupedList();
             _list.width = 280;
             _list.height = 800;
             _list.setSelectedLocation(-1, -1);
@@ -293,6 +299,55 @@ package com.sgn.starlingbuilder.editor.ui
             {
                 return array;
             }
+        }
+
+        private function createToolButtons(buttons:Array, anchorDisplayObject:DisplayObject = null):ButtonGroup
+        {
+            var group:ButtonGroup = new ButtonGroup();
+            group.paddingTop = 5;
+            group.paddingBottom = 5;
+            group.direction = ButtonGroup.DIRECTION_HORIZONTAL;
+            group.maxWidth = 200;
+            group.dataProvider = new ListCollection(buttons);
+
+            var layoutData:AnchorLayoutData = new AnchorLayoutData();
+            layoutData.left = 0;
+            layoutData.right = 0;
+            layoutData.bottom = 0;
+
+            if (anchorDisplayObject)
+            {
+                layoutData.bottomAnchorDisplayObject = anchorDisplayObject;
+            }
+
+            group.layoutData = layoutData;
+
+            addChild(group);
+
+            return group;
+        }
+
+        private function createTextButtons():Array
+        {
+            return [
+                {label:"Collapse all", triggered:onCollapseButton},
+                {label:"Expand all", triggered:onExpandButton},
+            ];
+        }
+
+        private function createListButtons(container:Sprite):void
+        {
+            container.addChild(createToolButtons(createTextButtons()));
+        }
+
+        private function onExpandButton(event:Event):void
+        {
+            _list.expandAll();
+        }
+
+        private function onCollapseButton(event:Event):void
+        {
+            _list.collapseAll();
         }
 
         private function createPickerList(container:Sprite):void
