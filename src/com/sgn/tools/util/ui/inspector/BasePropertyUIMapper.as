@@ -44,12 +44,33 @@ package com.sgn.tools.util.ui.inspector
                 _propertyRetriever = new DefaultPropertyRetriever(_target, param);
             }
 
-            var label:Label = FeathersUIUtil.labelWithText(_param.label ? _param.label : _param.name);
-            label.width = 70;
-            label.wordWrap = true;
-            addChild(label);
+            var name:String = _param.label ? _param.label : _param.name;
+            if (isNumerical(_propertyRetriever.get(name)))
+            {
+                createComponent("scrollableLabel", {"name": name});
+            }
+            else
+            {
+                var label:Label = FeathersUIUtil.labelWithText(name);
+                label.width = 70;
+                label.wordWrap = true;
+                addChild(label);
+            }
 
             createComponents(param);
+        }
+
+        private function isNumerical(value:Object):Boolean
+        {
+            if (value is int)
+            {
+                return true;
+            }
+            else if (value is Number)
+            {
+                return true;
+            }
+            return false
         }
 
         public function get propertyRetriever():IPropertyRetriever
