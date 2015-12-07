@@ -16,6 +16,9 @@ package com.sgn.starlingbuilder.editor.data
         [Embed(source="editor_template.json", mimeType="application/octet-stream")]
         public static const editor_template:Class;
 
+        [Embed(source="horizontal_arrows.png")]
+        public static const horizontal_arrows:Class;
+        public static const HORIZONTAL_ARROWS:String = "horizontal_arrows";
 
     }
 }

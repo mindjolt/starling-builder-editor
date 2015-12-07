@@ -9,7 +9,8 @@ package com.sgn.starlingbuilder.editor
 {
     import adobe.utils.ProductManager;
 
-    import com.sgn.starlingbuilder.editor.data.TemplateData;
+    import com.sgn.starlingbuilder.editor.data.EmbeddedData;
+
     import com.sgn.starlingbuilder.editor.helper.AssetLoaderWithOptions;
     import com.sgn.starlingbuilder.editor.helper.CustomComponentHelper;
     import com.sgn.starlingbuilder.editor.helper.CustomThemeHelper;
@@ -30,7 +31,11 @@ package com.sgn.starlingbuilder.editor
     import feathers.layout.AnchorLayoutData;
 
     import flash.desktop.NativeApplication;
+    import flash.display.Bitmap;
+    import flash.display.BitmapData;
     import flash.filesystem.File;
+    import flash.ui.Mouse;
+    import flash.ui.MouseCursorData;
     import flash.utils.Dictionary;
     import flash.utils.setTimeout;
 
@@ -73,7 +78,7 @@ package com.sgn.starlingbuilder.editor
 
             new MainMenu();
 
-
+            registerCursor();
 
             _assetManager = UIEditorApp.instance.assetManager;
 
@@ -88,6 +93,14 @@ package com.sgn.starlingbuilder.editor
             height = Starling.current.viewPort.height = Starling.current.stage.stageHeight = Starling.current.nativeStage.stageHeight;
 
             initWorkspaceDir();
+        }
+
+        private function registerCursor():void
+        {
+            var image:Bitmap = new EmbeddedData.horizontal_arrows();
+            var data:MouseCursorData = new MouseCursorData();
+            data.data = new <BitmapData>[image.bitmapData];
+            Mouse.registerCursor(EmbeddedData.HORIZONTAL_ARROWS, data);
         }
 
         private function initWorkspaceDir():void

@@ -16,7 +16,8 @@ package com.sgn.tools.util.ui.inspector
             "colorPicker":ColorPickerPropertyComponent,
             "textArea":TextAreaPropertyComponent,
             "popup":ButtonPropertyComponent,
-            "check":CheckPropertyComponent
+            "check":CheckPropertyComponent,
+            "scrollableLabel":ScrollableLabelPropertyComponent
         };
 
         public static const DEFAULT_ITEMS_MAPPING:Object = {
