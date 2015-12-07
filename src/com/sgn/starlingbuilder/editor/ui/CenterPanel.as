@@ -57,6 +57,11 @@ package com.sgn.starlingbuilder.editor.ui
             _documentManager.hasFocus = false;
         }
 
+        override public function get isFocusEnabled():Boolean
+        {
+            return this._isEnabled && this._isFocusEnabled;
+        }
+
         override public function dispose():void
         {
             _container.removeChildren(); //make sure DocumentManager component is not disposed
