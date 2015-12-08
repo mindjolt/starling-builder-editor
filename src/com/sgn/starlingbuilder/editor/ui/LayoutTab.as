@@ -184,6 +184,7 @@ package com.sgn.starlingbuilder.editor.ui
                     break;
                 case "expand all":
                     _documentManager.expandAll();
+                    break;
                 case "up":
                     moveUp();
                     break;
