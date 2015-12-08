@@ -168,7 +168,7 @@ package com.sgn.starlingbuilder.editor.controller
 
             var objects:Array = [];
             var obj:DisplayObjectContainer = result.object;
-            getObjectsByPrefixTraversal(obj, _extraParamsDict, objects);
+            getObjectsByPreorderTraversal(obj, _extraParamsDict, objects);
             addFrom(obj, result.params, null);
         }
 
@@ -206,7 +206,7 @@ package com.sgn.starlingbuilder.editor.controller
             if (container)
             {
                 var objects:Array = [];
-                getObjectsByPrefixTraversal(container, paramDict, objects);
+                getObjectsByPreorderTraversal(container, paramDict, objects);
 
                 for each (var obj:DisplayObject in objects)
                 {
@@ -271,30 +271,12 @@ package com.sgn.starlingbuilder.editor.controller
                     parent.addChildAt(obj, index);
             }
 
-            var prefix:String = getPrefixFromObject(obj);
-
-            _dataProvider.push({label:prefix + obj.name, "hidden":false, "lock":false, "obj":obj, "prefix":prefix});
+            _dataProvider.push({label:obj.name, "hidden":false, "lock":false, "obj":obj, "layer":getLayerFromObject(obj)});
         }
 
-
-        private function getPrefixFromObject(obj:DisplayObject):String
+        private function getLayerFromObject(obj:DisplayObject):int
         {
-            var layer:int = getLayer(_root, obj, 1);
-
-            var str:String = "";
-            for (var i:int = 0; i < layer; ++i)
-            {
-                if (i == layer - 1)
-                {
-                    str += "  •  "
-                }
-                else
-                {
-                    str += "     ";
-                }
-            }
-
-            return str;
+            return getLayer(_root, obj, 1);
         }
 
         private function sortDataProvider():void
@@ -312,7 +294,7 @@ package com.sgn.starlingbuilder.editor.controller
 
             var result:Array = [];
 
-            getObjectsByPrefixTraversal(_root, _extraParamsDict, result);
+            getObjectsByPreorderTraversal(_root, _extraParamsDict, result);
 
             _dataProvider = new ListCollection();
             for each (var obj:DisplayObject in result)
@@ -321,7 +303,7 @@ package com.sgn.starlingbuilder.editor.controller
             }
         }
 
-        private function getObjectsByPrefixTraversal(container:DisplayObjectContainer, paramDict:Dictionary, result:Array):void
+        private function getObjectsByPreorderTraversal(container:DisplayObjectContainer, paramDict:Dictionary, result:Array):void
         {
             result.push(container);
 
@@ -335,7 +317,7 @@ package com.sgn.starlingbuilder.editor.controller
 
                     if (_uiBuilder.isContainer(paramDict[child]))
                     {
-                        getObjectsByPrefixTraversal(child as DisplayObjectContainer, paramDict, result);
+                        getObjectsByPreorderTraversal(child as DisplayObjectContainer, paramDict, result);
                     }
                     else
                     {
@@ -347,6 +329,8 @@ package com.sgn.starlingbuilder.editor.controller
 
         private function getLayer(container:DisplayObjectContainer, obj:DisplayObject, layer:int):int
         {
+            if (container === obj) return 0;
+
             for (var i:int = 0; i < container.numChildren; ++i)
             {
                 var child:DisplayObject = container.getChildAt(i);
@@ -759,7 +743,7 @@ package com.sgn.starlingbuilder.editor.controller
 
             var obj:DisplayObject;
 
-            getObjectsByPrefixTraversal(container, result.params, objects);
+            getObjectsByPreorderTraversal(container, result.params, objects);
 
             setRoot(container, result.params[container]);
 
@@ -869,7 +853,9 @@ package com.sgn.starlingbuilder.editor.controller
             {
                 var item:Object = _dataProvider.getItemAt(i);
                 var obj:DisplayObject = item.obj;
-                item.label = item.prefix + obj.name;
+                item.label = obj.name;
+                item.layer = getLayerFromObject(obj);
+                item.isContainer = _uiBuilder.isContainer(_extraParamsDict[obj]);
                 _dataProvider.updateItemAt(i);
             }
         }
