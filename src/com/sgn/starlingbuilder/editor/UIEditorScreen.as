@@ -9,6 +9,8 @@ package com.sgn.starlingbuilder.editor
 {
     import adobe.utils.ProductManager;
 
+    import com.sgn.starlingbuilder.editor.data.EmbeddedData;
+
     import com.sgn.starlingbuilder.editor.data.TemplateData;
     import com.sgn.starlingbuilder.editor.helper.AssetLoaderWithOptions;
     import com.sgn.starlingbuilder.editor.helper.CustomComponentHelper;
@@ -31,6 +33,8 @@ package com.sgn.starlingbuilder.editor
 
     import flash.desktop.NativeApplication;
     import flash.filesystem.File;
+    import flash.filesystem.FileMode;
+    import flash.filesystem.FileStream;
     import flash.utils.Dictionary;
     import flash.utils.setTimeout;
 
@@ -181,7 +185,7 @@ package com.sgn.starlingbuilder.editor
 
         private function prepareWorkspace():void
         {
-            const DIRS:Array = ["textures", "fonts", "backgrounds", "libs", "localization"];
+            const DIRS:Array = ["textures", "fonts", "backgrounds", "libs", "localization", "settings"];
 
             for each (var path:String in DIRS)
             {
@@ -192,7 +196,23 @@ package com.sgn.starlingbuilder.editor
                     dir.createDirectory();
                 }
             }
+
+            createDefaultSettings();
         }
+
+        private function createDefaultSettings():void
+        {
+            var file:File = _workspaceDir.resolvePath("settings/texture_options.json");
+
+            if (!file.exists)
+            {
+                var fs:FileStream = new FileStream();
+                fs.open(file, FileMode.WRITE);
+                fs.writeUTFBytes(new EmbeddedData.texture_options);
+                fs.close();
+            }
+        }
+
 
         private function init():void
         {

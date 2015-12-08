@@ -9,13 +9,10 @@ package com.sgn.starlingbuilder.editor.data
 {
     public class EmbeddedData
     {
-        public function EmbeddedData()
-        {
-        }
-
         [Embed(source="editor_template.json", mimeType="application/octet-stream")]
         public static const editor_template:Class;
 
-
+        [Embed(source="texture_options.json", mimeType="application/octet-stream")]
+        public static const texture_options:Class;
     }
 }
