@@ -100,6 +100,8 @@ package com.sgn.starlingbuilder.editor.controller
 
         private var _setting:Setting;
 
+        private var _collapseMap:Dictionary;
+
         public function DocumentManager(assetManager:AssetManager, localizationManager:LocalizationManager)
         {
             _assetManager = assetManager;
@@ -131,6 +133,8 @@ package com.sgn.starlingbuilder.editor.controller
             _historyManager = new HistoryManager();
 
             _setting = UIEditorScreen.instance.setting;
+
+            _collapseMap = new Dictionary();
         }
 
         public function set container(value:Sprite):void
@@ -271,7 +275,7 @@ package com.sgn.starlingbuilder.editor.controller
                     parent.addChildAt(obj, index);
             }
 
-            _dataProvider.push({label:obj.name, "hidden":false, "lock":false, "obj":obj, "layer":getLayerFromObject(obj)});
+            _dataProvider.push({label:obj.name, hidden:false, lock:false, obj:obj, layer:getLayerFromObject(obj)});
         }
 
         private function getLayerFromObject(obj:DisplayObject):int
@@ -281,31 +285,23 @@ package com.sgn.starlingbuilder.editor.controller
 
         private function sortDataProvider():void
         {
-            var dict:Dictionary = new Dictionary();
-            var objects:Array = [];
-
-            for (var i:int = 0; i < _dataProvider.length; ++i)
-            {
-                var item:Object = _dataProvider.getItemAt(i);
-                dict[item.obj] = item;
-
-                objects.push(item.obj);
-            }
-
             var result:Array = [];
 
-            getObjectsByPreorderTraversal(_root, _extraParamsDict, result);
+            getObjectsByPreorderTraversal(_root, _extraParamsDict, result, _collapseMap);
 
             _dataProvider = new ListCollection();
             for each (var obj:DisplayObject in result)
             {
-                _dataProvider.push(dict[obj]);
+                _dataProvider.push({label:obj.name, hidden:!obj.visible, lock:!obj.touchable, obj:obj, layer:getLayerFromObject(obj), collapse:_collapseMap[obj]});
             }
         }
 
-        private function getObjectsByPreorderTraversal(container:DisplayObjectContainer, paramDict:Dictionary, result:Array):void
+        private function getObjectsByPreorderTraversal(container:DisplayObjectContainer, paramDict:Dictionary, result:Array, collapseMap:Dictionary = null):void
         {
             result.push(container);
+
+            if (collapseMap && collapseMap[container])
+                return;
 
             for (var i:int = 0; i < container.numChildren; ++i)
             {
@@ -317,7 +313,7 @@ package com.sgn.starlingbuilder.editor.controller
 
                     if (_uiBuilder.isContainer(paramDict[child]))
                     {
-                        getObjectsByPreorderTraversal(child as DisplayObjectContainer, paramDict, result);
+                        getObjectsByPreorderTraversal(child as DisplayObjectContainer, paramDict, result, collapseMap);
                     }
                     else
                     {
@@ -786,6 +782,7 @@ package com.sgn.starlingbuilder.editor.controller
             _snapContainer.removeChildren(0, -1, true);
             _extraParamsDict = new Dictionary();
             _dataProvider = new ListCollection();
+            _collapseMap = new Dictionary();
 
             canvasSize = new Point(_setting.defaultCanvasWidth, _setting.defaultCanvasHeight);
             background = null;
@@ -1116,5 +1113,49 @@ package com.sgn.starlingbuilder.editor.controller
                 dispatchEventWith(DocumentEventType.CANVAS_SIZE_CHANGE);
             }
         }
+
+        public function collapse(obj:DisplayObject):void
+        {
+            if (!_collapseMap[obj])
+            {
+                _collapseMap[obj] = true;
+                setLayerChanged();
+                setChanged();
+            }
+        }
+
+        public function expand(obj:DisplayObject):void
+        {
+            if (_collapseMap[obj])
+            {
+                delete _collapseMap[obj];
+                setLayerChanged();
+                setChanged();
+            }
+        }
+
+        public function collapseAll():void
+        {
+            var objects:Array = [];
+            getObjectsByPreorderTraversal(_root, _extraParamsDict, objects);
+
+            for each(var obj:DisplayObject in objects)
+            {
+                _collapseMap[obj] = true;
+            }
+
+            setLayerChanged();
+            setChanged();
+        }
+
+        public function expandAll():void
+        {
+            _collapseMap = new Dictionary();
+
+            setLayerChanged();
+            setChanged();
+        }
+
+
     }
 }

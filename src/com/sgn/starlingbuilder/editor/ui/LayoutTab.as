@@ -35,6 +35,7 @@ package com.sgn.starlingbuilder.editor.ui
 
         private var _documentManager:DocumentManager;
 
+        private var _buttonGroup:ButtonGroup;
         private var _buttonGroup1:ButtonGroup;
         private var _buttonGroup2:ButtonGroup;
         private var _buttonGroup3:ButtonGroup;
@@ -52,7 +53,8 @@ package com.sgn.starlingbuilder.editor.ui
 
             _buttonGroup3 = createToolButtons(createTextButtons3());
             _buttonGroup2 = createToolButtons(createTextButtons2(), _buttonGroup3);
-            _buttonGroup1 = createToolButtons(createTextButtons(), _buttonGroup2);
+            _buttonGroup1 = createToolButtons(createTextButtons1(), _buttonGroup2);
+            _buttonGroup = createToolButtons(createTextButtons(), _buttonGroup1);
 
             createList();
 
@@ -79,7 +81,7 @@ package com.sgn.starlingbuilder.editor.ui
             var anchorLayoutData:AnchorLayoutData = new AnchorLayoutData();
             anchorLayoutData.top = 0
             anchorLayoutData.bottom = 0;
-            anchorLayoutData.bottomAnchorDisplayObject = _buttonGroup1;
+            anchorLayoutData.bottomAnchorDisplayObject = _buttonGroup;
             _list.layoutData = anchorLayoutData;
 
             addChild(_list);
@@ -138,9 +140,15 @@ package com.sgn.starlingbuilder.editor.ui
             return group;
         }
 
-
-
         private function createTextButtons():Array
+        {
+            return [
+                {label:"collapse all", triggered:onButton},
+                {label:"expand all", triggered:onButton},
+            ];
+        }
+
+        private function createTextButtons1():Array
         {
             return [
                 {label:"up", triggered:onButton},
@@ -171,6 +179,11 @@ package com.sgn.starlingbuilder.editor.ui
             var button:Button = event.target as Button;
             switch (button.label)
             {
+                case "collapse all":
+                    _documentManager.collapseAll();
+                    break;
+                case "expand all":
+                    _documentManager.expandAll();
                 case "up":
                     moveUp();
                     break;

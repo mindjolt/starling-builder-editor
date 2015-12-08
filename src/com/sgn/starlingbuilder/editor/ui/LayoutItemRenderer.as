@@ -43,11 +43,14 @@ package com.sgn.starlingbuilder.editor.ui
 
         private function onTrigger(event:Event):void
         {
-            var target:Button = event.target as Button;
-            if (target.rotation == 0)
-                target.rotation = Math.PI / 2;
+            if (_data.collapse)
+            {
+                UIEditorApp.instance.documentManager.expand(_data.obj);
+            }
             else
-                target.rotation = 0;
+            {
+                UIEditorApp.instance.documentManager.collapse(_data.obj);
+            }
         }
 
         private function createIconGroup():void
@@ -80,7 +83,7 @@ package com.sgn.starlingbuilder.editor.ui
 
             _sign = new Button(EmbeddedImages.expand_sign_texture);
             _sign.alignPivot();
-            //_sign.addEventListener(Event.TRIGGERED, onTrigger);
+            _sign.addEventListener(Event.TRIGGERED, onTrigger);
 
             _nameLabel = new Label();
             _group2.addChild(_group);
@@ -95,7 +98,8 @@ package com.sgn.starlingbuilder.editor.ui
             _hiddenCheck.isSelected = item.hidden;
             _lockCheck.isSelected = item.lock;
             _nameLabel.text = item.label;
-            _sign.rotation = Math.PI / 2;
+            _sign.rotation = item.collapse ? 0 : Math.PI / 2;
+            _data = item;
 
             if (item.isContainer)
             {
