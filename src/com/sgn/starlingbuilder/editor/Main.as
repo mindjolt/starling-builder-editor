@@ -64,6 +64,7 @@ package com.sgn.starlingbuilder.editor
             _starling.simulateMultitouch  = false;
             _starling.enableErrorChecking = false;
             _starling.showStatsAt(HAlign.RIGHT, VAlign.TOP);
+            _starling.supportHighResolutions = true;
 
             _starling.stage3D.addEventListener(Event.CONTEXT3D_CREATE, _start);
 
