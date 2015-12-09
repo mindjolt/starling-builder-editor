@@ -108,7 +108,7 @@
         <!--<softKeyboardBehavior></softKeyboardBehavior>-->
 
         <!-- Display Resolution for the app (either "standard" or "high"). Optional, OSX-only. Default "standard" -->
-        <!-- <requestedDisplayResolution></requestedDisplayResolution> -->
+         <requestedDisplayResolution>high</requestedDisplayResolution>
     </initialWindow>
 
     <!-- We recommend omitting the supportedProfiles element, which in turn permits your application to be deployed to all devices supported by AIR.
