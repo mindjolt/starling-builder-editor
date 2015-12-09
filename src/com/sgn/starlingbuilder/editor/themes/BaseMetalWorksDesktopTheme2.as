@@ -61,8 +61,10 @@ package com.sgn.starlingbuilder.editor.themes
     import feathers.controls.renderers.DefaultGroupedListHeaderOrFooterRenderer;
     import feathers.controls.renderers.DefaultGroupedListItemRenderer;
     import feathers.controls.renderers.DefaultListItemRenderer;
+    import feathers.controls.text.StageTextTextEditor;
     import feathers.controls.text.TextBlockTextEditor;
     import feathers.controls.text.TextBlockTextRenderer;
+    import feathers.controls.text.TextFieldTextEditor;
     import feathers.core.FeathersControl;
     import feathers.core.FocusManager;
     import feathers.core.PopUpManager;
@@ -256,9 +258,9 @@ package com.sgn.starlingbuilder.editor.themes
 		 * The default global text editor factory for this theme creates a
 		 * TextBlockTextEditor.
 		 */
-		protected static function textEditorFactory():TextBlockTextEditor
+		protected static function textEditorFactory():TextFieldTextEditor
 		{
-			return new TextBlockTextEditor();
+            return new TextFieldTextEditor();
 		}
 
 		/**
@@ -555,6 +557,9 @@ package com.sgn.starlingbuilder.editor.themes
 		protected var searchIconTexture:Texture;
 		protected var searchIconDisabledTexture:Texture;
 
+        protected var textFieldTextFormat:TextFormat;
+        protected var disabledTextFieldTextFormat:TextFormat;
+
 		/**
 		 * Disposes the texture atlas before calling super.dispose()
 		 */
@@ -674,6 +679,9 @@ package com.sgn.starlingbuilder.editor.themes
 			this.largeDarkElementFormat = new ElementFormat(this.regularFontDescription, this.largeFontSize, DARK_TEXT_COLOR);
 			this.largeLightElementFormat = new ElementFormat(this.regularFontDescription, this.largeFontSize, LIGHT_TEXT_COLOR);
 			this.largeDisabledElementFormat = new ElementFormat(this.regularFontDescription, this.largeFontSize, DISABLED_TEXT_COLOR);
+
+            this.textFieldTextFormat = new TextFormat(FONT_NAME, this.regularFontSize, LIGHT_TEXT_COLOR);
+            this.disabledTextFieldTextFormat = new TextFormat(FONT_NAME, this.regularFontSize, DISABLED_TEXT_COLOR);
 		}
 
 		/**
@@ -2265,10 +2273,13 @@ package com.sgn.starlingbuilder.editor.themes
 			input.paddingLeft = this.gutterSize;
 			input.paddingRight = this.gutterSize;
 
-			input.textEditorProperties.elementFormat = this.lightElementFormat;
-			input.textEditorProperties.disabledElementFormat = this.disabledElementFormat;
-			input.textEditorProperties.cursorSkin = new Quad(1, 1, LIGHT_TEXT_COLOR);
-			input.textEditorProperties.selectionSkin = new Quad(1, 1, TEXT_SELECTION_BACKGROUND_COLOR);
+//			input.textEditorProperties.elementFormat = this.lightElementFormat;
+//			input.textEditorProperties.disabledElementFormat = this.disabledElementFormat;
+//			input.textEditorProperties.cursorSkin = new Quad(1, 1, LIGHT_TEXT_COLOR);
+//			input.textEditorProperties.selectionSkin = new Quad(1, 1, TEXT_SELECTION_BACKGROUND_COLOR);
+
+            input.textEditorProperties.textFormat = this.textFieldTextFormat;
+            input.textEditorProperties.disabledTextFormat = this.disabledTextFieldTextFormat;
 
 			input.promptProperties.elementFormat = this.lightElementFormat;
 			input.promptProperties.disabledElementFormat = this.disabledElementFormat;
