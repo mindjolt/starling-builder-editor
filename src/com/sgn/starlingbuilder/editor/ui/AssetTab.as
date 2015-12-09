@@ -307,7 +307,7 @@ package com.sgn.starlingbuilder.editor.ui
             group.paddingTop = 5;
             group.paddingBottom = 5;
             group.direction = ButtonGroup.DIRECTION_HORIZONTAL;
-            group.maxWidth = 200;
+            group.width = 280;
             group.dataProvider = new ListCollection(buttons);
 
             var layoutData:AnchorLayoutData = new AnchorLayoutData();
@@ -330,8 +330,8 @@ package com.sgn.starlingbuilder.editor.ui
         private function createTextButtons():Array
         {
             return [
-                {label:"Collapse all", triggered:onCollapseButton},
-                {label:"Expand all", triggered:onExpandButton},
+                {label:"collapse all", triggered:onCollapseButton},
+                {label:"expand all", triggered:onExpandButton},
             ];
         }
 
