@@ -27,11 +27,15 @@ git clone https://github.com/mindjolt/starling-builder-engine
 
 If you want to create custom UI components or feathers theme for the editor, check out the extensions repository at https://github.com/mindjolt/starling-builder-extensions
 
+####Toubleshooting
+
+If the editor crashes when it starts without prompting an error, it's most likely that your runtime libraries inside YOUR_WORKSPACE/libs are not compatible with the current Starling Builder version.
+This happens when Starling Builder is built with a Starling/Feathers version different than the one inside your libs. You can solve the problem by either removing the problematic swf files from YOUR_WORKSPACE/libs, or recompile/download those files with the correct version of Starling/Feathers
+
 
 ####Documentation
 
 For more information, please visit our wiki page at http://wiki.starling-framework.org/builder/start
-
 
 
 
