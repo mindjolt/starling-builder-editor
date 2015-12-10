@@ -101,6 +101,8 @@ package starlingbuilder.editor.ui
             _sign.rotation = item.collapse ? 0 : Math.PI / 2;
             _data = item;
 
+            changeState(STATE_UP);
+
             if (item.isContainer)
             {
                 _group2.addChildAt(_sign, 1);
