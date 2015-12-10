@@ -2,7 +2,7 @@
 <module type="Flex" version="4">
   <component name="FlexBuildConfigurationManager" active="dev">
     <configurations>
-      <configuration name="dev" target-platform="Desktop" pure-as="true" main-class="com.sgn.starlingbuilder.editor.Main" output-file="desktop.swf" output-folder="$MODULE_DIR$/out/production/starling-builder-editor">
+      <configuration name="dev" target-platform="Desktop" pure-as="true" main-class="starlingbuilder.editor.Main" output-file="desktop.swf" output-folder="$MODULE_DIR$/out/production/starling-builder-editor">
         <dependencies>
           <entries>
             <entry library-id="1b681331-4950-42a7-8e25-11d467985093">
@@ -14,16 +14,16 @@
         <compiler-options>
           <option name="additionalOptions" value="-advanced-telemetry=true" />
         </compiler-options>
-        <packaging-air-desktop use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/src/com/sgn/starlingbuilder/editor/UI-editor-app.xml" package-file-name="starling-builder">
+        <packaging-air-desktop use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/src/starlingbuilder/editor/UI-editor-app.xml" package-file-name="starling-builder">
           <files-to-package>
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/icons" path-in-package="icons" />
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/src/com/sgn/starlingbuilder/editor/updateConfig.xml" path-in-package="updateConfig.xml" />
+            <FilePathAndPathInPackage file-path="$MODULE_DIR$/src/starlingbuilder/editor/updateConfig.xml" path-in-package="updateConfig.xml" />
           </files-to-package>
         </packaging-air-desktop>
         <packaging-android />
         <packaging-ios />
       </configuration>
-      <configuration name="release" target-platform="Desktop" pure-as="true" main-class="com.sgn.starlingbuilder.editor.Main" output-file="release.swf" output-folder="$MODULE_DIR$/out/production/starling-builder-editor">
+      <configuration name="release" target-platform="Desktop" pure-as="true" main-class="starlingbuilder.editor.Main" output-file="release.swf" output-folder="$MODULE_DIR$/out/production/starling-builder-editor">
         <dependencies>
           <entries>
             <entry library-id="cbf26817-0ccc-4195-8bf0-38892b4aa95f">
@@ -37,10 +37,10 @@
             <entry key="compiler.debug.swf" value="false" />
           </map>
         </compiler-options>
-        <packaging-air-desktop use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/src/com/sgn/starlingbuilder/editor/UI-editor-app.xml" package-file-name="starling-builder">
+        <packaging-air-desktop use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/src/starlingbuilder/editor/UI-editor-app.xml" package-file-name="starling-builder">
           <files-to-package>
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/icons" path-in-package="icons" />
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/src/com/sgn/starlingbuilder/editor/updateConfig.xml" path-in-package="updateConfig.xml" />
+            <FilePathAndPathInPackage file-path="$MODULE_DIR$/src/starlingbuilder/editor/updateConfig.xml" path-in-package="updateConfig.xml" />
           </files-to-package>
         </packaging-air-desktop>
         <packaging-android />
