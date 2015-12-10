@@ -108,15 +108,21 @@ package starlingbuilder.editor
                 }
                 else
                 {
-                    var button:Button = FeathersUIUtil.buttonWithLabel("choose workspace", onBrowse);
-                    addChild(button);
+                    addChooseWorkspaceButton();
                     onBrowse(null);
                 }
             }
             else
             {
+                addChooseWorkspaceButton();
                 onBrowse(null);
             }
+        }
+
+        private function addChooseWorkspaceButton():void
+        {
+            var button:Button = FeathersUIUtil.buttonWithLabel("choose workspace", onBrowse);
+            addChild(button);
         }
 
         private function reload():void
