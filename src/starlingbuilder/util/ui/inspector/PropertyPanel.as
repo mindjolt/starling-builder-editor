@@ -3,6 +3,8 @@
  */
 package starlingbuilder.util.ui.inspector
 {
+    import feathers.controls.Check;
+
     import starlingbuilder.engine.util.ObjectLocaterUtil;
     import starlingbuilder.engine.util.ParamUtil;
     import starlingbuilder.util.feathers.FeathersUIUtil;
@@ -26,8 +28,16 @@ package starlingbuilder.util.ui.inspector
 
         protected var _propertyRetrieverFactory:Function;
 
+        protected var _linkedProperties:Array;
+        protected var _linkedPropertiesInitValues:Object;
+        protected var _linkedPropertiesCheck:Check;
+
         public function PropertyPanel(target:Object = null, params:Array = null, propertyRetrieverFactory:Function = null)
         {
+            _linkedPropertiesInitValues = {};
+            _linkedPropertiesCheck = new Check();
+            _linkedPropertiesCheck.label = "link";
+
             _propertyRetrieverFactory = propertyRetrieverFactory;
 
             _container = FeathersUIUtil.scrollContainerWithVerticalLayout();
@@ -39,15 +49,12 @@ package starlingbuilder.util.ui.inspector
             globalDispatcher.addEventListener(UIMapperEventType.PROPERTY_CHANGE, onGlobalPropertyChange);
         }
 
-        private function onPropertyChange(event:Event):void
-        {
-            reloadData(_target);
-        }
-
         private function onGlobalPropertyChange(event:Event):void
         {
             if (event.data.target === _target)
             {
+                changeLinkedProperties(event);
+
                 reloadTarget(_target);
             }
         }
@@ -60,22 +67,26 @@ package starlingbuilder.util.ui.inspector
 
                 _container.removeChildren(0, -1, true);
 
-                //_propertyMappers = [];
-
                 for each (var param:Object in _params)
                 {
-                    if (param is Array)
-                    {
-                        var panel:PropertyPanel = new LinkedPropertyPanel(_target, param as Array, _propertyRetrieverFactory, function(target:Object):Boolean {
-                            return target is DisplayObject && target.rotation == 0;
-                        });
-                        _container.addChild(panel);
-                    }
-                    else if (hasProperty(_target, param.name))
+                    if (hasProperty(_target, param.name))
                     {
                         var mapper:BasePropertyUIMapper = new BasePropertyUIMapper(_target, param, _propertyRetrieverFactory);
                         _container.addChild(mapper);
                     }
+                }
+
+                if (_linkedProperties)
+                {
+                    if (_target && _params)
+                    {
+                        var index:int = findLastLinkedPropertyIndex();
+                        _container.addChildAt(_linkedPropertiesCheck, index + 1);
+                    }
+                }
+                else
+                {
+                    _linkedPropertiesCheck.removeFromParent();
                 }
             }
             else
@@ -136,5 +147,70 @@ package starlingbuilder.util.ui.inspector
             super.dispose();
         }
 
+
+        public function get linkedProperties():Array
+        {
+            return _linkedProperties;
+        }
+
+        public function set linkedProperties(value:Array):void
+        {
+            _linkedProperties = value;
+        }
+
+        private function findLastLinkedPropertyIndex():int
+        {
+            var index:int = 0;
+
+            for each (var name:String in _linkedProperties)
+            {
+                for (var i:int = 0; i < _params.length; ++i)
+                {
+                    var param:Object = _params[i];
+
+                    if (param.name == name)
+                    {
+                        index = Math.max(index, i);
+                    }
+                }
+            }
+
+            return index;
+        }
+
+        private function changeLinkedProperties(event:Event):void
+        {
+            var name:String = event.data.propertyName;
+
+            if (_linkedPropertiesCheck.isSelected && _linkedProperties.indexOf(name) != -1 && linkedCondition(_target))
+            {
+                for each (var item:String in _linkedProperties)
+                {
+                    if (item == name) continue;
+
+                    if (_target && _target.hasOwnProperty(item))
+                    {
+                        //special case for locking width/height ratio
+                        if (_target is DisplayObject)
+                        {
+                            if (name == "width")
+                            {
+                                _target["scaleY"] = _target["scaleX"];
+                            }
+                            else if (name == "height")
+                            {
+                                _target["scaleX"] = _target["scaleY"];
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        //special case for rotation/size race condition
+        private function linkedCondition(target:Object):Boolean
+        {
+            return target is DisplayObject && target.rotation == 0;
+        }
     }
 }

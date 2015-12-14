@@ -156,7 +156,6 @@ package starlingbuilder.editor.ui
                     var params:Array = ParamUtil.getParams(_template, _documentManager.selectedObject);
 
                     UIMapperUtil.processParamsWithFonts(params, UIEditorScreen.instance.getBitmapFontNames());
-                    UIMapperUtil.processParamsWithWidthAndHeight(params);
 
                     _paramCache[target.constructor] = params;
                 }
@@ -180,6 +179,7 @@ package starlingbuilder.editor.ui
             if (!_propertyPanelCache[target.constructor])
             {
                 var propertyPanel:PropertyPanel = new PropertyPanel(null, null, displayObjectPropertyFactory);
+                propertyPanel.linkedProperties = ["width", "height"];
                 _propertyPanelCache[target.constructor] = propertyPanel;
             }
 

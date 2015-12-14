@@ -15,35 +15,5 @@ package starlingbuilder.util.ui.inspector
                 }
             }
         }
-
-        public static function processParamsWithWidthAndHeight(params:Array):void
-        {
-            var i:int;
-
-            var array:Array;
-            var param:Object;
-
-            for (i = 0; i < params.length; ++i)
-            {
-                param = params[i];
-
-                if (param.name == "width")
-                {
-                    array = [param];
-                    params.splice(i, 1, array);
-                }
-            }
-
-            for (i = 0; i < params.length; ++i)
-            {
-                param = params[i];
-
-                if (param.name == "height")
-                {
-                    params.splice(i, 1);
-                    array.push(param);
-                }
-            }
-        }
     }
 }
