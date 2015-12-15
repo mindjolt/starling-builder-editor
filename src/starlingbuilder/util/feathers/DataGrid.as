@@ -17,12 +17,13 @@ package starlingbuilder.util.feathers
     import feathers.controls.TextInput;
     import feathers.data.ListCollection;
     import feathers.events.FeathersEventType;
-    import feathers.layout.MultiColumnGridLayout;
 
     import flash.utils.setTimeout;
 
     import starling.display.DisplayObject;
     import starling.events.Event;
+
+    import starlingbuilder.util.feathers.layout.MultiColumnGridLayout;
 
     public class DataGrid extends ScrollContainer
     {
