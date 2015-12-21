@@ -3,8 +3,6 @@
  */
 package starlingbuilder.util.ui.inspector
 {
-    import feathers.controls.Check;
-
     import starlingbuilder.engine.util.ObjectLocaterUtil;
     import starlingbuilder.engine.util.ParamUtil;
     import starlingbuilder.util.feathers.FeathersUIUtil;
@@ -30,13 +28,13 @@ package starlingbuilder.util.ui.inspector
 
         protected var _linkedProperties:Array;
         protected var _linkedPropertiesInitValues:Object;
-        protected var _linkedPropertiesCheck:Check;
+        protected var _linkButton:LinkButton;
 
         public function PropertyPanel(target:Object = null, params:Array = null, propertyRetrieverFactory:Function = null)
         {
             _linkedPropertiesInitValues = {};
-            _linkedPropertiesCheck = new Check();
-            _linkedPropertiesCheck.label = "link";
+            _linkButton = new LinkButton();
+            _linkButton.includeInLayout = false;
 
             _propertyRetrieverFactory = propertyRetrieverFactory;
 
@@ -76,20 +74,25 @@ package starlingbuilder.util.ui.inspector
                     }
                 }
 
+                _container.validate();
+
                 var index:int = -1;
 
                 if (_linkedProperties && _target && _params)
                 {
-                    index = findLastLinkedPropertyIndex();
+                    index = findFirstLinkedPropertyIndex();
                 }
 
                 if (index >= 0)
                 {
-                    _container.addChildAt(_linkedPropertiesCheck, index + 1);
+                    var obj:DisplayObject = _container.getChildAt(index);
+                    _container.addChild(_linkButton);
+                    _linkButton.x = obj.x + obj.width + 3;
+                    _linkButton.y = obj.y + obj.height / 2;
                 }
                 else
                 {
-                    _linkedPropertiesCheck.removeFromParent();
+                    _linkButton.removeFromParent();
                 }
             }
             else
@@ -161,31 +164,27 @@ package starlingbuilder.util.ui.inspector
             _linkedProperties = value;
         }
 
-        private function findLastLinkedPropertyIndex():int
+        private function findFirstLinkedPropertyIndex():int
         {
-            var index:int = -1;
-
             for each (var name:String in _linkedProperties)
             {
                 for (var i:int = 0; i < _params.length; ++i)
                 {
-                    var param:Object = _params[i];
-
-                    if (param.name == name)
+                    if (_params[i].name == name)
                     {
-                        index = Math.max(index, i);
+                        return i;
                     }
                 }
             }
 
-            return index;
+            return -1;
         }
 
         private function changeLinkedProperties(event:Event):void
         {
             var name:String = event.data.propertyName;
 
-            if (_linkedPropertiesCheck.isSelected && _linkedProperties.indexOf(name) != -1 && linkedCondition(_target))
+            if (_linkButton.isSelected && _linkedProperties.indexOf(name) != -1 && linkedCondition(_target))
             {
                 for each (var item:String in _linkedProperties)
                 {
