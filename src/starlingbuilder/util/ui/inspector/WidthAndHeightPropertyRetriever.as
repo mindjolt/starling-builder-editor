@@ -18,7 +18,7 @@ package starlingbuilder.util.ui.inspector
             var sx:Number = sign(_target.scaleX);
             var sy:Number = sign(_target.scaleY);
 
-            value = formatType(name, value);
+            value = formatType(name, value, false);
             _target[name] = value;
 
             if (sx != sign(_target.scaleX))

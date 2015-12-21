@@ -18,7 +18,7 @@ package starlingbuilder.util.ui.inspector
 
         public function set(name:String, value:Object):void
         {
-            value = formatType(name, value);
+            value = formatType(name, value, false);
 
             ObjectLocaterUtil.set(_target, name, value);
         }
@@ -27,11 +27,11 @@ package starlingbuilder.util.ui.inspector
         {
             var value:Object =  ObjectLocaterUtil.get(_target, name);
 
-            return formatType(name, value);
+            return formatType(name, value, true);
         }
 
         //TODO: add more cases
-        public function formatType(name:String, obj:Object):Object
+        public function formatType(name:String, obj:Object, forRead:Boolean):Object
         {
             if (isBoolean(name) && obj is String)
             {
@@ -50,7 +50,7 @@ package starlingbuilder.util.ui.inspector
                     return value;
                 }
             }
-            else if (!ObjectLocaterUtil.hasProperty(_target, name) && _param.hasOwnProperty("default_value"))
+            else if (forRead && !ObjectLocaterUtil.hasProperty(_target, name) && _param.hasOwnProperty("default_value"))
             {
                 return _param.default_value;
             }
