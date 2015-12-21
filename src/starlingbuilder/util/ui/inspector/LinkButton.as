@@ -25,7 +25,7 @@ package starlingbuilder.util.ui.inspector
 
         private var _linkButton:Button;
 
-        private var _isSelected = false;
+        private var _isSelected:Boolean = false;
 
         public function LinkButton(isSelected:Boolean = false)
         {

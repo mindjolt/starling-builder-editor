@@ -17,6 +17,8 @@ package starlingbuilder.util.ui.inspector
 
     public class PropertyPanel extends LayoutGroup
     {
+        public static const DEFAULT_ROW_GAP:int = 10;
+
         public static var globalDispatcher:EventDispatcher = new EventDispatcher();
 
         protected var _container:ScrollContainer;
@@ -30,21 +32,28 @@ package starlingbuilder.util.ui.inspector
         protected var _linkedPropertiesInitValues:Object;
         protected var _linkButton:LinkButton;
 
-        public function PropertyPanel(target:Object = null, params:Array = null, propertyRetrieverFactory:Function = null)
+        protected var _setting:Object;
+
+        public function PropertyPanel(target:Object = null, params:Array = null, propertyRetrieverFactory:Function = null, setting:Object = null)
         {
             _linkedPropertiesInitValues = {};
             _linkButton = new LinkButton();
-            _linkButton.includeInLayout = false;
 
             _propertyRetrieverFactory = propertyRetrieverFactory;
+            _setting = setting;
 
-            _container = FeathersUIUtil.scrollContainerWithVerticalLayout();
+            _container = FeathersUIUtil.scrollContainerWithVerticalLayout(rowGap);
             addChild(_container);
 
             if (target && params)
                 reloadData(target, params);
 
             globalDispatcher.addEventListener(UIMapperEventType.PROPERTY_CHANGE, onGlobalPropertyChange);
+        }
+
+        public function get rowGap():int
+        {
+            return (_setting && _setting.hasOwnProperty("rowGap")) ? _setting.rowGap : DEFAULT_ROW_GAP;
         }
 
         private function onGlobalPropertyChange(event:Event):void
@@ -69,7 +78,7 @@ package starlingbuilder.util.ui.inspector
                 {
                     if (hasProperty(_target, param.name))
                     {
-                        var mapper:BasePropertyUIMapper = new BasePropertyUIMapper(_target, param, _propertyRetrieverFactory);
+                        var mapper:BasePropertyUIMapper = new BasePropertyUIMapper(_target, param, _propertyRetrieverFactory, _setting);
                         _container.addChild(mapper);
                     }
                 }
@@ -86,7 +95,7 @@ package starlingbuilder.util.ui.inspector
                 if (index >= 0)
                 {
                     var obj:DisplayObject = _container.getChildAt(index);
-                    _container.addChild(_linkButton);
+                    addChild(_linkButton);
                     _linkButton.x = obj.x + obj.width + 3;
                     _linkButton.y = obj.y + obj.height / 2;
                 }
