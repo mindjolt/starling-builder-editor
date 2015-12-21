@@ -76,13 +76,16 @@ package starlingbuilder.util.ui.inspector
                     }
                 }
 
-                if (_linkedProperties)
+                var index:int = -1;
+
+                if (_linkedProperties && _target && _params)
                 {
-                    if (_target && _params)
-                    {
-                        var index:int = findLastLinkedPropertyIndex();
-                        _container.addChildAt(_linkedPropertiesCheck, index + 1);
-                    }
+                    index = findLastLinkedPropertyIndex();
+                }
+
+                if (index >= 0)
+                {
+                    _container.addChildAt(_linkedPropertiesCheck, index + 1);
                 }
                 else
                 {
@@ -160,7 +163,7 @@ package starlingbuilder.util.ui.inspector
 
         private function findLastLinkedPropertyIndex():int
         {
-            var index:int = 0;
+            var index:int = -1;
 
             for each (var name:String in _linkedProperties)
             {
