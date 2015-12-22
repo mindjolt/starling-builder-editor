@@ -17,6 +17,8 @@ package starlingbuilder.util.ui.inspector
 
     public class PropertyPanel extends LayoutGroup
     {
+        public static const DEFAULT_ROW_GAP:int = 10;
+
         public static var globalDispatcher:EventDispatcher = new EventDispatcher();
 
         protected var _container:ScrollContainer;
@@ -26,11 +28,21 @@ package starlingbuilder.util.ui.inspector
 
         protected var _propertyRetrieverFactory:Function;
 
-        public function PropertyPanel(target:Object = null, params:Array = null, propertyRetrieverFactory:Function = null)
-        {
-            _propertyRetrieverFactory = propertyRetrieverFactory;
+        protected var _linkedProperties:Array;
+        protected var _linkedPropertiesInitValues:Object;
+        protected var _linkButton:LinkButton;
 
-            _container = FeathersUIUtil.scrollContainerWithVerticalLayout();
+        protected var _setting:Object;
+
+        public function PropertyPanel(target:Object = null, params:Array = null, propertyRetrieverFactory:Function = null, setting:Object = null)
+        {
+            _linkedPropertiesInitValues = {};
+            _linkButton = new LinkButton();
+
+            _propertyRetrieverFactory = propertyRetrieverFactory;
+            _setting = setting;
+
+            _container = FeathersUIUtil.scrollContainerWithVerticalLayout(rowGap);
             addChild(_container);
 
             if (target && params)
@@ -39,15 +51,17 @@ package starlingbuilder.util.ui.inspector
             globalDispatcher.addEventListener(UIMapperEventType.PROPERTY_CHANGE, onGlobalPropertyChange);
         }
 
-        private function onPropertyChange(event:Event):void
+        public function get rowGap():int
         {
-            reloadData(_target);
+            return (_setting && _setting.hasOwnProperty("rowGap")) ? _setting.rowGap : DEFAULT_ROW_GAP;
         }
 
         private function onGlobalPropertyChange(event:Event):void
         {
             if (event.data.target === _target)
             {
+                changeLinkedProperties(event);
+
                 reloadTarget(_target);
             }
         }
@@ -60,22 +74,34 @@ package starlingbuilder.util.ui.inspector
 
                 _container.removeChildren(0, -1, true);
 
-                //_propertyMappers = [];
-
                 for each (var param:Object in _params)
                 {
-                    if (param is Array)
+                    if (hasProperty(_target, param.name))
                     {
-                        var panel:PropertyPanel = new LinkedPropertyPanel(_target, param as Array, _propertyRetrieverFactory, function(target:Object):Boolean {
-                            return target is DisplayObject && target.rotation == 0;
-                        });
-                        _container.addChild(panel);
-                    }
-                    else if (hasProperty(_target, param.name))
-                    {
-                        var mapper:BasePropertyUIMapper = new BasePropertyUIMapper(_target, param, _propertyRetrieverFactory);
+                        var mapper:BasePropertyUIMapper = new BasePropertyUIMapper(_target, param, _propertyRetrieverFactory, _setting);
                         _container.addChild(mapper);
                     }
+                }
+
+                _container.validate();
+
+                var index:int = -1;
+
+                if (_linkedProperties && _target && _params)
+                {
+                    index = findFirstLinkedPropertyIndex();
+                }
+
+                if (index >= 0)
+                {
+                    var obj:DisplayObject = _container.getChildAt(index);
+                    addChild(_linkButton);
+                    _linkButton.x = obj.x + obj.width + 3;
+                    _linkButton.y = obj.y + obj.height / 2;
+                }
+                else
+                {
+                    _linkButton.removeFromParent();
                 }
             }
             else
@@ -136,5 +162,66 @@ package starlingbuilder.util.ui.inspector
             super.dispose();
         }
 
+
+        public function get linkedProperties():Array
+        {
+            return _linkedProperties;
+        }
+
+        public function set linkedProperties(value:Array):void
+        {
+            _linkedProperties = value;
+        }
+
+        private function findFirstLinkedPropertyIndex():int
+        {
+            for each (var name:String in _linkedProperties)
+            {
+                for (var i:int = 0; i < _params.length; ++i)
+                {
+                    if (_params[i].name == name)
+                    {
+                        return i;
+                    }
+                }
+            }
+
+            return -1;
+        }
+
+        private function changeLinkedProperties(event:Event):void
+        {
+            var name:String = event.data.propertyName;
+
+            if (_linkButton.isSelected && _linkedProperties.indexOf(name) != -1 && linkedCondition(_target))
+            {
+                for each (var item:String in _linkedProperties)
+                {
+                    if (item == name) continue;
+
+                    if (_target && _target.hasOwnProperty(item))
+                    {
+                        //special case for locking width/height ratio
+                        if (_target is DisplayObject)
+                        {
+                            if (name == "width")
+                            {
+                                _target["scaleY"] = _target["scaleX"];
+                            }
+                            else if (name == "height")
+                            {
+                                _target["scaleX"] = _target["scaleY"];
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        //special case for rotation/size race condition
+        private function linkedCondition(target:Object):Boolean
+        {
+            return target is DisplayObject && target.rotation == 0;
+        }
     }
 }

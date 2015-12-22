@@ -89,6 +89,7 @@ package starlingbuilder.editor.ui
         private function createPropertyPanel():void
         {
             _propertyPanel = new PropertyPanel(null, null, displayObjectPropertyFactory);
+            _propertyPanel.linkedProperties = ["width", "height"];
             var anchorLayoutData:AnchorLayoutData = new AnchorLayoutData();
             anchorLayoutData.bottom = 10;
             anchorLayoutData.left = anchorLayoutData.right = 5;
@@ -158,7 +159,6 @@ package starlingbuilder.editor.ui
             if (!_params)
             {
                 _params = ObjectUtils.clone(_template.background.params);
-                UIMapperUtil.processParamsWithWidthAndHeight(_params);
             }
 
             if (_documentManager.background)

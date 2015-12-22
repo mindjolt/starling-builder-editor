@@ -3,9 +3,7 @@
  */
 package starlingbuilder.util.ui.list
 {
-    import starlingbuilder.util.ui.*;
     import feathers.controls.GroupedList;
-    import feathers.controls.renderers.IGroupedListHeaderOrFooterRenderer;
     import feathers.controls.renderers.IGroupedListHeaderRenderer;
     import feathers.data.HierarchicalCollection;
 

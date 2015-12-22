@@ -16,22 +16,21 @@ package starlingbuilder.util.ui.inspector
 
     public class BasePropertyUIMapper extends ScrollContainer implements IUIMapper
     {
-        protected var _gap:Number = 10;
+        public static const DEFAULT_LABEL_WIDTH:int = 55;
+        public static const DEFAULT_COLUMN_GAP:int = 10;
 
         protected var _target:Object;
         protected var _param:Object;
         protected var _propertyRetriever:IPropertyRetriever;
 
         protected var _factory:UIPropertyComponentFactory;
+        protected var _setting:Object;
 
-        public function BasePropertyUIMapper(target:Object, param:Object, propertyRetrieverFactory:Function = null)
+        public function BasePropertyUIMapper(target:Object, param:Object, propertyRetrieverFactory:Function = null, setting:Object = null)
         {
-            var layout:HorizontalLayout = new HorizontalLayout();
-            layout.gap = _gap;
-            this.layout = layout;
-
             _target = target;
             _param = param;
+            _setting = setting;
 
             _factory = new UIPropertyComponentFactory();
 
@@ -44,12 +43,26 @@ package starlingbuilder.util.ui.inspector
                 _propertyRetriever = new DefaultPropertyRetriever(_target, param);
             }
 
+            var layout:HorizontalLayout = new HorizontalLayout();
+            layout.gap = columnGap;
+            this.layout = layout;
+
             var label:Label = FeathersUIUtil.labelWithText(_param.label ? _param.label : _param.name);
-            label.width = 70;
+            label.width = labelWidth;
             label.wordWrap = true;
             addChild(label);
 
             createComponents(param);
+        }
+
+        public function get labelWidth():int
+        {
+            return (_setting && _setting.hasOwnProperty("labelWidth")) ? _setting.labelWidth : DEFAULT_LABEL_WIDTH;
+        }
+
+        public function get columnGap():int
+        {
+            return (_setting && _setting.hasOwnProperty("columnGap")) ? _setting.columnGap : DEFAULT_COLUMN_GAP;
         }
 
         public function get propertyRetriever():IPropertyRetriever
