@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?> 
      <update xmlns="http://ns.adobe.com/air/framework/update/description/2.5"> 
-       <versionNumber>0.6.5</versionNumber>
-       <url>http://cache.mindjolt.com/starling-builder/v0.6.5/starling-builder.air</url>
+       <versionNumber>0.6.6</versionNumber>
+       <url>http://cache.mindjolt.com/starling-builder/v0.6.6/starling-builder.air</url>
        <description>
-[editor] Upgrade to Starling 1.7 and Feathers UI 2.3
-[editor] Collapsable layout tree component
-[editor] Collapsable asset group list component
-[editor] HD support for Macbook retina display
-[editor] Fix asian language characters not able to type in with input method
-[editor] Various bug fixes
+[engine] Add helper function: UIBuilder.find()
+[engine] Better error detection when texture is not found
+[engine] Fix demo viewport not working correctly on iPad Air
+[editor] Fix bug: link button not working sometimes
+[editor] Implement new link button
+[editor] Fix bug: customParams not setting value if there's no initial value
        </description>
     </update>
