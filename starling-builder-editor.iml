@@ -8,6 +8,9 @@
             <entry library-id="1b681331-4950-42a7-8e25-11d467985093">
               <dependency linkage="Merged" />
             </entry>
+            <entry library-id="f4b6f9ba-336c-404f-b1fa-4e0dfa2721fe">
+              <dependency linkage="Merged" />
+            </entry>
           </entries>
           <sdk name="AIRSDK" />
         </dependencies>
@@ -54,6 +57,7 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/starling-builder-engine/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/tests/src" isTestSource="false" />
     </content>
     <orderEntry type="jdk" jdkName="AIRSDK" jdkType="Flex SDK Type (new)" />
     <orderEntry type="sourceFolder" forTests="false" />
@@ -77,6 +81,17 @@
         <JAVADOC />
         <SOURCES />
         <jarDirectory url="file://$MODULE_DIR$/libs" recursive="false" />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library type="flex">
+        <properties id="f4b6f9ba-336c-404f-b1fa-4e0dfa2721fe" />
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/tests/libs" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+        <jarDirectory url="file://$MODULE_DIR$/tests/libs" recursive="false" />
       </library>
     </orderEntry>
   </component>
