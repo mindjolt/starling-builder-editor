@@ -419,7 +419,11 @@
                 {"name":"top", "component":"slider", "min":-200, "max":200, "step":1, "default_value":"NaN"},
                 {"name":"right", "component":"slider", "min":-200, "max":200, "step":1, "default_value":"NaN"},
                 {"name":"bottom", "component":"slider", "min":-200, "max":200, "step":1, "default_value":"NaN"},
-                {"name":"left", "component":"slider", "min":-200, "max":200, "step":1, "default_value":"NaN"}
+                {"name":"left", "component":"slider", "min":-200, "max":200, "step":1, "default_value":"NaN"},
+                {"name":"horizontalCenter", "component":"slider", "min":-200, "max":200, "step":1, "default_value":"NaN"},
+                {"name":"verticalCenter", "component":"slider", "min":-200, "max":200, "step":1, "default_value":"NaN"},
+                {"name":"percentWidth", "component":"slider", "min":0, "max":200, "step":1, "default_value":"NaN"},
+                {"name":"percentHeight", "component":"slider", "min":0, "max":200, "step":1, "default_value":"NaN"}
             ]
         }
     ],
@@ -469,6 +473,6 @@
 
     "version":1.0,
 
-    "revision":20
+    "revision":21
 
 }
