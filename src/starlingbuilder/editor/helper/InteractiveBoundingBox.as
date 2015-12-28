@@ -46,6 +46,8 @@ package starlingbuilder.editor.helper
 
         public static const PIVOT_POINT:String = "pivotPoint";
 
+        public static const DRAG_BOX:String = "dragBox";
+
         public static const BOUNDING_BOX:Array = [
 
             TOP, BOTTOM, LEFT, RIGHT,
@@ -118,9 +120,12 @@ package starlingbuilder.editor.helper
             _boundingBoxContainer = new Sprite();
             addChild(_boundingBoxContainer);
 
+            quad = createDragBox(DRAG_BOX);
+            DragHelper.startDrag(quad, onDrag, onComplete);
+            _boundingBoxContainer.addChild(quad);
+
             quad = createPivot(PIVOT_POINT);
             DragHelper.startDrag(quad, onDrag, onComplete);
-
             _boundingBoxContainer.addChild(quad);
 
             for each (var name:String in BOUNDING_BOX)
@@ -159,6 +164,15 @@ package starlingbuilder.editor.helper
                 pivotY = p.y;
 //                pivotX *= _target.scaleX;
 //                pivotY *= _target.scaleY;
+
+                if (_target.width == 0 && _target.height == 0)
+                {
+                    _boundingBoxContainer.getChildByName(DRAG_BOX).visible = true;
+                }
+                else
+                {
+                    _boundingBoxContainer.getChildByName(DRAG_BOX).visible = false;
+                }
             }
 
             quad = _boundingBoxContainer.getChildByName(PIVOT_POINT) as Quad;
@@ -207,6 +221,15 @@ package starlingbuilder.editor.helper
             }
 
             return count >= 2;
+        }
+
+        private function createDragBox(name:String):Quad
+        {
+            var square:Quad = new Quad(50, 50, 0xffff00);
+            square.alpha = 0.5;
+            square.alignPivot();
+            square.name = name;
+            return square;
         }
 
         private function createPivot(name:String):Quad
@@ -311,6 +334,8 @@ package starlingbuilder.editor.helper
 
             var ratioX:Number = 1 - _target.pivotX / (_target.width / _target.scaleX);
             var ratioY:Number = 1 - _target.pivotY / (_target.height / _target.scaleY);
+            if (isNaN(ratioX)) ratioX = 1;
+            if (isNaN(ratioY)) ratioY = 1;
 
             var oldValue:Rectangle = new Rectangle(_target.x, _target.y, _target.width, _target.height);
 
@@ -360,6 +385,10 @@ package starlingbuilder.editor.helper
                     DisplayObjectUtil.movePivotTo(_target, _target.pivotX + dx, _target.pivotY + dy);
                     UIEditorApp.instance.documentManager.historyManager.add(new MovePivotOperation(_target, new Point(_target.pivotX - dx, _target.pivotY - dx),
                             new Point(_target.pivotX, _target.pivotY)));
+                    break;
+                case DRAG_BOX:
+                    _target.x += dx * ratioX;
+                    _target.y += dy * ratioY;
                     break;
             }
 

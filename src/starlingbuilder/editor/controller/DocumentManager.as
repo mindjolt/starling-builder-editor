@@ -7,6 +7,9 @@
  */
 package starlingbuilder.editor.controller
 {
+    import feathers.controls.LayoutGroup;
+    import feathers.layout.AnchorLayout;
+
     import starlingbuilder.editor.Setting;
     import starlingbuilder.editor.UIEditorScreen;
     import starlingbuilder.editor.data.TemplateData;
@@ -76,7 +79,7 @@ package starlingbuilder.editor.controller
 
         private var _backgroundContainer:Sprite;
 
-        private var _layoutContainer:Sprite;
+        private var _layoutContainer:LayoutGroup;
 
         private var _root:DisplayObjectContainer;
 
@@ -122,7 +125,8 @@ package starlingbuilder.editor.controller
             _canvasContainer.addChild(_canvas);
 
             _backgroundContainer = new Sprite();
-            _layoutContainer = new Sprite();
+            _layoutContainer = new LayoutGroup();
+            _layoutContainer.layout = new AnchorLayout();
             _snapContainer = new Sprite();
             _boundingBox = new InteractiveBoundingBox();
 
@@ -1029,8 +1033,8 @@ package starlingbuilder.editor.controller
                 _canvasSize = value;
             }
 
-            _canvas.width = canvasSize.x;
-            _canvas.height = canvasSize.y;
+            _layoutContainer.width = _canvas.width = canvasSize.x;
+            _layoutContainer.height = _canvas.height = canvasSize.y;
 
             _container.clipRect = new Rectangle(0, 0, canvasSize.x * _canvasContainer.scaleX, canvasSize.y * _canvasContainer.scaleY);
 
@@ -1062,7 +1066,7 @@ package starlingbuilder.editor.controller
 
             var object:DisplayObject = target as DisplayObject;
 
-            return (object && object.stage ==  null) || (container && container.contains(object)) || (_testContainer && _testContainer.contains(object));
+            return (container && container.contains(object)) || (_testContainer && _testContainer.contains(object));
         }
 
         public function get extraParamsDict():Dictionary
