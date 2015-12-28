@@ -1066,7 +1066,7 @@ package starlingbuilder.editor.controller
 
             var object:DisplayObject = target as DisplayObject;
 
-            return (object && object.stage ==  null) || (container && container.contains(object)) || (_testContainer && _testContainer.contains(object));
+            return (container && container.contains(object)) || (_testContainer && _testContainer.contains(object));
         }
 
         public function get extraParamsDict():Dictionary
