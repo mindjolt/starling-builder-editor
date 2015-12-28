@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?> 
      <update xmlns="http://ns.adobe.com/air/framework/update/description/2.5"> 
-       <versionNumber>0.6.6</versionNumber>
-       <url>http://cache.mindjolt.com/starling-builder/v0.6.6/starling-builder.air</url>
+       <versionNumber>0.6.7</versionNumber>
+       <url>http://cache.mindjolt.com/starling-builder/v0.6.7/starling-builder.air</url>
        <description>
-[engine] Add helper function: UIBuilder.find()
-[engine] Better error detection when texture is not found
-[engine] Fix demo viewport not working correctly on iPad Air
-[editor] Fix bug: link button not working sometimes
-[editor] Implement new link button
-[editor] Fix bug: customParams not setting value if there's no initial value
+[editor] Fix bug: theme pollution issue with EmbeddedTheme.swf
+[editor] add a drag box to be able to move container with 0 width and height on canvas
+[editor] Icon function will keep width/height ratio in IconItemRenderer
        </description>
     </update>
