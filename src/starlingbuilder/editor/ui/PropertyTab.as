@@ -72,7 +72,7 @@ package starlingbuilder.editor.ui
             layout.paddingTop = layout.gap = 20;
             this.layout = layout;
 
-            layoutData = FeathersUIUtil.anchorLayoutData(50, 0);
+            layoutData = FeathersUIUtil.anchorLayoutData(60, 0);
 
             _template = TemplateData.editor_template;
 
