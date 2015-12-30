@@ -308,6 +308,7 @@ package starlingbuilder.editor
             var layoutData:AnchorLayoutData = new AnchorLayoutData();
             layoutData.right = 5;
             layoutData.top = _toolbar.height;
+            layoutData.bottom = 0;
 
             _rightPanel = new RightPanel();
             _rightPanel.layoutData = layoutData;

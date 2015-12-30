@@ -7,6 +7,9 @@
  */
 package starlingbuilder.editor.ui
 {
+    import feathers.layout.AnchorLayout;
+    import feathers.layout.AnchorLayoutData;
+
     import starlingbuilder.editor.UIEditorApp;
     import starlingbuilder.editor.UIEditorScreen;
     import starlingbuilder.editor.controller.DocumentManager;
@@ -31,11 +34,11 @@ package starlingbuilder.editor.ui
             _documentManager = UIEditorApp.instance.documentManager;
             _documentManager.addEventListener(DocumentEventType.CHANGE, onChange);
 
-            var layout:VerticalLayout = new VerticalLayout();
-            layout.gap = 10;
-            this.layout = layout;
+            this.layout = new AnchorLayout();
 
             _label = new Label();
+            _label.y = 40;
+
             addChild(_label);
 
             createTabs([{"label":"properties"}, {"label":"custom"}], [new PropertyTab(), new CustomParamsTab()]);
