@@ -57,9 +57,7 @@ package starlingbuilder.editor.helper
 
             setScaleRatio(constructorParams, editorData.scaleData);
 
-            setFontName(constructorParams, editorData.fontName);
-
-            setFontText(data.params, editorData.text);
+            setFontParams(data.params, editorData.fontName, editorData.text);
 
             if (constructorParams && constructorParams.length)
                 data.constructorParams = constructorParams;
@@ -93,21 +91,9 @@ package starlingbuilder.editor.helper
             }
         }
 
-        private static function setFontName(constructorParams:Array, fontName:String):void
+        private static function setFontParams(params:Object, fontName:String, text:String):void
         {
-            if (!fontName) return;
-
-            for each (var param:Object in constructorParams)
-            {
-                if (param.name == "fontName")
-                {
-                    param.value = fontName;
-                }
-            }
-        }
-
-        private static function setFontText(params:Object, text:String):void
-        {
+            if (fontName) params.fontName = fontName;
             if (text) params.text = text;
         }
 
