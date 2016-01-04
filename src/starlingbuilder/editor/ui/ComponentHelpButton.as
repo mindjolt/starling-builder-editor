@@ -67,7 +67,7 @@ package starlingbuilder.editor.ui
             }
             else
             {
-                return clsName;
+                return null;
             }
         }
 
