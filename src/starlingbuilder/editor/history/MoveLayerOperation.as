@@ -7,6 +7,8 @@
  */
 package starlingbuilder.editor.history
 {
+    import starling.display.DisplayObjectContainer;
+
     import starlingbuilder.editor.UIEditorApp;
     import starlingbuilder.util.history.IHistoryOperation;
 
@@ -14,12 +16,16 @@ package starlingbuilder.editor.history
 
     public class MoveLayerOperation extends AbstractHistoryOperation
     {
-        public function MoveLayerOperation(target:Object, beforeLayer:int, afterLayer:int)
+        private var _oldParent:DisplayObjectContainer;
+        private var _newParent:DisplayObjectContainer;
+
+        public function MoveLayerOperation(target:Object, newParent:DisplayObjectContainer, beforeLayer:int, afterLayer:int)
         {
             super(OperationType.MOVE_LAYER, target, beforeLayer, afterLayer);
 
             _target = target;
-
+            _oldParent = _target.parent;
+            _newParent = newParent;
         }
 
         override public function undo():void
@@ -28,7 +34,7 @@ package starlingbuilder.editor.history
 
             if (obj)
             {
-                obj.parent.setChildIndex(obj, int(_beforeValue));
+                _oldParent.addChildAt(obj, int(_beforeValue));
             }
 
             setChanged();
@@ -40,7 +46,7 @@ package starlingbuilder.editor.history
 
             if (obj)
             {
-                obj.parent.setChildIndex(obj, int(_afterValue));
+                _newParent.addChildAt(obj, int(_afterValue));
             }
 
             setChanged();

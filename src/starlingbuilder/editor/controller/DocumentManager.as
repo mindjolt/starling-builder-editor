@@ -507,7 +507,7 @@ package starlingbuilder.editor.controller
             var index:int = parent.getChildIndex(_selectedObject);
             if (index > 0)
             {
-                _historyManager.add(new MoveLayerOperation(_selectedObject, index, index - 1));
+                _historyManager.add(new MoveLayerOperation(_selectedObject, _selectedObject.parent, index, index - 1));
 
                 parent.setChildIndex(_selectedObject, index - 1);
 
@@ -528,7 +528,7 @@ package starlingbuilder.editor.controller
             var index:int = parent.getChildIndex(_selectedObject);
             if (index < parent.numChildren - 1)
             {
-                _historyManager.add(new MoveLayerOperation(_selectedObject, index, index + 1));
+                _historyManager.add(new MoveLayerOperation(_selectedObject, _selectedObject.parent, index, index + 1));
 
                 parent.setChildIndex(_selectedObject, index + 1);
 
@@ -804,6 +804,12 @@ package starlingbuilder.editor.controller
         public function createFromData(data:Object):void
         {
             var parent:DisplayObjectContainer = getParent();
+
+            if (parent.x == 0 && parent.y == 0)
+            {
+                data.params.x = UIEditorScreen.instance.centerPanel.horizontalScrollPosition / scale;
+                data.params.y = UIEditorScreen.instance.centerPanel.verticalScrollPosition / scale;
+            }
 
             var result:Object = _uiBuilder.createUIElement(data);
             var paramDict:Dictionary = new Dictionary();

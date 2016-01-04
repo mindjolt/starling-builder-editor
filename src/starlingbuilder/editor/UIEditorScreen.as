@@ -343,8 +343,6 @@ package starlingbuilder.editor
             button.layoutData = layoutData;
         }
 
-
-
         public function get leftPanel():LeftPanel
         {
             return _leftPanel;
@@ -353,6 +351,11 @@ package starlingbuilder.editor
         public function get rightPanel():RightPanel
         {
             return _rightPanel;
+        }
+
+        public function get centerPanel():CenterPanel
+        {
+            return _centerPanel;
         }
 
         public function get workspaceDir():File

@@ -7,6 +7,8 @@
  */
 package starlingbuilder.editor.ui
 {
+    import feathers.layout.VerticalLayout;
+
     import starlingbuilder.editor.UIEditorApp;
     import starlingbuilder.editor.controller.DocumentManager;
     import starlingbuilder.editor.events.DocumentEventType;
@@ -28,6 +30,8 @@ package starlingbuilder.editor.ui
     import starling.display.DisplayObject;
     import starling.events.Event;
     import starling.events.KeyboardEvent;
+
+    import starlingbuilder.util.feathers.FeathersUIUtil;
 
     public class LayoutTab extends LayoutGroup
     {
@@ -77,6 +81,14 @@ package starlingbuilder.editor.ui
             _list.addEventListener(Event.CHANGE, onListChange);
             _list.addEventListener(FeathersEventType.FOCUS_IN, onFocusIn);
             _list.addEventListener(FeathersEventType.FOCUS_OUT, onFocusOut);
+
+            var layout:VerticalLayout = new VerticalLayout();
+            layout.useVirtualLayout = true;
+            layout.padding = 0;
+            layout.gap = 1;
+            layout.horizontalAlign = VerticalLayout.HORIZONTAL_ALIGN_JUSTIFY;
+            layout.verticalAlign = VerticalLayout.VERTICAL_ALIGN_TOP;
+            _list.layout = layout;
 
             var anchorLayoutData:AnchorLayoutData = new AnchorLayoutData();
             anchorLayoutData.top = 0
