@@ -37,7 +37,7 @@ package starlingbuilder.editor
             //new MetalWorksMobileTheme2(false, _documentManager);
             new MetalWorksDesktopTheme2(_documentManager);
 
-            addChild(new UIEditorScreen());
+            addChild(createEditorScreen());
         }
 
         private function setup():void
@@ -73,6 +73,11 @@ package starlingbuilder.editor
         public function get notificationDispatcher():EventDispatcher
         {
             return _notificationDispatcher;
+        }
+
+        protected function createEditorScreen():Sprite
+        {
+            return new UIEditorScreen();
         }
 
 

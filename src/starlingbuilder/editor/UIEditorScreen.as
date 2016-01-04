@@ -239,7 +239,7 @@ package starlingbuilder.editor
                 menu.registerAction(MainMenu.SETTING, onSetting);
 
                 initUI();
-
+                initTests();
             }
 
 
@@ -383,6 +383,11 @@ package starlingbuilder.editor
         public function get setting():Setting
         {
             return _setting;
+        }
+
+        protected function initTests():void
+        {
+
         }
 
     }

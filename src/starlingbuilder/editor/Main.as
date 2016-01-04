@@ -59,7 +59,7 @@ package starlingbuilder.editor
 
             Starling.handleLostContext = true;
 
-            _starling = new Starling(UIEditorApp, stage, _viewport, null, Context3DRenderMode.AUTO, Context3DProfile.BASELINE);
+            _starling = new Starling(getApp(), stage, _viewport, null, Context3DRenderMode.AUTO, Context3DProfile.BASELINE);
 
             _starling.simulateMultitouch  = false;
             _starling.enableErrorChecking = false;
@@ -88,6 +88,11 @@ package starlingbuilder.editor
 
             trace(message);
             InfoPopup.show(message);
+        }
+
+        protected function getApp():Class
+        {
+            return UIEditorApp;
         }
     }
 }
