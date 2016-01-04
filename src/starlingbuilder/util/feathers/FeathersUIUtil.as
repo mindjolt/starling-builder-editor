@@ -95,6 +95,20 @@ package starlingbuilder.util.feathers
             return button;
         }
 
+        public static function horizontalLayout(gap:int = 10):HorizontalLayout
+        {
+            var layout:HorizontalLayout = new HorizontalLayout();
+            layout.gap = gap;
+            return layout;
+        }
+
+        public static function verticalLayout(gap:int = 10):VerticalLayout
+        {
+            var layout:VerticalLayout = new VerticalLayout();
+            layout.gap = gap;
+            return layout;
+        }
+
         public static function anchorLayoutData(top:Number = NaN, bottom:Number = NaN, left:Number = NaN, right:Number = NaN):AnchorLayoutData
         {
             var layoutData:AnchorLayoutData = new AnchorLayoutData();

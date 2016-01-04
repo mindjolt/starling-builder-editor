@@ -7,12 +7,15 @@
  */
 package starlingbuilder.editor.ui
 {
+    import feathers.controls.ScrollContainer;
+
     import starlingbuilder.editor.UIEditorApp;
     import starlingbuilder.editor.controller.DocumentManager;
     import starlingbuilder.editor.data.TemplateData;
     import starlingbuilder.editor.events.DocumentEventType;
     import starlingbuilder.engine.localization.ILocalization;
     import starlingbuilder.engine.util.ParamUtil;
+    import starlingbuilder.util.feathers.FeathersUIUtil;
     import starlingbuilder.util.ui.inspector.PropertyPanel;
     import starlingbuilder.util.ui.inspector.UIMapperEventType;
 
@@ -22,7 +25,7 @@ package starlingbuilder.editor.ui
     import starling.events.Event;
     import starlingbuilder.editor.utils.AssetManager;
 
-    public class CustomParamsTab extends LayoutGroup
+    public class CustomParamsTab extends ScrollContainer
     {
         public static const LOCALIZE_KEYS:String = "customParams.localizeKey";
 
@@ -49,6 +52,8 @@ package starlingbuilder.editor.ui
             var layout:VerticalLayout = new VerticalLayout();
             layout.paddingTop = layout.gap = 20;
             this.layout = layout;
+
+            layoutData = FeathersUIUtil.anchorLayoutData(60, 0);
 
             initUI();
         }

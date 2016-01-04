@@ -7,6 +7,10 @@
  */
 package starlingbuilder.editor.ui
 {
+    import feathers.FEATHERS_VERSION;
+
+    import starling.core.Starling;
+
     import starlingbuilder.util.feathers.FeathersUIUtil;
     import starlingbuilder.util.feathers.popup.InfoPopup;
 
@@ -37,7 +41,7 @@ package starlingbuilder.editor.ui
         override protected function createContent(container:LayoutGroup):void
         {
             var layout:VerticalLayout = new VerticalLayout();
-            layout.gap = 20;
+            layout.gap = 15;
             layout.horizontalAlign = HAlign.CENTER;
             container.layout = layout;
 
@@ -56,6 +60,8 @@ package starlingbuilder.editor.ui
             container.addChild(new Image(_iconTexture));
             container.addChild(FeathersUIUtil.labelWithText(version));
             container.addChild(FeathersUIUtil.labelWithText(copyright));
+            container.addChild(FeathersUIUtil.labelWithText("Starling version: " + Starling.VERSION));
+            container.addChild(FeathersUIUtil.labelWithText("Feathers version: " + FEATHERS_VERSION));
         }
 
         override public function dispose():void

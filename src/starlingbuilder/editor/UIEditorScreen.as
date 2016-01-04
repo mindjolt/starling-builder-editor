@@ -308,6 +308,7 @@ package starlingbuilder.editor
             var layoutData:AnchorLayoutData = new AnchorLayoutData();
             layoutData.right = 5;
             layoutData.top = _toolbar.height;
+            layoutData.bottom = 0;
 
             _rightPanel = new RightPanel();
             _rightPanel.layoutData = layoutData;
@@ -342,8 +343,6 @@ package starlingbuilder.editor
             button.layoutData = layoutData;
         }
 
-
-
         public function get leftPanel():LeftPanel
         {
             return _leftPanel;
@@ -352,6 +351,11 @@ package starlingbuilder.editor
         public function get rightPanel():RightPanel
         {
             return _rightPanel;
+        }
+
+        public function get centerPanel():CenterPanel
+        {
+            return _centerPanel;
         }
 
         public function get workspaceDir():File

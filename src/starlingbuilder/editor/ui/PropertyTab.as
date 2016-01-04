@@ -7,6 +7,8 @@
  */
 package starlingbuilder.editor.ui
 {
+    import feathers.layout.AnchorLayoutData;
+
     import starlingbuilder.editor.UIEditorApp;
     import starlingbuilder.editor.UIEditorScreen;
     import starlingbuilder.editor.controller.DocumentManager;
@@ -15,6 +17,7 @@ package starlingbuilder.editor.ui
     import starlingbuilder.editor.history.ResetOperation;
     import starlingbuilder.editor.themes.UIEditorStyleProvider;
     import starlingbuilder.engine.util.ParamUtil;
+    import starlingbuilder.util.feathers.FeathersUIUtil;
     import starlingbuilder.util.ui.inspector.DefaultPropertyRetriever;
     import starlingbuilder.util.ui.inspector.IPropertyRetriever;
     import starlingbuilder.util.ui.inspector.PropertyComponentType;
@@ -37,7 +40,7 @@ package starlingbuilder.editor.ui
     import starling.events.Event;
     import starlingbuilder.editor.utils.AssetManager;
 
-    public class PropertyTab extends LayoutGroup
+    public class PropertyTab extends ScrollContainer
     {
         private var _propertyPanel:PropertyPanel;
 
@@ -68,6 +71,8 @@ package starlingbuilder.editor.ui
             var layout:VerticalLayout = new VerticalLayout();
             layout.paddingTop = layout.gap = 20;
             this.layout = layout;
+
+            layoutData = FeathersUIUtil.anchorLayoutData(60, 0);
 
             _template = TemplateData.editor_template;
 

@@ -26,6 +26,7 @@ package starlingbuilder.util.serialize
         public static const OPEN:String = "open";
         public static const CLOSE:String = "close";
         public static const READ:String = "read";
+        public static const READ_WITH_FILE:String = "readWithFile";
 
         public static const CHANGE:String = "change";
 
@@ -38,6 +39,8 @@ package starlingbuilder.util.serialize
         private var _pendingActions:Array = [];
 
         private var _mediator:IDocumentMediator;
+
+        private var _pendingFile:File;
 
         public function DocumentSerializer(documentMediator:IDocumentMediator)
         {
@@ -115,6 +118,7 @@ package starlingbuilder.util.serialize
             file.removeEventListener(Event.CANCEL, onFileCanceled);
 
             _pendingActions = [];
+            _pendingFile = null;
         }
 
 
@@ -134,15 +138,15 @@ package starlingbuilder.util.serialize
 
         public function openWithFile(file:File):void
         {
-            _file = file;
+            _pendingFile = file;
             if (isDirty())
             {
                 actionForOldFile();
-                _pendingActions.push(READ);
+                _pendingActions.push(READ_WITH_FILE);
             }
             else
             {
-                read();
+                readWithFile();
             }
         }
 
@@ -172,6 +176,13 @@ package starlingbuilder.util.serialize
             _isDirty = false;
 
             setChange(_file.url);
+        }
+
+        public function readWithFile():void
+        {
+            _file = _pendingFile;
+            _pendingFile = null;
+            read();
         }
 
         public function close():void
