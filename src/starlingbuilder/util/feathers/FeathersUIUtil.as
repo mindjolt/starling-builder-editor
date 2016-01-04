@@ -97,14 +97,14 @@ package starlingbuilder.util.feathers
 
         public static function horizontalLayout(gap:int = 10):HorizontalLayout
         {
-            var layout = new feathers.layout.HorizontalLayout();
+            var layout:HorizontalLayout = new HorizontalLayout();
             layout.gap = gap;
             return layout;
         }
 
         public static function verticalLayout(gap:int = 10):VerticalLayout
         {
-            var layout = new feathers.layout.VerticalLayout();
+            var layout:VerticalLayout = new VerticalLayout();
             layout.gap = gap;
             return layout;
         }
