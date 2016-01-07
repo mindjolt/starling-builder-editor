@@ -47,10 +47,9 @@ package starlingbuilder.util.ui.inspector
             layout.gap = columnGap;
             this.layout = layout;
 
-            var label:Label = FeathersUIUtil.labelWithText(_param.label ? _param.label : _param.name);
-            label.width = labelWidth;
-            label.wordWrap = true;
-            addChild(label);
+            var component:LabelPropertyComponent = new LabelPropertyComponent(_propertyRetriever, _param, labelWidth);
+            component.addEventListener(Event.CHANGE, onChange);
+            addChild(component);
 
             createComponents(param);
         }

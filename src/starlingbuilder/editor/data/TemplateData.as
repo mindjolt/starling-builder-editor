@@ -17,7 +17,7 @@ package starlingbuilder.editor.data
         {
         }
 
-        public static const ALWAYS_OVERRIDE:Boolean = false;
+        public static const ALWAYS_OVERRIDE:Boolean = true;
 
         public static var editor_template_string:String;
 

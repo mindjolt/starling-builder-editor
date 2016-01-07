@@ -4,8 +4,8 @@
         {
             "cls":"starling.display.Image",
             "params":[
-                {"name":"width", "component":"slider", "min":1, "max":2000, "step":1, "read_only":true},
-                {"name":"height", "component":"slider", "min":1, "max":2000, "step":1, "read_only":true},
+                {"name":"width", "min":0, "read_only":true},
+                {"name":"height", "min":0, "read_only":true},
                 {"name":"scaleX", "step":0.01, "default_value":1},
                 {"name":"scaleY", "step":0.01, "default_value":1},
                 {"name":"color", "component":"colorPicker", "default_value":16777215}
@@ -19,8 +19,8 @@
         {
             "cls":"starling.display.Quad",
             "params":[
-                {"name":"width", "component":"slider", "min":1, "max":2000, "step":1, "read_only":true},
-                {"name":"height", "component":"slider", "min":1, "max":2000, "step":1, "read_only":true},
+                {"name":"width", "min":0, "read_only":true},
+                {"name":"height", "min":0, "read_only":true},
                 {"name":"scaleX", "step":0.01, "default_value":1},
                 {"name":"scaleY", "step":0.01, "default_value":1},
                 {"name":"color", "component":"colorPicker", "default_value":16777215}
@@ -36,11 +36,11 @@
         {
             "cls":"starling.display.Button",
             "params":[
-                {"name":"width", "component":"slider", "min":1, "max":2000, "step":1},
-                {"name":"height", "component":"slider", "min":1, "max":2000, "step":1},
+                {"name":"width", "min":0},
+                {"name":"height", "min":0},
                 {"name":"text", "default_value":""},
                 {"name":"fontName", "component":"textInput", "options":[], "default_value":"Verdana"},
-                {"name":"fontSize", "component":"slider", "min":1, "max":100, "step":1, "default_value":12},
+                {"name":"fontSize", "min":1, "step":1, "default_value":12},
                 {"name":"fontColor", "component":"colorPicker", "default_value":0},
                 {"name":"scaleX", "step":0.01, "default_value":1},
                 {"name":"scaleY", "step":0.01, "default_value":1},
@@ -56,11 +56,11 @@
         {
             "cls":"starling.text.TextField",
             "params":[
-                {"name":"width", "component":"slider", "min":1, "max":2000, "step":1},
-                {"name":"height", "component":"slider", "min":1, "max":2000, "step":1},
+                {"name":"width", "min":0},
+                {"name":"height", "min":0},
                 {"name":"text"},
                 {"name":"fontName", "component":"textInput", "options":[], "default_value":"Verdana"},
-                {"name":"fontSize", "component":"slider", "min":1, "max":100, "step":1},
+                {"name":"fontSize", "min":1, "step":1},
                 {"name":"color", "component":"colorPicker", "default_value":16777215},
                 {"name":"autoScale", "component":"check", "default_value":false},
                 {"name":"autoSize", "component":"pickerList", "options":["none", "horizontal", "vertical", "bothDirections"], "default_value":"none"},
@@ -82,8 +82,8 @@
         {
             "cls":"feathers.display.Scale3Image",
             "params":[
-                {"name":"width", "component":"slider", "min":1, "max":2000, "step":1},
-                {"name":"height", "component":"slider", "min":1, "max":2000, "step":1},
+                {"name":"width", "min":1, "step":1},
+                {"name":"height", "min":1, "step":1},
                 {"name":"color", "component":"colorPicker", "default_value":16777215}
             ],
             "constructorParams":
@@ -97,8 +97,8 @@
         {
             "cls":"feathers.display.Scale9Image",
             "params":[
-                {"name":"width", "component":"slider", "min":1, "max":2000, "step":1},
-                {"name":"height", "component":"slider", "min":1, "max":2000, "step":1},
+                {"name":"width", "min":1},
+                {"name":"height", "min":1},
                 {"name":"color", "component":"colorPicker", "default_value":16777215}
             ],
             "constructorParams":
@@ -112,8 +112,8 @@
         {
             "cls":"feathers.display.TiledImage",
             "params":[
-                {"name":"width", "component":"slider", "min":1, "max":2000, "step":1},
-                {"name":"height", "component":"slider", "min":1, "max":2000, "step":1},
+                {"name":"width", "min":1},
+                {"name":"height", "min":1},
                 {"name":"color", "component":"colorPicker", "default_value":16777215}
             ],
             "constructorParams":
@@ -126,8 +126,8 @@
         {
             "cls":"feathers.controls.LayoutGroup",
             "params":[
-                {"name":"width", "component":"slider", "min":0, "max":2000, "step":1, "default_value":0},
-                {"name":"height", "component":"slider", "min":0, "max":2000, "step":1, "default_value":0},
+                {"name":"width", "min":0, "default_value":0},
+                {"name":"height", "min":0, "default_value":0},
                 {"name":"layout", "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"starlingbuilder.editor.ui.DefaultEditPropertyPopup",
                 "supportedClasses":[null, "feathers.layout.HorizontalLayout", "feathers.layout.VerticalLayout", "feathers.layout.AnchorLayout", "feathers.layout.FlowLayout", "feathers.layout.TiledRowsLayout", "feathers.layout.TiledColumnsLayout", "feathers.layout.WaterfallLayout"]},
                 {"name":"layoutData", "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"starlingbuilder.editor.ui.DefaultEditPropertyPopup",
@@ -141,8 +141,8 @@
         {
             "cls":"feathers.controls.ScrollContainer",
             "params":[
-                {"name":"width", "component":"slider", "min":-2000, "max":2000, "step":1},
-                {"name":"height", "component":"slider", "min":-2000, "max":2000, "step":1},
+                {"name":"width", "min":0},
+                {"name":"height", "min":0},
                 {"name":"layout", "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"starlingbuilder.editor.ui.DefaultEditPropertyPopup",
                     "supportedClasses":[null, "feathers.layout.HorizontalLayout", "feathers.layout.VerticalLayout", "feathers.layout.AnchorLayout", "feathers.layout.FlowLayout", "feathers.layout.TiledRowsLayout", "feathers.layout.TiledColumnsLayout", "feathers.layout.WaterfallLayout"]},
                 {"name":"layoutData", "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"starlingbuilder.editor.ui.DefaultEditPropertyPopup",
@@ -155,8 +155,8 @@
         {
             "cls":"starling.display.Sprite",
             "params":[
-                {"name":"width", "component":"slider", "min":1, "max":2000, "step":1, "read_only":true},
-                {"name":"height", "component":"slider", "min":1, "max":2000, "step":1, "read_only":true},
+                {"name":"width", "min":0, "read_only":true},
+                {"name":"height", "min":0, "read_only":true},
                 {"name":"scaleX", "step":0.01, "default_value":1},
                 {"name":"scaleY", "step":0.01, "default_value":1}
             ],
@@ -168,7 +168,7 @@
             "cls":"starling.display.Sprite3D",
             "params":[
 
-                {"name":"z", "component":"slider", "min":-2000, "max":2000, "step":0.1, "default_value":0},
+                {"name":"z", "default_value":0},
                 {"name":"rotationX", "component":"slider", "min":-3.14, "max":3.14, "step":0.01, "default_value":0},
                 {"name":"rotationY", "component":"slider", "min":-3.14, "max":3.14, "step":0.01, "default_value":0},
                 {"name":"scaleZ", "default_value":1},
@@ -185,7 +185,7 @@
                 {"cls":"__AS3__.vec.Vector.<starling.textures.Texture>", "name":"textures", "value":""}
             ],
             "params": [
-                {"name":"fps", "component":"slider", "min":1, "max":100, "step":1, "default_value":12},
+                {"name":"fps", "min":1, "default_value":12},
                 {"name":"loop", "component":"check", "default_value":true},
                 {"name":"currentFrame", "default_value":0},
                 {"name":"numFrames", "read_only":true, "disable":true}
@@ -199,8 +199,8 @@
             "cls":"feathers.controls.Panel",
             "params":[
                 {"name":"title"},
-                {"name":"width", "component":"slider", "min":1, "max":2000, "step":1},
-                {"name":"height", "component":"slider", "min":1, "max":2000, "step":1}
+                {"name":"width", "min":0},
+                {"name":"height", "min":0}
             ],
             "container":true,
             "tag":"container"
@@ -234,8 +234,8 @@
         {
             "cls":"feathers.controls.GroupedList",
             "params":[
-                {"name":"width", "component":"slider", "min":1, "max":2000, "step":1},
-                {"name":"height", "component":"slider", "min":1, "max":2000, "step":1}
+                {"name":"width", "min":0},
+                {"name":"height", "min":0}
             ],
             "tag":"feathers"
         },
@@ -269,8 +269,8 @@
         {
             "cls":"feathers.controls.List",
             "params":[
-                {"name":"width", "component":"slider", "min":1, "max":2000, "step":1},
-                {"name":"height", "component":"slider", "min":1, "max":2000, "step":1}
+                {"name":"width", "min":0},
+                {"name":"height", "min":0}
             ],
             "tag":"feathers"
         },
@@ -280,8 +280,8 @@
         {
             "cls":"feathers.controls.NumericStepper",
             "params":[
-                {"name":"width", "component":"slider", "min":0, "max":2000, "step":1, "default_value":0},
-                {"name":"height", "component":"slider", "min":0, "max":2000, "step":1, "default_value":0},
+                {"name":"width", "min":0, "default_value":0},
+                {"name":"height", "min":0, "default_value":0},
                 {"name":"minimum"},
                 {"name":"maximum"},
                 {"name":"step"},
@@ -309,8 +309,8 @@
         {
             "cls":"feathers.controls.ProgressBar",
             "params":[
-                {"name":"width", "component":"slider", "min":0, "max":2000, "step":1, "default_value":0},
-                {"name":"height", "component":"slider", "min":0, "max":2000, "step":1, "default_value":0},
+                {"name":"width", "min":0, "default_value":0},
+                {"name":"height", "min":0, "default_value":0},
                 {"name":"minimum"},
                 {"name":"maximum"},
                 {"name":"value"}
@@ -330,8 +330,8 @@
         {
             "cls":"feathers.controls.Slider",
             "params":[
-                {"name":"width", "component":"slider", "min":0, "max":2000, "step":1, "default_value":0},
-                {"name":"height", "component":"slider", "min":0, "max":2000, "step":1, "default_value":0},
+                {"name":"width", "min":0, "default_value":0},
+                {"name":"height", "min":0, "default_value":0},
                 {"name":"minimum"},
                 {"name":"maximum"},
                 {"name":"step"},
@@ -343,8 +343,8 @@
         {
             "cls":"feathers.controls.TextArea",
             "params":[
-                {"name":"width", "component":"slider", "min":0, "max":2000, "step":1, "default_value":0},
-                {"name":"height", "component":"slider", "min":0, "max":2000, "step":1, "default_value":0},
+                {"name":"width", "min":0, "default_value":0},
+                {"name":"height", "min":0, "default_value":0},
                 {"name":"text"}
             ],
             "tag":"feathers"
@@ -353,8 +353,8 @@
         {
             "cls":"feathers.controls.TextInput",
             "params":[
-                {"name":"width", "component":"slider", "min":0, "max":2000, "step":1, "default_value":0},
-                {"name":"height", "component":"slider", "min":0, "max":2000, "step":1, "default_value":0},
+                {"name":"width", "min":0, "default_value":0},
+                {"name":"height", "min":0, "default_value":0},
                 {"name":"text"}
             ],
             "tag":"feathers"
@@ -381,58 +381,58 @@
         {
             "cls":"feathers.layout.HorizontalLayout",
             "params":[
-                {"name":"gap", "component":"slider", "min":-200, "max":200, "step":1, "default_value":0},
-                {"name":"padding", "component":"slider", "min":-200, "max":200, "step":1, "default_value":0},
+                {"name":"gap", "default_value":0},
+                {"name":"padding", "default_value":0},
                 {"name":"distributeWidths", "component":"check", "default_value":false},
                 {"name":"horizontalAlign", "component":"pickerList", "options":["left", "center", "right"], "default_value":"left"},
                 {"name":"verticalAlign", "component":"pickerList", "options":["top", "middle", "bottom", "justify"], "default_value":"top"},
-                {"name":"requestedRowCount", "default_value":0},
-                {"name":"requestedColumnCount", "default_value":0}
+                {"name":"requestedRowCount", "min":0, "default_value":0},
+                {"name":"requestedColumnCount", "min":0, "default_value":0}
             ]
         },
 
         {
             "cls":"feathers.layout.VerticalLayout",
             "params":[
-                {"name":"gap", "component":"slider", "min":-200, "max":200, "step":1, "default_value":0},
-                {"name":"padding", "component":"slider", "min":-200, "max":200, "step":1, "default_value":0},
+                {"name":"gap", "default_value":0},
+                {"name":"padding", "default_value":0},
                 {"name":"distributeHeights", "component":"check", "default_value":false},
                 {"name":"horizontalAlign", "component":"pickerList", "options":["left", "center", "right", "justify"], "default_value":"left"},
                 {"name":"verticalAlign", "component":"pickerList", "options":["top", "middle", "bottom"], "default_value":"top"},
-                {"name":"requestedRowCount", "default_value":0},
-                {"name":"requestedColumnCount", "default_value":0}
+                {"name":"requestedRowCount", "min":0, "default_value":0},
+                {"name":"requestedColumnCount", "min":0, "default_value":0}
             ]
         },
 
         {
             "cls":"feathers.layout.TiledRowsLayout",
             "params":[
-                {"name":"gap", "component":"slider", "min":-200, "max":200, "step":1, "default_value":0},
-                {"name":"padding", "component":"slider", "min":-200, "max":200, "step":1, "default_value":0},
+                {"name":"gap", "default_value":0},
+                {"name":"padding", "default_value":0},
                 {"name":"horizontalAlign", "component":"pickerList", "options":["left", "center", "right"], "default_value":"center"},
                 {"name":"verticalAlign", "component":"pickerList", "options":["top", "middle", "bottom"], "default_value":"top"},
-                {"name":"requestedRowCount", "default_value":0},
-                {"name":"requestedColumnCount", "default_value":0}
+                {"name":"requestedRowCount", "min":0, "default_value":0},
+                {"name":"requestedColumnCount", "min":0, "default_value":0}
             ]
         },
 
         {
             "cls":"feathers.layout.TiledColumnsLayout",
             "params":[
-                {"name":"gap", "component":"slider", "min":-200, "max":200, "step":1, "default_value":0},
-                {"name":"padding", "component":"slider", "min":-200, "max":200, "step":1, "default_value":0},
+                {"name":"gap", "default_value":0},
+                {"name":"padding", "default_value":0},
                 {"name":"horizontalAlign", "component":"pickerList", "options":["left", "center", "right"], "default_value":"center"},
                 {"name":"verticalAlign", "component":"pickerList", "options":["top", "middle", "bottom"], "default_value":"top"},
-                {"name":"requestedRowCount", "default_value":0},
-                {"name":"requestedColumnCount", "default_value":0}
+                {"name":"requestedRowCount", "min":0, "default_value":0},
+                {"name":"requestedColumnCount", "min":0, "default_value":0}
             ]
         },
 
         {
             "cls":"feathers.layout.FlowLayout",
             "params":[
-                {"name":"gap", "component":"slider", "min":-200, "max":200, "step":1, "default_value":0},
-                {"name":"padding", "component":"slider", "min":-200, "max":200, "step":1, "default_value":0},
+                {"name":"gap", "default_value":0},
+                {"name":"padding", "default_value":0},
                 {"name":"horizontalAlign", "component":"pickerList", "options":["left", "center", "right"], "default_value":"center"},
                 {"name":"verticalAlign", "component":"pickerList", "options":["top", "middle", "bottom"], "default_value":"top"}
             ]
@@ -441,24 +441,24 @@
         {
             "cls":"feathers.layout.WaterfallLayout",
             "params":[
-                {"name":"gap", "component":"slider", "min":-200, "max":200, "step":1, "default_value":0},
-                {"name":"padding", "component":"slider", "min":-200, "max":200, "step":1, "default_value":0},
+                {"name":"gap", "default_value":0},
+                {"name":"padding", "default_value":0},
                 {"name":"horizontalAlign", "component":"pickerList", "options":["left", "center", "right"], "default_value":"center"},
-                {"name":"requestedColumnCount", "default_value":0}
+                {"name":"requestedColumnCount", "min":0, "default_value":0}
             ]
         },
 
         {
             "cls":"feathers.layout.AnchorLayoutData",
             "params":[
-                {"name":"top", "component":"slider", "min":-200, "max":200, "step":1, "default_value":"NaN"},
-                {"name":"right", "component":"slider", "min":-200, "max":200, "step":1, "default_value":"NaN"},
-                {"name":"bottom", "component":"slider", "min":-200, "max":200, "step":1, "default_value":"NaN"},
-                {"name":"left", "component":"slider", "min":-200, "max":200, "step":1, "default_value":"NaN"},
+                {"name":"top", "default_value":"NaN"},
+                {"name":"right", "default_value":"NaN"},
+                {"name":"bottom", "default_value":"NaN"},
+                {"name":"left", "default_value":"NaN"},
                 {"name":"horizontalCenter", "component":"slider", "min":-200, "max":200, "step":1, "default_value":"NaN"},
                 {"name":"verticalCenter", "component":"slider", "min":-200, "max":200, "step":1, "default_value":"NaN"},
-                {"name":"percentWidth", "component":"slider", "min":0, "max":200, "step":1, "default_value":"NaN"},
-                {"name":"percentHeight", "component":"slider", "min":0, "max":200, "step":1, "default_value":"NaN"}
+                {"name":"percentWidth", "min":0, "default_value":"NaN"},
+                {"name":"percentHeight", "min":0, "default_value":"NaN"}
             ]
         }
     ],
@@ -468,8 +468,8 @@
     {
         "params":[
             {"name":"name", "default_value":null},
-            {"name":"x", "component":"slider", "min":-2000, "max":2000, "step":0.1, "default_value":0},
-            {"name":"y", "component":"slider", "min":-2000, "max":2000, "step":0.1, "default_value":0},
+            {"name":"x", "step":1, "default_value":0},
+            {"name":"y", "step":1, "default_value":0},
             {"name":"pivotX", "default_value":0},
             {"name":"pivotY", "default_value":0},
             {"name":"rotation", "component":"slider", "min":-3.14, "max":3.14, "step":0.01, "default_value":0},
@@ -499,10 +499,10 @@
     {
         "params":[
             {"name":"name"},
-            {"name":"x", "component":"slider", "min":-2000, "max":2000, "step":1},
-            {"name":"y", "component":"slider", "min":-2000, "max":2000, "step":1},
-            {"name":"width", "component":"slider", "min":-2000, "max":2000, "step":1},
-            {"name":"height", "component":"slider", "min":-2000, "max":2000, "step":1}
+            {"name":"x", "step":10},
+            {"name":"y", "step":10},
+            {"name":"width", "min":0, "step":10},
+            {"name":"height", "min":0, "step":10}
         ]
     },
 

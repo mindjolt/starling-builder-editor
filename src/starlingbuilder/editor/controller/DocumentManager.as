@@ -128,7 +128,7 @@ package starlingbuilder.editor.controller
             _layoutContainer = new LayoutGroup();
             _layoutContainer.layout = new AnchorLayout();
             _snapContainer = new Sprite();
-            _boundingBox = new InteractiveBoundingBox();
+            _boundingBox = new InteractiveBoundingBox(this);
 
             _testContainer = new Sprite();
 
