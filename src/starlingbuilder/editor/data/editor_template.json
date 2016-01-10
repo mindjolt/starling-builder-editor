@@ -126,8 +126,8 @@
         {
             "cls":"feathers.controls.LayoutGroup",
             "params":[
-                {"name":"width", "min":0, "default_value":0},
-                {"name":"height", "min":0, "default_value":0},
+                {"name":"width", "min":0, "default_value":0, "explicitField":"explicitWidth"},
+                {"name":"height", "min":0, "default_value":0, "explicitField":"explicitHeight"},
                 {"name":"layout", "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"starlingbuilder.editor.ui.DefaultEditPropertyPopup",
                 "supportedClasses":[null, "feathers.layout.HorizontalLayout", "feathers.layout.VerticalLayout", "feathers.layout.AnchorLayout", "feathers.layout.FlowLayout", "feathers.layout.TiledRowsLayout", "feathers.layout.TiledColumnsLayout", "feathers.layout.WaterfallLayout"]},
                 {"name":"layoutData", "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"starlingbuilder.editor.ui.DefaultEditPropertyPopup",

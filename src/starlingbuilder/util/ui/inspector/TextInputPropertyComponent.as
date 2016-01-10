@@ -3,19 +3,27 @@
  */
 package starlingbuilder.util.ui.inspector
 {
+    import feathers.controls.Check;
+
     import starlingbuilder.util.feathers.AutoCompleteWithDropDown;
 
     import feathers.events.FeathersEventType;
 
     import starling.events.Event;
 
+    import starlingbuilder.util.feathers.FeathersUIUtil;
+
     public class TextInputPropertyComponent extends BasePropertyComponent
     {
         protected var _textInput:AutoCompleteWithDropDown;
 
+        protected var _check:Check;
+
         public function TextInputPropertyComponent(propertyRetriver:IPropertyRetriever, param:Object)
         {
             super(propertyRetriver, param);
+
+            layout = FeathersUIUtil.horizontalLayout();
 
             _textInput = new AutoCompleteWithDropDown();
             addChild(_textInput);
@@ -52,18 +60,50 @@ package starlingbuilder.util.ui.inspector
             _textInput.addEventListener(FeathersEventType.FOCUS_OUT, onTextInput);
             _textInput.addEventListener(FeathersEventType.ENTER, onTextInput);
             _textInput.addEventListener(Event.CLOSE, onTextInput);
+
+            if (_param.explicitField)
+            {
+                _check = new Check();
+                _check.label = "explicit";
+                _check.addEventListener(Event.CHANGE, onCheck);
+                addChild(_check);
+            }
         }
 
         private function onTextInput(event:Event):void
         {
+            changeValue(_textInput.text);
+        }
+
+        private function changeValue(value:Object):void
+        {
             _oldValue = _propertyRetriever.get(_param.name);
-            _propertyRetriever.set(_param.name, _textInput.text);
+            _propertyRetriever.set(_param.name, value);
             setChanged();
         }
 
         override public function update():void
         {
             _textInput.text = String(_propertyRetriever.get(_param.name));
+
+            if (_check)
+            {
+                _textInput.isEnabled = _check.isSelected = _propertyRetriever.get(_param.explicitField);
+            }
+        }
+
+        private function onCheck(event:Event):void
+        {
+            _textInput.isEnabled = _check.isSelected;
+
+            if (_textInput.isEnabled)
+            {
+                changeValue(_textInput.text);
+            }
+            else
+            {
+                changeValue(NaN);
+            }
         }
     }
 }

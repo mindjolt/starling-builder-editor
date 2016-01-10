@@ -220,7 +220,10 @@ package starlingbuilder.editor.helper
 
             for each (var param:Object in params)
             {
-                if (param.name == "width" || param.name == "height")
+                if (param.name == "width" && (!target.hasOwnProperty("explicitWidth") || !isNaN(target["explicitWidth"])))
+                    ++count;
+
+                if (param.name == "height" && (!target.hasOwnProperty("explicitHeight") || !isNaN(target["explicitHeight"])))
                     ++count;
             }
 
