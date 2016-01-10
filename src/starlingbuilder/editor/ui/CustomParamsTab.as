@@ -47,7 +47,7 @@ package starlingbuilder.editor.ui
             _documentManager = UIEditorApp.instance.documentManager;
             _documentManager.addEventListener(DocumentEventType.CHANGE, onChange);
 
-            width = 320;
+            width = 350;
 
             var layout:VerticalLayout = new VerticalLayout();
             layout.paddingTop = layout.gap = 20;
