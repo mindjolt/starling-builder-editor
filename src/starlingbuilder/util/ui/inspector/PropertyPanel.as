@@ -179,7 +179,7 @@ package starlingbuilder.util.ui.inspector
             {
                 for (var i:int = 0; i < _params.length; ++i)
                 {
-                    if (_params[i].name == name)
+                    if (_params[i].name == name && _params[i].hasOwnProperty("link"))
                     {
                         return i;
                     }

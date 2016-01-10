@@ -4,8 +4,8 @@
         {
             "cls":"starling.display.Image",
             "params":[
-                {"name":"width", "min":0, "read_only":true},
-                {"name":"height", "min":0, "read_only":true},
+                {"name":"width", "min":0, "read_only":true, "link":true},
+                {"name":"height", "min":0, "read_only":true, "link":true},
                 {"name":"scaleX", "step":0.01, "default_value":1},
                 {"name":"scaleY", "step":0.01, "default_value":1},
                 {"name":"color", "component":"colorPicker", "default_value":16777215}
@@ -19,8 +19,8 @@
         {
             "cls":"starling.display.Quad",
             "params":[
-                {"name":"width", "min":0, "read_only":true},
-                {"name":"height", "min":0, "read_only":true},
+                {"name":"width", "min":0, "read_only":true, "link":true},
+                {"name":"height", "min":0, "read_only":true, "link":true},
                 {"name":"scaleX", "step":0.01, "default_value":1},
                 {"name":"scaleY", "step":0.01, "default_value":1},
                 {"name":"color", "component":"colorPicker", "default_value":16777215}
@@ -36,8 +36,8 @@
         {
             "cls":"starling.display.Button",
             "params":[
-                {"name":"width", "min":0},
-                {"name":"height", "min":0},
+                {"name":"width", "min":0, "link":true},
+                {"name":"height", "min":0, "link":true},
                 {"name":"text", "default_value":""},
                 {"name":"fontName", "component":"textInput", "options":[], "default_value":"Verdana"},
                 {"name":"fontSize", "min":1, "step":1, "default_value":12},
@@ -155,8 +155,8 @@
         {
             "cls":"starling.display.Sprite",
             "params":[
-                {"name":"width", "min":0, "read_only":true},
-                {"name":"height", "min":0, "read_only":true},
+                {"name":"width", "min":0, "read_only":true, "link":true},
+                {"name":"height", "min":0, "read_only":true, "link":true},
                 {"name":"scaleX", "step":0.01, "default_value":1},
                 {"name":"scaleY", "step":0.01, "default_value":1}
             ],
@@ -167,6 +167,10 @@
         {
             "cls":"starling.display.Sprite3D",
             "params":[
+                {"name":"width", "min":0, "read_only":true, "link":true},
+                {"name":"height", "min":0, "read_only":true, "link":true},
+                {"name":"scaleX", "step":0.01, "default_value":1},
+                {"name":"scaleY", "step":0.01, "default_value":1},
 
                 {"name":"z", "default_value":0},
                 {"name":"rotationX", "component":"slider", "min":-3.14, "max":3.14, "step":0.01, "default_value":0},
