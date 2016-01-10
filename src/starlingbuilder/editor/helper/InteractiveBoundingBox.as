@@ -397,8 +397,10 @@ package starlingbuilder.editor.helper
             }
 
             //This will lock width/height ratio when linked button is active
-            PropertyPanel.globalDispatcher.dispatchEventWith(UIMapperEventType.PROPERTY_CHANGE, false, {target:_target, propertyName:"width"});
-            PropertyPanel.globalDispatcher.dispatchEventWith(UIMapperEventType.PROPERTY_CHANGE, false, {target:_target, propertyName:"height"});
+            if (_target.width != oldValue.width)
+                PropertyPanel.globalDispatcher.dispatchEventWith(UIMapperEventType.PROPERTY_CHANGE, false, {target:_target, propertyName:"width"});
+            if (_target.height != oldValue.height)
+                PropertyPanel.globalDispatcher.dispatchEventWith(UIMapperEventType.PROPERTY_CHANGE, false, {target:_target, propertyName:"height"});
 
             if (object.name != PIVOT_POINT)
             {

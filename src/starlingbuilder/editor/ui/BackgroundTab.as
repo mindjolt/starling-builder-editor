@@ -14,10 +14,7 @@ package starlingbuilder.editor.ui
     import starlingbuilder.editor.events.DocumentEventType;
     import starlingbuilder.editor.helper.FileListingHelper;
     import starlingbuilder.util.feathers.FeathersUIUtil;
-    import starlingbuilder.util.ui.inspector.IPropertyRetriever;
     import starlingbuilder.util.ui.inspector.PropertyPanel;
-    import starlingbuilder.util.ui.inspector.UIMapperUtil;
-    import starlingbuilder.util.ui.inspector.WidthAndHeightPropertyRetriever;
 
     import feathers.controls.Button;
     import feathers.controls.LayoutGroup;
@@ -88,7 +85,7 @@ package starlingbuilder.editor.ui
 
         private function createPropertyPanel():void
         {
-            _propertyPanel = new PropertyPanel(null, null, displayObjectPropertyFactory);
+            _propertyPanel = new PropertyPanel(null, null);
             _propertyPanel.linkedProperties = ["width", "height"];
             var anchorLayoutData:AnchorLayoutData = new AnchorLayoutData();
             anchorLayoutData.bottom = 10;
@@ -169,11 +166,6 @@ package starlingbuilder.editor.ui
             {
                 _propertyPanel.reloadData();
             }
-        }
-
-        private function displayObjectPropertyFactory(target:Object, param:Object):IPropertyRetriever
-        {
-            return new WidthAndHeightPropertyRetriever(target, param);
         }
     }
 }

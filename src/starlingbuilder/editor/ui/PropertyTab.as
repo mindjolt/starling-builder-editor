@@ -23,7 +23,6 @@ package starlingbuilder.editor.ui
     import starlingbuilder.util.ui.inspector.PropertyComponentType;
     import starlingbuilder.util.ui.inspector.PropertyPanel;
     import starlingbuilder.util.ui.inspector.UIMapperUtil;
-    import starlingbuilder.util.ui.inspector.WidthAndHeightPropertyRetriever;
 
     import feathers.controls.Button;
     import feathers.controls.ButtonGroup;
@@ -100,14 +99,7 @@ package starlingbuilder.editor.ui
                 param.options = getStyleNames(target as FeathersControl);
             }
 
-            if (target is DisplayObject && (param.name == "width" || param.name == "height"))
-            {
-                return new WidthAndHeightPropertyRetriever(target, param);
-            }
-            else
-            {
-                return new DefaultPropertyRetriever(target, param);
-            }
+            return new DefaultPropertyRetriever(target, param);
         }
 
         private function createButtons():Array
