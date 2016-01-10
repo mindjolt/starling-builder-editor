@@ -126,8 +126,8 @@
         {
             "cls":"feathers.controls.LayoutGroup",
             "params":[
-                {"name":"width", "min":0, "default_value":0, "explicitField":"explicitWidth"},
-                {"name":"height", "min":0, "default_value":0, "explicitField":"explicitHeight"},
+                {"name":"width", "min":0, "explicitField":"explicitWidth"},
+                {"name":"height", "min":0, "explicitField":"explicitHeight"},
                 {"name":"layout", "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"starlingbuilder.editor.ui.DefaultEditPropertyPopup",
                 "supportedClasses":[null, "feathers.layout.HorizontalLayout", "feathers.layout.VerticalLayout", "feathers.layout.AnchorLayout", "feathers.layout.FlowLayout", "feathers.layout.TiledRowsLayout", "feathers.layout.TiledColumnsLayout", "feathers.layout.WaterfallLayout"]},
                 {"name":"layoutData", "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"starlingbuilder.editor.ui.DefaultEditPropertyPopup",
@@ -141,8 +141,8 @@
         {
             "cls":"feathers.controls.ScrollContainer",
             "params":[
-                {"name":"width", "min":0},
-                {"name":"height", "min":0},
+                {"name":"width", "min":0, "explicitField":"explicitWidth"},
+                {"name":"height", "min":0, "explicitField":"explicitHeight"},
                 {"name":"layout", "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"starlingbuilder.editor.ui.DefaultEditPropertyPopup",
                     "supportedClasses":[null, "feathers.layout.HorizontalLayout", "feathers.layout.VerticalLayout", "feathers.layout.AnchorLayout", "feathers.layout.FlowLayout", "feathers.layout.TiledRowsLayout", "feathers.layout.TiledColumnsLayout", "feathers.layout.WaterfallLayout"]},
                 {"name":"layoutData", "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"starlingbuilder.editor.ui.DefaultEditPropertyPopup",
@@ -200,17 +200,6 @@
         },
 
         {
-            "cls":"feathers.controls.Panel",
-            "params":[
-                {"name":"title"},
-                {"name":"width", "min":0},
-                {"name":"height", "min":0}
-            ],
-            "container":true,
-            "tag":"container"
-        },
-
-        {
             "cls":"feathers.controls.Button",
             "params":[
                 {"name":"label"}
@@ -238,8 +227,6 @@
         {
             "cls":"feathers.controls.GroupedList",
             "params":[
-                {"name":"width", "min":0},
-                {"name":"height", "min":0}
             ],
             "tag":"feathers"
         },
@@ -273,8 +260,6 @@
         {
             "cls":"feathers.controls.List",
             "params":[
-                {"name":"width", "min":0},
-                {"name":"height", "min":0}
             ],
             "tag":"feathers"
         },
@@ -284,8 +269,6 @@
         {
             "cls":"feathers.controls.NumericStepper",
             "params":[
-                {"name":"width", "min":0, "default_value":0},
-                {"name":"height", "min":0, "default_value":0},
                 {"name":"minimum"},
                 {"name":"maximum"},
                 {"name":"step"},
@@ -301,8 +284,6 @@
             "tag":"feathers"
         },
 
-
-
         {
             "cls":"feathers.controls.PageIndicator",
             "params":[
@@ -311,10 +292,17 @@
         },
 
         {
+            "cls":"feathers.controls.Panel",
+            "params":[
+                {"name":"title"}
+            ],
+            "container":true,
+            "tag":"feathers"
+        },
+
+        {
             "cls":"feathers.controls.ProgressBar",
             "params":[
-                {"name":"width", "min":0, "default_value":0},
-                {"name":"height", "min":0, "default_value":0},
                 {"name":"minimum"},
                 {"name":"maximum"},
                 {"name":"value"}
@@ -334,8 +322,6 @@
         {
             "cls":"feathers.controls.Slider",
             "params":[
-                {"name":"width", "min":0, "default_value":0},
-                {"name":"height", "min":0, "default_value":0},
                 {"name":"minimum"},
                 {"name":"maximum"},
                 {"name":"step"},
@@ -347,8 +333,6 @@
         {
             "cls":"feathers.controls.TextArea",
             "params":[
-                {"name":"width", "min":0, "default_value":0},
-                {"name":"height", "min":0, "default_value":0},
                 {"name":"text"}
             ],
             "tag":"feathers"
@@ -357,8 +341,6 @@
         {
             "cls":"feathers.controls.TextInput",
             "params":[
-                {"name":"width", "min":0, "default_value":0},
-                {"name":"height", "min":0, "default_value":0},
                 {"name":"text"}
             ],
             "tag":"feathers"
@@ -492,6 +474,8 @@
     "default_feathers_component":
     {
         "params":[
+            {"name":"width", "min":0, "explicitField":"explicitWidth"},
+            {"name":"height", "min":0, "explicitField":"explicitHeight"},
             {"name":"styleName", "default_value":""},
             {"name":"layoutData", "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"starlingbuilder.editor.ui.DefaultEditPropertyPopup",
                 "supportedClasses":[null, "feathers.layout.AnchorLayoutData"]},
