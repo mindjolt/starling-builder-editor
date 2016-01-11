@@ -55,7 +55,7 @@ package starlingbuilder.util.ui.inspector
             //TODO: better change detection
             if (_oldValue is Number)
             {
-                return Math.abs(Number(_propertyRetriever.get(_param.name)) - Number(_oldValue)) >= 1;
+                return Math.abs(Number(_propertyRetriever.get(_param.name)) - Number(_oldValue)) >= 0.0001;
             }
             else
             {
