@@ -86,7 +86,6 @@ package starlingbuilder.editor.ui
         private function createPropertyPanel():void
         {
             _propertyPanel = new PropertyPanel(null, null);
-            _propertyPanel.linkedProperties = ["width", "height"];
             var anchorLayoutData:AnchorLayoutData = new AnchorLayoutData();
             anchorLayoutData.bottom = 10;
             anchorLayoutData.left = anchorLayoutData.right = 5;

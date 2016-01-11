@@ -176,7 +176,6 @@ package starlingbuilder.editor.ui
             if (!_propertyPanelCache[target.constructor])
             {
                 var propertyPanel:PropertyPanel = new PropertyPanel(null, null, displayObjectPropertyFactory);
-                propertyPanel.linkedProperties = ["width", "height"];
                 _propertyPanelCache[target.constructor] = propertyPanel;
             }
 
