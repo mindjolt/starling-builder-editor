@@ -47,7 +47,7 @@ package starlingbuilder.util.ui.inspector
             }
             catch(e:Error)
             {
-                trace("Invalid JSON object!")
+                throw new Error("Invalid JSON object!");
             }
         }
 
