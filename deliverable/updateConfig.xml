@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?> 
      <update xmlns="http://ns.adobe.com/air/framework/update/description/2.5"> 
-       <versionNumber>0.6.8</versionNumber>
-       <url>http://cache.mindjolt.com/starling-builder/v0.6.8/starling-builder.air</url>
+       <versionNumber>0.7.0</versionNumber>
+       <url>http://cache.mindjolt.com/starling-builder/v0.7.0/starling-builder.air</url>
        <description>
-[editor] Fix bug: open recent with dirty file override the newly open file
-[editor] Layout tab support drag and drop
-[editor] Right panel becomes scrollable
-[editor] Implement help button for quick documentation lookup
+[engine] Add TweenBuilder support
+[editor] Add Tween preview tab
+[editor] Implement Unity liked slidable label
+[editor] Add explicit check box for feathers components
+[editor] Support more feathers layouts and components
+[editor] Various bug fixes
        </description>
     </update>
