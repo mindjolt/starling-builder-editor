@@ -31,6 +31,8 @@ package starlingbuilder.editor.controller
     import starlingbuilder.editor.themes.IUIEditorThemeMediator;
     import starlingbuilder.engine.IUIBuilder;
     import starlingbuilder.engine.UIBuilder;
+    import starlingbuilder.engine.tween.DefaultTweenBuilder;
+    import starlingbuilder.engine.tween.ITweenBuilder;
     import starlingbuilder.engine.util.ParamUtil;
     import starlingbuilder.util.feathers.popup.InfoPopup;
     import starlingbuilder.util.history.HistoryManager;
@@ -101,6 +103,8 @@ package starlingbuilder.editor.controller
 
         private var _localizationManager:LocalizationManager;
 
+        private var _tweenBuilder:ITweenBuilder;
+
         private var _setting:Setting;
 
         private var _collapseMap:Dictionary;
@@ -117,8 +121,10 @@ package starlingbuilder.editor.controller
 
             _assetMediator = new AssetMediator(_assetManager);
 
-            _uiBuilder = new UIBuilder(_assetMediator, true, TemplateData.editor_template, _localizationManager.localization);
-            _uiBuilderForGame = new UIBuilder(_assetMediator, false, TemplateData.editor_template, _localizationManager.localization);
+            _tweenBuilder = new DefaultTweenBuilder();
+
+            _uiBuilder = new UIBuilder(_assetMediator, true, TemplateData.editor_template, _localizationManager.localization, _tweenBuilder);
+            _uiBuilderForGame = new UIBuilder(_assetMediator, false, TemplateData.editor_template, _localizationManager.localization, _tweenBuilder);
 
             _canvas = new Quad(100, 100);
             _canvasContainer = new Sprite();
@@ -128,7 +134,7 @@ package starlingbuilder.editor.controller
             _layoutContainer = new LayoutGroup();
             _layoutContainer.layout = new AnchorLayout();
             _snapContainer = new Sprite();
-            _boundingBox = new InteractiveBoundingBox();
+            _boundingBox = new InteractiveBoundingBox(this);
 
             _testContainer = new Sprite();
 

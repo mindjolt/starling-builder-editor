@@ -8,7 +8,9 @@
 package starlingbuilder.editor.helper
 {
     import starlingbuilder.editor.UIEditorApp;
+    import starlingbuilder.editor.controller.DocumentManager;
     import starlingbuilder.editor.data.TemplateData;
+    import starlingbuilder.editor.events.DocumentEventType;
     import starlingbuilder.editor.history.MovePivotOperation;
     import starlingbuilder.editor.history.ResizeOperation;
     import starlingbuilder.engine.util.DisplayObjectUtil;
@@ -69,13 +71,15 @@ package starlingbuilder.editor.helper
 
         private var _enable:Boolean = true;
 
-        public function InteractiveBoundingBox()
+        private var _documentManager:DocumentManager;
+
+        public function InteractiveBoundingBox(documentManager:DocumentManager)
         {
             createBoundingBox();
             _boundingBoxContainer.visible = false;
 
-            PropertyPanel.globalDispatcher.addEventListener(UIMapperEventType.PROPERTY_CHANGE, onChange);
-
+            _documentManager = documentManager;
+            _documentManager.addEventListener(DocumentEventType.CHANGE, onChange);
         }
 
         public function set target(value:DisplayObject):void
@@ -216,7 +220,10 @@ package starlingbuilder.editor.helper
 
             for each (var param:Object in params)
             {
-                if (param.name == "width" || param.name == "height")
+                if (param.name == "width" && (!target.hasOwnProperty("explicitWidth") || !isNaN(target["explicitWidth"])))
+                    ++count;
+
+                if (param.name == "height" && (!target.hasOwnProperty("explicitHeight") || !isNaN(target["explicitHeight"])))
                     ++count;
             }
 
@@ -392,6 +399,12 @@ package starlingbuilder.editor.helper
                     break;
             }
 
+            //This will lock width/height ratio when linked button is active
+            if (_target.width != oldValue.width)
+                PropertyPanel.globalDispatcher.dispatchEventWith(UIMapperEventType.PROPERTY_CHANGE, false, {target:_target, propertyName:"width"});
+            if (_target.height != oldValue.height)
+                PropertyPanel.globalDispatcher.dispatchEventWith(UIMapperEventType.PROPERTY_CHANGE, false, {target:_target, propertyName:"height"});
+
             if (object.name != PIVOT_POINT)
             {
                 var newValue:Rectangle = new Rectangle(_target.x, _target.y, _target.width, _target.height);
@@ -412,8 +425,7 @@ package starlingbuilder.editor.helper
 
         private function onChange(event:Event):void
         {
-            if (_target === event.data.target)
-                reload();
+            reload();
         }
 
         public function get enable():Boolean

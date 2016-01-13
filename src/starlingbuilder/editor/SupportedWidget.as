@@ -11,11 +11,13 @@ package starlingbuilder.editor
     import feathers.display.Scale3Image;
     import feathers.display.Scale9Image;
     import feathers.display.TiledImage;
+    import feathers.layout.FlowLayout;
     import feathers.layout.HorizontalLayout;
     import feathers.layout.TiledColumnsLayout;
     import feathers.layout.TiledRowsLayout;
     import feathers.layout.VerticalLayout;
     import feathers.layout.VerticalSpinnerLayout;
+    import feathers.layout.WaterfallLayout;
 
     import starling.display.Button;
     import starling.display.Image;
@@ -54,6 +56,7 @@ package starlingbuilder.editor
             ButtonGroup,
             Callout,
             Check,
+            DateTimeSpinner,
             Drawers,
             GroupedList,
             Header,
@@ -91,9 +94,11 @@ package starlingbuilder.editor
 
             HorizontalLayout,
             VerticalLayout,
+            FlowLayout,
             TiledRowsLayout,
             TiledColumnsLayout,
             VerticalSpinnerLayout,
+            WaterfallLayout,
         ]
 
         public static const DEFAULT_SCALE3_RATIO:Array = [0.49, 0.02, "horizontal"];

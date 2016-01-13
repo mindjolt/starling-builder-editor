@@ -8,6 +8,9 @@
             <entry library-id="1b681331-4950-42a7-8e25-11d467985093">
               <dependency linkage="Merged" />
             </entry>
+            <entry library-id="33b263e2-15d4-413d-8296-199e18cd3817">
+              <dependency linkage="Merged" />
+            </entry>
           </entries>
           <sdk name="AIRSDK" />
         </dependencies>
@@ -29,15 +32,42 @@
             <entry library-id="cbf26817-0ccc-4195-8bf0-38892b4aa95f">
               <dependency linkage="Merged" />
             </entry>
+            <entry library-id="85019b74-0ac9-4fa3-ae3f-3595ecd4e729">
+              <dependency linkage="Merged" />
+            </entry>
           </entries>
           <sdk name="AIRSDK" />
         </dependencies>
         <compiler-options>
           <map>
-            <entry key="compiler.debug.swf" value="false" />
+            <entry key="compiler.debug.swf" value="true" />
           </map>
         </compiler-options>
         <packaging-air-desktop use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/src/starlingbuilder/editor/UI-editor-app.xml" package-file-name="starling-builder">
+          <files-to-package>
+            <FilePathAndPathInPackage file-path="$MODULE_DIR$/icons" path-in-package="icons" />
+            <FilePathAndPathInPackage file-path="$MODULE_DIR$/src/starlingbuilder/editor/updateConfig.xml" path-in-package="updateConfig.xml" />
+          </files-to-package>
+        </packaging-air-desktop>
+        <packaging-android />
+        <packaging-ios />
+      </configuration>
+      <configuration name="test" target-platform="Desktop" pure-as="true" main-class="starlingbuilder.editor.MainCI" output-file="test.swf" output-folder="$MODULE_DIR$/out/production/test/starling-builder-editor">
+        <dependencies>
+          <entries>
+            <entry library-id="0420f57a-c647-4d7e-beb3-b6c1b0c14779">
+              <dependency linkage="Merged" />
+            </entry>
+            <entry library-id="3a9b2050-d68d-4a6a-b765-f4f0e4f77722">
+              <dependency linkage="Merged" />
+            </entry>
+          </entries>
+          <sdk name="AIRSDK" />
+        </dependencies>
+        <compiler-options>
+          <option name="additionalOptions" value="-advanced-telemetry=true" />
+        </compiler-options>
+        <packaging-air-desktop use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/src/starlingbuilder/editor/UI-editor-app.xml" package-file-name="test">
           <files-to-package>
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/icons" path-in-package="icons" />
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/src/starlingbuilder/editor/updateConfig.xml" path-in-package="updateConfig.xml" />
@@ -54,6 +84,8 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/starling-builder-engine/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/test-ci/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/tests/src" isTestSource="true" />
     </content>
     <orderEntry type="jdk" jdkName="AIRSDK" jdkType="Flex SDK Type (new)" />
     <orderEntry type="sourceFolder" forTests="false" />
@@ -77,6 +109,50 @@
         <JAVADOC />
         <SOURCES />
         <jarDirectory url="file://$MODULE_DIR$/libs" recursive="false" />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library type="flex">
+        <properties id="0420f57a-c647-4d7e-beb3-b6c1b0c14779" />
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/libs" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+        <jarDirectory url="file://$MODULE_DIR$/libs" recursive="false" />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library type="flex">
+        <properties id="3a9b2050-d68d-4a6a-b765-f4f0e4f77722" />
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/tests/libs" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+        <jarDirectory url="file://$MODULE_DIR$/tests/libs" recursive="false" />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library type="flex">
+        <properties id="33b263e2-15d4-413d-8296-199e18cd3817" />
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/tests/libs" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+        <jarDirectory url="file://$MODULE_DIR$/tests/libs" recursive="false" />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library type="flex">
+        <properties id="85019b74-0ac9-4fa3-ae3f-3595ecd4e729" />
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/tests/libs" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+        <jarDirectory url="file://$MODULE_DIR$/tests/libs" recursive="false" />
       </library>
     </orderEntry>
   </component>

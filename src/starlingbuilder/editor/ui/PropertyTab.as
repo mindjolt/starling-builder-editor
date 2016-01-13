@@ -23,7 +23,6 @@ package starlingbuilder.editor.ui
     import starlingbuilder.util.ui.inspector.PropertyComponentType;
     import starlingbuilder.util.ui.inspector.PropertyPanel;
     import starlingbuilder.util.ui.inspector.UIMapperUtil;
-    import starlingbuilder.util.ui.inspector.WidthAndHeightPropertyRetriever;
 
     import feathers.controls.Button;
     import feathers.controls.ButtonGroup;
@@ -66,7 +65,7 @@ package starlingbuilder.editor.ui
             _documentManager = UIEditorApp.instance.documentManager;
             _documentManager.addEventListener(DocumentEventType.CHANGE, onChange);
 
-            width = 320;
+            width = 350;
 
             var layout:VerticalLayout = new VerticalLayout();
             layout.paddingTop = layout.gap = 20;
@@ -100,14 +99,7 @@ package starlingbuilder.editor.ui
                 param.options = getStyleNames(target as FeathersControl);
             }
 
-            if (target is DisplayObject && (param.name == "width" || param.name == "height"))
-            {
-                return new WidthAndHeightPropertyRetriever(target, param);
-            }
-            else
-            {
-                return new DefaultPropertyRetriever(target, param);
-            }
+            return new DefaultPropertyRetriever(target, param);
         }
 
         private function createButtons():Array
@@ -184,7 +176,6 @@ package starlingbuilder.editor.ui
             if (!_propertyPanelCache[target.constructor])
             {
                 var propertyPanel:PropertyPanel = new PropertyPanel(null, null, displayObjectPropertyFactory);
-                propertyPanel.linkedProperties = ["width", "height"];
                 _propertyPanelCache[target.constructor] = propertyPanel;
             }
 

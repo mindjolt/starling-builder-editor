@@ -22,7 +22,7 @@ package starlingbuilder.editor
     import starling.utils.HAlign;
     import starling.utils.VAlign;
 
-    [SWF(frameRate=60, width=1300, height=960, backgroundColor="#000")]
+    [SWF(frameRate=60, width=1320, height=960, backgroundColor="#000")]
     public class Main extends Sprite
     {
         public static var STAGE : Stage;
@@ -59,7 +59,7 @@ package starlingbuilder.editor
 
             Starling.handleLostContext = true;
 
-            _starling = new Starling(UIEditorApp, stage, _viewport, null, Context3DRenderMode.AUTO, Context3DProfile.BASELINE);
+            _starling = new Starling(getApp(), stage, _viewport, null, Context3DRenderMode.AUTO, Context3DProfile.BASELINE);
 
             _starling.simulateMultitouch  = false;
             _starling.enableErrorChecking = false;
@@ -88,6 +88,11 @@ package starlingbuilder.editor
 
             trace(message);
             InfoPopup.show(message);
+        }
+
+        protected function getApp():Class
+        {
+            return UIEditorApp;
         }
     }
 }

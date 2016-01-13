@@ -28,16 +28,15 @@ package starlingbuilder.util.ui.inspector
 
         protected var _propertyRetrieverFactory:Function;
 
-        protected var _linkedProperties:Array;
-        protected var _linkedPropertiesInitValues:Object;
         protected var _linkButton:LinkButton;
+        protected var _linkOperation:ILinkOperation;
 
         protected var _setting:Object;
 
         public function PropertyPanel(target:Object = null, params:Array = null, propertyRetrieverFactory:Function = null, setting:Object = null)
         {
-            _linkedPropertiesInitValues = {};
             _linkButton = new LinkButton();
+            _linkOperation = new DefaultLinkOperation();
 
             _propertyRetrieverFactory = propertyRetrieverFactory;
             _setting = setting;
@@ -87,7 +86,7 @@ package starlingbuilder.util.ui.inspector
 
                 var index:int = -1;
 
-                if (_linkedProperties && _target && _params)
+                if (_target && _params)
                 {
                     index = findFirstLinkedPropertyIndex();
                 }
@@ -162,27 +161,13 @@ package starlingbuilder.util.ui.inspector
             super.dispose();
         }
 
-
-        public function get linkedProperties():Array
-        {
-            return _linkedProperties;
-        }
-
-        public function set linkedProperties(value:Array):void
-        {
-            _linkedProperties = value;
-        }
-
         private function findFirstLinkedPropertyIndex():int
         {
-            for each (var name:String in _linkedProperties)
+            for (var i:int = 0; i < _params.length; ++i)
             {
-                for (var i:int = 0; i < _params.length; ++i)
+                if (_params[i].hasOwnProperty("link"))
                 {
-                    if (_params[i].name == name)
-                    {
-                        return i;
-                    }
+                    return i;
                 }
             }
 
@@ -193,35 +178,28 @@ package starlingbuilder.util.ui.inspector
         {
             var name:String = event.data.propertyName;
 
-            if (_linkButton.isSelected && _linkedProperties.indexOf(name) != -1 && linkedCondition(_target))
+            if (_linkButton.isSelected)
             {
-                for each (var item:String in _linkedProperties)
+                for each (var param:Object in _params)
                 {
-                    if (item == name) continue;
+                    if (!param.hasOwnProperty("link")) continue;
 
-                    if (_target && _target.hasOwnProperty(item))
+                    if (_target && _target.hasOwnProperty(name))
                     {
-                        //special case for locking width/height ratio
-                        if (_target is DisplayObject)
-                        {
-                            if (name == "width")
-                            {
-                                _target["scaleY"] = _target["scaleX"];
-                            }
-                            else if (name == "height")
-                            {
-                                _target["scaleX"] = _target["scaleY"];
-                            }
-                        }
+                        _linkOperation.update(_target, name, param.name);
                     }
                 }
             }
         }
 
-        //special case for rotation/size race condition
-        private function linkedCondition(target:Object):Boolean
+        public function set linkOperation(value:ILinkOperation):void
         {
-            return target is DisplayObject && target.rotation == 0;
+            _linkOperation = value;
+        }
+
+        public function get linkOperation():ILinkOperation
+        {
+            return _linkOperation;
         }
     }
 }

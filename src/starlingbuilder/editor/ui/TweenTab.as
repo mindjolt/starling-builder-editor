@@ -7,7 +7,13 @@
  */
 package starlingbuilder.editor.ui
 {
+    import feathers.controls.Button;
+    import feathers.controls.Check;
     import feathers.controls.ScrollContainer;
+
+    import flash.utils.Dictionary;
+
+    import starling.display.DisplayObject;
 
     import starlingbuilder.editor.UIEditorApp;
     import starlingbuilder.editor.controller.DocumentManager;
@@ -25,24 +31,20 @@ package starlingbuilder.editor.ui
     import starling.events.Event;
     import starlingbuilder.editor.utils.AssetManager;
 
-    public class CustomParamsTab extends ScrollContainer
+    public class TweenTab extends ScrollContainer
     {
-        public static const LOCALIZE_KEYS:String = "customParams.localizeKey";
+        public static const TWEEN_DATA:String = "tweenData";
 
         private var _propertiesPanel:PropertyPanel;
+        private var _tweenAllCheck:Check;
 
         private var _documentManager:DocumentManager;
 
-        private var _assetManger:AssetManager;
-
         private var _params:Array;
 
-        public function CustomParamsTab()
+        public function TweenTab()
         {
-            _assetManger = UIEditorApp.instance.assetManager;
-
-            _params = ParamUtil.getCustomParams(TemplateData.editor_template);
-            processParams(_params);
+            _params = ParamUtil.getTweenParams(TemplateData.editor_template);
 
             _documentManager = UIEditorApp.instance.documentManager;
             _documentManager.addEventListener(DocumentEventType.CHANGE, onChange);
@@ -60,11 +62,21 @@ package starlingbuilder.editor.ui
 
         private function initUI():void
         {
-            PropertyPanel.globalDispatcher.addEventListener(UIMapperEventType.PROPERTY_CHANGE, onPropertyChange);
-
             _propertiesPanel = new PropertyPanel({}, []);
 
             addChild(_propertiesPanel);
+
+            _tweenAllCheck = new Check();
+            _tweenAllCheck.label = "tween all";
+            _tweenAllCheck.isSelected = true;
+            addChild(_tweenAllCheck);
+
+            var group:LayoutGroup = FeathersUIUtil.layoutGroupWithHorizontalLayout();
+            var playButton:Button = FeathersUIUtil.buttonWithLabel("start", onPlay);
+            var stopButton:Button = FeathersUIUtil.buttonWithLabel("stop", onStop);
+            group.addChild(playButton);
+            group.addChild(stopButton);
+            addChild(group);
         }
 
         private function onChange(event:Event):void
@@ -81,32 +93,50 @@ package starlingbuilder.editor.ui
             }
         }
 
-        private function processParams(params:Array):void
+        private function findName(root:DisplayObject, object:DisplayObject, paramsDict:Dictionary):String
         {
-            var localization:ILocalization = UIEditorApp.instance.localizationManager.localization;
+            var name:String = "";
 
-            for each (var item:Object in params)
+            while (object !== root)
             {
-                if (item.name == LOCALIZE_KEYS && localization)
-                {
-                    delete item.options;
-                    item.options = localization.getKeys();
-                }
+                if (object == null) return null;
+
+                if (paramsDict[object])
+                    name = object.name + "." + name;
+
+                object = object.parent;
             }
+
+            return name.substring(0, name.length - 1);
         }
 
-        private function onPropertyChange(event:Event):void
+        private function onPlay(event:*):void
         {
-            if (event.data.propertyName == LOCALIZE_KEYS)
+            var root:DisplayObject = _documentManager.root;
+            var selected:DisplayObject = _documentManager.selectedObject;
+            var paramsDict:Dictionary = _documentManager.extraParamsDict;
+            var names:Array;
+
+            _documentManager.uiBuilder.tweenBuilder.stop(root, paramsDict);
+
+            if (!_tweenAllCheck.isSelected)
             {
-                _documentManager.uiBuilder.localizeTexts(_documentManager.root, _documentManager.extraParamsDict);
+                var name:String = findName(root, selected, paramsDict);
+                if (name) names = [name];
             }
+
+            _documentManager.uiBuilder.tweenBuilder.start(root, paramsDict, names);
+        }
+
+        private function onStop(event:*):void
+        {
+            var root:DisplayObject = _documentManager.root;
+            var paramsDict:Dictionary = _documentManager.extraParamsDict;
+            _documentManager.uiBuilder.tweenBuilder.stop(root);
         }
 
         override public function dispose():void
         {
-            PropertyPanel.globalDispatcher.removeEventListener(UIMapperEventType.PROPERTY_CHANGE, onPropertyChange);
-
             super.dispose();
         }
     }

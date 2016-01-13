@@ -54,7 +54,7 @@ package starlingbuilder.editor.ui
             group.addChild(_helpButton);
             addChild(group);
 
-            createTabs([{"label":"properties"}, {"label":"custom"}], [new PropertyTab(), new CustomParamsTab()]);
+            createTabs([{"label":"properties"}, {"label":"custom"}, {"label":"tween"}], [new PropertyTab(), new CustomParamsTab(), new TweenTab()]);
         }
 
         private function onChange(event:Event):void
