@@ -124,6 +124,34 @@ package starlingbuilder.engine
             "version":"1.0"
         }
 
+        private var _externalLayout:Object = {
+            "layout":{
+                "children":[
+                    {
+                        "cls":"starling.display.Sprite",
+                        "customParams":{
+                            "source":"quad"
+                        },
+                        "params":{
+                            "name":"quad"
+                        }
+                    }
+                ],
+                "cls":"starling.display.Sprite",
+                "customParams":{},
+                "params":{
+                    "name":"root"
+                }
+            },
+            "setting":{
+                "canvasSize":{
+                    "x":640,
+                    "y":960
+                }
+            },
+            "version":"1.0"
+        }
+
         public function UIBuilderTest()
         {
         }
@@ -222,7 +250,21 @@ package starlingbuilder.engine
             assertEquals(textField.text, "hola");
         }
 
+        [Test]
+        public function shouldLoadExternalLayout():void
+        {
+            _assetMediator.expects("getExternalData").withArg("quad").willReturn(_quadLayout);
 
+            var sprite:Sprite = _uiBuilder.create(_externalLayout) as Sprite;
 
+            var parentContainer:Sprite = sprite.getChildAt(0) as Sprite;
+            var childRoot:Sprite = parentContainer.getChildAt(0) as Sprite;
+            var quad:Quad = childRoot.getChildAt(0) as Quad;
+
+            assertTrue(parentContainer is Sprite);
+            assertTrue(childRoot is Sprite);
+            assertTrue(quad is Quad);
+            assertEquals(quad.name, "quad");
+        }
     }
 }
