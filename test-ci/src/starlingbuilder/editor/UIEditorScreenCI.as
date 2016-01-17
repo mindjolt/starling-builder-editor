@@ -13,6 +13,10 @@ package starlingbuilder.editor
     import starling.events.KeyboardEvent;
 
     import starlingbuilder.editor.citestcase.BasicTest;
+    import starlingbuilder.editor.citestcase.DocumentTest;
+    import starlingbuilder.editor.citestcase.LayoutTest;
+    import starlingbuilder.editor.citestcase.LocalizationTest;
+    import starlingbuilder.editor.citestcase.TweenTest;
     import starlingbuilder.util.feathers.popup.InfoPopup;
 
     public class UIEditorScreenCI extends UIEditorScreen
@@ -34,6 +38,11 @@ package starlingbuilder.editor
             _testManager.add(BasicTest.COMPONENT1);
             _testManager.add(BasicTest.COMPONENT2);
             _testManager.add(BasicTest.COMPONENT3);
+            _testManager.add(LayoutTest.LAYOUTS);
+            _testManager.add(LayoutTest.ANCHOR_LAYOUT);
+            _testManager.add(DocumentTest.OPERATIONS);
+            _testManager.add(LocalizationTest.LOCALIZE);
+            _testManager.add(TweenTest.TWEEN);
             _testManager.add(function():void{
                 InfoPopup.show("CI Test Complete.")
             })
@@ -49,7 +58,7 @@ package starlingbuilder.editor
 
             if (event.keyCode == Keyboard.R)
             {
-                _testManager.reset();
+                _testManager.stop();
             }
         }
     }

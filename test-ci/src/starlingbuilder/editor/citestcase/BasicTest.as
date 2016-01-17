@@ -16,6 +16,7 @@ package starlingbuilder.editor.citestcase
 
     import starling.display.Button;
     import starling.display.DisplayObject;
+    import starling.display.Image;
     import starling.display.MovieClip;
     import starling.display.Quad;
     import starling.display.Sprite;
@@ -32,17 +33,9 @@ package starlingbuilder.editor.citestcase
     import starlingbuilder.editor.data.TemplateData;
     import starlingbuilder.engine.util.ParamUtil;
 
-    public class BasicTest
+    public class BasicTest extends AbstractTest
     {
-        public static function get selectedObject():DisplayObject
-        {
-            return UIEditorApp.instance.documentManager.selectedObject;
-        }
 
-        public static function get documentManager():DocumentManager
-        {
-            return UIEditorApp.instance.documentManager;
-        }
 
 
         public static const INTERACTION:Array = [
@@ -50,6 +43,7 @@ package starlingbuilder.editor.citestcase
             function():void{
                 documentManager.clear();
                 selectTab("asset");
+                selectPickerListComponent(Image);
                 selectGroupList(0, 0);
             },
 
@@ -306,49 +300,8 @@ package starlingbuilder.editor.citestcase
         }
 
 
-        public static function selectTab(name:String):void
-        {
-            simulateTouch(findDisplayObject({label:name}));
-        }
 
-        public static function selectPickerListComponent(cls:Class):void
-        {
-            var pickerList:PickerList = findDisplayObject({cls:PickerList}, UIEditorScreen.instance.leftPanel) as PickerList;
-            pickerList.selectedItem = ParamUtil.getClassName(cls);
-        }
 
-        public static function selectListComponent(cls:Class):void
-        {
-            var list:List = findDisplayObject({cls:List}, UIEditorScreen.instance.leftPanel) as List;
-            var index:int = CITestUtil.findListCollectionIndex(list.dataProvider, ParamUtil.getClassName(cls));
-            list.selectedIndex = index
-        }
 
-        public static function selectGroupList(groupIndex:int, itemIndex:int):void
-        {
-            var list:GroupedList = findDisplayObject({cls:GroupedList}) as GroupedList;
-            list.setSelectedLocation(groupIndex, itemIndex);
-        }
-
-        public static function selectList(index:int):void
-        {
-            var list:List = findDisplayObject({cls:List}) as List;
-            list.selectedIndex = index;
-        }
-
-        public static function clickButton(name:String):void
-        {
-            simulateTouch(findDisplayObject({label:name}));
-        }
-
-        private static function componentFunction(cls:Class):Function
-        {
-            return function():void{
-                documentManager.clear();
-                selectTab("feathers");
-                selectListComponent(cls);
-                trace(ParamUtil.getClassName(cls));
-            }
-        }
     }
 }

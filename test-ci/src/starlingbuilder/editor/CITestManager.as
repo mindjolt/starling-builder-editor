@@ -45,6 +45,13 @@ package starlingbuilder.editor
             }
         }
 
+        public function stop():void
+        {
+            _timer.stop();
+            _index = 0;
+        }
+
+
         public function reset():void
         {
             _timer.stop();

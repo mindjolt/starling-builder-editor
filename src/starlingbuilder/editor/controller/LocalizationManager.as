@@ -91,7 +91,7 @@ package starlingbuilder.editor.controller
             })
         }
 
-        private function onLocale(event:Event):void
+        public function onLocale(event:Event):void
         {
             var locale:String = event.type;
 
