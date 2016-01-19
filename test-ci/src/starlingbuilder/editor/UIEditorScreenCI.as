@@ -14,6 +14,7 @@ package starlingbuilder.editor
 
     import starlingbuilder.editor.citestcase.BasicTest;
     import starlingbuilder.editor.citestcase.DocumentTest;
+    import starlingbuilder.editor.citestcase.InspectorTest;
     import starlingbuilder.editor.citestcase.LayoutTest;
     import starlingbuilder.editor.citestcase.LocalizationTest;
     import starlingbuilder.editor.citestcase.TweenTest;
@@ -43,6 +44,7 @@ package starlingbuilder.editor
             _testManager.add(DocumentTest.OPERATIONS);
             _testManager.add(LocalizationTest.LOCALIZE);
             _testManager.add(TweenTest.TWEEN);
+            _testManager.add(InspectorTest.TEST);
             _testManager.add(function():void{
                 InfoPopup.show("CI Test Complete.")
             })

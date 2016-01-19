@@ -3,6 +3,7 @@
  */
 package starlingbuilder.editor.citestcase
 {
+    import feathers.controls.Check;
     import feathers.controls.GroupedList;
     import feathers.controls.List;
     import feathers.controls.PickerList;
@@ -10,8 +11,11 @@ package starlingbuilder.editor.citestcase
     import feathers.controls.TextInput;
     import feathers.events.FeathersEventType;
 
+    import starling.display.Button;
+
     import starling.display.DisplayObject;
     import starling.display.DisplayObjectContainer;
+    import starling.events.Event;
 
     import starlingbuilder.editor.CITestUtil;
     import starlingbuilder.editor.UIEditorApp;
@@ -22,6 +26,7 @@ package starlingbuilder.editor.citestcase
     import starlingbuilder.editor.citestutil.simulateTouch;
     import starlingbuilder.editor.controller.DocumentManager;
     import starlingbuilder.engine.util.ParamUtil;
+    import starlingbuilder.util.ui.inspector.LinkButton;
 
     public class AbstractTest
     {
@@ -106,23 +111,52 @@ package starlingbuilder.editor.citestcase
                 var value:Object = properties[name];
 
                 var obj:DisplayObjectContainer = findDisplayObject({text: name}, container).parent.parent;
-                var textInput:TextInput = findDisplayObject({cls: TextInput}, obj) as TextInput;
-                if (textInput)
-                {
-                    textInput.text = value.toString();
-                    textInput.dispatchEventWith(FeathersEventType.FOCUS_OUT);
-                }
 
-                var textArea:TextArea = findDisplayObject({cls: TextArea}, obj) as TextArea;
-                if (textArea)
+                const components:Array = [TextInput, TextArea, PickerList, Check];
+
+                for each (var cls:Class in components)
                 {
-                    textArea.text = value.toString();
-                    textArea.dispatchEventWith(FeathersEventType.FOCUS_OUT);
+                    var object:DisplayObject = findDisplayObject({cls: cls}, obj);
+
+                    if (object is TextInput)
+                    {
+                        var textInput:TextInput = object as TextInput;
+                        textInput.text = value.toString();
+                        textInput.dispatchEventWith(FeathersEventType.FOCUS_OUT);
+                    }
+                    else if (object is TextArea)
+                    {
+                        var textArea:TextArea = object as TextArea;
+                        textArea.text = value.toString();
+                        textArea.dispatchEventWith(FeathersEventType.FOCUS_OUT);
+                    }
+                    else if (object is Check)
+                    {
+                        var check:Check = object as Check;
+                        check.isSelected = value;
+                        check.dispatchEventWith(Event.CHANGE);
+                    }
+                    else if (object is PickerList)
+                    {
+                        var pickerList:PickerList = object as PickerList;
+                        pickerList.selectedItem = value;
+                        pickerList.dispatchEventWith(Event.CHANGE);
+                    }
                 }
             }
-
-
         }
+
+        public static function clickLinkButton():void
+        {
+            var linkButton:LinkButton = findDisplayObject({cls:LinkButton}) as LinkButton;
+            var button:Button = findDisplayObject({cls:Button}, linkButton) as Button;
+            if (button)
+            {
+                simulateTouch(button);
+            }
+        }
+
+
 
 
     }

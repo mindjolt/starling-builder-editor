@@ -29,7 +29,6 @@ package starlingbuilder.editor.citestcase
             function():void{
                 selectTab("tween");
                 changeInspectorProperty({tweenData:JSON.stringify(tweenData1)});
-
             },
 
             function():void{
@@ -60,6 +59,8 @@ package starlingbuilder.editor.citestcase
                 assertNumericEquals(target.scaleX, 1);
                 assertNumericEquals(target.scaleY, 1);
                 assertNumericEquals(target.alpha, 1);
+
+                selectTab("properties");
             }
         ]
 
