@@ -109,6 +109,7 @@ package starlingbuilder.editor.controller
             var documentManager:DocumentManager = UIEditorApp.instance.documentManager;
 
             documentManager.uiBuilder.localizeTexts(documentManager.root, documentManager.extraParamsDict);
+            documentManager.setChanged();
         }
 
         public function get localization():ILocalization
