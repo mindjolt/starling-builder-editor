@@ -285,7 +285,7 @@ package starlingbuilder.editor.controller
                     parent.addChildAt(obj, index);
             }
 
-            _dataProvider.push({label:obj.name, hidden:false, lock:false, obj:obj, layer:getLayerFromObject(obj)});
+            _dataProvider.push({label:obj.name, hidden:!obj.visible, lock:!obj.touchable, obj:obj, layer:getLayerFromObject(obj)});
         }
 
         private function getLayerFromObject(obj:DisplayObject):int
@@ -696,6 +696,8 @@ package starlingbuilder.editor.controller
                 setting.canvasSize = {x:_canvasSize.x, y:_canvasSize.y};
             }
 
+            saveFlags(setting);
+
             return setting;
         }
 
@@ -712,6 +714,8 @@ package starlingbuilder.editor.controller
                 {
                     canvasSize = new Point(setting.canvasSize.x, setting.canvasSize.y);
                 }
+
+                loadFlags(setting);
             }
 
             setChanged();
@@ -761,6 +765,7 @@ package starlingbuilder.editor.controller
 
             importSetting(result.data.setting);
 
+            setLayerChanged();
             setChanged();
         }
 
@@ -1171,6 +1176,51 @@ package starlingbuilder.editor.controller
             setLayerChanged();
             setChanged();
         }
+
+        private function loadFlags(setting:Object):void
+        {
+            var objects:Array = [];
+            getObjectsByPreorderTraversal(_root, _extraParamsDict, objects);
+
+            var hiddenFlag:String = setting.hidden;
+            var lockFlag:String = setting.lock;
+
+            for (var i:int = 0; i < objects.length; ++i)
+            {
+                if (hiddenFlag) objects[i].visible = (hiddenFlag.charAt(i) != "1");
+                if (lockFlag) objects[i].touchable = (lockFlag.charAt(i) != "1");
+            }
+        }
+
+        private function saveFlags(setting:Object):void
+        {
+            var objects:Array = [];
+            getObjectsByPreorderTraversal(_root, _extraParamsDict, objects);
+
+            delete setting["hidden"];
+            delete setting["lock"];
+
+            var hiddenFlag:String = createFlag(objects, "visible");
+            var lockFlag:String = createFlag(objects, "touchable");
+            if (hiddenFlag) setting["hidden"] = hiddenFlag;
+            if (lockFlag) setting["lock"] = lockFlag;
+        }
+
+        private function createFlag(objects:Array, field:String):String
+        {
+            var saved:Boolean = false;
+
+            var flag:String = "";
+            for each (var obj:DisplayObject in objects)
+            {
+                var value:Boolean = !obj[field];
+                if (value == true) saved = true;
+                flag += value ? "1" : "0";
+            }
+
+            return saved ? flag : null;
+        }
+
 
 
     }
