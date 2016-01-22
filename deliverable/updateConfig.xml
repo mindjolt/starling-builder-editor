@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?> 
      <update xmlns="http://ns.adobe.com/air/framework/update/description/2.5"> 
-       <versionNumber>0.7.0</versionNumber>
-       <url>http://cache.mindjolt.com/starling-builder/v0.7.0/starling-builder.air</url>
+       <versionNumber>0.7.1</versionNumber>
+       <url>http://cache.mindjolt.com/starling-builder/v0.7.1/starling-builder.air</url>
        <description>
-[engine] Add TweenBuilder support
-[editor] Add Tween preview tab
-[editor] Implement Unity liked slidable label
-[editor] Add explicit check box for feathers components
-[editor] Support more feathers layouts and components
-[editor] Various bug fixes
+[engine] Implement LocalizationHandler
+[editor] Persist hidden and lock flag to layout
+[template] Add backgroundSkin property to LayoutGroup, add layout property to Panel
        </description>
     </update>
