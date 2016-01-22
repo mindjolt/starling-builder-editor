@@ -91,7 +91,7 @@ package starlingbuilder.editor.controller
             })
         }
 
-        private function onLocale(event:Event):void
+        public function onLocale(event:Event):void
         {
             var locale:String = event.type;
 
@@ -109,6 +109,7 @@ package starlingbuilder.editor.controller
             var documentManager:DocumentManager = UIEditorApp.instance.documentManager;
 
             documentManager.uiBuilder.localizeTexts(documentManager.root, documentManager.extraParamsDict);
+            documentManager.setChanged();
         }
 
         public function get localization():ILocalization

@@ -3,9 +3,11 @@
  */
 package starlingbuilder.engine
 {
+    import org.mock4as.Mock;
+
     import starling.textures.Texture;
 
-    public class MockAssetMediator implements IAssetMediator
+    public class MockAssetMediator extends Mock implements IAssetMediator
     {
         public function MockAssetMediator()
         {
@@ -13,17 +15,20 @@ package starlingbuilder.engine
 
         public function getTexture(name:String):Texture
         {
-            return null;
+            record("getTexture");
+            return expectedReturnFor();
         }
 
         public function getTextures(prefix:String="", result:Vector.<Texture>=null):Vector.<Texture>
         {
-            return null;
+            record("getTextures", prefix, result);
+            return expectedReturnFor();
         }
 
         public function getExternalData(name:String):Object
         {
-            return null;
+            record("getExternalData", name);
+            return expectedReturnFor();
         }
     }
 }
