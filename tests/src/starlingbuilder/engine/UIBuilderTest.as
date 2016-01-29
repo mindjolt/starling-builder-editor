@@ -49,7 +49,7 @@ package starlingbuilder.engine
                         "customParams":{},
                         "params":{
                             "color":6804084,
-                            "name":"quad",
+                            "name":"_quad",
                             "x":40,
                             "y":30
                         }
@@ -264,7 +264,42 @@ package starlingbuilder.engine
             assertTrue(parentContainer is Sprite);
             assertTrue(childRoot is Sprite);
             assertTrue(quad is Quad);
-            assertEquals(quad.name, "quad");
+            assertEquals(quad.name, "_quad");
+        }
+
+        [Test]
+        public function shouldBind():void
+        {
+            var sprite:Sprite = _uiBuilder.create(_quadLayout) as Sprite;
+            var object:TestUIClass1 = new TestUIClass1();
+            UIBuilder.bind(sprite, object);
+
+            assertTrue(object._quad != null);
+            assertEquals(object._quad.width, 50);
+            assertEquals(object._quad.height, 50);
+        }
+
+        [Test]
+        public function shouldNotBind():void
+        {
+            var sprite:Sprite = _uiBuilder.create(_textLayout, false) as Sprite;
+            var object:TestUIClass2 = new TestUIClass2();
+            UIBuilder.bind(sprite, object);
+
+            assertTrue(object.text == null);
         }
     }
+}
+
+import starling.display.Quad;
+import starling.text.TextField;
+
+class TestUIClass1
+{
+    public var _quad:Quad;
+}
+
+class TestUIClass2
+{
+    public var text:TextField;
 }
