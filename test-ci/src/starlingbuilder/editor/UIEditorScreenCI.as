@@ -4,6 +4,7 @@
 package starlingbuilder.editor
 {
     import flash.ui.Keyboard;
+    import flash.utils.getTimer;
 
     import org.flexunit.asserts.assertEquals;
 
@@ -11,6 +12,8 @@ package starlingbuilder.editor
     import starling.display.Stage;
     import starling.events.Event;
     import starling.events.KeyboardEvent;
+
+    import starlingbuilder.editor.citestcase.BackgroundTest;
 
     import starlingbuilder.editor.citestcase.BasicTest;
     import starlingbuilder.editor.citestcase.DocumentTest;
@@ -35,18 +38,23 @@ package starlingbuilder.editor
 
         override protected function initTests():void
         {
+            var t:Number = getTimer();
+
             _testManager.add(BasicTest.INTERACTION);
             _testManager.add(BasicTest.COMPONENT1);
             _testManager.add(BasicTest.COMPONENT2);
             _testManager.add(BasicTest.COMPONENT3);
+            _testManager.add(BackgroundTest.BACKGROUND);
             _testManager.add(LayoutTest.LAYOUTS);
             _testManager.add(LayoutTest.ANCHOR_LAYOUT);
+            _testManager.add(DocumentTest.DRAG_DROP);
             _testManager.add(DocumentTest.OPERATIONS);
             _testManager.add(LocalizationTest.LOCALIZE);
             _testManager.add(TweenTest.TWEEN);
             _testManager.add(InspectorTest.TEST);
             _testManager.add(function():void{
-                InfoPopup.show("CI Test Complete.")
+                InfoPopup.show("CI Test Complete.");
+                trace("Time: ", getTimer() - t);
             })
             _testManager.start();
         }

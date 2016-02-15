@@ -53,11 +53,19 @@ package starlingbuilder.editor.citestcase
                 simulateTouch(target, 50, 50, 200, 200);
                 assertNumericEquals(target.x, 200);
                 assertNumericEquals(target.y, 200);
+
+                //MoveOperation
+                undo();
+                assertNumericEquals(target.x, 0);
+                assertNumericEquals(target.y, 0);
+                redo();
             },
 
             //top left corner
             function():void{
                 var target:DisplayObject = selectedObject;
+                var oldX:Number = target.x;
+                var oldY:Number = target.y;
                 var oldWidth:Number = target.width;
                 var oldHeight:Number = target.height;
                 simulateTouch(target, 0, 0, -10, -10);
@@ -66,6 +74,13 @@ package starlingbuilder.editor.citestcase
                 assertNumericEquals(target.width, oldWidth + 10);
                 assertNumericEquals(target.height, oldHeight + 10);
 
+                //ResizeOperation
+                undo();
+                assertNumericEquals(target.x, oldX);
+                assertNumericEquals(target.y, oldY);
+                assertNumericEquals(target.width, oldWidth);
+                assertNumericEquals(target.height, oldHeight);
+                redo();
             },
 
             function():void{
@@ -133,11 +148,19 @@ package starlingbuilder.editor.citestcase
                 var target:DisplayObject = selectedObject;
                 var oldX:Number = target.x;
                 var oldY:Number = target.y;
+                var oldPivotX:Number = target.pivotX;
+                var oldPivotY:Number = target.pivotY;
                 clickButton("set pivot to");
                 assertNumericEquals(target.pivotX, target.width / 2);
                 assertNumericEquals(target.pivotY, target.height / 2);
                 assertNumericEquals(target.x, oldX + target.width / 2);
                 assertNumericEquals(target.y, oldY + target.height / 2);
+
+                //MovePivotOperation
+                undo();
+                assertNumericEquals(target.pivotX, oldPivotX);
+                assertNumericEquals(target.pivotY, oldPivotY);
+                redo();
             },
 
             function():void{
@@ -156,11 +179,23 @@ package starlingbuilder.editor.citestcase
             },
 
             function():void{
-                clickButton("reset");
+
                 var target:DisplayObject = selectedObject;
+                var oldScaleX:Number = target.scaleX;
+                var oldScaleY:Number = target.scaleY;
+                var oldRotation:Number = target.rotation;
+
+                clickButton("reset");
+
                 assertNumericEquals(target.scaleX, 1);
                 assertNumericEquals(target.scaleY, 1);
                 assertNumericEquals(target.rotation, 0);
+
+                undo();
+                assertNumericEquals(target.scaleX, oldScaleX);
+                assertNumericEquals(target.scaleY, oldScaleY);
+                assertNumericEquals(target.rotation, oldRotation);
+                redo();
             }
         ]
 
