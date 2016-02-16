@@ -44,7 +44,7 @@ package starlingbuilder.editor
             target.dispatchEvent(new TouchEvent(TouchEvent.TOUCH, touches));
         }
 
-        public static function findDisplayObject(options:Object, container:DisplayObjectContainer = null):DisplayObject
+        public static function findDisplayObjectWithCondition(condition:Function, container:DisplayObjectContainer = null):DisplayObject
         {
             if (container == null)
                 container = Starling.current.stage;
@@ -53,25 +53,37 @@ package starlingbuilder.editor
             {
                 var child:DisplayObject = container.getChildAt(i);
 
-                for (var name:String in options)
-                {
-                    var value:String = options[name];
-
-                    if (child.hasOwnProperty(name) && child[name] == value)
-                        return child;
-
-                    if ("cls" in options && child is options.cls)
-                        return child;
-                }
+                if (condition(child))
+                    return child;
 
                 if (child is DisplayObjectContainer)
                 {
-                    var obj:DisplayObject = findDisplayObject(options, child as DisplayObjectContainer);
+                    var obj:DisplayObject = findDisplayObjectWithCondition(condition, child as DisplayObjectContainer);
                     if (obj) return obj;
                 }
             }
 
             return null;
+        }
+
+        public static function findDisplayObject(options:Object, container:DisplayObjectContainer = null):DisplayObject
+        {
+            return findDisplayObjectWithCondition(function(obj:DisplayObject):Boolean{
+
+                for (var name:String in options)
+                {
+                    var value:String = options[name];
+
+                    if (obj.hasOwnProperty(name) && obj[name] == value)
+                        return true;
+
+                    if ("cls" in options && obj is options.cls)
+                        return true;
+                }
+
+                return false;
+
+            }, container);
         }
 
         public static function findListCollectionIndex(listCollection:ListCollection, text:String):int

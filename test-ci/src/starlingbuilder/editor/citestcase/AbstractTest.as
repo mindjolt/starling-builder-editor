@@ -156,8 +156,14 @@ package starlingbuilder.editor.citestcase
             }
         }
 
+        public static function undo():void
+        {
+            documentManager.historyManager.undo();
+        }
 
-
-
+        public static function redo():void
+        {
+            documentManager.historyManager.redo();
+        }
     }
 }

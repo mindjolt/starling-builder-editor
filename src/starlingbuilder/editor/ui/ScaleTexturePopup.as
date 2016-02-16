@@ -49,7 +49,7 @@ package starlingbuilder.editor.ui
 
         private var _onComplete:Function;
 
-        private var _data:Object;
+        protected var _data:Object;
 
         public function ScaleTexturePopup(data:Object, onComplete:Function)
         {
@@ -243,7 +243,7 @@ package starlingbuilder.editor.ui
 
                 _data.constructorParams[0].scaleRatio = scaleRatio;
 
-                _onComplete(_data);
+                complete();
             }
             else
             {
@@ -273,6 +273,9 @@ package starlingbuilder.editor.ui
             }
         }
 
-
+        protected function complete():void
+        {
+            _onComplete(_data);
+        }
     }
 }

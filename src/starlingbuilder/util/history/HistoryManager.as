@@ -14,13 +14,14 @@ package starlingbuilder.util.history
     {
         public static const RESET:String = "reset";
 
-        private var MAX_HISTORY_RECORD:int = 15;
+        private var _maxHistoryRecord:int = 15;
 
         private var _operations:Array = [];
         private var _currentIndex:int = -1;
 
-        public function HistoryManager()
+        public function HistoryManager(maxHistoryRecord:int = 15)
         {
+            _maxHistoryRecord = maxHistoryRecord;
         }
 
         public function add(operation:IHistoryOperation):void
@@ -54,7 +55,7 @@ package starlingbuilder.util.history
             _currentIndex = _operations.length - 1;
 
 
-            while (_operations.length > MAX_HISTORY_RECORD)
+            while (_operations.length > _maxHistoryRecord)
             {
                 var op:IHistoryOperation = _operations.shift();
                 //op.dispose(); //We can't dispose it in case the target is still on the stage or on other operations
@@ -96,9 +97,19 @@ package starlingbuilder.util.history
             dispatchEventWith(RESET);
         }
 
+        public function undoable():Boolean
+        {
+            return _currentIndex >= 0
+        }
+
+        public function redoable():Boolean
+        {
+            return _currentIndex + 1 < _operations.length;
+        }
+
         public function getNextUndoHint():String
         {
-            if (_currentIndex >= 0)
+            if (undoable())
             {
                 var operation:IHistoryOperation = _operations[_currentIndex];
                 return operation.info();
@@ -111,7 +122,7 @@ package starlingbuilder.util.history
 
         public function getNextRedoHint():String
         {
-            if (_currentIndex + 1 < _operations.length)
+            if (redoable())
             {
                 var operation:IHistoryOperation = _operations[_currentIndex + 1];
                 return operation.info();
@@ -120,6 +131,11 @@ package starlingbuilder.util.history
             {
                 return null;
             }
+        }
+
+        public function get numOperations():int
+        {
+            return _operations.length;
         }
     }
 }

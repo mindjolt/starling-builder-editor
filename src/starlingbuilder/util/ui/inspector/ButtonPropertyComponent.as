@@ -3,6 +3,8 @@
  */
 package starlingbuilder.util.ui.inspector
 {
+    import starling.display.Image;
+
     import starlingbuilder.util.feathers.FeathersUIUtil;
 
     import feathers.controls.Button;
@@ -33,9 +35,12 @@ package starlingbuilder.util.ui.inspector
 
                 var cls:Class = getDefinitionByName(param.editPropertyClass) as Class;
                 var popup:DisplayObject = new cls(_propertyRetriever.target, target, param, function(item:Object):void{
-                    _oldValue = _propertyRetriever.get(_param.name);
-                    _propertyRetriever.set(_param.name, item);
-                    setChanged();
+                    if (!_param.read_only)
+                    {
+                        _oldValue = _propertyRetriever.get(_param.name);
+                        _propertyRetriever.set(_param.name, item);
+                        setChanged();
+                    }
                 });
 
                 PopUpManager.addPopUp(popup);

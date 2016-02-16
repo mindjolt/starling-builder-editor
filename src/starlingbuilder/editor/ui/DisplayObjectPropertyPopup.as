@@ -36,7 +36,7 @@ package starlingbuilder.editor.ui
                     _target = null;
                 }
 
-                _onComplete(_target);
+                complete();
             }
             else
             {

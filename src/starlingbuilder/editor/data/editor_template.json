@@ -8,7 +8,8 @@
                 {"name":"height", "min":0, "read_only":true, "link":true},
                 {"name":"scaleX", "step":0.01, "default_value":1},
                 {"name":"scaleY", "step":0.01, "default_value":1},
-                {"name":"color", "component":"colorPicker", "default_value":16777215}
+                {"name":"color", "component":"colorPicker", "default_value":16777215},
+                {"name":"texture", "read_only":true, "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"starlingbuilder.editor.ui.TextureConstructorPopup"}
             ],
             "constructorParams":
             [
@@ -44,6 +45,7 @@
                 {"name":"fontColor", "component":"colorPicker", "default_value":0},
                 {"name":"scaleX", "step":0.01, "default_value":1},
                 {"name":"scaleY", "step":0.01, "default_value":1},
+                {"name":"upState", "read_only":true, "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"starlingbuilder.editor.ui.TextureConstructorPopup"},
                 {"name":"downState", "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"starlingbuilder.editor.ui.TexturePropertyPopup"}
             ],
             "constructorParams":
@@ -84,7 +86,8 @@
             "params":[
                 {"name":"width", "min":1, "step":1},
                 {"name":"height", "min":1, "step":1},
-                {"name":"color", "component":"colorPicker", "default_value":16777215}
+                {"name":"color", "component":"colorPicker", "default_value":16777215},
+                {"name":"textures", "read_only":true, "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"starlingbuilder.editor.ui.ScaleTextureConstructorPopup1"}
             ],
             "constructorParams":
             [
@@ -99,7 +102,8 @@
             "params":[
                 {"name":"width", "min":1},
                 {"name":"height", "min":1},
-                {"name":"color", "component":"colorPicker", "default_value":16777215}
+                {"name":"color", "component":"colorPicker", "default_value":16777215},
+                {"name":"textures", "read_only":true, "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"starlingbuilder.editor.ui.ScaleTextureConstructorPopup1"}
             ],
             "constructorParams":
             [
@@ -114,7 +118,8 @@
             "params":[
                 {"name":"width", "min":1},
                 {"name":"height", "min":1},
-                {"name":"color", "component":"colorPicker", "default_value":16777215}
+                {"name":"color", "component":"colorPicker", "default_value":16777215},
+                {"name":"texture", "read_only":true, "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"starlingbuilder.editor.ui.TextureConstructorPopup"}
             ],
             "constructorParams":
                 [
@@ -503,6 +508,6 @@
 
     "version":1.0,
 
-    "revision":24
+    "revision":25
 
 }
