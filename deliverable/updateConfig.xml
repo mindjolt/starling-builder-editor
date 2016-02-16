@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?> 
      <update xmlns="http://ns.adobe.com/air/framework/update/description/2.5"> 
-       <versionNumber>0.7.1</versionNumber>
-       <url>http://cache.mindjolt.com/starling-builder/v0.7.1/starling-builder.air</url>
+       <versionNumber>0.7.2</versionNumber>
+       <url>http://cache.mindjolt.com/starling-builder/v0.7.2/starling-builder.air</url>
        <description>
-[engine] Implement LocalizationHandler
-[editor] Persist hidden and lock flag to layout
-[template] Add backgroundSkin property to LayoutGroup, add layout property to Panel
+[editor] Image, Button, Scale3Image, Scale9Image, TiledImage can change texture after creation
        </description>
     </update>
