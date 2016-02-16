@@ -116,7 +116,8 @@
             "params":[
                 {"name":"width", "min":1},
                 {"name":"height", "min":1},
-                {"name":"color", "component":"colorPicker", "default_value":16777215}
+                {"name":"color", "component":"colorPicker", "default_value":16777215},
+                {"name":"texture", "read_only":true, "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"starlingbuilder.editor.ui.TextureConstructorPopup"}
             ],
             "constructorParams":
                 [

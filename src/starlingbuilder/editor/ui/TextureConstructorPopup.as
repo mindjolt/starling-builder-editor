@@ -25,8 +25,11 @@ package starlingbuilder.editor.ui
                 param1.textureName = textureName;
             }
 
-            _owner[_targetParam.name] = _assetManager.getTexture(textureName);
-            _owner["readjustSize"]();
+            if (_owner.hasOwnProperty(_targetParam.name))
+                _owner[_targetParam.name] = _assetManager.getTexture(textureName);
+
+            if (_owner.hasOwnProperty("readjustSize"))
+                _owner["readjustSize"]();
 
             _documentManager.setChanged();
         }
