@@ -122,7 +122,7 @@ package starlingbuilder.editor.ui
                     _target = null;
                 }
 
-                _onComplete(_target);
+                complete();
             }
             else
             {
@@ -153,8 +153,9 @@ package starlingbuilder.editor.ui
             };
         }
 
-
-
-
+        protected function complete():void
+        {
+            _onComplete(_target);
+        }
     }
 }
