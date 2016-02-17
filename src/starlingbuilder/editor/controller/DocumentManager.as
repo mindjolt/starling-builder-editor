@@ -8,6 +8,7 @@
 package starlingbuilder.editor.controller
 {
     import feathers.controls.LayoutGroup;
+    import feathers.core.FocusManager;
     import feathers.layout.AnchorLayout;
 
     import starlingbuilder.editor.Setting;
@@ -1096,15 +1097,10 @@ package starlingbuilder.editor.controller
             return _uiBuilder;
         }
 
-
         public function get hasFocus():Boolean
         {
-            return _hasFocus;
-        }
-
-        public function set hasFocus(value:Boolean):void
-        {
-            _hasFocus = value;
+            var obj:DisplayObject = FocusManager.focus as DisplayObject;
+            return obj && UIEditorScreen.instance.centerPanel.contains(obj);
         }
 
         public function get root():DisplayObjectContainer
