@@ -12,14 +12,19 @@ package starlingbuilder.editor.controller
     import feathers.core.FocusManager;
     import feathers.layout.AnchorLayout;
 
+    import flash.ui.Keyboard;
+
     import starlingbuilder.editor.Setting;
     import starlingbuilder.editor.UIEditorScreen;
     import starlingbuilder.editor.data.TemplateData;
     import starlingbuilder.editor.events.DocumentEventType;
     import starlingbuilder.editor.helper.AssetMediator;
+    import starlingbuilder.editor.helper.BoundingBoxContainer;
     import starlingbuilder.editor.helper.DragHelper;
+    import starlingbuilder.editor.helper.DragQuad;
     import starlingbuilder.editor.helper.FileListingHelper;
-    import starlingbuilder.editor.helper.InteractiveBoundingBox;
+    import starlingbuilder.editor.history.CompositeHistoryOperation;
+    import starlingbuilder.util.KeyboardWatcher;
     import starlingbuilder.editor.helper.PixelSnapper;
     import starlingbuilder.editor.helper.PixelSnapperData;
     import starlingbuilder.editor.helper.SelectHelper;
@@ -89,7 +94,11 @@ package starlingbuilder.editor.controller
 
         private var _snapContainer:Sprite;
 
-        private var _boundingBox:InteractiveBoundingBox;
+        private var _boundingBoxContainer:BoundingBoxContainer;
+
+        private var _selectManager:SelectManager;
+
+        private var _keyboardWatcher:KeyboardWatcher;
 
         private var _selectedObject:DisplayObject;
 
@@ -129,18 +138,30 @@ package starlingbuilder.editor.controller
             _canvas = new Quad(100, 100);
             _canvasContainer = new Sprite();
             _canvasContainer.addChild(_canvas);
+            SelectHelper.startSelect(_canvas, function(object:DisplayObject):void{
+                selectObject(null);
+            });
+
+            DragQuad.startDrag(_canvas, function(rect:Rectangle):void{
+                _selectManager.selectByRect(rect, _extraParamsDict, uiBuilder);
+            });
 
             _backgroundContainer = new Sprite();
             _layoutContainer = new LayoutGroup();
             _layoutContainer.layout = new AnchorLayout();
             _snapContainer = new Sprite();
-            _boundingBox = new InteractiveBoundingBox(this);
+            _boundingBoxContainer = new BoundingBoxContainer(this);
 
             _testContainer = new Sprite();
 
             PropertyPanel.globalDispatcher.addEventListener(UIMapperEventType.PROPERTY_CHANGE, onPropertyChange);
 
             _historyManager = new HistoryManager();
+
+            _selectManager = new SelectManager();
+            _selectManager.addEventListener(DocumentEventType.SELECTION_CHANGE, onSelectionChanged);
+
+            _keyboardWatcher = new KeyboardWatcher();
 
             _setting = UIEditorScreen.instance.setting;
             _setting.addEventListener(Event.CHANGE, onSettingChanged);
@@ -157,9 +178,7 @@ package starlingbuilder.editor.controller
             _container.addChild(_backgroundContainer);
             _container.addChild(_layoutContainer);
             _container.addChild(_snapContainer);
-            _container.addChild(_boundingBox);
-
-
+            _container.addChild(_boundingBoxContainer);
 
             reset();
         }
@@ -245,7 +264,24 @@ package starlingbuilder.editor.controller
                 FocusManager.focus = UIEditorScreen.instance.centerPanel;
 
                 if (!(selectedObject is DisplayObjectContainer) || !DisplayObjectContainer(selectedObject).contains(object))
-                    selectObject(object);
+                {
+                    if (_keyboardWatcher.hasKeyPressed(Keyboard.CONTROL) || _keyboardWatcher.hasKeyPressed(Keyboard.COMMAND))
+                    {
+                        if (_selectManager.isSelected(object))
+                        {
+                            _selectManager.removeSelectObject(object);
+                        }
+                        else
+                        {
+                            _selectManager.addSelectObject(object);
+                        }
+                    }
+                    else
+                    {
+                        if (!_selectManager.isSelected(object))
+                            selectObject(object);
+                    }
+                }
             }, function(obj:DisplayObject, dx:Number, dy:Number):Boolean{
 
                 dx /= scale;
@@ -409,23 +445,23 @@ package starlingbuilder.editor.controller
             }
         }
 
-        public function removeTree(obj:DisplayObject):void
+        public function removeTree(obj:DisplayObject, last:Boolean = true):void
         {
             var parent:DisplayObjectContainer = obj.parent;
 
-            selectObject(null);
+            if (last)
+                selectObject(null);
 
             removeFromParam(obj, _extraParamsDict);
-
             obj.removeFromParent();
-
             endSelect(obj);
 
-            setLayerChanged();
-
-            selectParent(parent);
-
-            setChanged();
+            if (last)
+            {
+                setLayerChanged();
+                selectParent(parent);
+                setChanged();
+            }
         }
 
         private function selectParent(parent:DisplayObjectContainer):void
@@ -443,18 +479,24 @@ package starlingbuilder.editor.controller
 
         public function remove():void
         {
-            if (_selectedObject)
+            var objects:Array = selectedObjects;
+
+            if (objects.length)
             {
-                if (_root == _selectedObject)
+                var ops:Array = [];
+
+                for (var i:int = 0; i < objects.length; ++i)
                 {
-                    info("can't remove root");
-                    return;
+                    var obj:DisplayObject = objects[i];
+                    if (obj === _root) continue;
+
+                    var newDict:Dictionary = new Dictionary();
+                    recreateFromParam(obj, _extraParamsDict, newDict);
+                    ops.push(new DeleteOperation(obj, newDict, obj.parent));
+                    removeTree(obj, i == objects.length - 1);
                 }
 
-                var newDict:Dictionary = new Dictionary();
-                recreateFromParam(_selectedObject, _extraParamsDict, newDict);
-                _historyManager.add(new DeleteOperation(_selectedObject, newDict, _selectedObject.parent));
-                removeTree(_selectedObject);
+                _historyManager.add(new CompositeHistoryOperation(ops));
             }
         }
 
@@ -464,7 +506,10 @@ package starlingbuilder.editor.controller
         {
             //trace("dx:", dx, "dy:", dy);
 
-            if (!_selectedObject)
+            if (_selectManager.selectedObjects.length != 1)
+                ignoreSnapPixel = true;
+
+            if (_selectManager.selectedObjects.length == 0)
                 return false;
 
             var data:PixelSnapperData;
@@ -482,8 +527,11 @@ package starlingbuilder.editor.controller
                 }
             }
 
-            _selectedObject.x += dx;
-            _selectedObject.y += dy;
+            for each (var obj:DisplayObject in _selectManager.selectedObjects)
+            {
+                obj.x += dx;
+                obj.y += dy;
+            }
 
             recordMoveHistory(dx, dy);
 
@@ -550,31 +598,24 @@ package starlingbuilder.editor.controller
 
         public function selectObject(obj:DisplayObject):void
         {
-            if (_selectedObject === obj)
+            _selectManager.selectObject(obj);
+        }
+
+        private function onSelectionChanged(event:Event):void
+        {
+            var obj:DisplayObject = _selectManager.selectedObject;
+
+            _selectedObject = obj;
+
+            if (_selectedObject is FeathersControl)
             {
-                return;
+                FeathersControl(_selectedObject).invalidate();
             }
-            else
-            {
-                if (_selectedObject)
-                {
-                    _boundingBox.target = null;
-                }
 
-                _selectedObject = obj;
+            //_boundingBoxContainer.update([_selectedObject]);
+            _boundingBoxContainer.update(_selectManager.selectedObjects);
 
-                if (_selectedObject is FeathersControl)
-                {
-                    FeathersControl(_selectedObject).invalidate();
-                }
-
-                if (_selectedObject)
-                {
-                    _boundingBox.target = _selectedObject;
-                }
-
-                setChanged();
-            }
+            setChanged();
         }
 
         private function onPropertyChange(event:Event):void
@@ -602,8 +643,18 @@ package starlingbuilder.editor.controller
 
         private function recordMoveHistory(dx:Number, dy:Number):void
         {
-            var operation:IHistoryOperation = new MoveOperation(_selectedObject, new Point(_selectedObject.x - dx, _selectedObject.y - dy), new Point(_selectedObject.x, _selectedObject.y));
-            _historyManager.add(operation);
+            var objects:Object = selectedObjects;
+
+            if (objects.length)
+            {
+                var ops:Array = [];
+                for each (var obj:DisplayObject in objects)
+                {
+                    ops.push(new MoveOperation(obj, dx, dy));
+                }
+
+                _historyManager.add(new CompositeHistoryOperation(ops));
+            }
         }
 
         public function get historyManager():HistoryManager
@@ -645,6 +696,10 @@ package starlingbuilder.editor.controller
             return _selectedObject;
         }
 
+        public function get selectedObjects():Array
+        {
+            return _selectManager.selectedObjects;
+        }
 
         public function startTest(forGame:Boolean = false):Sprite
         {
@@ -946,9 +1001,9 @@ package starlingbuilder.editor.controller
         {
             if (_selectedObject)
             {
-                if (_root == _selectedObject)
+                if (_root === _selectedObject)
                 {
-                    info("can't remove root");
+                    info("Can't remove root");
                     return;
                 }
 
@@ -958,12 +1013,18 @@ package starlingbuilder.editor.controller
                 _historyManager.add(new CutOperation(_selectedObject, newDict, _selectedObject.parent));
                 removeTree(_selectedObject);
             }
+            else
+            {
+                info("Please select 1 item");
+            }
         }
 
         public function copy():void
         {
             if (_selectedObject)
                 Clipboard.generalClipboard.setData(ClipboardFormats.TEXT_FORMAT, _uiBuilder.copy(_selectedObject, _extraParamsDict));
+            else
+                info("Please select 1 item");
         }
 
         public function paste():void
@@ -999,7 +1060,7 @@ package starlingbuilder.editor.controller
 
         public function duplicate():void
         {
-            if (_selectedObject == null || _selectedObject === _root)
+            if (_selectedObject === _root)
             {
                 info("Can't duplicate root");
                 return;
@@ -1043,12 +1104,12 @@ package starlingbuilder.editor.controller
 
         public function get enableBoundingBox():Boolean
         {
-            return _boundingBox.enable;
+            return _boundingBoxContainer.enable;
         }
 
         public function set enableBoundingBox(value:Boolean):void
         {
-            _boundingBox.enable = value;
+            _boundingBoxContainer.enable = value;
         }
 
         private var _canvasSize:Point = new Point();
@@ -1148,7 +1209,7 @@ package starlingbuilder.editor.controller
 
                 _container.clipRect = new Rectangle(0, 0, canvasSize.x * _canvasContainer.scaleX, canvasSize.y * _canvasContainer.scaleY);
 
-                _boundingBox.reload();
+                _boundingBoxContainer.reload();
 
                 dispatchEventWith(DocumentEventType.CANVAS_CHANGE);
             }
@@ -1242,7 +1303,13 @@ package starlingbuilder.editor.controller
 
         private function onSettingChanged():void
         {
-            _uiBuilder.prettyData = _setting.prettyJSON;
+                _uiBuilder.prettyData = _setting.prettyJSON;
+                }
+
+
+        public function get boundingBoxContainer():BoundingBoxContainer
+        {
+            return _boundingBoxContainer;
         }
     }
 }

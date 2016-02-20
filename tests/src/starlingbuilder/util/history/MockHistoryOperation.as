@@ -52,6 +52,11 @@ package starlingbuilder.util.history
             _target.value -= 1;
         }
 
+        public function get operations():Array
+        {
+            return null;
+        }
+
         public function info():String
         {
             return "info";

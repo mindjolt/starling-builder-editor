@@ -20,18 +20,10 @@ package starlingbuilder.editor.history
         protected var _type:String;
         protected var _timestamp:Number;
 
-        protected var _target:Object;
-        protected var _beforeValue:Object;
-        protected var _afterValue:Object;
-
-        public function AbstractHistoryOperation(type:String, target:Object, beforeValue:Object, afterValue:Object)
+        public function AbstractHistoryOperation(type:String)
         {
             _type = type;
             _timestamp = getTimer();
-
-            _target = target;
-            _beforeValue = beforeValue;
-            _afterValue = afterValue;
         }
 
         public function get type():String
@@ -46,7 +38,7 @@ package starlingbuilder.editor.history
 
         public function get beforeValue():Object
         {
-            return _beforeValue;
+            return null;
         }
 
         public function canMergeWith(previousOperation:IHistoryOperation):Boolean
@@ -56,7 +48,6 @@ package starlingbuilder.editor.history
 
         public function merge(previousOperation:IHistoryOperation):void
         {
-            _beforeValue = previousOperation.beforeValue;
         }
 
         public function redo():void
@@ -76,9 +67,11 @@ package starlingbuilder.editor.history
         {
         }
 
-        protected function setChanged():void
+        public function get operations():Array
         {
-            PropertyPanel.globalDispatcher.dispatchEventWith(UIMapperEventType.PROPERTY_CHANGE, false, {target:_target});
+            return null;
         }
+
+
     }
 }

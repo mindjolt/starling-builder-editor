@@ -14,7 +14,7 @@ package starlingbuilder.editor.history
 
     import starling.display.DisplayObject;
 
-    public class MoveLayerOperation extends AbstractHistoryOperation
+    public class MoveLayerOperation extends SingleHistoryOperation
     {
         private var _oldParent:DisplayObjectContainer;
         private var _newParent:DisplayObjectContainer;

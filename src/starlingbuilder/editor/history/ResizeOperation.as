@@ -9,7 +9,7 @@ package starlingbuilder.editor.history
 {
     import flash.geom.Rectangle;
 
-    public class ResizeOperation extends AbstractHistoryOperation
+    public class ResizeOperation extends SingleHistoryOperation
     {
         public function ResizeOperation(target:Object, beforeValue:Object, afterValue:Object)
         {

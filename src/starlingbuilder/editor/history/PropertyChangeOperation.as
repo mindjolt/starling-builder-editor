@@ -10,7 +10,7 @@ package starlingbuilder.editor.history
     import starlingbuilder.util.ui.inspector.PropertyPanel;
     import starlingbuilder.util.ui.inspector.UIMapperEventType;
 
-    public class PropertyChangeOperation extends AbstractHistoryOperation
+    public class PropertyChangeOperation extends SingleHistoryOperation
     {
         protected var _propertyName:String;
 

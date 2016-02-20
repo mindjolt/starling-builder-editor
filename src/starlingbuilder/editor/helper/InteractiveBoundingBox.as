@@ -442,6 +442,8 @@ package starlingbuilder.editor.helper
 
         override public function dispose():void
         {
+            _documentManager.removeEventListener(DocumentEventType.CHANGE, onChange);
+
             PropertyPanel.globalDispatcher.removeEventListener(UIMapperEventType.PROPERTY_CHANGE, onChange);
 
             super.dispose();
