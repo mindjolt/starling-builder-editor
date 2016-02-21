@@ -14,6 +14,6 @@ package starlingbuilder.editor.data
         [Embed(source="expand_sign.png")]
         public static const expand_sign:Class;
 
-        public static var expand_sign_texture:Texture = Texture.fromBitmap(new expand_sign());
+        public static var expand_sign_texture:Texture;
     }
 }

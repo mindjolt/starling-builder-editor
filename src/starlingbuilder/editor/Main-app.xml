@@ -48,7 +48,7 @@
     <!-- Settings for the application's initial window. Required. -->
     <initialWindow>
         <!-- The main SWF or HTML file of the application. Required. -->
-        <content>SWF file name is set automatically at compile time</content>
+        <content>Main.swf</content>
 
         <!-- The title of the main window. Optional. -->
         <!--<title></title>-->

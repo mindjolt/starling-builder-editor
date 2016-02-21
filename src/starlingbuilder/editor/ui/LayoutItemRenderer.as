@@ -27,6 +27,7 @@ package starlingbuilder.editor.ui
     import starling.events.Touch;
     import starling.events.TouchEvent;
     import starling.events.TouchPhase;
+    import starling.textures.Texture;
 
     import starlingbuilder.editor.UIEditorApp;
     import starlingbuilder.editor.data.EmbeddedImages;
@@ -106,6 +107,7 @@ package starlingbuilder.editor.ui
             _group2 = new LayoutGroup();
             _group2.layout = layout;
 
+            if (EmbeddedImages.expand_sign_texture == null) EmbeddedImages.expand_sign_texture = Texture.fromBitmap(new EmbeddedImages.expand_sign())
             _sign = new Button(EmbeddedImages.expand_sign_texture);
             _sign.alignPivot();
             _sign.addEventListener(Event.TRIGGERED, onTrigger);
