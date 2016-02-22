@@ -9,97 +9,35 @@ package starlingbuilder.util
 {
     import air.update.ApplicationUpdaterUI;
 
+    import flash.events.ErrorEvent;
+
     import flash.events.Event;
-    import flash.filesystem.File;
 
     public class AppUpdater
     {
+        //Set the location of your update descriptor file here
+        public static const UPDATE_URL:String = null;
+
         private var _appUpdater:ApplicationUpdaterUI;
 
         public function AppUpdater()
         {
             _appUpdater = new ApplicationUpdaterUI();
+            _appUpdater.addEventListener(ErrorEvent.ERROR, onError);
 
-            _appUpdater.addEventListener("beforeInstall", beforeInstall);
-            _appUpdater.addEventListener("checkForUpdate", checkForUpdate);
-            _appUpdater.addEventListener("downloadComplete", downloadComplete);
-            _appUpdater.addEventListener("downloadError", downloadError);
-            _appUpdater.addEventListener("downloadStart", downloadStart);
-            _appUpdater.addEventListener("error", error);
-            _appUpdater.addEventListener("fileUpdateError", fileUpdateError);
-            _appUpdater.addEventListener("fileUpdateStatus", fileUpdateStatus);
-            _appUpdater.addEventListener("initialized", initialized);
-            _appUpdater.addEventListener("progress", progress);
-            _appUpdater.addEventListener("updateError", updateError);
-            _appUpdater.addEventListener("updateStatus", updateStatus);
-            _appUpdater.configurationFile = new File("app:/updateConfig.xml");
+            _appUpdater.updateURL = UPDATE_URL;
+            _appUpdater.delay = 1;
+            _appUpdater.isCheckForUpdateVisible = false;
+            _appUpdater.isDownloadUpdateVisible = true;
+            _appUpdater.isDownloadProgressVisible = true;
+            _appUpdater.isInstallUpdateVisible = true;
+
             _appUpdater.initialize();
         }
 
-        private function beforeInstall(event:Event):void
+        private function onError(event:Event):void
         {
-            trace("beforeInstall");
-        }
-
-        private function checkForUpdate(event:Event):void
-        {
-            trace("checkForUpdate");
-        }
-
-        private function downloadComplete(event:Event):void
-        {
-            trace("downloadComplete");
-        }
-
-        private function downloadError(event:Event):void
-        {
-            trace("downloadError");
-        }
-
-        private function downloadStart(event:Event):void
-        {
-            trace("downloadStart");
-        }
-
-        private function error(event:Event):void
-        {
-            trace("error");
-        }
-
-        private function fileUpdateError(event:Event):void
-        {
-            trace("fileUpdateError");
-        }
-
-        private function fileUpdateStatus(event:Event):void
-        {
-            trace("fileUpdateStatus");
-        }
-
-        private function initialized(event:Event):void
-        {
-            trace("initialized");
-            (event.target as ApplicationUpdaterUI).checkNow();
-        }
-
-        private function progress(event:Event):void
-        {
-            trace("progress");
-        }
-
-        private function updateError(event:Event):void
-        {
-            trace("updateError");
-        }
-
-        private function updateStatus(event:Event):void
-        {
-            trace("updateStatus");
-        }
-
-        public function get appUpdater():ApplicationUpdaterUI
-        {
-            return _appUpdater;
+            trace(event.toString());
         }
 
         public function checkNow():void
