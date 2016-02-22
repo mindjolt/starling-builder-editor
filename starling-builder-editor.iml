@@ -19,8 +19,7 @@
         </compiler-options>
         <packaging-air-desktop use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/src/starlingbuilder/editor/Main-app.xml" package-file-name="starling-builder">
           <files-to-package>
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/icons" path-in-package="icons" />
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/src/starlingbuilder/editor/updateConfig.xml" path-in-package="updateConfig.xml" />
+            <FilePathAndPathInPackage file-path="$MODULE_DIR$/package" path-in-package="." />
           </files-to-package>
         </packaging-air-desktop>
         <packaging-android />
@@ -45,8 +44,7 @@
         </compiler-options>
         <packaging-air-desktop use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/src/starlingbuilder/editor/Main-app.xml" package-file-name="starling-builder">
           <files-to-package>
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/icons" path-in-package="icons" />
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/src/starlingbuilder/editor/updateConfig.xml" path-in-package="updateConfig.xml" />
+            <FilePathAndPathInPackage file-path="$MODULE_DIR$/package" path-in-package="." />
           </files-to-package>
         </packaging-air-desktop>
         <packaging-android />
@@ -69,8 +67,7 @@
         </compiler-options>
         <packaging-air-desktop use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/src/starlingbuilder/editor/Main-app.xml" package-file-name="test">
           <files-to-package>
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/icons" path-in-package="icons" />
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/src/starlingbuilder/editor/updateConfig.xml" path-in-package="updateConfig.xml" />
+            <FilePathAndPathInPackage file-path="$MODULE_DIR$/package" path-in-package="." />
           </files-to-package>
         </packaging-air-desktop>
         <packaging-android />

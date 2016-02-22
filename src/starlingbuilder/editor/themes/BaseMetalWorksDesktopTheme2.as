@@ -105,10 +105,10 @@ package starlingbuilder.editor.themes
 	 */
 	public class BaseMetalWorksDesktopTheme2 extends UIEditorTheme
 	{
-		[Embed(source="/../../assets/fonts/SourceSansPro-Regular.ttf",fontFamily="SourceSansPro",fontWeight="normal",mimeType="application/x-font",embedAsCFF="true")]
+		[Embed(source="../../../../assets/fonts/SourceSansPro-Regular.ttf",fontFamily="SourceSansPro",fontWeight="normal",mimeType="application/x-font",embedAsCFF="true")]
 		protected static const SOURCE_SANS_PRO_REGULAR:Class;
 
-		[Embed(source="/../../assets/fonts/SourceSansPro-Semibold.ttf",fontFamily="SourceSansPro",fontWeight="bold",mimeType="application/x-font",embedAsCFF="true")]
+		[Embed(source="../../../../assets/fonts/SourceSansPro-Semibold.ttf",fontFamily="SourceSansPro",fontWeight="bold",mimeType="application/x-font",embedAsCFF="true")]
 		protected static const SOURCE_SANS_PRO_SEMIBOLD:Class;
 
 		/**
