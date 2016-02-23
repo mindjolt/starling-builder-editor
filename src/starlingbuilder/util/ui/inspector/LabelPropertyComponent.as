@@ -51,8 +51,13 @@ package starlingbuilder.util.ui.inspector
                 switch (touch.phase)
                 {
                     case TouchPhase.MOVED:
+                        var delta:Number;
 
-                        var dx:Number = Math.round(touch.globalX - touch.previousGlobalX);
+                        if (_param.vertical_arrow)
+                            delta = Math.round(touch.globalY - touch.previousGlobalY);
+                        else
+                            delta = Math.round(touch.globalX - touch.previousGlobalX);
+
                         var value:Object = _propertyRetriever.get(_param.name);
 
                         if (value is Number)
@@ -63,7 +68,7 @@ package starlingbuilder.util.ui.inspector
 
                             if (isNaN(Number(number))) number = 0;
 
-                            number += dx * _step;
+                            number += delta * _step;
 
                             if (!isNaN(_min)) number = Math.max(number, _min);
                             if (!isNaN(_max)) number = Math.min(number, _max);
@@ -72,7 +77,13 @@ package starlingbuilder.util.ui.inspector
                             setChanged();
                         }
                     case TouchPhase.HOVER:
-                        if (_isNumeric) Mouse.cursor = CursorRegister.HORIZONTAL_ARROW;
+                        if (_isNumeric)
+                        {
+                            if (_param.vertical_arrow)
+                                Mouse.cursor = CursorRegister.VERTICAL_ARROW;
+                            else
+                                Mouse.cursor = CursorRegister.HORIZONTAL_ARROW;
+                        }
                         break;
                     case TouchPhase.ENDED:
                         Mouse.cursor = MouseCursor.AUTO;
