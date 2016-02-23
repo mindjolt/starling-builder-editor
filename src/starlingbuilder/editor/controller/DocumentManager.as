@@ -11,6 +11,8 @@ package starlingbuilder.editor.controller
     import feathers.core.FocusManager;
     import feathers.layout.AnchorLayout;
 
+    import starling.utils.Color;
+
     import starlingbuilder.editor.Setting;
     import starlingbuilder.editor.UIEditorScreen;
     import starlingbuilder.editor.data.TemplateData;
@@ -697,6 +699,8 @@ package starlingbuilder.editor.controller
                 setting.canvasSize = {x:_canvasSize.x, y:_canvasSize.y};
             }
 
+            setting.canvasColor = canvasColor;
+
             saveFlags(setting);
 
             return setting;
@@ -714,6 +718,11 @@ package starlingbuilder.editor.controller
                 if (setting.canvasSize)
                 {
                     canvasSize = new Point(setting.canvasSize.x, setting.canvasSize.y);
+                }
+
+                if ("canvasColor" in setting)
+                {
+                    canvasColor = setting.canvasColor;
                 }
 
                 loadFlags(setting);
@@ -1058,12 +1067,26 @@ package starlingbuilder.editor.controller
 
             FeathersControl(_container.parent).invalidate();
 
-            dispatchEventWith(DocumentEventType.CANVAS_SIZE_CHANGE);
+            dispatchEventWith(DocumentEventType.CANVAS_CHANGE);
         }
 
         public function get canvasSize():Point
         {
             return _canvasSize;
+        }
+
+        public function get canvasColor():uint
+        {
+            return _canvas.color;
+        }
+
+        public function set canvasColor(value:uint):void
+        {
+            if (_canvas.color != value)
+            {
+                _canvas.color = value;
+                dispatchEventWith(DocumentEventType.CANVAS_CHANGE);
+            }
         }
 
         public function get container():Sprite
@@ -1127,7 +1150,7 @@ package starlingbuilder.editor.controller
 
                 _boundingBox.reload();
 
-                dispatchEventWith(DocumentEventType.CANVAS_SIZE_CHANGE);
+                dispatchEventWith(DocumentEventType.CANVAS_CHANGE);
             }
         }
 
