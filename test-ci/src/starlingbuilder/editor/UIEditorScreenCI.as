@@ -20,6 +20,7 @@ package starlingbuilder.editor
     import starlingbuilder.editor.citestcase.InspectorTest;
     import starlingbuilder.editor.citestcase.LayoutTest;
     import starlingbuilder.editor.citestcase.LocalizationTest;
+    import starlingbuilder.editor.citestcase.SelectionTest;
     import starlingbuilder.editor.citestcase.TweenTest;
     import starlingbuilder.util.feathers.popup.InfoPopup;
 
@@ -52,8 +53,9 @@ package starlingbuilder.editor
             _testManager.add(LocalizationTest.LOCALIZE);
             _testManager.add(TweenTest.TWEEN);
             _testManager.add(InspectorTest.TEST);
+            _testManager.add(SelectionTest.SELECTION);
             _testManager.add(function():void{
-                InfoPopup.show("CI Test Complete.");
+                InfoPopup.show("Functional Test Complete.");
                 trace("Time: ", getTimer() - t);
             })
             _testManager.start();

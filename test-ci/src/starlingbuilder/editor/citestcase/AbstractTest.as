@@ -11,10 +11,13 @@ package starlingbuilder.editor.citestcase
     import feathers.controls.TextInput;
     import feathers.events.FeathersEventType;
 
+    import starling.core.Starling;
+
     import starling.display.Button;
 
     import starling.display.DisplayObject;
     import starling.display.DisplayObjectContainer;
+    import starling.display.Stage;
     import starling.events.Event;
 
     import starlingbuilder.editor.CITestUtil;
@@ -32,6 +35,11 @@ package starlingbuilder.editor.citestcase
     {
         public function AbstractTest()
         {
+        }
+
+        public static function get stage():Stage
+        {
+            return Starling.current.stage;
         }
 
         public static function get selectedObject():DisplayObject
@@ -92,6 +100,11 @@ package starlingbuilder.editor.citestcase
         public static function clickButton(name:String, container:DisplayObjectContainer = null):void
         {
             simulateTouch(findDisplayObject({label:name}, container));
+        }
+
+        public static function clickButtonWithName(name:String, container:DisplayObjectContainer = null):void
+        {
+            simulateTouch(findDisplayObject({name:name}, container));
         }
 
         public static function componentFunction(cls:Class):Function
