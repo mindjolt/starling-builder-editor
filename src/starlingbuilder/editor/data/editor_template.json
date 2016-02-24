@@ -505,8 +505,8 @@
             {"name":"name"},
             {"name":"x", "step":10},
             {"name":"y", "step":10, "vertical_arrow":true},
-            {"name":"width", "min":0, "step":10},
-            {"name":"height", "min":0, "step":10}
+            {"name":"width", "min":0, "step":10, "link":true},
+            {"name":"height", "min":0, "step":10, "link":true}
         ]
     },
 
