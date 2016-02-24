@@ -489,7 +489,8 @@ package starlingbuilder.editor.controller
             {
                 _snapContainer.x = _selectedObject.parent.x;
                 _snapContainer.y = _selectedObject.parent.y;
-                PixelSnapper.drawSnapLine(_snapContainer, data)
+                PixelSnapper.drawSnapObjectBound(_snapContainer, data);
+                PixelSnapper.drawSnapLine(_snapContainer, data);
             }
 
             setChanged();

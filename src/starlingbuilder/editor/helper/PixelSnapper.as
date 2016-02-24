@@ -7,6 +7,8 @@
  */
 package starlingbuilder.editor.helper
 {
+    import starling.utils.Color;
+
     import starlingbuilder.util.DrawUtil;
 
     import flash.geom.Point;
@@ -231,7 +233,7 @@ package starlingbuilder.editor.helper
                 global1 = container.globalToLocal(new Point(x1, y1));
                 global2 = container.globalToLocal(new Point(x2, y2));
 
-                container.addChild(DrawUtil.makeLine(global1.x, global1.y, global2.x, global2.y));
+                container.addChild(DrawUtil.makeLine(global1.x, global1.y, global2.x, global2.y, Color.RED));
             }
 
             if (data.targetObjY)
@@ -245,7 +247,20 @@ package starlingbuilder.editor.helper
                 global1 = container.globalToLocal(new Point(x1, y1));
                 global2 = container.globalToLocal(new Point(x2, y2));
 
-                container.addChild(DrawUtil.makeLine(global1.x, global1.y, global2.x, global2.y));
+                container.addChild(DrawUtil.makeLine(global1.x, global1.y, global2.x, global2.y, Color.RED));
+            }
+        }
+
+        public static function drawSnapObjectBound(container:DisplayObjectContainer, data:PixelSnapperData):void
+        {
+            if (data.targetObjX)
+            {
+                container.addChild(DrawUtil.makeRect(data.targetObjX.getBounds(container), Color.LIME));
+            }
+
+            if (data.targetObjY)
+            {
+                container.addChild(DrawUtil.makeRect(data.targetObjY.getBounds(container), Color.LIME));
             }
         }
 
