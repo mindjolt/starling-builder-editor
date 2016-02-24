@@ -125,11 +125,11 @@ package starlingbuilder.editor.helper
             addChild(_boundingBoxContainer);
 
             quad = createDragBox(DRAG_BOX);
-            DragHelper.startDrag(quad, onDrag, onComplete);
+            DragHelper.startDrag(quad, null, onDrag, onComplete);
             _boundingBoxContainer.addChild(quad);
 
             quad = createPivot(PIVOT_POINT);
-            DragHelper.startDrag(quad, onDrag, onComplete);
+            DragHelper.startDrag(quad, null, onDrag, onComplete);
             _boundingBoxContainer.addChild(quad);
 
             for each (var name:String in BOUNDING_BOX)
@@ -140,7 +140,7 @@ package starlingbuilder.editor.helper
 
                 if (INTERACTABLE.indexOf(name) != -1)
                 {
-                    DragHelper.startDrag(quad, onDrag, onComplete);
+                    DragHelper.startDrag(quad, null, onDrag, onComplete);
                 }
             }
         }

@@ -18,7 +18,7 @@ package starlingbuilder.editor.helper
         {
         }
 
-        public static function startDrag(obj:DisplayObject, onDrag:Function, onComplete:Function):void
+        public static function startDrag(obj:DisplayObject, onSelect:Function, onDrag:Function, onRelease:Function):void
         {
             var previousX:Number;
             var previousY:Number;
@@ -29,17 +29,24 @@ package starlingbuilder.editor.helper
 
                 if (touch)
                 {
-                    if (touch.phase == TouchPhase.MOVED)
+                    if (touch.phase == TouchPhase.BEGAN)
+                    {
+                        if (onSelect) onSelect(obj);
+                    }
+                    else if (touch.phase == TouchPhase.MOVED)
                     {
                         if (!isNaN(previousX) && !isNaN(previousY))
                         {
                             var dx:Number = touch.globalX - previousX;
                             var dy:Number = touch.globalY - previousY;
 
-                            if (onDrag(obj, dx, dy))
+                            if (onDrag)
                             {
-                                previousX = touch.globalX;
-                                previousY = touch.globalY;
+                                if (onDrag(obj, dx, dy))
+                                {
+                                    previousX = touch.globalX;
+                                    previousY = touch.globalY;
+                                }
                             }
                         }
                         else
@@ -50,12 +57,14 @@ package starlingbuilder.editor.helper
                     }
                     else if (touch.phase == TouchPhase.ENDED)
                     {
-                        onComplete();
+                        if (onRelease) onRelease();
 
                         previousX = Number.NaN;
                         previousY = Number.NaN;
                     }
                 }
+
+                event.stopPropagation();
             }
 
 

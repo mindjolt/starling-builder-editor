@@ -27,6 +27,8 @@ package starlingbuilder.editor.helper
                         onSelect(object);
                     }
                 }
+
+                event.stopPropagation();
             }
 
             object.addEventListener(TouchEvent.TOUCH, onTouch);

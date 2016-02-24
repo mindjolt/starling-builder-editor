@@ -8,10 +8,9 @@
 package starlingbuilder.editor.controller
 {
     import feathers.controls.LayoutGroup;
+    import feathers.controls.TextInput;
     import feathers.core.FocusManager;
     import feathers.layout.AnchorLayout;
-
-    import starling.utils.Color;
 
     import starlingbuilder.editor.Setting;
     import starlingbuilder.editor.UIEditorScreen;
@@ -101,8 +100,6 @@ package starlingbuilder.editor.controller
         private var _snapPixel:Boolean = true;
 
         private var _showTextBorder:Boolean = false;
-
-        private var _hasFocus:Boolean = false;
 
         private var _localizationManager:LocalizationManager;
 
@@ -239,28 +236,28 @@ package starlingbuilder.editor.controller
             setChanged();
         }
 
-
-
-
-
         private function addFrom(obj:DisplayObject, param:Object, parent:DisplayObjectContainer = null, index:int = -1):void
         {
+            DragHelper.startDrag(obj, function(object:DisplayObject):void{
 
-            if (!_uiBuilder.isContainer(param))
+                FocusManager.focus = UIEditorScreen.instance.centerPanel;
+
+                if (!(selectedObject is DisplayObjectContainer) || !DisplayObjectContainer(selectedObject).contains(object))
+                    selectObject(object);
+            }, function(obj:DisplayObject, dx:Number, dy:Number):Boolean{
+
+                dx /= scale;
+                dy /= scale;
+                return move(dx, dy);
+            }, function():void{
+
+                endMove();
+            });
+
+            //fix exception on TextInput
+            if (obj is TextInput)
             {
-                DragHelper.startDrag(obj, function(obj:DisplayObject, dx:Number, dy:Number):Boolean{
-
-                    dx /= scale;
-                    dy /= scale;
-                    return move(dx, dy);
-                }, function():void{
-                    endMove();
-                });
-
-                SelectHelper.startSelect(obj, function(object:DisplayObject):void{
-                    if (!(selectedObject is DisplayObjectContainer) || !DisplayObjectContainer(selectedObject).contains(object))
-                        selectObject(object);
-                });
+                (obj as TextInput).isFocusEnabled = false;
             }
 
             if (obj is TextField)
