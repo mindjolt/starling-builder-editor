@@ -19,5 +19,6 @@ package starlingbuilder.editor
 
         public var defaultCanvasHeight:int = 960;
 
+        public var prettyJSON:Boolean = true;
     }
 }

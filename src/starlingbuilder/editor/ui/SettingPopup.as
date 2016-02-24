@@ -56,6 +56,7 @@ package starlingbuilder.editor.ui
             }
 
             _setting.persist();
+            _setting.setChanged();
         }
     }
 }

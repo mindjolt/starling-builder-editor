@@ -143,6 +143,8 @@ package starlingbuilder.editor.controller
             _historyManager = new HistoryManager();
 
             _setting = UIEditorScreen.instance.setting;
+            _setting.addEventListener(Event.CHANGE, onSettingChanged);
+            _setting.setChanged();
 
             _collapseMap = new Dictionary();
         }
@@ -1238,7 +1240,9 @@ package starlingbuilder.editor.controller
             return saved ? flag : null;
         }
 
-
-
+        private function onSettingChanged():void
+        {
+            _uiBuilder.prettyData = _setting.prettyJSON;
+        }
     }
 }

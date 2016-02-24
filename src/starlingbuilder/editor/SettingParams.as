@@ -10,9 +10,10 @@ package starlingbuilder.editor
     public class SettingParams
     {
         public static const PARAMS:Array = [
-            {"name":"rootContainerClass", "component":"pickerList", options:["starling.display.Sprite", "feathers.controls.LayoutGroup"]},
-            {"name":"defaultCanvasWidth"},
-            {"name":"defaultCanvasHeight"}
+            {"name":"rootContainerClass", "label":"Root Container Class", "component":"pickerList", options:["starling.display.Sprite", "feathers.controls.LayoutGroup"]},
+            {"name":"defaultCanvasWidth", "label":"Default Canvas Width"},
+            {"name":"defaultCanvasHeight", "label":"Default Canvas Height"},
+            {"name":"prettyJSON", "label":"Pretty JSON", "component":"check"}
         ]
     }
 }
