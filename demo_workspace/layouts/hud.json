@@ -13,10 +13,8 @@
             ],
             "customParams":{},
             "params":{
-              "height":226.99999999999997,
               "name":"score_element_background",
-              "scaleY":0.9956140350877192,
-              "width":595,
+              "scaleY":1,
               "x":17,
               "y":26.5
             }
@@ -206,9 +204,7 @@
             ],
             "customParams":{},
             "params":{
-              "height":89,
               "name":"meter_element_fill",
-              "width":178,
               "x":229.5,
               "y":43.5
             }
@@ -223,17 +219,14 @@
             ],
             "customParams":{},
             "params":{
-              "height":49,
               "name":"meter_element_star_0",
               "scaleX":1.02,
-              "width":51,
               "x":212,
               "y":65
             }
           },
           {
-            "children":[
-            ],
+            "children":[],
             "cls":"feathers.controls.LayoutGroup",
             "customParams":{},
             "params":{
@@ -295,10 +288,10 @@
                 ],
                 "customParams":{},
                 "params":{
-                  "height":83.73134328358209,
+                  "height":83.73,
                   "name":"boostslot_bg_green",
-                  "scaleX":0.8208955223880597,
-                  "scaleY":0.8208955223880597,
+                  "scaleX":0.82,
+                  "scaleY":0.82,
                   "width":110
                 }
               },
@@ -312,10 +305,10 @@
                 ],
                 "customParams":{},
                 "params":{
-                  "height":83.73134328358209,
+                  "height":83.73,
                   "name":"boostslot_bg_green",
-                  "scaleX":0.8208955223880597,
-                  "scaleY":0.8208955223880597,
+                  "scaleX":0.82,
+                  "scaleY":0.82,
                   "width":110,
                   "x":110
                 }
@@ -330,10 +323,10 @@
                 ],
                 "customParams":{},
                 "params":{
-                  "height":83.73134328358209,
+                  "height":83.73,
                   "name":"boostslot_bg_green",
-                  "scaleX":0.8208955223880597,
-                  "scaleY":0.8208955223880597,
+                  "scaleX":0.82,
+                  "scaleY":0.82,
                   "width":110,
                   "x":220
                 }
@@ -348,10 +341,10 @@
                 ],
                 "customParams":{},
                 "params":{
-                  "height":83.73134328358209,
+                  "height":83.73,
                   "name":"boostslot_bg_green",
-                  "scaleX":0.8208955223880597,
-                  "scaleY":0.8208955223880597,
+                  "scaleX":0.82,
+                  "scaleY":0.82,
                   "width":110,
                   "x":330
                 }
@@ -398,8 +391,8 @@
           "name":"settings_button",
           "pivotX":72,
           "pivotY":74,
-          "scaleX":1.0833333333333333,
-          "scaleY":1.054054054054054,
+          "scaleX":1.08,
+          "scaleY":1.05,
           "width":78,
           "x":640,
           "y":860
@@ -413,6 +406,7 @@
     }
   },
   "setting":{
+    "canvasColor":16777215,
     "canvasSize":{
       "x":640,
       "y":860
