@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="starling-builder-extensions" default="all" basedir="../">
+    <property file="buildscript/build.properties"/>
+    <target name="all" depends="package, run"/>
+    <target name="swf">
+        <echo message="Building Main.swf"/>
+        <java jar="${mxmlc}" dir="." fork="true" failonerror="true">
+            <arg value="-load-config=${airsdk.config}"/>
+            <arg value="-debug=true"/>
+            <arg value="-swf-version=${swf-version}"/>
+            <arg value="-source-path+=src"/>
+            <arg value="-source-path+=starling-builder-engine/src"/>
+            <arg value="-external-library-path+=${airsdk.framework}/libs/air/airglobal.swc"/>
+            <arg value="-library-path+=${airsdk.framework}/libs/air/applicationupdater.swc"/>
+            <arg value="-library-path+=${airsdk.framework}/libs/air/applicationupdater_ui.swc"/>
+            <arg value="-library-path+=libs"/>
+            <arg value="-output+=deliverable/bin/Main.swf"/>
+            <arg value="src/starlingbuilder/editor/Main.as"/>
+        </java>
+        <copy todir="deliverable/bin/icons">
+            <fileset dir="package/icons"/>
+        </copy>
+        <copy file="src/starlingbuilder/editor/Main-app.xml" todir="deliverable/bin"/>
+    </target>
+    <target name="package" depends="swf">
+        <echo message="Packaging starling-builder.air"/>
+        <java jar="${adt}" dir="deliverable/bin" fork="true" failonerror="true">
+            <arg value="-package"/>
+            <arg value="-storetype"/>
+            <arg value="pkcs12"/>
+            <arg value="-keystore"/>
+            <arg value="../../buildscript/cert.p12"/>
+            <arg value="-storepass"/>
+            <arg value="1111"/>
+            <arg value="../starling-builder.air"/>
+            <arg value="Main-app.xml"/>
+            <arg value="Main.swf"/>
+            <arg value="icons"/>
+        </java>
+    </target>
+    <target name="run" depends="swf">
+        <echo message="Running"/>
+        <exec executable="${adl}" dir="deliverable/bin">
+            <arg value="Main-app.xml"/>
+        </exec>
+    </target>
+    <target name="clean">
+        <delete file="deliverable/starling-builder.air"/>
+        <delete dir="deliverable/bin"/>
+    </target>
+</project>
