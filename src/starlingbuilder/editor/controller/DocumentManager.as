@@ -143,6 +143,8 @@ package starlingbuilder.editor.controller
             });
 
             DragQuad.startDrag(_canvas, function(rect:Rectangle):void{
+
+                FocusManager.focus = UIEditorScreen.instance.centerPanel;
                 _selectManager.selectByRect(rect, _extraParamsDict, uiBuilder);
             });
 

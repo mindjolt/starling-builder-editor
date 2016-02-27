@@ -9,6 +9,8 @@ package starlingbuilder.editor.ui
 {
     import feathers.controls.LayoutGroup;
     import feathers.core.PopUpManager;
+    import feathers.layout.VerticalLayout;
+
     import flash.geom.Rectangle;
 
     import starling.display.Button;
@@ -18,6 +20,7 @@ package starlingbuilder.editor.ui
 
     import starling.events.Event;
     import starling.textures.Texture;
+    import starling.textures.TextureAtlas;
 
     import starlingbuilder.editor.UIEditorApp;
 
@@ -43,6 +46,18 @@ package starlingbuilder.editor.ui
         public static const ALIGN_HORIZONTAL:String = "align horizontal";
         public static const ALIGN_VERTICAL:String = "align vertical";
 
+        [Embed(source="align_1.png")]
+        public static const ALIGN_LEFT_IMAGE:Class;
+
+        [Embed(source="position_tool.png")]
+        public static const POSITION_TOOL_PNG:Class;
+
+        [Embed(source="position_tool.xml", mimeType="application/octet-stream")]
+        public static const POSITION_TOOL_XML:Class;
+
+        public static var texture:Texture;
+        public static var atlas:TextureAtlas;
+
         private var _documentManager:DocumentManager;
 
         public function PositionToolbar()
@@ -54,16 +69,23 @@ package starlingbuilder.editor.ui
 
         private function createButtons():void
         {
-            var texture:Texture = Texture.fromBitmap(new AboutPopup.ICON());
+            if (texture == null) texture = Texture.fromBitmap(new POSITION_TOOL_PNG());
+            if (atlas == null) atlas = new TextureAtlas(texture, XML(new POSITION_TOOL_XML));
 
-            var group:LayoutGroup = FeathersUIUtil.layoutGroupWithVerticalLayout(2);
+            var group:LayoutGroup = FeathersUIUtil.layoutGroupWithVerticalLayout(15);
+            var layout:VerticalLayout = group.layout as VerticalLayout;
+            layout.paddingLeft = layout.paddingRight = 5;
+            group.y = 25;
             for each (var item:Object in createTextButtons())
             {
-                var button:starling.display.Button = new starling.display.Button(texture);
-                button.width = button.height = 32;
+                trace(item.name.replace(" ", "_"));
+                var button:starling.display.Button = new starling.display.Button(atlas.getTexture(item.name.replace(" ", "_")));
+                button.width = button.height = 22;
                 button.name = item.name;
                 button.addEventListener(Event.TRIGGERED, item.triggered);
+                button.useHandCursor = false;
                 group.addChild(button);
+
             }
 
             addChild(group);
