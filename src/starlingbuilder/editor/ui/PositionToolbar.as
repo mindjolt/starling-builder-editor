@@ -46,9 +46,6 @@ package starlingbuilder.editor.ui
         public static const ALIGN_HORIZONTAL:String = "align horizontal";
         public static const ALIGN_VERTICAL:String = "align vertical";
 
-        [Embed(source="align_1.png")]
-        public static const ALIGN_LEFT_IMAGE:Class;
-
         [Embed(source="position_tool.png")]
         public static const POSITION_TOOL_PNG:Class;
 
@@ -115,6 +112,7 @@ package starlingbuilder.editor.ui
 
         private function onButtonClick(event:Event):void
         {
+            var obj:Object;
             var button:starling.display.Button = event.target as starling.display.Button;
             switch(button.name)
             {
@@ -183,15 +181,14 @@ package starlingbuilder.editor.ui
                     });
                     break;
                 case ALIGN_HORIZONTAL:
-
-                    var obj:Object = {padding:0};
+                    obj = {padding:0};
                     var alignHorizontal:Function = function():void{
                         doAlignHorizontal(obj.padding);
                     };
                     PopUpManager.addPopUp(new SimpleEditPropertyPopup(obj, [{name:"padding", type:"Number"}], alignHorizontal, alignHorizontal));
                     break;
                 case ALIGN_VERTICAL:
-                    var obj:Object = {padding:0};
+                    obj = {padding:0};
                     var alignVertical:Function = function():void{
                         doAlignVertical(obj.padding);
                     };

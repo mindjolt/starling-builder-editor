@@ -128,7 +128,7 @@ package starlingbuilder.editor.ui
 
         private function reset():void
         {
-            var objects = _documentManager.selectedObjects;
+            var objects:Array = _documentManager.selectedObjects;
 
             if (objects.length)
             {
