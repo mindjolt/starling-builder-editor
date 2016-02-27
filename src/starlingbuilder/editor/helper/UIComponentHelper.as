@@ -12,8 +12,6 @@ package starlingbuilder.editor.helper
     import starlingbuilder.engine.util.ParamUtil;
 
     import feathers.core.PopUpManager;
-    import feathers.textures.Scale3Textures;
-    import feathers.textures.Scale9Textures;
 
     import starling.display.DisplayObject;
     import starling.textures.Texture;
@@ -71,7 +69,7 @@ package starlingbuilder.editor.helper
 
             for each (var param:Object in constructorParams)
             {
-                if (ParamUtil.getClassNames([Texture, Scale3Textures, Scale9Textures]).indexOf(param.cls) != -1)
+                if (ParamUtil.getClassNames([Texture]).indexOf(param.cls) != -1)
                 {
                     param.textureName = textureName;
                 }
@@ -82,13 +80,13 @@ package starlingbuilder.editor.helper
         {
             if (!scaleRatio) return;
 
-            for each (var param:Object in constructorParams)
-            {
-                if (ParamUtil.getClassNames([Scale3Textures, Scale9Textures]).indexOf(param.cls) != -1)
-                {
-                    param.scaleRatio = scaleRatio;
-                }
-            }
+//            for each (var param:Object in constructorParams)
+//            {
+//                if (ParamUtil.getClassNames([Scale3Textures, Scale9Textures]).indexOf(param.cls) != -1)
+//                {
+//                    param.scaleRatio = scaleRatio;
+//                }
+//            }
         }
 
         private static function setFontParams(params:Object, fontName:String, text:String):void

@@ -43,7 +43,7 @@ package starlingbuilder.editor.ui
     import starling.core.Starling;
     import starling.display.Sprite;
     import starling.events.Event;
-    import starlingbuilder.editor.utils.AssetManager;
+    import starling.utils.AssetManager;
     import starlingbuilder.util.ui.inspector.ColorPicker;
 
     public class Toolbar extends LayoutGroup

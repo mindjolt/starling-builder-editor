@@ -13,8 +13,8 @@ package starlingbuilder.editor
 
     import starling.display.Sprite;
     import starling.events.EventDispatcher;
-    import starlingbuilder.editor.utils.AssetManager;
     import starlingbuilder.util.AppUpdater;
+    import starling.utils.AssetManager;
 
     public class UIEditorApp extends Sprite
     {

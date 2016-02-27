@@ -17,7 +17,7 @@ package starlingbuilder.editor.ui
     import feathers.layout.VerticalLayout;
 
     import starling.events.Event;
-    import starlingbuilder.editor.utils.AssetManager;
+    import starling.utils.AssetManager;
 
     public class TexturePropertyPopup extends AbstractPropertyPopup
     {

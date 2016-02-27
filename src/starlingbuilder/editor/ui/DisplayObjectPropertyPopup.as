@@ -11,10 +11,6 @@ package starlingbuilder.editor.ui
     import feathers.controls.PickerList;
     import feathers.core.PopUpManager;
     import feathers.data.ListCollection;
-    import feathers.display.Scale3Image;
-    import feathers.display.Scale9Image;
-    import feathers.textures.Scale3Textures;
-    import feathers.textures.Scale9Textures;
 
     import flash.utils.getDefinitionByName;
 
@@ -58,35 +54,35 @@ package starlingbuilder.editor.ui
 
                     var cls:Class = getDefinitionByName(clsName) as Class;
 
-                    if (cls == Scale3Image || cls == Scale9Image)
-                    {
-                        var textureData:Object = {
-                            cls:(cls == Scale3Image) ? ParamUtil.getClassName(Scale3Textures) : ParamUtil.getClassName(Scale9Textures),
-                            textureName: textureName,
-                            scaleRatio: (cls == Scale3Image) ? SupportedWidget.DEFAULT_SCALE3_RATIO : SupportedWidget.DEFAULT_SCALE9_RATIO
-                        };
-
-                        var imageData:Object = {
-                            cls:clsName,
-                            constructorParams:[textureData],
-                            customParams:{}
-                        }
-
-                        PopUpManager.addPopUp(new ScaleTexturePopup(imageData, function(data:Object):void{
-
-                            _target = _documentManager.uiBuilder.createUIElement(data).object;
-
-                            var param:Object = _documentManager.extraParamsDict[_owner];
-                            param.params[_targetParam.name] = data;
-                            complete();
-                        }));
-                    }
-                    else
-                    {
+//                    if (cls == Scale3Image || cls == Scale9Image)
+//                    {
+//                        var textureData:Object = {
+//                            cls:(cls == Scale3Image) ? ParamUtil.getClassName(Scale3Textures) : ParamUtil.getClassName(Scale9Textures),
+//                            textureName: textureName,
+//                            scaleRatio: (cls == Scale3Image) ? SupportedWidget.DEFAULT_SCALE3_RATIO : SupportedWidget.DEFAULT_SCALE9_RATIO
+//                        };
+//
+//                        var imageData:Object = {
+//                            cls:clsName,
+//                            constructorParams:[textureData],
+//                            customParams:{}
+//                        }
+//
+//                        PopUpManager.addPopUp(new ScaleTexturePopup(imageData, function(data:Object):void{
+//
+//                            _target = _documentManager.uiBuilder.createUIElement(data).object;
+//
+//                            var param:Object = _documentManager.extraParamsDict[_owner];
+//                            param.params[_targetParam.name] = data;
+//                            complete();
+//                        }));
+//                    }
+//                    else
+//                    {
                         _target = new cls(_assetManager.getTexture(textureName));
                         setCustomParam(textureName);
                         complete();
-                    }
+//                    }
                 }
                 else
                 {

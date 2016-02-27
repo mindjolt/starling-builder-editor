@@ -10,6 +10,7 @@ package starlingbuilder.editor.ui
     import feathers.FEATHERS_VERSION;
 
     import starling.core.Starling;
+    import starling.utils.Align;
 
     import starlingbuilder.util.feathers.FeathersUIUtil;
     import starlingbuilder.util.feathers.popup.InfoPopup;
@@ -21,7 +22,6 @@ package starlingbuilder.editor.ui
 
     import starling.display.Image;
     import starling.textures.Texture;
-    import starling.utils.HAlign;
 
     public class AboutPopup extends InfoPopup
     {
@@ -42,7 +42,7 @@ package starlingbuilder.editor.ui
         {
             var layout:VerticalLayout = new VerticalLayout();
             layout.gap = 15;
-            layout.horizontalAlign = HAlign.CENTER;
+            layout.horizontalAlign = Align.CENTER;
             container.layout = layout;
 
             var descriptor:XML = NativeApplication.nativeApplication.applicationDescriptor;

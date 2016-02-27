@@ -8,9 +8,6 @@
 package starlingbuilder.editor
 {
     import feathers.controls.*;
-    import feathers.display.Scale3Image;
-    import feathers.display.Scale9Image;
-    import feathers.display.TiledImage;
     import feathers.layout.FlowLayout;
     import feathers.layout.HorizontalLayout;
     import feathers.layout.TiledColumnsLayout;
@@ -45,10 +42,6 @@ package starlingbuilder.editor
             List,
             Sprite,
             Sprite3D,
-
-            Scale3Image,
-            Scale9Image,
-            TiledImage,
 
             Alert,
             AutoComplete,

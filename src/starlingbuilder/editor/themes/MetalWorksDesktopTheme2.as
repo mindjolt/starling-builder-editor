@@ -1,5 +1,5 @@
 /*
- Copyright 2012-2015 Joshua Tynjala
+ Copyright 2012-2015 Bowler Hat LLC
 
  Permission is hereby granted, free of charge, to any person
  obtaining a copy of this software and associated documentation
@@ -22,8 +22,8 @@
  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  OTHER DEALINGS IN THE SOFTWARE.
  */
-package starlingbuilder.editor.themes {
-
+package starlingbuilder.editor.themes
+{
     import flash.display.Bitmap;
     import flash.display.BitmapData;
 
@@ -32,66 +32,70 @@ package starlingbuilder.editor.themes {
     import starling.textures.TextureAtlas;
 
     /**
-	 * The "Metal Works" theme for desktop Feathers apps.
-	 *
-	 * <p>This version of the theme embeds its assets. To load assets at
-	 * runtime, see <code>MetalWorksDesktopThemeWithAssetManager</code> instead.</p>
-	 *
-	 * @see http://feathersui.com/help/theme-assets.html
-	 */
-	public class MetalWorksDesktopTheme2 extends BaseMetalWorksDesktopTheme2
-	{
-		/**
-		 * @private
-		 */
-		[Embed(source="../../../../assets/images/metalworks_desktop.xml",mimeType="application/octet-stream")]
-		protected static const ATLAS_XML:Class;
+     * The "Metal Works" theme for desktop Feathers apps.
+     *
+     * <p>This version of the theme embeds its assets. To load assets at
+     * runtime, see <code>MetalWorksDesktopThemeWithAssetManager</code> instead.</p>
+     *
+     * @see http://feathersui.com/help/theme-assets.html
+     */
+    public class MetalWorksDesktopTheme2 extends BaseMetalWorksDesktopTheme2
+    {
+        /**
+         * @private
+         */
+        [Embed(source="/../assets/images/metalworks_desktop.xml",mimeType="application/octet-stream")]
+        protected static const ATLAS_XML:Class;
 
-		/**
-		 * @private
-		 */
-		[Embed(source="../../../../assets/images/metalworks_desktop.png")]
-		protected static const ATLAS_BITMAP:Class;
+        /**
+         * @private
+         */
+        [Embed(source="/../assets/images/metalworks_desktop.png")]
+        protected static const ATLAS_BITMAP:Class;
 
-		/**
-		 * Constructor.
-		 */
-		public function MetalWorksDesktopTheme2(themeMediator:IUIEditorThemeMediator = null)
-		{
-			super(themeMediator);
-			this.initialize();
-			this.dispatchEventWith(Event.COMPLETE);
-		}
+        /**
+         * @private
+         */
+        protected static const ATLAS_SCALE_FACTOR:int = 2;
 
-		/**
-		 * @private
-		 */
-		override protected function initialize():void
-		{
-			this.initializeTextureAtlas();
-			super.initialize();
-		}
+        /**
+         * Constructor.
+         */
+        public function MetalWorksDesktopTheme2(themeMediator:IUIEditorThemeMediator)
+        {
+            super(themeMediator);
+            this.initialize();
+        }
 
-		/**
-		 * @private
-		 */
-		protected function initializeTextureAtlas():void
-		{
-			var atlasBitmapData:BitmapData = Bitmap(new ATLAS_BITMAP()).bitmapData;
-			var atlasTexture:Texture = Texture.fromBitmapData(atlasBitmapData, false, false, 1);
-			atlasTexture.root.onRestore = this.atlasTexture_onRestore;
-			atlasBitmapData.dispose();
-			this.atlas = new TextureAtlas(atlasTexture, XML(new ATLAS_XML()));
-		}
+        /**
+         * @private
+         */
+        override protected function initialize():void
+        {
+            this.initializeTextureAtlas();
+            super.initialize();
+        }
 
-		/**
-		 * @private
-		 */
-		protected function atlasTexture_onRestore():void
-		{
-			var atlasBitmapData:BitmapData = Bitmap(new ATLAS_BITMAP()).bitmapData;
-			this.atlas.texture.root.uploadBitmapData(atlasBitmapData);
-			atlasBitmapData.dispose();
-		}
-	}
+        /**
+         * @private
+         */
+        protected function initializeTextureAtlas():void
+        {
+            var atlasBitmapData:BitmapData = Bitmap(new ATLAS_BITMAP()).bitmapData;
+            var atlasTexture:Texture = Texture.fromBitmapData(atlasBitmapData, false, false, ATLAS_SCALE_FACTOR);
+            atlasTexture.root.onRestore = this.atlasTexture_onRestore;
+            atlasBitmapData.dispose();
+            this.atlas = new TextureAtlas(atlasTexture, XML(new ATLAS_XML()));
+        }
+
+        /**
+         * @private
+         */
+        protected function atlasTexture_onRestore():void
+        {
+            var atlasBitmapData:BitmapData = Bitmap(new ATLAS_BITMAP()).bitmapData;
+            this.atlas.texture.root.uploadBitmapData(atlasBitmapData);
+            atlasBitmapData.dispose();
+        }
+    }
 }

@@ -30,8 +30,8 @@ package starlingbuilder.editor.ui
                 _text = new TextField(50, 50, TextTab.DEFAULT_TEXT);
             }
 
-            _text.color = Color.WHITE;
-            _text.fontName = item.label;
+            _text.format.color = Color.WHITE;
+            _text.format.font = item.label;
             return _text;
         }
     }

@@ -67,7 +67,7 @@ package starlingbuilder.editor.controller
     import starling.events.Event;
     import starling.events.EventDispatcher;
     import starling.text.TextField;
-    import starlingbuilder.editor.utils.AssetManager;
+    import starling.utils.AssetManager;
 
     public class DocumentManager extends EventDispatcher implements IUIEditorThemeMediator
     {
@@ -1126,7 +1126,7 @@ package starlingbuilder.editor.controller
             _layoutContainer.width = _canvas.width = canvasSize.x;
             _layoutContainer.height = _canvas.height = canvasSize.y;
 
-            _container.clipRect = new Rectangle(0, 0, canvasSize.x * _canvasContainer.scaleX, canvasSize.y * _canvasContainer.scaleY);
+            _container.mask = new Quad(canvasSize.x * _canvasContainer.scaleX, canvasSize.y * _canvasContainer.scaleY);
 
             FeathersControl(_container.parent).invalidate();
 
@@ -1209,7 +1209,7 @@ package starlingbuilder.editor.controller
 
                 FeathersControl(_container.parent).invalidate();
 
-                _container.clipRect = new Rectangle(0, 0, canvasSize.x * _canvasContainer.scaleX, canvasSize.y * _canvasContainer.scaleY);
+                _container.mask = new Quad(canvasSize.x * _canvasContainer.scaleX, canvasSize.y * _canvasContainer.scaleY);
 
                 _boundingBoxContainer.reload();
 

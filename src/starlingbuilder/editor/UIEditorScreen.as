@@ -44,7 +44,7 @@ package starlingbuilder.editor
     import starling.display.Stage;
     import starling.events.Event;
     import starling.events.ResizeEvent;
-    import starlingbuilder.editor.utils.AssetManager;
+    import starling.utils.AssetManager;
 
     public class UIEditorScreen extends LayoutGroup
     {
@@ -382,7 +382,7 @@ package starlingbuilder.editor
         {
             var array:Array = [];
 
-            var dict:Dictionary = Starling.current.contextData[BITMAP_FONT_DATA_NAME] as Dictionary;
+            var dict:Dictionary = Starling.painter.sharedData[BITMAP_FONT_DATA_NAME] as Dictionary;
             for (var name:String in dict)
             {
                 array.push(name);

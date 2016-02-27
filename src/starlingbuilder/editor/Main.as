@@ -7,6 +7,8 @@
  */
 package starlingbuilder.editor
 {
+    import starling.utils.Align;
+
     import starlingbuilder.util.AppUpdater;
     import starlingbuilder.util.feathers.popup.InfoPopup;
 
@@ -19,8 +21,6 @@ package starlingbuilder.editor
     import flash.geom.Rectangle;
 
     import starling.core.Starling;
-    import starling.utils.HAlign;
-    import starling.utils.VAlign;
 
     [SWF(frameRate=60, width=1350, height=960, backgroundColor="#000")]
     public class Main extends Sprite
@@ -54,13 +54,11 @@ package starlingbuilder.editor
 
             _viewport = new Rectangle(0, 0, stage.stageWidth, stage.stageHeight);
 
-            Starling.handleLostContext = true;
-
             _starling = new Starling(getApp(), stage, _viewport, null, Context3DRenderMode.AUTO, Context3DProfile.BASELINE);
 
             _starling.simulateMultitouch  = false;
             _starling.enableErrorChecking = false;
-            _starling.showStatsAt(HAlign.RIGHT, VAlign.TOP);
+            _starling.showStatsAt(Align.RIGHT, Align.TOP);
             _starling.supportHighResolutions = true;
 
             _starling.stage3D.addEventListener(Event.CONTEXT3D_CREATE, _start);

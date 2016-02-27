@@ -43,13 +43,13 @@ package starlingbuilder.editor.ui
     import starling.display.Sprite;
     import starling.events.Event;
     import starling.text.TextField;
-    import starlingbuilder.editor.utils.AssetManager;
+    import starling.utils.AssetManager;
 
     import starling.textures.TextureAtlas;
 
     public class AssetTab extends LayoutGroup
     {
-        private static const linker:Array = [ScaleTexturePopup, DefaultCreateComponentPopup, DefaultEditPropertyPopup, TexturePropertyPopup, DisplayObjectPropertyPopup, TextureConstructorPopup, ScaleTextureConstructorPopup1, ScaleTextureConstructorPopup2];
+        private static const linker:Array = [DefaultCreateComponentPopup, DefaultEditPropertyPopup, TexturePropertyPopup, DisplayObjectPropertyPopup, TextureConstructorPopup];
 
         public static var assetList:Vector.<String>;
 
@@ -217,7 +217,7 @@ package starlingbuilder.editor.ui
 
         private function getGroupAssets():HierarchicalCollection
         {
-            var atlasDict:Dictionary = _assetManager.getTextureAtlasDictionary();
+            var atlasNames:Vector.<String> = _assetManager.getTextureAtlasNames();
             var atlasName:String;
 
             var data:Array = [];
@@ -227,9 +227,9 @@ package starlingbuilder.editor.ui
 
             var itemDict:Dictionary = new Dictionary();
 
-            for (atlasName in atlasDict)
+            for each (var atlasName:String in atlasNames)
             {
-                atlas = atlasDict[atlasName];
+                atlas = _assetManager.getTextureAtlas(atlasName);
 
                 item = {header:{label:atlasName}, children:[]};
                 data.push(item);
@@ -245,11 +245,11 @@ package starlingbuilder.editor.ui
 
             for each (var name:String in array)
             {
-                for (atlasName in atlasDict)
+                for each (atlasName in atlasNames)
                 {
                     found = false;
 
-                    atlas = atlasDict[atlasName];
+                    atlas = _assetManager.getTextureAtlas(atlasName);
                     if (atlas.getTexture(name))
                     {
                         itemDict[atlasName].children.push({label:name});
