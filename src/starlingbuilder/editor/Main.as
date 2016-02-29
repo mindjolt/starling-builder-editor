@@ -30,14 +30,11 @@ package starlingbuilder.editor
         private var _viewport:Rectangle;
         private var _starling : Starling;
 
-        private var _appUpdater:AppUpdater;
+
 
         public function Main()
         {
             addEventListener(Event.ENTER_FRAME, onEnterFrame);
-
-            _appUpdater = new AppUpdater();
-
         }
 
         private function _start(e:Event):void

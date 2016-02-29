@@ -8,10 +8,13 @@
 package starlingbuilder.util
 {
     import air.update.ApplicationUpdaterUI;
+    import air.update.events.StatusUpdateEvent;
 
     import flash.events.ErrorEvent;
 
     import flash.events.Event;
+
+    import starlingbuilder.util.feathers.popup.InfoPopup;
 
     public class AppUpdater
     {
@@ -20,10 +23,13 @@ package starlingbuilder.util
 
         private var _appUpdater:ApplicationUpdaterUI;
 
+        private var _showPopup:Boolean = false;
+
         public function AppUpdater()
         {
             _appUpdater = new ApplicationUpdaterUI();
             _appUpdater.addEventListener(ErrorEvent.ERROR, onError);
+            _appUpdater.addEventListener(StatusUpdateEvent.UPDATE_STATUS, onUpdateStatus);
 
             _appUpdater.updateURL = UPDATE_URL;
             _appUpdater.delay = 1;
@@ -35,6 +41,14 @@ package starlingbuilder.util
             _appUpdater.initialize();
         }
 
+        private function onUpdateStatus(event:StatusUpdateEvent):void
+        {
+            if (!event.available && _showPopup)
+                InfoPopup.show("Already up to date", ["OK"]);
+
+            _showPopup = false;
+        }
+
         private function onError(event:Event):void
         {
             trace(event.toString());
@@ -42,6 +56,7 @@ package starlingbuilder.util
 
         public function checkNow():void
         {
+            _showPopup = true;
             _appUpdater.checkNow();
         }
     }

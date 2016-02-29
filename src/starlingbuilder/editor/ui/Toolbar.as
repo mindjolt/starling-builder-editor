@@ -528,6 +528,7 @@ package starlingbuilder.editor.ui
             menu.registerAction(MainMenu.DOCUMENTATION, onDocumentation);
             menu.registerAction(MainMenu.GITHUB_PAGE, onGithubPage);
             menu.registerAction(MainMenu.ABOUT, onAbout);
+            menu.registerAction(MainMenu.CHECK_FOR_UPDATE, onCheckForUpdate);
 
             _documentManager.historyManager.addEventListener(starling.events.Event.CHANGE, updateHistoryManager);
             _documentManager.historyManager.addEventListener(HistoryManager.RESET, updateHistoryManager);
@@ -557,6 +558,11 @@ package starlingbuilder.editor.ui
         {
             var popup:AboutPopup = new AboutPopup();
             PopUpManager.addPopUp(popup);
+        }
+
+        private function onCheckForUpdate():void
+        {
+            UIEditorApp.instance.appUpdater.checkNow();
         }
 
         private function onChange(e:starling.events.Event):void

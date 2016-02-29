@@ -62,6 +62,7 @@ package starlingbuilder.editor.ui
         public static const DOCUMENTATION:String = "Documentation";
         public static const GITHUB_PAGE:String = "Github Page";
         public static const ABOUT:String = "About";
+        public static const CHECK_FOR_UPDATE:String = "Check for update";
 
         public static const FILE_MENU:Array = [
             {"label":NEW, "key":"n"},
@@ -116,7 +117,8 @@ package starlingbuilder.editor.ui
         public static const HELP_MENU:Array = [
             {"label":DOCUMENTATION},
             {"label":GITHUB_PAGE},
-            {"label":ABOUT}
+            {"label":CHECK_FOR_UPDATE},
+            {"label":ABOUT},
         ]
 
         private static var _instance:MainMenu;
