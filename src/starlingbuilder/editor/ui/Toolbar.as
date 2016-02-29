@@ -44,6 +44,7 @@ package starlingbuilder.editor.ui
     import starling.display.Sprite;
     import starling.events.Event;
     import starlingbuilder.editor.utils.AssetManager;
+    import starlingbuilder.util.ui.inspector.ColorPicker;
 
     public class Toolbar extends LayoutGroup
     {
@@ -67,6 +68,7 @@ package starlingbuilder.editor.ui
         private var _canvasSizeHeight:TextInput;
 
         private var _canvasScale:TextInput;
+        private var _colorPicker:ColorPicker;
 
         private var _loadExternalSerializer:DocumentSerializer;
 
@@ -148,7 +150,7 @@ package starlingbuilder.editor.ui
             _canvasSizeHeight.addEventListener(FeathersEventType.FOCUS_OUT, onCanvasChange);
             _canvasSizeHeight.width = 50;
 
-            _documentManager.addEventListener(DocumentEventType.CANVAS_SIZE_CHANGE, onCanvas);
+            _documentManager.addEventListener(DocumentEventType.CANVAS_CHANGE, onCanvas);
 
             group.addChild(_canvasSizeWidth);
 
@@ -163,8 +165,17 @@ package starlingbuilder.editor.ui
             _canvasScale.addEventListener(FeathersEventType.FOCUS_OUT, onCanvasScaleChange);
             group.addChild(_canvasScale);
 
+            _colorPicker = new ColorPicker();
+            _colorPicker.addEventListener(starling.events.Event.CHANGE, onColorChange);
+            group.addChild(_colorPicker);
+
             addChild(group);
 
+        }
+
+        private function onColorChange(event:starling.events.Event):void
+        {
+            _documentManager.canvasColor = _colorPicker.value;
         }
 
         private function onCanvasChange(event:starling.events.Event):void
@@ -180,6 +191,8 @@ package starlingbuilder.editor.ui
             _canvasSizeHeight.text = String(canvasSize.y);
 
             _canvasScale.text = String(_documentManager.scale);
+
+            _colorPicker.value = _documentManager.canvasColor;
         }
 
         private function onCanvasScaleChange(event:starling.events.Event):void
@@ -515,6 +528,7 @@ package starlingbuilder.editor.ui
             menu.registerAction(MainMenu.DOCUMENTATION, onDocumentation);
             menu.registerAction(MainMenu.GITHUB_PAGE, onGithubPage);
             menu.registerAction(MainMenu.ABOUT, onAbout);
+            menu.registerAction(MainMenu.CHECK_FOR_UPDATE, onCheckForUpdate);
 
             _documentManager.historyManager.addEventListener(starling.events.Event.CHANGE, updateHistoryManager);
             _documentManager.historyManager.addEventListener(HistoryManager.RESET, updateHistoryManager);
@@ -544,6 +558,11 @@ package starlingbuilder.editor.ui
         {
             var popup:AboutPopup = new AboutPopup();
             PopUpManager.addPopUp(popup);
+        }
+
+        private function onCheckForUpdate():void
+        {
+            UIEditorApp.instance.appUpdater.checkNow();
         }
 
         private function onChange(e:starling.events.Event):void

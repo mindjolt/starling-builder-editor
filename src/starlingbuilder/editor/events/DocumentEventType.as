@@ -14,7 +14,9 @@ package starlingbuilder.editor.events
 
         public static const LAYER_CHANGE:String = "layerChange";
 
-        public static const CANVAS_SIZE_CHANGE:String = "canvasSizeChange";
+        public static const CANVAS_CHANGE:String = "canvasChange";
+
+        public static const SELECTION_CHANGE:String = "selectionChange";
 
         public function DocumentEventType()
         {

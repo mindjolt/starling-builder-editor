@@ -45,18 +45,6 @@ package starlingbuilder.editor.ui
             height = 900;
         }
 
-        override protected function focusInHandler(event:Event):void
-        {
-            super.focusInHandler(event);
-            _documentManager.hasFocus = true;
-        }
-
-        override protected function focusOutHandler(event:Event):void
-        {
-            super.focusOutHandler(event);
-            _documentManager.hasFocus = false;
-        }
-
         override public function get isFocusEnabled():Boolean
         {
             return this._isEnabled && this._isFocusEnabled;

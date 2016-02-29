@@ -1,5 +1,8 @@
 package starlingbuilder.util.ui.inspector
 {
+    import feathers.controls.TextInput;
+    import feathers.events.FeathersEventType;
+
     import flash.display.Bitmap;
     import flash.geom.Point;
     import flash.geom.Rectangle;
@@ -35,6 +38,10 @@ package starlingbuilder.util.ui.inspector
 
         private var _value:uint = 0xffffff;
 
+        private var _sprite:Sprite;
+
+        private var _textInput:TextInput;
+
         public function ColorPicker()
         {
             _bitmap = new Palette();
@@ -49,6 +56,17 @@ package starlingbuilder.util.ui.inspector
 
             _square.addEventListener(Event.TRIGGERED, onSquare);
             _palette.addEventListener(TouchEvent.TOUCH, onPalette);
+
+            _textInput = new TextInput();
+            _textInput.y = _palette.height;
+            _textInput.addEventListener(FeathersEventType.FOCUS_OUT, onTextInput);
+            _textInput.addEventListener(FeathersEventType.ENTER, onTextInput);
+            _textInput.addEventListener(Event.CLOSE, onTextInput);
+
+            _sprite = new Sprite();
+            _sprite.addChild(_palette);
+            _sprite.addChild(_textInput);
+
         }
 
         private function onSquare(event:Event):void
@@ -58,14 +76,14 @@ package starlingbuilder.util.ui.inspector
 
         private function togglePalette():void
         {
-            if (_palette.stage == null)
+            if (_sprite.stage == null)
             {
-                Starling.current.stage.addChild(_palette);
+                Starling.current.stage.addChild(_sprite);
                 autoPositionPalette();
             }
             else
             {
-                Starling.current.stage.removeChild(_palette);
+                Starling.current.stage.removeChild(_sprite);
             }
         }
 
@@ -77,7 +95,7 @@ package starlingbuilder.util.ui.inspector
             {
                 positionPalette(direction);
 
-                if (insideViewPort(_palette))
+                if (insideViewPort(_sprite))
                 {
                     break;
                 }
@@ -103,23 +121,23 @@ package starlingbuilder.util.ui.inspector
             {
                 case BOTTOM_LEFT:
                     pt = localToGlobal(new Point(-10, 0));
-                    _palette.x = pt.x - _palette.width;
-                    _palette.y = pt.y;
+                    _sprite.x = pt.x - _sprite.width;
+                    _sprite.y = pt.y;
                     break;
                 case BOTTOM_RIGHT:
                     pt = localToGlobal(new Point(30, 0));
-                    _palette.x = pt.x;
-                    _palette.y = pt.y;
+                    _sprite.x = pt.x;
+                    _sprite.y = pt.y;
                     break;
                 case TOP_LEFT:
                     pt = localToGlobal(new Point(-10, 20));
-                    _palette.x = pt.x - _palette.width;
-                    _palette.y = pt.y - _palette.height;
+                    _sprite.x = pt.x - _sprite.width;
+                    _sprite.y = pt.y - _sprite.height;
                     break;
                 case TOP_RIGHT:
                     pt = localToGlobal(new Point(30, 20));
-                    _palette.x = pt.x;
-                    _palette.y = pt.y - _palette.height;
+                    _sprite.x = pt.x;
+                    _sprite.y = pt.y - _sprite.height;
                     break;
             }
         }
@@ -143,9 +161,15 @@ package starlingbuilder.util.ui.inspector
 
                 if (touch.phase == TouchPhase.ENDED)
                 {
-                    target.removeFromParent();
+                    _sprite.removeFromParent();
                 }
             }
+        }
+
+        private function onTextInput(event:Event):void
+        {
+            value = uint(_textInput.text);
+            dispatchEventWith(Event.CHANGE);
         }
 
         public function get value():uint
@@ -164,6 +188,7 @@ package starlingbuilder.util.ui.inspector
         {
             _colorFilter.reset();
             _colorFilter.tint(color);
+            _textInput.text = "0x" + value.toString(16);
         }
 
         private function getColor(x:int, y:int):uint
@@ -176,7 +201,7 @@ package starlingbuilder.util.ui.inspector
             _square.removeEventListener(Event.TRIGGERED, onSquare);
             _palette.removeEventListener(TouchEvent.TOUCH, onPalette);
 
-            _palette.removeFromParent(true);
+            _sprite.removeFromParent(true);
             _palette.texture.dispose();
 
             _square.removeFromParent(true);

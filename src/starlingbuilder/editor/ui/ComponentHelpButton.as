@@ -20,7 +20,7 @@ package starlingbuilder.editor.ui
         [Embed(source="question_mark.png")]
         public static const question_mark:Class;
 
-        public static var question_mark_texture:Texture = Texture.fromBitmap(new question_mark());
+        public static var question_mark_texture:Texture;
 
         public static const STARLING_BASE_URL:String = "http://doc.starling-framework.org/current/"
         public static const FEATHERS_BASE_URL:String = "http://feathersui.com/api-reference/";
@@ -31,6 +31,8 @@ package starlingbuilder.editor.ui
         public function ComponentHelpButton()
         {
             super();
+
+            if (question_mark_texture == null) question_mark_texture = Texture.fromBitmap(new question_mark());
             _button = new Button(question_mark_texture);
             _button.scaleX = _button.scaleY = 0.5;
             _button.addEventListener(Event.TRIGGERED, onHelp);

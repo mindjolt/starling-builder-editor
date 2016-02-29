@@ -7,6 +7,8 @@
  */
 package starlingbuilder.editor.ui
 {
+    import starling.utils.Color;
+
     import starlingbuilder.editor.UIEditorApp;
     import starlingbuilder.util.DrawUtil;
     import starlingbuilder.util.feathers.popup.InfoPopup;
@@ -150,7 +152,7 @@ package starlingbuilder.editor.ui
 
         private function makeLine(x1:Number, y1:Number, x2:Number, y2:Number):Quad
         {
-            return DrawUtil.makeLine(x1 * _image.width, y1 * _image.height, x2 * _image.width, y2 * _image.height);
+            return DrawUtil.makeLine(x1 * _image.width, y1 * _image.height, x2 * _image.width, y2 * _image.height, Color.RED);
         }
 
         private function createUIMapperParams():Array

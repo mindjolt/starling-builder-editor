@@ -19,6 +19,7 @@ package starlingbuilder.editor
     import starlingbuilder.editor.ui.CenterPanel;
     import starlingbuilder.editor.ui.LeftPanel;
     import starlingbuilder.editor.ui.MainMenu;
+    import starlingbuilder.editor.ui.PositionToolbar;
     import starlingbuilder.editor.ui.RightPanel;
     import starlingbuilder.editor.ui.SettingPopup;
     import starlingbuilder.editor.ui.Toolbar;
@@ -55,6 +56,7 @@ package starlingbuilder.editor
         private var _assetManager:AssetManager;
 
         private var _toolbar:Toolbar;
+        private var _positionToolbar:PositionToolbar;
 
         private var _leftPanel:LeftPanel;
         private var _rightPanel:RightPanel;
@@ -252,6 +254,7 @@ package starlingbuilder.editor
             createToolbar();
             createLeftPanel();
             createRightPanel();
+            createPositionToolbar();
             createCenterPanel();
 
             UIEditorApp.instance.documentManager.clear();
@@ -318,7 +321,7 @@ package starlingbuilder.editor
         private function createCenterPanel():void
         {
             var layoutData:AnchorLayoutData = new AnchorLayoutData();
-            layoutData.left = _leftPanel.width;
+            layoutData.left = _leftPanel.width + _positionToolbar.width;
             layoutData.top = _toolbar.height;
             layoutData.bottom = 0;
             layoutData.right = 5;
@@ -327,6 +330,15 @@ package starlingbuilder.editor
             _centerPanel = new CenterPanel();
             _centerPanel.layoutData = layoutData;
             addChild(_centerPanel);
+        }
+
+        private function createPositionToolbar():void
+        {
+            _positionToolbar = new PositionToolbar();
+            _positionToolbar.validate();
+            _positionToolbar.x = _leftPanel.width;
+            _positionToolbar.y = _toolbar.height;
+            addChild(_positionToolbar);
         }
 
         private function testButton():void

@@ -18,7 +18,7 @@ package starlingbuilder.util.ui.inspector
         [Embed(source="link_sign.png")]
         public static const link_sign:Class;
 
-        public static var link_sign_texture:Texture = Texture.fromBitmap(new link_sign());
+        public static var link_sign_texture:Texture;
 
         private var _label1:Label;
         private var _label2:Label;
@@ -31,6 +31,7 @@ package starlingbuilder.util.ui.inspector
         {
             super();
 
+            if (link_sign_texture == null) link_sign_texture = Texture.fromBitmap(new link_sign());
             _isSelected = isSelected;
 
             layout = new VerticalLayout();

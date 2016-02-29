@@ -1,0 +1,37 @@
+{
+  "layout":{
+    "children":[
+      {
+        "cls":"starling.display.MovieClip",
+        "constructorParams":[
+          {
+            "cls":"__AS3__.vec.Vector.<starling.textures.Texture>",
+            "label":"prefix",
+            "name":"textures",
+            "value":"meter_"
+          }
+        ],
+        "customParams":{},
+        "params":{
+          "currentFrame":2,
+          "fps":6,
+          "name":"movieClip",
+          "x":87.5,
+          "y":69.5
+        }
+      }
+    ],
+    "cls":"starling.display.Sprite",
+    "customParams":{},
+    "params":{
+      "name":"root"
+    }
+  },
+  "setting":{
+    "canvasSize":{
+      "x":640,
+      "y":960
+    }
+  },
+  "version":"1.0"
+}

@@ -17,10 +17,9 @@
         <compiler-options>
           <option name="additionalOptions" value="-advanced-telemetry=true" />
         </compiler-options>
-        <packaging-air-desktop use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/src/starlingbuilder/editor/UI-editor-app.xml" package-file-name="starling-builder">
+        <packaging-air-desktop use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/src/starlingbuilder/editor/Main-app.xml" package-file-name="starling-builder">
           <files-to-package>
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/icons" path-in-package="icons" />
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/src/starlingbuilder/editor/updateConfig.xml" path-in-package="updateConfig.xml" />
+            <FilePathAndPathInPackage file-path="$MODULE_DIR$/package" path-in-package="." />
           </files-to-package>
         </packaging-air-desktop>
         <packaging-android />
@@ -43,10 +42,9 @@
             <entry key="compiler.debug.swf" value="true" />
           </map>
         </compiler-options>
-        <packaging-air-desktop use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/src/starlingbuilder/editor/UI-editor-app.xml" package-file-name="starling-builder">
+        <packaging-air-desktop use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/src/starlingbuilder/editor/Main-app.xml" package-file-name="starling-builder">
           <files-to-package>
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/icons" path-in-package="icons" />
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/src/starlingbuilder/editor/updateConfig.xml" path-in-package="updateConfig.xml" />
+            <FilePathAndPathInPackage file-path="$MODULE_DIR$/package" path-in-package="." />
           </files-to-package>
         </packaging-air-desktop>
         <packaging-android />
@@ -67,10 +65,9 @@
         <compiler-options>
           <option name="additionalOptions" value="-advanced-telemetry=true" />
         </compiler-options>
-        <packaging-air-desktop use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/src/starlingbuilder/editor/UI-editor-app.xml" package-file-name="test">
+        <packaging-air-desktop use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/src/starlingbuilder/editor/Main-app.xml" package-file-name="test">
           <files-to-package>
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/icons" path-in-package="icons" />
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/src/starlingbuilder/editor/updateConfig.xml" path-in-package="updateConfig.xml" />
+            <FilePathAndPathInPackage file-path="$MODULE_DIR$/package" path-in-package="." />
           </files-to-package>
         </packaging-air-desktop>
         <packaging-android />

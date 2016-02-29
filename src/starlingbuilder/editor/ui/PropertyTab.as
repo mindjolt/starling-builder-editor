@@ -14,6 +14,7 @@ package starlingbuilder.editor.ui
     import starlingbuilder.editor.controller.DocumentManager;
     import starlingbuilder.editor.data.TemplateData;
     import starlingbuilder.editor.events.DocumentEventType;
+    import starlingbuilder.editor.history.CompositeHistoryOperation;
     import starlingbuilder.editor.history.ResetOperation;
     import starlingbuilder.editor.themes.UIEditorStyleProvider;
     import starlingbuilder.engine.util.ParamUtil;
@@ -127,21 +128,29 @@ package starlingbuilder.editor.ui
 
         private function reset():void
         {
-            var obj:DisplayObject = _documentManager.selectedObject;
+            var objects:Array = _documentManager.selectedObjects;
 
-            if (obj)
+            if (objects.length)
             {
-                var oldValue:Object = {rotation:obj.rotation, scaleX:obj.scaleX, scaleY:obj.scaleY};
+                var ops:Array = [];
 
-                obj.rotation = 0;
-                obj.scaleX = 1;
-                obj.scaleY = 1;
+                for each (var obj:DisplayObject in objects)
+                {
+                    var oldValue:Object = {rotation:obj.rotation, scaleX:obj.scaleX, scaleY:obj.scaleY};
+
+                    obj.rotation = 0;
+                    obj.scaleX = 1;
+                    obj.scaleY = 1;
+
+                    var newValue:Object = {rotation:obj.rotation, scaleX:obj.scaleX, scaleY:obj.scaleY};
+
+                    var op:ResetOperation = new ResetOperation(obj, oldValue, newValue);
+                    ops.push(op);
+                }
+
+                _documentManager.historyManager.add(new CompositeHistoryOperation(ops));
                 _documentManager.setChanged();
-
-                var newValue:Object = {rotation:obj.rotation, scaleX:obj.scaleX, scaleY:obj.scaleY};
-                _documentManager.historyManager.add(new ResetOperation(obj, oldValue, newValue));
             }
-
         }
 
         private function getObjectParams(target:Object):Array

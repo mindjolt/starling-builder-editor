@@ -87,7 +87,8 @@
                 {"name":"width", "min":1, "step":1},
                 {"name":"height", "min":1, "step":1},
                 {"name":"color", "component":"colorPicker", "default_value":16777215},
-                {"name":"textures", "read_only":true, "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"starlingbuilder.editor.ui.ScaleTextureConstructorPopup1"}
+                {"name":"textures", "read_only":true, "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"starlingbuilder.editor.ui.ScaleTextureConstructorPopup1"},
+                {"name":"textureScale", "min":0, "step":0.01, "default_value":1}
             ],
             "constructorParams":
             [
@@ -103,7 +104,8 @@
                 {"name":"width", "min":1},
                 {"name":"height", "min":1},
                 {"name":"color", "component":"colorPicker", "default_value":16777215},
-                {"name":"textures", "read_only":true, "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"starlingbuilder.editor.ui.ScaleTextureConstructorPopup1"}
+                {"name":"textures", "read_only":true, "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"starlingbuilder.editor.ui.ScaleTextureConstructorPopup1"},
+                {"name":"textureScale", "min":0, "step":0.01, "default_value":1}
             ],
             "constructorParams":
             [
@@ -119,7 +121,8 @@
                 {"name":"width", "min":1},
                 {"name":"height", "min":1},
                 {"name":"color", "component":"colorPicker", "default_value":16777215},
-                {"name":"texture", "read_only":true, "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"starlingbuilder.editor.ui.TextureConstructorPopup"}
+                {"name":"texture", "read_only":true, "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"starlingbuilder.editor.ui.TextureConstructorPopup"},
+                {"name":"textureScale", "min":0, "step":0.01, "default_value":1}
             ],
             "constructorParams":
                 [
@@ -192,7 +195,7 @@
         {
             "cls":"starling.display.MovieClip",
             "constructorParams": [
-                {"cls":"__AS3__.vec.Vector.<starling.textures.Texture>", "name":"textures", "value":""}
+                {"cls":"__AS3__.vec.Vector.<starling.textures.Texture>", "name":"textures", "label":"prefix", "value":""}
             ],
             "params": [
                 {"name":"fps", "min":1, "default_value":12},
@@ -467,7 +470,8 @@
             {"name":"pivotX", "default_value":0},
             {"name":"pivotY", "default_value":0},
             {"name":"rotation", "component":"slider", "min":-3.14, "max":3.14, "step":0.01, "default_value":0},
-            {"name":"alpha", "component":"slider", "min":0, "max":1, "step":0.01, "default_value":1}
+            {"name":"alpha", "component":"slider", "min":0, "max":1, "step":0.01, "default_value":1},
+            {"name":"blendMode", "component":"pickerList", "options":["auto", "add", "below", "erase", "mask", "multiply", "none", "normal", "screen"], "default_value":"auto"}
         ],
 
         "customParams":[
@@ -501,13 +505,13 @@
             {"name":"name"},
             {"name":"x", "step":10},
             {"name":"y", "step":10},
-            {"name":"width", "min":0, "step":10},
-            {"name":"height", "min":0, "step":10}
+            {"name":"width", "min":0, "step":10, "link":true},
+            {"name":"height", "min":0, "step":10, "link":true}
         ]
     },
 
     "version":1.0,
 
-    "revision":25
+    "revision":26
 
 }

@@ -9,6 +9,7 @@ package starlingbuilder.editor.ui
 {
     import starlingbuilder.editor.UIEditorApp;
     import starlingbuilder.editor.controller.DocumentManager;
+    import starlingbuilder.editor.history.CompositeHistoryOperation;
     import starlingbuilder.editor.history.MovePivotOperation;
     import starlingbuilder.engine.util.DisplayObjectUtil;
     import starlingbuilder.util.feathers.FeathersUIUtil;
@@ -68,17 +69,24 @@ package starlingbuilder.editor.ui
 
         private function onPivotButton(event:Event):void
         {
-            var obj:DisplayObject = _documentManager.selectedObject;
+            var objects:Array = _documentManager.selectedObjects;
 
-            if (obj)
+            if (objects.length)
             {
-                var oldValue:Point = new Point(obj.pivotX, obj.pivotY);
+                var ops:Array = [];
 
-                DisplayObjectUtil.movePivotToAlign(obj, String(_hAlighPickerList.selectedItem), String(_vAlighPickerList.selectedItem));
+                for each (var obj:DisplayObject in objects)
+                {
+                    var oldValue:Point = new Point(obj.pivotX, obj.pivotY);
+
+                    DisplayObjectUtil.movePivotToAlign(obj, String(_hAlighPickerList.selectedItem), String(_vAlighPickerList.selectedItem));
+                    var newValue:Point = new Point(obj.pivotX, obj.pivotY);
+
+                    ops.push(new MovePivotOperation(obj, oldValue, newValue));
+                }
+
+                _documentManager.historyManager.add(new CompositeHistoryOperation(ops));
                 _documentManager.setChanged();
-
-                var newValue:Point = new Point(obj.pivotX, obj.pivotY);
-                _documentManager.historyManager.add(new MovePivotOperation(obj, oldValue, newValue));
             }
         }
     }

@@ -7,6 +7,8 @@
  */
 package starlingbuilder.editor.helper
 {
+    import feathers.core.PopUpManager;
+
     import starlingbuilder.editor.UIEditorApp;
     import starlingbuilder.editor.themes.BaseMetalWorksDesktopTheme2;
 
@@ -46,6 +48,7 @@ package starlingbuilder.editor.helper
         {
             Starling.current.stage.color = BaseMetalWorksDesktopTheme2.PRIMARY_BACKGROUND_COLOR;
             Starling.current.nativeStage.color = BaseMetalWorksDesktopTheme2.PRIMARY_BACKGROUND_COLOR;
+            PopUpManager.overlayFactory = BaseMetalWorksDesktopTheme2.popUpOverlayFactory;
         }
 
     }

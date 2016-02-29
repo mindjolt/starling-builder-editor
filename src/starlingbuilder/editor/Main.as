@@ -22,7 +22,7 @@ package starlingbuilder.editor
     import starling.utils.HAlign;
     import starling.utils.VAlign;
 
-    [SWF(frameRate=60, width=1320, height=960, backgroundColor="#000")]
+    [SWF(frameRate=60, width=1350, height=960, backgroundColor="#000")]
     public class Main extends Sprite
     {
         public static var STAGE : Stage;
@@ -30,14 +30,11 @@ package starlingbuilder.editor
         private var _viewport:Rectangle;
         private var _starling : Starling;
 
-        private var _appUpdater:AppUpdater;
+
 
         public function Main()
         {
             addEventListener(Event.ENTER_FRAME, onEnterFrame);
-
-            _appUpdater = new AppUpdater();
-
         }
 
         private function _start(e:Event):void

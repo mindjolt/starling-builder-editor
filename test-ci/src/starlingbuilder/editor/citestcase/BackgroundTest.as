@@ -35,7 +35,7 @@ package starlingbuilder.editor.citestcase
                 clickLinkButton();
                 changeInspectorProperty({width:256}, UIEditorScreen.instance.leftPanel);
                 assertNumericEquals(target.width, 256);
-                assertNumericEquals(target.width, 256);
+                assertNumericEquals(target.height, 256);
             },
 
             function():void{

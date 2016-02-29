@@ -15,7 +15,7 @@ package starlingbuilder.editor.history
     import starling.display.DisplayObject;
     import starling.display.DisplayObjectContainer;
 
-    public class DeleteOperation extends AbstractHistoryOperation
+    public class DeleteOperation extends SingleHistoryOperation
     {
         protected var _index:int;
 

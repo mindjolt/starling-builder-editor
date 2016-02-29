@@ -73,9 +73,7 @@
         ],
         "customParams":{},
         "params":{
-          "height":85,
           "name":"title_bg",
-          "width":419,
           "x":108,
           "y":16.5
         }
@@ -90,9 +88,7 @@
         ],
         "customParams":{},
         "params":{
-          "height":231,
           "name":"connectFB_image",
-          "width":489,
           "x":73,
           "y":122.5
         }
@@ -124,12 +120,12 @@
           "autoSize":"bothDirections",
           "fontName":"lobstertworegular_size54_colorffffff_strokeaf384e_dropshadow560d1b",
           "fontSize":55,
-          "height":59.074074074074076,
+          "height":59.07,
           "name":"LobsterTwoRegular_Size54_ColorFFFFFF_StrokeAF384E_DropShadow560D1B",
           "text":"Connect Facebook",
-          "width":371.75925925925924,
-          "x":135.62037037037038,
-          "y":37.90000000000009
+          "width":371.76,
+          "x":135.62,
+          "y":37.9
         }
       },
       {
@@ -194,6 +190,7 @@
     }
   },
   "setting":{
+    "canvasColor":16777215,
     "canvasSize":{
       "x":640,
       "y":860

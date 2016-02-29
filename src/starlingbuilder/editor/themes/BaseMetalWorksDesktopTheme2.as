@@ -105,10 +105,10 @@ package starlingbuilder.editor.themes
 	 */
 	public class BaseMetalWorksDesktopTheme2 extends UIEditorTheme
 	{
-		[Embed(source="/../../assets/fonts/SourceSansPro-Regular.ttf",fontFamily="SourceSansPro",fontWeight="normal",mimeType="application/x-font",embedAsCFF="true")]
+		[Embed(source="../../../../assets/fonts/SourceSansPro-Regular.ttf",fontFamily="SourceSansPro",fontWeight="normal",mimeType="application/x-font",embedAsCFF="true")]
 		protected static const SOURCE_SANS_PRO_REGULAR:Class;
 
-		[Embed(source="/../../assets/fonts/SourceSansPro-Semibold.ttf",fontFamily="SourceSansPro",fontWeight="bold",mimeType="application/x-font",embedAsCFF="true")]
+		[Embed(source="../../../../assets/fonts/SourceSansPro-Semibold.ttf",fontFamily="SourceSansPro",fontWeight="bold",mimeType="application/x-font",embedAsCFF="true")]
 		protected static const SOURCE_SANS_PRO_SEMIBOLD:Class;
 
 		/**
@@ -131,7 +131,7 @@ package starlingbuilder.editor.themes
 		protected static const SCROLL_BAR_TRACK_DOWN_COLOR:uint = 0xff7700;
 		protected static const TEXT_SELECTION_BACKGROUND_COLOR:uint = 0x574f46;
 		protected static const MODAL_OVERLAY_COLOR:uint = 0x29241e;
-		protected static const MODAL_OVERLAY_ALPHA:Number = 0.8;
+		protected static const MODAL_OVERLAY_ALPHA:Number = 0;
 		protected static const DRAWER_OVERLAY_COLOR:uint = 0x29241e;
 		protected static const DRAWER_OVERLAY_ALPHA:Number = 0.4;
 
@@ -271,7 +271,7 @@ package starlingbuilder.editor.themes
 			return new ScrollBar();
 		}
 
-		protected static function popUpOverlayFactory():DisplayObject
+		public static function popUpOverlayFactory():DisplayObject
 		{
 			var quad:Quad = new Quad(100, 100, MODAL_OVERLAY_COLOR);
 			quad.alpha = MODAL_OVERLAY_ALPHA;

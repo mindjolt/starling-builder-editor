@@ -24,6 +24,8 @@ package starlingbuilder.util.ui.inspector
 
         private var _isNumeric:Boolean;
 
+        public static const DEFAULT_VERTICAL_ARROW_FIELDS:Array = ["y", "height"];
+
         public function LabelPropertyComponent(propertyRetriver:IPropertyRetriever, param:Object, labelWidth:Number)
         {
             CursorRegister.init();
@@ -43,6 +45,14 @@ package starlingbuilder.util.ui.inspector
             _isNumeric = (_propertyRetriever.get(_param.name) is Number);
         }
 
+        private function useVerticalArrow():Boolean
+        {
+            if ("vertical_arrow" in _param)
+                return _param.vertical_arrow;
+            else
+                return DEFAULT_VERTICAL_ARROW_FIELDS.indexOf(_param.name) >= 0;
+        }
+
         private function onTouch(event:TouchEvent):void
         {
             var touch:Touch = event.getTouch(this);
@@ -51,8 +61,13 @@ package starlingbuilder.util.ui.inspector
                 switch (touch.phase)
                 {
                     case TouchPhase.MOVED:
+                        var delta:Number;
 
-                        var dx:Number = Math.round(touch.globalX - touch.previousGlobalX);
+                        if (useVerticalArrow())
+                            delta = Math.round(touch.globalY - touch.previousGlobalY);
+                        else
+                            delta = Math.round(touch.globalX - touch.previousGlobalX);
+
                         var value:Object = _propertyRetriever.get(_param.name);
 
                         if (value is Number)
@@ -63,7 +78,7 @@ package starlingbuilder.util.ui.inspector
 
                             if (isNaN(Number(number))) number = 0;
 
-                            number += dx * _step;
+                            number += delta * _step;
 
                             if (!isNaN(_min)) number = Math.max(number, _min);
                             if (!isNaN(_max)) number = Math.min(number, _max);
@@ -72,7 +87,13 @@ package starlingbuilder.util.ui.inspector
                             setChanged();
                         }
                     case TouchPhase.HOVER:
-                        if (_isNumeric) Mouse.cursor = CursorRegister.HORIZONTAL_ARROW;
+                        if (_isNumeric)
+                        {
+                            if (useVerticalArrow())
+                                Mouse.cursor = CursorRegister.VERTICAL_ARROW;
+                            else
+                                Mouse.cursor = CursorRegister.HORIZONTAL_ARROW;
+                        }
                         break;
                     case TouchPhase.ENDED:
                         Mouse.cursor = MouseCursor.AUTO;

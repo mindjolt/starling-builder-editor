@@ -23,6 +23,8 @@ package starlingbuilder.util.history
         function info():String
 
         function dispose():void
+
+        function get operations():Array
     }
 
 

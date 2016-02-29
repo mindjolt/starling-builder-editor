@@ -7,7 +7,7 @@
  */
 package starlingbuilder.editor.history
 {
-    public class ResetOperation extends AbstractHistoryOperation
+    public class ResetOperation extends SingleHistoryOperation
     {
         public function ResetOperation(target:Object, beforeValue:Object, afterValue:Object)
         {

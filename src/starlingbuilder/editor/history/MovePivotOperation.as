@@ -11,7 +11,7 @@ package starlingbuilder.editor.history
 
     import starling.display.DisplayObject;
 
-    public class MovePivotOperation extends AbstractHistoryOperation
+    public class MovePivotOperation extends SingleHistoryOperation
     {
         public function MovePivotOperation(target:Object, beforeValue:Object, afterValue:Object)
         {

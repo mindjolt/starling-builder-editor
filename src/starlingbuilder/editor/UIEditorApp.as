@@ -14,6 +14,7 @@ package starlingbuilder.editor
     import starling.display.Sprite;
     import starling.events.EventDispatcher;
     import starlingbuilder.editor.utils.AssetManager;
+    import starlingbuilder.util.AppUpdater;
 
     public class UIEditorApp extends Sprite
     {
@@ -21,6 +22,8 @@ package starlingbuilder.editor
         private var _documentManager:DocumentManager;
         private var _localizationManager:LocalizationManager;
         private var _notificationDispatcher:EventDispatcher;
+
+        private var _appUpdater:AppUpdater;
 
         private static var _instance:UIEditorApp;
 
@@ -32,6 +35,8 @@ package starlingbuilder.editor
 
         public function UIEditorApp()
         {
+            _appUpdater = new AppUpdater();
+
             setup();
 
             //new MetalWorksMobileTheme2(false, _documentManager);
@@ -78,6 +83,11 @@ package starlingbuilder.editor
         protected function createEditorScreen():Sprite
         {
             return new UIEditorScreen();
+        }
+
+        public function get appUpdater():AppUpdater
+        {
+            return _appUpdater;
         }
 
 

@@ -25,7 +25,7 @@ package starlingbuilder.editor.ui
 
     public class AboutPopup extends InfoPopup
     {
-        [Embed(source="../../../../icons/icon128.png")]
+        [Embed(source="icon128.png")]
         public static const ICON:Class;
 
         private var _iconTexture:Texture;

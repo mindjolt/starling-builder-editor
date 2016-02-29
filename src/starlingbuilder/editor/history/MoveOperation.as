@@ -7,10 +7,15 @@
  */
 package starlingbuilder.editor.history
 {
-    public class MoveOperation extends AbstractHistoryOperation
+    import flash.geom.Point;
+
+    public class MoveOperation extends SingleHistoryOperation
     {
-        public function MoveOperation(target:Object, beforeValue:Object, afterValue:Object)
+        public function MoveOperation(target:Object, dx:Number, dy:Number)
         {
+            var beforeValue:Point = new Point(target.x - dx, target.y - dy);
+            var afterValue:Point = new Point(target.x, target.y);
+
             super(OperationType.MOVE, target, beforeValue, afterValue);
         }
 
