@@ -42,6 +42,7 @@ package starlingbuilder.util.feathers.popup
         {
             var layout:VerticalLayout = new VerticalLayout();
             layout.gap = 3;
+            layout.horizontalAlign = VerticalLayout.HORIZONTAL_ALIGN_CENTER;
             this.layout = layout;
 
             super.initialize();
