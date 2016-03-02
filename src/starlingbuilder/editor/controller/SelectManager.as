@@ -99,6 +99,8 @@ package starlingbuilder.editor.controller
         {
             for (var obj:DisplayObject in paramsDict)
             {
+                if (!obj.touchable || !obj.visible) continue;
+
                 var bound:Rectangle = obj.getBounds(Starling.current.stage);
 
                 if (rect.intersects(bound) && _selectedObjects.indexOf(obj) == -1 && !uiBuilder.isContainer(paramsDict[obj]))
