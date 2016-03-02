@@ -67,16 +67,14 @@
                 {"name":"autoScale", "component":"check", "default_value":false},
                 {"name":"autoSize", "component":"pickerList", "options":["none", "horizontal", "vertical", "bothDirections"], "default_value":"none"},
                 {"name":"hAlign", "component":"pickerList", "options":["left", "center", "right"], "default_value":"center"},
-                {"name":"vAlign", "component":"pickerList", "options":["top", "center", "bottom"], "default_value":"center"}
-            ],
+                {"name":"vAlign", "component":"pickerList", "options":["top", "center", "bottom"], "default_value":"center"},
+                {"name":"format", "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"starlingbuilder.editor.ui.DefaultEditPropertyPopup",
+                    "supportedClasses":["starling.text.TextFormat"]}],
             "constructorParams":
             [
                 {"value":200},
                 {"value":100},
-                {"value":""},
-                {"value":"Verdana", "name":"fontName"},
-                {"value":46},
-                {"value":16777215}
+                {"value":""}
             ],
             "tag":"text"
         },
@@ -457,7 +455,52 @@
                 {"name":"percentWidth", "min":0, "default_value":"NaN"},
                 {"name":"percentHeight", "min":0, "default_value":"NaN"}
             ]
+        },
+
+        {
+            "cls":"starling.text.TextFormat",
+            "params":[
+                {"name":"font", "default_value":"Verdana"},
+                {"name":"size", "default_value":12},
+                {"name":"color", "component":"colorPicker", "default_value":16777215},
+                {"name":"horizontalAlign", "component":"pickerList", "options":["left", "center", "right"], "default_value":"center"},
+                {"name":"verticalAlign", "component":"pickerList", "options":["top", "center", "bottom"], "default_value":"center"},
+                {"name":"kerning", "component":"check", "default_value":true},
+                {"name":"leading", "default_value":0},
+                {"name":"bold", "component":"check", "default_value":false},
+                {"name":"italic", "component":"check", "default_value":false},
+                {"name":"underline", "component":"check", "default_value":false}
+            ]
+        },
+
+        {
+            "cls":"starling.filters.BlurFilter",
+            "params":[
+                {"name":"blurX", "default_value":1},
+                {"name":"blurY", "default_value":1}
+            ]
+        },
+
+        {
+            "cls":"starling.filters.GlowFilter",
+            "params":[
+                {"name":"color", "component":"colorPicker", "default_value":16776960},
+                {"name":"alpha", "default_value":1},
+                {"name":"blur", "default_value":1}
+            ]
+        },
+
+        {
+            "cls":"starling.filters.DropShadowFilter",
+            "params":[
+                {"name":"color", "component":"colorPicker", "default_value":16776960},
+                {"name":"alpha", "default_value":1},
+                {"name":"distance", "default_value":4},
+                {"name":"angle", "default_value":0.785},
+                {"name":"blur", "default_value":1}
+            ]
         }
+
     ],
 
 
@@ -471,7 +514,9 @@
             {"name":"pivotY", "default_value":0},
             {"name":"rotation", "component":"slider", "min":-3.14, "max":3.14, "step":0.01, "default_value":0},
             {"name":"alpha", "component":"slider", "min":0, "max":1, "step":0.01, "default_value":1},
-            {"name":"blendMode", "component":"pickerList", "options":["auto", "add", "below", "erase", "mask", "multiply", "none", "normal", "screen"], "default_value":"auto"}
+            {"name":"blendMode", "component":"pickerList", "options":["auto", "add", "below", "erase", "mask", "multiply", "none", "normal", "screen"], "default_value":"auto"},
+            {"name":"filter", "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"starlingbuilder.editor.ui.DefaultEditPropertyPopup",
+                "supportedClasses":["null", "starling.filters.BlurFilter", "starling.filters.DropShadowFilter", "starling.filters.GlowFilter"]}
         ],
 
         "customParams":[

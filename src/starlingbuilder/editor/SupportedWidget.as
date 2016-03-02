@@ -22,6 +22,9 @@ package starlingbuilder.editor
     import starling.display.Quad;
     import starling.display.Sprite;
     import starling.display.Sprite3D;
+    import starling.filters.BlurFilter;
+    import starling.filters.DropShadowFilter;
+    import starling.filters.GlowFilter;
     import starling.text.TextField;
 
     public class SupportedWidget
@@ -92,6 +95,10 @@ package starlingbuilder.editor
             TiledColumnsLayout,
             VerticalSpinnerLayout,
             WaterfallLayout,
+
+            BlurFilter,
+            GlowFilter,
+            DropShadowFilter
         ]
 
         public static const DEFAULT_SCALE3_RATIO:Array = [0.49, 0.02, "horizontal"];
