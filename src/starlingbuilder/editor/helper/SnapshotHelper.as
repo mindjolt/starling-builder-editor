@@ -14,6 +14,7 @@ package starlingbuilder.editor.helper
     import flash.filesystem.File;
     import flash.filesystem.FileMode;
     import flash.filesystem.FileStream;
+    import flash.geom.Point;
     import flash.geom.Rectangle;
     import flash.utils.ByteArray;
     import flash.utils.setTimeout;
@@ -38,7 +39,7 @@ package starlingbuilder.editor.helper
          * @param displayObject
          * @param fileName
          */
-        public static function snapshot(displayObject:DisplayObject, fileName:String):void
+        public static function snapshot(displayObject:DisplayObject, size:Point, fileName:String):void
         {
             var stage:Stage = Starling.current.stage;
 
@@ -49,8 +50,8 @@ package starlingbuilder.editor.helper
 
             stage.addChild(displayObject);
 
-            Starling.current.nativeStage.stageWidth = displayObject.width;
-            Starling.current.nativeStage.stageHeight = displayObject.height;
+            Starling.current.nativeStage.stageWidth = size.x;
+            Starling.current.nativeStage.stageHeight = size.y
 
             setTimeout(function():void{
                 var bitmapData:BitmapData = Starling.current.stage.drawToBitmapData();

@@ -1318,9 +1318,13 @@ package starlingbuilder.editor.controller
         public function snapshot():void
         {
             var sprite:Sprite = new Sprite();
-            sprite.addChild(new Quad(_canvas.width, _canvas.height));
+
+            var canvas:Quad = new Quad(_canvas.width, _canvas.height);
+            canvas.color = _canvas.color;
+
+            sprite.addChild(canvas);
             sprite.addChild(startTest());
-            SnapshotHelper.snapshot(sprite, getSnapshotFileName());
+            SnapshotHelper.snapshot(sprite, new Point(_canvas.width, _canvas.height), getSnapshotFileName());
 
             UIEditorScreen.instance.workspaceDir.openWithDefaultApplication();
         }
