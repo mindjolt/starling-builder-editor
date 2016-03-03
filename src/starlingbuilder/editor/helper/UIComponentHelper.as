@@ -53,9 +53,7 @@ package starlingbuilder.editor.helper
 
             setTextureName(constructorParams, editorData.textureName);
 
-            setScaleRatio(constructorParams, editorData.scaleData);
-
-            setFontParams(data.params, editorData.fontName, editorData.text);
+            setFontParams(data, editorData);
 
             if (constructorParams && constructorParams.length)
                 data.constructorParams = constructorParams;
@@ -76,23 +74,23 @@ package starlingbuilder.editor.helper
             }
         }
 
-        private static function setScaleRatio(constructorParams:Array, scaleRatio:Object):void
-        {
-            if (!scaleRatio) return;
+        public static const TEXT_FORMAT_FIELDS:Array = ["font", "size", "color"];
 
-//            for each (var param:Object in constructorParams)
-//            {
-//                if (ParamUtil.getClassNames([Scale3Textures, Scale9Textures]).indexOf(param.cls) != -1)
-//                {
-//                    param.scaleRatio = scaleRatio;
-//                }
-//            }
-        }
-
-        private static function setFontParams(params:Object, fontName:String, text:String):void
+        private static function setFontParams(data:Object, editorData:Object):void
         {
-            if (fontName) params.fontName = fontName;
-            if (text) params.text = text;
+            if (data.cls == "starling.text.TextField")
+            {
+                data.params.format = {cls:"starling.text.TextFormat", params:{}, customParams:{}};
+
+                for each (var field:String in TEXT_FORMAT_FIELDS)
+                    if (field in editorData)
+                        data.params.format.params[field] = editorData[field];
+            }
+
+            if ("text" in editorData)
+            {
+                data.params.text = editorData.text;
+            }
         }
 
 

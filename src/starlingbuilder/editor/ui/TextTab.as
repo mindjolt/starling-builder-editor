@@ -26,6 +26,8 @@ package starlingbuilder.editor.ui
     public class TextTab extends LayoutGroup
     {
         public static const DEFAULT_TEXT:String = "Abc123";
+        public static const DEFAULT_SIZE:int = 46;
+        public static const DEFAULT_COLOR:uint = 0xffffff;
 
         private var _assetManager:AssetManager;
 
@@ -75,7 +77,7 @@ package starlingbuilder.editor.ui
                 var cls:String = _supportedTypes[_typePicker.selectedIndex];
                 var name:String = _list.selectedItem.label;
 
-                var editorData:Object = {cls:cls, fontName:name, name:name, text:DEFAULT_TEXT};
+                var editorData:Object = {cls:cls, font:name, name:name, text:DEFAULT_TEXT, size:DEFAULT_SIZE, color:DEFAULT_COLOR};
 
                 UIComponentHelper.createComponent(editorData);
 
