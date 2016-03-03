@@ -27,6 +27,8 @@ package starlingbuilder.editor
     import starling.filters.GlowFilter;
     import starling.text.TextField;
 
+    import starlingbuilder.extensions.filters.ColorFilter;
+
     public class SupportedWidget
     {
         /*
@@ -98,7 +100,8 @@ package starlingbuilder.editor
 
             BlurFilter,
             GlowFilter,
-            DropShadowFilter
+            DropShadowFilter,
+            ColorFilter
         ]
 
         public static const DEFAULT_SCALE3_RATIO:Array = [0.49, 0.02, "horizontal"];

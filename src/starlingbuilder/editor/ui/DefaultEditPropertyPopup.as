@@ -7,7 +7,9 @@
  */
 package starlingbuilder.editor.ui
 {
+    import starlingbuilder.editor.UIEditorScreen;
     import starlingbuilder.editor.data.TemplateData;
+    import starlingbuilder.engine.UIBuilder;
     import starlingbuilder.engine.util.ParamUtil;
     import starlingbuilder.util.ui.inspector.PropertyPanel;
 
@@ -18,13 +20,13 @@ package starlingbuilder.editor.ui
 
     import starling.events.Event;
 
+    import starlingbuilder.util.ui.inspector.UIMapperUtil;
+
     public class DefaultEditPropertyPopup extends AbstractPropertyPopup
     {
         private var _classPicker:PickerList;
 
         private var _propertyPanel:PropertyPanel;
-
-
 
         private var _supportedClass:Array = [];
 
@@ -63,6 +65,7 @@ package starlingbuilder.editor.ui
             for each (var clsName:String in _supportedClass)
             {
                 var param:Object = ParamUtil.getParamByClassName(TemplateData.editor_template, clsName);
+                UIMapperUtil.processParamsWithFonts(param as Array, UIEditorScreen.instance.getBitmapFontNames());
                 _paramDict[clsName] = param;
             }
         }
@@ -84,12 +87,15 @@ package starlingbuilder.editor.ui
             _propertyPanel = new PropertyPanel(_target, _paramDict[clsName]);
 
             addChild(_classPicker);
+
+            createCustom();
+
             addChild(_propertyPanel);
 
             _classPicker.addEventListener(Event.CHANGE, onClassPicker);
         }
 
-        private function onClassPicker(event:Event):void
+        protected function onClassPicker(event:Event):void
         {
             var selected:String = _classPicker.selectedItem as String;
 
@@ -100,6 +106,8 @@ package starlingbuilder.editor.ui
             else
             {
                 _target = _documentManager.uiBuilder.createUIElement({cls:selected, customParams:{}}).object;
+
+                initDefault();
             }
 
             _owner[_targetParam.name] = _target;
@@ -119,6 +127,16 @@ package starlingbuilder.editor.ui
                 _owner[_targetParam.name] = _oldTarget;
                 _onComplete = null;
             }
+        }
+
+        protected function createCustom():void
+        {
+
+        }
+
+        protected function initDefault():void
+        {
+
         }
     }
 }

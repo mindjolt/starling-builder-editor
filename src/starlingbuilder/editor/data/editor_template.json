@@ -9,6 +9,10 @@
                 {"name":"scaleX", "step":0.01, "default_value":1},
                 {"name":"scaleY", "step":0.01, "default_value":1},
                 {"name":"color", "component":"colorPicker", "default_value":16777215},
+                {"name":"scale9Grid", "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"starlingbuilder.editor.ui.ImageGridPopup",
+                    "supportedClasses":["null", "flash.geom.Rectangle"]},
+                {"name":"tileGrid", "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"starlingbuilder.editor.ui.ImageGridPopup",
+            "supportedClasses":["null", "flash.geom.Rectangle"]},
                 {"name":"texture", "read_only":true, "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"starlingbuilder.editor.ui.TextureConstructorPopup"}
             ],
             "constructorParams":
@@ -40,11 +44,12 @@
                 {"name":"width", "min":0, "link":true},
                 {"name":"height", "min":0, "link":true},
                 {"name":"text", "default_value":""},
-                {"name":"fontName", "component":"textInput", "options":[], "default_value":"Verdana"},
-                {"name":"fontSize", "min":1, "step":1, "default_value":12},
-                {"name":"fontColor", "component":"colorPicker", "default_value":0},
+                {"name":"textFormat", "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"starlingbuilder.editor.ui.DefaultEditPropertyPopup",
+                    "supportedClasses":["starling.text.TextFormat"]},
                 {"name":"scaleX", "step":0.01, "default_value":1},
                 {"name":"scaleY", "step":0.01, "default_value":1},
+                {"name":"scale9Grid", "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"starlingbuilder.editor.ui.ImageGridPopup",
+                    "supportedClasses":["null", "flash.geom.Rectangle"]},
                 {"name":"upState", "read_only":true, "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"starlingbuilder.editor.ui.TextureConstructorPopup"},
                 {"name":"downState", "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"starlingbuilder.editor.ui.TexturePropertyPopup"}
             ],
@@ -460,7 +465,7 @@
         {
             "cls":"starling.text.TextFormat",
             "params":[
-                {"name":"font", "default_value":"Verdana"},
+                {"name":"font", "component":"textInput", "options":[], "default_value":"Verdana"},
                 {"name":"size", "default_value":12},
                 {"name":"color", "component":"colorPicker", "default_value":16777215},
                 {"name":"horizontalAlign", "component":"pickerList", "options":["left", "center", "right"], "default_value":"center"},
@@ -470,7 +475,8 @@
                 {"name":"bold", "component":"check", "default_value":false},
                 {"name":"italic", "component":"check", "default_value":false},
                 {"name":"underline", "component":"check", "default_value":false}
-            ]
+            ],
+            "tag":"ignore_default"
         },
 
         {
@@ -499,6 +505,27 @@
                 {"name":"angle", "default_value":0.785},
                 {"name":"blur", "default_value":1}
             ]
+        },
+
+        {
+            "cls":"starlingbuilder.extensions.filters.ColorFilter",
+            "params":[
+                {"name":"hue", "min":-1, "max":1, "step":0.01, "default_value":0},
+                {"name":"brightness", "min":-1, "max":1, "step":0.01, "default_value":0},
+                {"name":"contrast", "min":-1, "max":1, "step":0.01, "default_value":0},
+                {"name":"saturation", "min":-1, "max":1, "step":0.01, "default_value":0}
+            ]
+        },
+
+        {
+            "cls":"flash.geom.Rectangle",
+            "params":[
+                {"name":"x", "default_value":0},
+                {"name":"width", "default_value":0},
+                {"name":"y", "default_value":0},
+                {"name":"height", "default_value":0}
+            ],
+            "tag":"ignore_default"
         }
 
     ],
@@ -516,7 +543,7 @@
             {"name":"alpha", "component":"slider", "min":0, "max":1, "step":0.01, "default_value":1},
             {"name":"blendMode", "component":"pickerList", "options":["auto", "add", "below", "erase", "mask", "multiply", "none", "normal", "screen"], "default_value":"auto"},
             {"name":"filter", "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"starlingbuilder.editor.ui.DefaultEditPropertyPopup",
-                "supportedClasses":["null", "starling.filters.BlurFilter", "starling.filters.DropShadowFilter", "starling.filters.GlowFilter"]}
+                "supportedClasses":["null", "starling.filters.BlurFilter", "starling.filters.DropShadowFilter", "starling.filters.GlowFilter", "starlingbuilder.extensions.filters.ColorFilter"]}
         ],
 
         "customParams":[
@@ -557,6 +584,6 @@
 
     "version":1.0,
 
-    "revision":26
+    "revision":27
 
 }
