@@ -37,7 +37,7 @@ package starlingbuilder.editor.helper
                 if (loader)
                 {
                     var cls:Class = loader.contentLoaderInfo.applicationDomain.getDefinition(NAME) as Class;
-                    new cls.theme(false, UIEditorApp.instance.documentManager);
+                    new cls.theme(UIEditorApp.instance.documentManager);
                     initializeStage();
                 }
 
