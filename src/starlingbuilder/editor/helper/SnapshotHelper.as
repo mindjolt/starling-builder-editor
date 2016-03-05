@@ -7,10 +7,9 @@
  */
 package starlingbuilder.editor.helper
 {
-    import flash.desktop.NativeApplication;
     import flash.display.BitmapData;
-    import flash.display.JPEGEncoderOptions;
-    import flash.display.NativeWindow;
+    import flash.display.PNGEncoderOptions;
+    import flash.display.Stage;
     import flash.filesystem.File;
     import flash.filesystem.FileMode;
     import flash.filesystem.FileStream;
@@ -21,7 +20,6 @@ package starlingbuilder.editor.helper
 
     import starling.core.Starling;
     import starling.display.DisplayObject;
-    import starling.display.Stage;
 
     import starlingbuilder.editor.UIEditorScreen;
 
@@ -41,22 +39,20 @@ package starlingbuilder.editor.helper
          */
         public static function snapshot(displayObject:DisplayObject, size:Point, fileName:String):void
         {
-            var stage:Stage = Starling.current.stage;
+            var stage:Stage = Starling.current.nativeStage;
 
-            var window:NativeWindow = NativeApplication.nativeApplication.activeWindow;
+            var oldWidth:Number = stage.stageWidth;
+            var oldHeight:Number = stage.stageHeight;
 
-            var oldWidth:Number = window.width;
-            var oldHeight:Number = window.height;
+            Starling.current.stage.addChild(displayObject);
 
-            stage.addChild(displayObject);
-
-            Starling.current.nativeStage.stageWidth = size.x;
-            Starling.current.nativeStage.stageHeight = size.y
+            stage.stageWidth = size.x;
+            stage.stageHeight = size.y
 
             setTimeout(function():void{
                 var bitmapData:BitmapData = Starling.current.stage.drawToBitmapData();
                 var byteArray:ByteArray = new ByteArray();
-                bitmapData.encode(new flash.geom.Rectangle(0, 0, bitmapData.width, bitmapData.height), new JPEGEncoderOptions(), byteArray);
+                bitmapData.encode(new flash.geom.Rectangle(0, 0, bitmapData.width, bitmapData.height), new PNGEncoderOptions(), byteArray);
                 var file:File = UIEditorScreen.instance.workspaceDir.resolvePath(fileName);
                 var fs:FileStream = new FileStream();
                 fs.open(file, FileMode.WRITE);
@@ -65,8 +61,8 @@ package starlingbuilder.editor.helper
 
                 displayObject.removeFromParent(true);
 
-                Starling.current.nativeStage.stageWidth = oldWidth;
-                Starling.current.nativeStage.stageHeight = oldHeight;
+                stage.stageWidth = oldWidth;
+                stage.stageHeight = oldHeight;
             }, 1);
         }
     }

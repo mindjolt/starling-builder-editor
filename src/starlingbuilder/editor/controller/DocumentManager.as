@@ -1330,7 +1330,7 @@ package starlingbuilder.editor.controller
         }
 
         public static const DEFAULT_FILENAME:String = "snapshot";
-        public static const DEFAULT_EXTENSION:String = ".jpeg";
+        public static const DEFAULT_EXTENSION:String = ".png";
 
         private function getSnapshotFileName():String
         {
