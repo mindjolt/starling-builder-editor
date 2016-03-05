@@ -15,7 +15,7 @@ package starlingbuilder.editor.ui
 
     import starling.display.Sprite;
     import starling.events.Event;
-    import starlingbuilder.editor.utils.AssetManager;
+    import starling.utils.AssetManager;
 
     public class CenterPanel extends ScrollContainer
     {

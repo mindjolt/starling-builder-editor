@@ -12,7 +12,7 @@ package starlingbuilder.editor.helper
     import flash.filesystem.FileStream;
 
     import starling.textures.TextureOptions;
-    import starlingbuilder.editor.utils.AssetManager;
+    import starling.utils.AssetManager;
 
     public class AssetLoaderWithOptions
     {
