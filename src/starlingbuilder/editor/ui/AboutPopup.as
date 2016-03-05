@@ -12,6 +12,7 @@ package starlingbuilder.editor.ui
     import starling.core.Starling;
     import starling.utils.Align;
 
+    import starlingbuilder.editor.UIEditorApp;
     import starlingbuilder.util.feathers.FeathersUIUtil;
     import starlingbuilder.util.feathers.popup.InfoPopup;
 
@@ -62,6 +63,7 @@ package starlingbuilder.editor.ui
             container.addChild(FeathersUIUtil.labelWithText(copyright));
             container.addChild(FeathersUIUtil.labelWithText("Starling version: " + Starling.VERSION));
             container.addChild(FeathersUIUtil.labelWithText("Feathers version: " + FEATHERS_VERSION));
+            container.addChild(FeathersUIUtil.labelWithText("SWF version: " + UIEditorApp.SWF_VERSION));
         }
 
         override public function dispose():void

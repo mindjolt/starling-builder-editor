@@ -18,6 +18,8 @@ package starlingbuilder.editor
 
     public class UIEditorApp extends Sprite
     {
+        public static var SWF_VERSION:int;
+
         private var _assetManager:AssetManager;
         private var _documentManager:DocumentManager;
         private var _localizationManager:LocalizationManager;

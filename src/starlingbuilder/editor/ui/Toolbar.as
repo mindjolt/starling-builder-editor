@@ -459,6 +459,11 @@ package starlingbuilder.editor.ui
             _documentManager.scale = 1;
         }
 
+        private function onCanvasSnapshot():void
+        {
+            _documentManager.snapshot();
+        }
+
         private function updateHistoryManager():void
         {
             var hint:String = _documentManager.historyManager.getNextRedoHint();
@@ -524,6 +529,7 @@ package starlingbuilder.editor.ui
             menu.registerAction(MainMenu.ZOOM_IN, onZoomIn);
             menu.registerAction(MainMenu.ZOOM_OUT, onZoomOut);
             menu.registerAction(MainMenu.RESET_ZOOM, onResetZoom);
+            menu.registerAction(MainMenu.CANVAS_SNAPSHOT, onCanvasSnapshot);
 
             menu.registerAction(MainMenu.DOCUMENTATION, onDocumentation);
             menu.registerAction(MainMenu.GITHUB_PAGE, onGithubPage);

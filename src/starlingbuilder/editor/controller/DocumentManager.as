@@ -23,6 +23,7 @@ package starlingbuilder.editor.controller
     import starlingbuilder.editor.helper.DragHelper;
     import starlingbuilder.editor.helper.DragQuad;
     import starlingbuilder.editor.helper.FileListingHelper;
+    import starlingbuilder.editor.helper.SnapshotHelper;
     import starlingbuilder.editor.history.CompositeHistoryOperation;
     import starlingbuilder.util.KeyboardWatcher;
     import starlingbuilder.editor.helper.PixelSnapper;
@@ -1312,6 +1313,39 @@ package starlingbuilder.editor.controller
         public function get boundingBoxContainer():BoundingBoxContainer
         {
             return _boundingBoxContainer;
+        }
+
+        public function snapshot():void
+        {
+            var sprite:Sprite = new Sprite();
+
+            var canvas:Quad = new Quad(_canvas.width, _canvas.height);
+            canvas.color = _canvas.color;
+
+            sprite.addChild(canvas);
+            sprite.addChild(startTest());
+            SnapshotHelper.snapshot(sprite, new Point(_canvas.width, _canvas.height), getSnapshotFileName());
+
+            UIEditorScreen.instance.workspaceDir.openWithDefaultApplication();
+        }
+
+        public static const DEFAULT_FILENAME:String = "snapshot";
+        public static const DEFAULT_EXTENSION:String = ".png";
+
+        private function getSnapshotFileName():String
+        {
+            var workspace:File = UIEditorScreen.instance.workspaceDir;
+            var name:String = DEFAULT_FILENAME + DEFAULT_EXTENSION;
+
+            if (!workspace.resolvePath(name).exists)
+                return name;
+
+            for (var i:int = 1;;++i)
+            {
+                name = DEFAULT_FILENAME + i + DEFAULT_EXTENSION;
+                if (!workspace.resolvePath(name).exists)
+                    return name;
+            }
         }
     }
 }
