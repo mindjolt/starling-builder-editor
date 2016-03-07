@@ -458,7 +458,53 @@
                 {"name":"percentWidth", "min":0, "default_value":"NaN"},
                 {"name":"percentHeight", "min":0, "default_value":"NaN"}
             ]
+        },
+
+        {
+            "cls":"starling.filters.BlurFilter",
+            "params":[
+                {"name":"blurX", "component":"slider", "default_value":1, "min":0, "max":10, "step":0.1},
+                {"name":"blurY", "component":"slider", "default_value":1, "min":0, "max":10, "step":0.1},
+                {"name":"resolution", "component":"slider", "min":0.1, "max":1, "step":0.01}
+            ],
+            "tag":"ignore_default"
+        },
+
+        {
+            "cls":"starlingbuilder.extensions.filters.GlowFilter",
+            "params":[
+                {"name":"color", "component":"colorPicker", "default_value":16776960},
+                {"name":"alpha", "component":"slider", "default_value":1, "min":0, "max":1, "step":0.01},
+                {"name":"blur", "component":"slider", "default_value":1, "min":0, "max":10, "step":0.1},
+                {"name":"resolution", "component":"slider", "min":0.1, "max":1, "step":0.01}
+            ],
+            "tag":"ignore_default"
+        },
+
+        {
+            "cls":"starlingbuilder.extensions.filters.DropShadowFilter",
+            "params":[
+                {"name":"color", "component":"colorPicker", "default_value":16776960},
+                {"name":"alpha", "component":"slider", "default_value":1, "min":0, "max":1, "step":0.01},
+                {"name":"distance", "default_value":4},
+                {"name":"angle", "component":"slider", "default_value":0.785, "min":-3.14, "max":3.14, "step":0.01},
+                {"name":"blur", "component":"slider", "default_value":1, "min":0, "max":10, "step":0.1},
+                {"name":"resolution", "component":"slider", "min":0.1, "max":1, "step":0.01}
+            ],
+            "tag":"ignore_default"
+        },
+
+        {
+            "cls":"starlingbuilder.extensions.filters.ColorFilter",
+            "params":[
+                {"name":"hue", "component":"slider", "min":-1, "max":1, "step":0.01, "default_value":0},
+                {"name":"brightness", "component":"slider", "min":-1, "max":1, "step":0.01, "default_value":0},
+                {"name":"contrast", "component":"slider", "min":-1, "max":1, "step":0.01, "default_value":0},
+                {"name":"saturation", "component":"slider", "min":-1, "max":1, "step":0.01, "default_value":0}
+            ],
+            "tag":"ignore_default"
         }
+
     ],
 
 
@@ -472,7 +518,9 @@
             {"name":"pivotY", "default_value":0},
             {"name":"rotation", "component":"slider", "min":-3.14, "max":3.14, "step":0.01, "default_value":0},
             {"name":"alpha", "component":"slider", "min":0, "max":1, "step":0.01, "default_value":1},
-            {"name":"blendMode", "component":"pickerList", "options":["auto", "add", "below", "erase", "mask", "multiply", "none", "normal", "screen"], "default_value":"auto"}
+            {"name":"blendMode", "component":"pickerList", "options":["auto", "add", "below", "erase", "mask", "multiply", "none", "normal", "screen"], "default_value":"auto"},
+            {"name":"filter", "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"starlingbuilder.editor.ui.DefaultEditPropertyPopup",
+                "supportedClasses":["null", "starling.filters.BlurFilter", "starlingbuilder.extensions.filters.DropShadowFilter", "starlingbuilder.extensions.filters.GlowFilter", "starlingbuilder.extensions.filters.ColorFilter"]}
         ],
 
         "customParams":[
@@ -513,6 +561,6 @@
 
     "version":1.0,
 
-    "revision":26
+    "revision":27
 
 }
