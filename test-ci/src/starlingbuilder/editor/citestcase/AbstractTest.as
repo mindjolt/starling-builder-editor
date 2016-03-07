@@ -57,15 +57,17 @@ package starlingbuilder.editor.citestcase
             simulateTouch(findDisplayObject({label:name}));
         }
 
-        public static function selectPickerListComponent(cls:Class):void
+        public static function selectPickerListComponent(cls:Class, container:DisplayObjectContainer = null):void
         {
-            var pickerList:PickerList = findDisplayObject({cls:PickerList}, UIEditorScreen.instance.leftPanel) as PickerList;
+            if (container == null) container = UIEditorScreen.instance.leftPanel;
+            var pickerList:PickerList = findDisplayObject({cls:PickerList}, container) as PickerList;
             pickerList.selectedItem = ParamUtil.getClassName(cls);
         }
 
-        public static function selectListComponent(cls:Class):void
+        public static function selectListComponent(cls:Class, container:DisplayObjectContainer = null):void
         {
-            var list:List = findDisplayObject({cls:List}, UIEditorScreen.instance.leftPanel) as List;
+            if (container == null) container = UIEditorScreen.instance.leftPanel;
+            var list:List = findDisplayObject({cls:List}, container) as List;
             var index:int = CITestUtil.findListCollectionIndex(list.dataProvider, ParamUtil.getClassName(cls));
             list.selectedIndex = index;
         }
@@ -115,6 +117,13 @@ package starlingbuilder.editor.citestcase
                 selectListComponent(cls);
                 trace(ParamUtil.getClassName(cls));
             }
+        }
+
+        public static function clickInspectorEditButton(propertyName:String, container:DisplayObjectContainer = null):void
+        {
+            var obj:DisplayObjectContainer = findDisplayObject({text: propertyName}, container).parent.parent;
+            var button:feathers.controls.Button = findDisplayObject({cls:feathers.controls.Button}, obj) as feathers.controls.Button;
+            if (button) simulateTouch(button);
         }
 
         public static function changeInspectorProperty(properties:Object, container:DisplayObjectContainer = null):void

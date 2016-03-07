@@ -8,6 +8,7 @@ package starlingbuilder.editor.citestcase
     import feathers.controls.List;
     import feathers.controls.PickerList;
     import feathers.controls.ScrollContainer;
+    import feathers.core.PopUpManager;
     import feathers.display.Scale3Image;
     import feathers.display.Scale9Image;
     import feathers.display.TiledImage;
@@ -16,11 +17,13 @@ package starlingbuilder.editor.citestcase
 
     import starling.display.Button;
     import starling.display.DisplayObject;
+    import starling.display.DisplayObjectContainer;
     import starling.display.Image;
     import starling.display.MovieClip;
     import starling.display.Quad;
     import starling.display.Sprite;
     import starling.display.Sprite3D;
+    import starling.filters.BlurFilter;
     import starling.text.TextField;
 
     import starlingbuilder.editor.CITestUtil;
@@ -31,7 +34,11 @@ package starlingbuilder.editor.citestcase
     import starlingbuilder.editor.citestutil.simulateTouch;
     import starlingbuilder.editor.controller.DocumentManager;
     import starlingbuilder.editor.data.TemplateData;
+    import starlingbuilder.editor.ui.DefaultEditPropertyPopup;
     import starlingbuilder.engine.util.ParamUtil;
+    import starlingbuilder.extensions.filters.ColorFilter;
+    import starlingbuilder.extensions.filters.DropShadowFilter;
+    import starlingbuilder.extensions.filters.GlowFilter;
 
     public class BasicTest extends AbstractTest
     {
@@ -334,9 +341,54 @@ package starlingbuilder.editor.citestcase
             return array;
         }
 
+        public static const FILTERS:Array = [
+            function():void{
+                documentManager.clear();
+                selectTab("asset");
+                selectPickerListComponent(Image);
+                selectGroupList(0, 0);
+            },
 
+            function():void{
+                clickInspectorEditButton("filter", UIEditorScreen.instance.rightPanel);
+                var popup:DisplayObjectContainer = findDisplayObject({cls:DefaultEditPropertyPopup}) as DisplayObjectContainer;
+                selectPickerListComponent(BlurFilter, popup);
+            },
 
+            function():void{
+                clickButton("OK");
+            },
 
+            function():void{
+                clickInspectorEditButton("filter", UIEditorScreen.instance.rightPanel);
+                var popup:DisplayObjectContainer = findDisplayObject({cls:DefaultEditPropertyPopup}) as DisplayObjectContainer;
+                selectPickerListComponent(DropShadowFilter, popup);
+            },
 
+            function():void{
+                clickButton("OK");
+            },
+
+            function():void{
+                clickInspectorEditButton("filter", UIEditorScreen.instance.rightPanel);
+                var popup:DisplayObjectContainer = findDisplayObject({cls:DefaultEditPropertyPopup}) as DisplayObjectContainer;
+                selectPickerListComponent(GlowFilter, popup);
+            },
+
+            function():void{
+                clickButton("OK");
+            },
+
+            function():void{
+                clickInspectorEditButton("filter", UIEditorScreen.instance.rightPanel);
+                var popup:DisplayObjectContainer = findDisplayObject({cls:DefaultEditPropertyPopup}) as DisplayObjectContainer;
+                selectPickerListComponent(ColorFilter, popup);
+                changeInspectorProperty({"hue":1});
+            },
+
+            function():void{
+                clickButton("OK");
+            },
+        ]
     }
 }
