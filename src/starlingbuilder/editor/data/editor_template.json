@@ -46,7 +46,8 @@
                 {"name":"scaleX", "step":0.01, "default_value":1},
                 {"name":"scaleY", "step":0.01, "default_value":1},
                 {"name":"upState", "read_only":true, "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"starlingbuilder.editor.ui.TextureConstructorPopup"},
-                {"name":"downState", "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"starlingbuilder.editor.ui.TexturePropertyPopup"}
+                {"name":"downState", "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"starlingbuilder.editor.ui.TexturePropertyPopup"},
+                {"name":"scaleWhenDown", "step":0.01, "default_value":0.9}
             ],
             "constructorParams":
             [

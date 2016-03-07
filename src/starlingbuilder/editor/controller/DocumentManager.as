@@ -306,9 +306,10 @@ package starlingbuilder.editor.controller
                 TextField(obj).border = _showTextBorder;
             }
 
-            if (obj.hasOwnProperty("scaleWhenDown") && obj["scaleWhenDown"] is Number)
+            if ("enabled" in obj && "alphaWhenDisabled" in obj)
             {
-                obj["scaleWhenDown"] = 1;
+                obj["enabled"] = false;
+                obj["alphaWhenDisabled"] = 1;
             }
 
             _extraParamsDict[obj] = param;
