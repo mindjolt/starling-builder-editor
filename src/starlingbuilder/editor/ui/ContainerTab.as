@@ -7,6 +7,10 @@
  */
 package starlingbuilder.editor.ui
 {
+    import feathers.controls.text.TextBlockTextRenderer;
+    import feathers.controls.text.TextFieldTextRenderer;
+    import feathers.core.ITextRenderer;
+
     import starlingbuilder.editor.UIEditorApp;
     import starlingbuilder.editor.data.TemplateData;
     import starlingbuilder.editor.helper.UIComponentHelper;
@@ -73,6 +77,14 @@ package starlingbuilder.editor.ui
             _list.width = 280;
             _list.height = 800;
             _list.selectedIndex = -1;
+
+            _list.itemRendererProperties.labelFactory = function():ITextRenderer
+            {
+                var textRenderer:TextBlockTextRenderer = new TextBlockTextRenderer();
+                textRenderer.wordWrap = true;
+                return textRenderer;
+            }
+            _list.itemRendererProperties.height = 50;
 
             var data:ListCollection = new ListCollection();
 
