@@ -196,6 +196,10 @@ package starlingbuilder.editor.ui
 
             if (canDrop(target, source))
             {
+                //don't forget to subtract its own index
+                if (source.parent === target && source.parent.getChildIndex(source) < index)
+                    --index;
+
                 UIEditorApp.instance.documentManager.historyManager.add(new MoveLayerOperation(source, target, source.parent.getChildIndex(source), index));
 
                 //var point:Point = source.parent.localToGlobal(new Point(source.x, source.y));
