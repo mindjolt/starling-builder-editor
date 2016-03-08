@@ -8,8 +8,10 @@
 package starlingbuilder.editor.controller
 {
     import flash.geom.Rectangle;
+    import flash.utils.Dictionary;
 
     import starling.core.Starling;
+    import starling.display.DisplayObject;
 
     import starling.display.DisplayObject;
     import starling.events.EventDispatcher;
@@ -95,10 +97,23 @@ package starlingbuilder.editor.controller
             dispatchEventWith(DocumentEventType.SELECTION_CHANGE);
         }
 
-        public function selectByRect(rect:Rectangle, paramsDict:Object, uiBuilder:IUIBuilder):void
+        private function allParentsTrue(obj:DisplayObject, propertyName:String):Boolean
+        {
+            while (obj && propertyName in obj)
+            {
+                if (!obj[propertyName]) return false;
+                obj = obj.parent; 
+            }
+
+            return true;
+        }
+
+        public function selectByRect(rect:Rectangle, paramsDict:Dictionary, uiBuilder:IUIBuilder):void
         {
             for (var obj:DisplayObject in paramsDict)
             {
+                if (!allParentsTrue(obj, "touchable") || !allParentsTrue(obj, "visible")) continue;
+
                 var bound:Rectangle = obj.getBounds(Starling.current.stage);
 
                 if (rect.intersects(bound) && _selectedObjects.indexOf(obj) == -1 && !uiBuilder.isContainer(paramsDict[obj]))

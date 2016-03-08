@@ -13,11 +13,13 @@ package starlingbuilder.editor
 
     import starling.display.Sprite;
     import starling.events.EventDispatcher;
-    import starlingbuilder.editor.utils.AssetManager;
+    import starling.utils.AssetManager;
     import starlingbuilder.util.AppUpdater;
 
     public class UIEditorApp extends Sprite
     {
+        public static var SWF_VERSION:int;
+
         private var _assetManager:AssetManager;
         private var _documentManager:DocumentManager;
         private var _localizationManager:LocalizationManager;

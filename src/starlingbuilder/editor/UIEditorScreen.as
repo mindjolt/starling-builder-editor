@@ -44,7 +44,7 @@ package starlingbuilder.editor
     import starling.display.Stage;
     import starling.events.Event;
     import starling.events.ResizeEvent;
-    import starlingbuilder.editor.utils.AssetManager;
+    import starling.utils.AssetManager;
 
     public class UIEditorScreen extends LayoutGroup
     {

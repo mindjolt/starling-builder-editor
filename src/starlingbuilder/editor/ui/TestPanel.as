@@ -66,6 +66,7 @@ package starlingbuilder.editor.ui
 
             var canvasSize:Point = UIEditorApp.instance.documentManager.canvasSize;
             var canvas:Quad = new Quad(canvasSize.x, canvasSize.y);
+            canvas.color = UIEditorApp.instance.documentManager.canvasColor;
             _container.clipRect = new Rectangle(0, 0, canvasSize.x, canvasSize.y);
             _container.addChild(canvas);
 

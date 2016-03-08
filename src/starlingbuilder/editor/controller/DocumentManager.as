@@ -23,7 +23,9 @@ package starlingbuilder.editor.controller
     import starlingbuilder.editor.helper.DragHelper;
     import starlingbuilder.editor.helper.DragQuad;
     import starlingbuilder.editor.helper.FileListingHelper;
+    import starlingbuilder.editor.helper.SnapshotHelper;
     import starlingbuilder.editor.history.CompositeHistoryOperation;
+    import starlingbuilder.editor.ui.CenterPanel;
     import starlingbuilder.util.KeyboardWatcher;
     import starlingbuilder.editor.helper.PixelSnapper;
     import starlingbuilder.editor.helper.PixelSnapperData;
@@ -67,7 +69,7 @@ package starlingbuilder.editor.controller
     import starling.events.Event;
     import starling.events.EventDispatcher;
     import starling.text.TextField;
-    import starlingbuilder.editor.utils.AssetManager;
+    import starling.utils.AssetManager;
 
     public class DocumentManager extends EventDispatcher implements IUIEditorThemeMediator
     {
@@ -149,6 +151,7 @@ package starlingbuilder.editor.controller
             });
 
             _backgroundContainer = new Sprite();
+            _backgroundContainer.touchable = false;
             _layoutContainer = new LayoutGroup();
             _layoutContainer.layout = new AnchorLayout();
             _snapContainer = new Sprite();
@@ -305,9 +308,10 @@ package starlingbuilder.editor.controller
                 TextField(obj).border = _showTextBorder;
             }
 
-            if (obj.hasOwnProperty("scaleWhenDown") && obj["scaleWhenDown"] is Number)
+            if ("enabled" in obj && "alphaWhenDisabled" in obj)
             {
-                obj["scaleWhenDown"] = 1;
+                obj["alphaWhenDisabled"] = 1;
+                obj["enabled"] = false;
             }
 
             _extraParamsDict[obj] = param;
@@ -883,11 +887,9 @@ package starlingbuilder.editor.controller
         {
             var parent:DisplayObjectContainer = getParent();
 
-            if (parent.x == 0 && parent.y == 0)
-            {
-                data.params.x = UIEditorScreen.instance.centerPanel.horizontalScrollPosition / scale;
-                data.params.y = UIEditorScreen.instance.centerPanel.verticalScrollPosition / scale;
-            }
+            var p:Point = getNewObjectPosition();
+            data.params.x = p.x;
+            data.params.y = p.y;
 
             var result:Object = _uiBuilder.createUIElement(data);
             var paramDict:Dictionary = new Dictionary();
@@ -904,6 +906,26 @@ package starlingbuilder.editor.controller
             setLayerChanged();
 
             setChanged();
+        }
+
+        private function getNewObjectPosition():Point
+        {
+            var parent:DisplayObjectContainer = getParent();
+
+            if (parent.x == 0 && parent.y == 0)
+            {
+                var centerPanel:CenterPanel = UIEditorScreen.instance.centerPanel;
+
+                var width:Number = Math.min(centerPanel.width, _canvas.width * scale);
+                var height:Number = Math.min(centerPanel.height, _canvas.height * scale);
+
+                return new Point((centerPanel.horizontalScrollPosition + width * 0.5) / scale,
+                                (centerPanel.verticalScrollPosition + height * 0.5) / scale);
+            }
+            else
+            {
+                return new Point(0, 0);
+            }
         }
 
         public function get dataProvider():ListCollection
@@ -1045,7 +1067,9 @@ package starlingbuilder.editor.controller
                     var root:DisplayObject = result.object;
                     var paramDict:Dictionary = result.params;
 
-                    root.x = root.y = 0;
+                    var p:Point = getNewObjectPosition();
+                    root.x = p.x;
+                    root.y = p.y;
 
                     var parent:DisplayObjectContainer = getParent();
                     _historyManager.add(new PasteOperation(root, paramDict, parent));
@@ -1312,6 +1336,39 @@ package starlingbuilder.editor.controller
         public function get boundingBoxContainer():BoundingBoxContainer
         {
             return _boundingBoxContainer;
+        }
+
+        public function snapshot():void
+        {
+            var sprite:Sprite = new Sprite();
+
+            var canvas:Quad = new Quad(_canvas.width, _canvas.height);
+            canvas.color = _canvas.color;
+
+            sprite.addChild(canvas);
+            sprite.addChild(startTest());
+            SnapshotHelper.snapshot(sprite, new Point(_canvas.width, _canvas.height), getSnapshotFileName());
+
+            UIEditorScreen.instance.workspaceDir.openWithDefaultApplication();
+        }
+
+        public static const DEFAULT_FILENAME:String = "snapshot";
+        public static const DEFAULT_EXTENSION:String = ".png";
+
+        private function getSnapshotFileName():String
+        {
+            var workspace:File = UIEditorScreen.instance.workspaceDir;
+            var name:String = DEFAULT_FILENAME + DEFAULT_EXTENSION;
+
+            if (!workspace.resolvePath(name).exists)
+                return name;
+
+            for (var i:int = 1;;++i)
+            {
+                name = DEFAULT_FILENAME + i + DEFAULT_EXTENSION;
+                if (!workspace.resolvePath(name).exists)
+                    return name;
+            }
         }
     }
 }

@@ -245,7 +245,10 @@ package starlingbuilder.editor.themes
 		 */
 		protected static const THEME_STYLE_NAME_VERTICAL_SLIDER_MAXIMUM_TRACK:String = "metalworks-desktop-vertical-slider-maximum-track";
 
-		/**
+
+        protected static const NO_THEME:String = "no-theme";
+
+        /**
 		 * The default global text renderer factory for this theme creates a
 		 * TextBlockTextRenderer.
 		 */
@@ -934,6 +937,7 @@ package starlingbuilder.editor.themes
 			//toggle button
 			this.getStyleProviderForClass(ToggleButton).defaultStyleFunction = this.setButtonStyles;
 			//this.getStyleProviderForClass(ToggleButton).setFunctionForStyleName(Button.ALTERNATE_NAME_QUIET_BUTTON, this.setQuietButtonStyles);
+            this.getStyleProviderForClass(ToggleButton).setFunctionForStyleName(NO_THEME, this.setNoThemeButtonStyles);
 
 			//toggle switch
 			this.getStyleProviderForClass(ToggleSwitch).defaultStyleFunction = this.setToggleSwitchStyles;
@@ -1208,6 +1212,11 @@ package starlingbuilder.editor.themes
 			button.minWidth = this.controlSize;
 			button.minHeight = this.controlSize;
 		}
+
+        protected function setNoThemeButtonStyles(button:Button):void
+        {
+            button.stateToSkinFunction = null;
+        }
 
 	//-------------------------
 	// ButtonGroup

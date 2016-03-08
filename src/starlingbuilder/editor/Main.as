@@ -68,6 +68,8 @@ package starlingbuilder.editor
             trace("width : " + Starling.current.viewPort.width + ", height : " + Starling.current.viewPort.height);
 
             loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onUncaughtError);
+
+            UIEditorApp.SWF_VERSION = loaderInfo.swfVersion;
         }
 
         private function onUncaughtError(event:UncaughtErrorEvent):void

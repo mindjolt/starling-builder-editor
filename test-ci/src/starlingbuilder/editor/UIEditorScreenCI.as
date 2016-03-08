@@ -45,6 +45,7 @@ package starlingbuilder.editor
             _testManager.add(BasicTest.COMPONENT1);
             _testManager.add(BasicTest.COMPONENT2);
             _testManager.add(BasicTest.COMPONENT3);
+            _testManager.add(BasicTest.FILTERS);
             _testManager.add(BackgroundTest.BACKGROUND);
             _testManager.add(LayoutTest.LAYOUTS);
             _testManager.add(LayoutTest.ANCHOR_LAYOUT);

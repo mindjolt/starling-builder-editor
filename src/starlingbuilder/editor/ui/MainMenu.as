@@ -49,6 +49,7 @@ package starlingbuilder.editor.ui
         public static const ZOOM_IN:String = "Zoom In";
         public static const ZOOM_OUT:String = "Zoom Out";
         public static const RESET_ZOOM:String = "Reset Zoom";
+        public static const CANVAS_SNAPSHOT:String = "Canvas Snapshot"
 
         public static const SHOW_TEXT_BORDER:String = "Show text border";
         public static const SNAP_PIXEL:String = "Snap pixel";
@@ -100,6 +101,7 @@ package starlingbuilder.editor.ui
             {"label":ZOOM_IN, "key":"+"},
             {"label":ZOOM_OUT, "key":"-"},
             {"label":RESET_ZOOM, "key":"0"},
+            {"label":CANVAS_SNAPSHOT}
         ]
 
         public static const OPTION_MENU:Array = [

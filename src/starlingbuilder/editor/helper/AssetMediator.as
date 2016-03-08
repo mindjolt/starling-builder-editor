@@ -14,7 +14,7 @@ package starlingbuilder.editor.helper
     import flash.filesystem.FileStream;
 
     import starling.textures.Texture;
-    import starlingbuilder.editor.utils.AssetManager;
+    import starling.utils.AssetManager;
 
     public class AssetMediator implements IAssetMediator
     {

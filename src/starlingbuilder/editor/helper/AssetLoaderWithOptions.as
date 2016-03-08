@@ -12,10 +12,12 @@ package starlingbuilder.editor.helper
     import flash.filesystem.FileStream;
 
     import starling.textures.TextureOptions;
-    import starlingbuilder.editor.utils.AssetManager;
+    import starling.utils.AssetManager;
 
     public class AssetLoaderWithOptions
     {
+        public static const DEFAULT_OPTION:String = "default_option";
+
         private var _assetManager:AssetManager;
         private var _workspace:File;
         private var _options:Object;
@@ -83,6 +85,9 @@ package starlingbuilder.editor.helper
                     return new TextureOptions(_options[key].scale);
                 }
             }
+
+            if (DEFAULT_OPTION in _options)
+                return new TextureOptions(_options[DEFAULT_OPTION].scale);
 
             return null;
         }
