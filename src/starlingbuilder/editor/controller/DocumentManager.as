@@ -310,8 +310,8 @@ package starlingbuilder.editor.controller
 
             if ("enabled" in obj && "alphaWhenDisabled" in obj)
             {
-                obj["enabled"] = false;
                 obj["alphaWhenDisabled"] = 1;
+                obj["enabled"] = false;
             }
 
             _extraParamsDict[obj] = param;
