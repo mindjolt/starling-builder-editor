@@ -112,6 +112,9 @@ package starlingbuilder.editor.ui
 
         private function onChange(event:Event):void
         {
+            var oldIndex:int = _list.selectedIndex;
+            var position:Number = _list.verticalScrollPosition;
+
             _list.dataProvider = null;
             _list.dataProvider = _documentManager.dataProvider;
 
@@ -120,7 +123,11 @@ package starlingbuilder.editor.ui
             if (index >= 0)
             {
                 _list.selectedIndex = index;
-                _list.scrollToDisplayIndex(index);
+
+                if (oldIndex == index)
+                    _list.verticalScrollPosition = position;
+                else
+                    _list.scrollToDisplayIndex(index);
             }
 
 

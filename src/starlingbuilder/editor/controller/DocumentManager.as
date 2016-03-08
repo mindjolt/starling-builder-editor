@@ -25,6 +25,7 @@ package starlingbuilder.editor.controller
     import starlingbuilder.editor.helper.FileListingHelper;
     import starlingbuilder.editor.helper.SnapshotHelper;
     import starlingbuilder.editor.history.CompositeHistoryOperation;
+    import starlingbuilder.editor.ui.CenterPanel;
     import starlingbuilder.util.KeyboardWatcher;
     import starlingbuilder.editor.helper.PixelSnapper;
     import starlingbuilder.editor.helper.PixelSnapperData;
@@ -150,6 +151,7 @@ package starlingbuilder.editor.controller
             });
 
             _backgroundContainer = new Sprite();
+            _backgroundContainer.touchable = false;
             _layoutContainer = new LayoutGroup();
             _layoutContainer.layout = new AnchorLayout();
             _snapContainer = new Sprite();
@@ -887,8 +889,13 @@ package starlingbuilder.editor.controller
 
             if (parent.x == 0 && parent.y == 0)
             {
-                data.params.x = UIEditorScreen.instance.centerPanel.horizontalScrollPosition / scale;
-                data.params.y = UIEditorScreen.instance.centerPanel.verticalScrollPosition / scale;
+                var centerPanel:CenterPanel = UIEditorScreen.instance.centerPanel;
+
+                var width:Number = Math.min(centerPanel.width, _canvas.width * scale);
+                var height:Number = Math.min(centerPanel.height, _canvas.height * scale);
+
+                data.params.x = (centerPanel.horizontalScrollPosition + width * 0.5) / scale;
+                data.params.y = (centerPanel.verticalScrollPosition + height * 0.5) / scale;
             }
 
             var result:Object = _uiBuilder.createUIElement(data);
