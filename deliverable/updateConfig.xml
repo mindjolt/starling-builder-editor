@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?> 
      <update xmlns="http://ns.adobe.com/air/framework/update/description/2.5"> 
-       <versionNumber>0.8.0</versionNumber>
-       <url>http://cache.mindjolt.com/starling-builder/v0.8.0/starling-builder.air</url>
+       <versionNumber>0.8.1</versionNumber>
+       <url>http://cache.mindjolt.com/starling-builder/v0.8.1/starling-builder.air</url>
        <description>
-[editor] Multiple selection support (finally!)
-[editor] Multiple objects positioning tools
-[editor] Display object property can set Image/Scale3/Scale9/TiledImage
-[editor] Vertical arrow slide for fields like y
-[editor] Canvas color picker
-[editor] Add pretty/minimized JSON option to setting popup
+[editor] Add filter support (BlurFilter, GlowFilter, DropShadowFilter, ColorFilter)
+[editor] Implement canvas snapshot
+[editor] New UI element position will default to center of the canvas
+[editor] Replace hidden and lock check to icons
+[editor] Upgrade to Starling 1.8 and AIR19
+[editor] Add default_option to texture_options.json
 [editor] Various bug fixes
-[engine] Add delta field to DefaultTweenBuilder to support position offset tween
-[template] Add blendMode to all components, add textureScale to Scale3Image/Scale9Image/TiledImage
+[template] Add scaleWhenDown property to starling.display.Button
+[extensions] Add a universal ContainerButton (A customized button you can add whatever you want inside. You need to download the new latest demo_workspace.zip to try it)
        </description>
     </update>
