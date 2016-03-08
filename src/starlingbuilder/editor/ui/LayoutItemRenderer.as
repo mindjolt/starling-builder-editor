@@ -10,6 +10,7 @@ package starlingbuilder.editor.ui
     import feathers.controls.Check;
     import feathers.controls.Label;
     import feathers.controls.LayoutGroup;
+    import feathers.controls.ToggleButton;
     import feathers.controls.renderers.DefaultListItemRenderer;
     import feathers.dragDrop.DragData;
     import feathers.dragDrop.DragDropManager;
@@ -22,6 +23,7 @@ package starlingbuilder.editor.ui
     import starling.display.Button;
     import starling.display.DisplayObject;
     import starling.display.DisplayObjectContainer;
+    import starling.display.Image;
     import starling.display.Quad;
     import starling.events.Event;
     import starling.events.Touch;
@@ -32,9 +34,20 @@ package starlingbuilder.editor.ui
     import starlingbuilder.editor.UIEditorApp;
     import starlingbuilder.editor.data.EmbeddedImages;
     import starlingbuilder.editor.history.MoveLayerOperation;
+    import starlingbuilder.util.feathers.FeathersUIUtil;
 
     public class LayoutItemRenderer extends DefaultListItemRenderer implements IDragSource, IDropTarget
     {
+        [Embed(source="eye.png")]
+        private static const EYE:Class;
+
+        [Embed(source="lock.png")]
+        private static const LOCK:Class;
+
+        private static var eyeTexture:Texture;
+        private static var lockTexture:Texture;
+
+
         public static const SOURCE:String = "source";
         public static const TARGET:String = "target";
         public static const INDEX:String = "index";
@@ -44,8 +57,8 @@ package starlingbuilder.editor.ui
         public static const DROP_BELOW:String = "below";
 
         private var _group:LayoutGroup;
-        private var _hiddenCheck:Check;
-        private var _lockCheck:Check;
+        private var _hiddenCheck:ToggleButton;
+        private var _lockCheck:ToggleButton;
 
         private var _group2:LayoutGroup;
         private var _sign:Button;
@@ -56,6 +69,11 @@ package starlingbuilder.editor.ui
         public function LayoutItemRenderer()
         {
             super();
+
+            if (lockTexture == null) lockTexture = Texture.fromBitmap(new LOCK);
+            if (eyeTexture == null) eyeTexture = Texture.fromBitmap(new EYE);
+
+
             createIconGroup();
             _iconFunction = layoutIconFunction;
             _labelFunction = nameLabelFunction;
@@ -82,10 +100,18 @@ package starlingbuilder.editor.ui
         private function createIconGroup():void
         {
             _group = new LayoutGroup();
-            _group.layout = new VerticalLayout();
 
-            _hiddenCheck = new Check();
-            _hiddenCheck.label = "hidden";
+            var layout:HorizontalLayout = FeathersUIUtil.horizontalLayout(10);
+            layout.paddingTop = layout.paddingBottom = 16;
+            layout.paddingRight = 10;
+
+            _group.layout = layout;
+
+            _hiddenCheck = new ToggleButton();
+            _hiddenCheck.styleName = "no-theme";
+            _hiddenCheck.defaultSkin = getImage(eyeTexture, 0.5, 1);
+            _hiddenCheck.defaultSelectedSkin = getImage(eyeTexture, 0.5, 0.3);
+            //_hiddenCheck.label = "hidden";
 
             _hiddenCheck.addEventListener(Event.CHANGE, function():void{
                 _data.hidden = _hiddenCheck.isSelected;
@@ -93,8 +119,11 @@ package starlingbuilder.editor.ui
             });
             _group.addChild(_hiddenCheck);
 
-            _lockCheck = new Check();
-            _lockCheck.label = "lock";
+            _lockCheck = new ToggleButton();
+            _lockCheck.styleName = "no-theme";
+            _lockCheck.defaultSkin = getImage(lockTexture, 0.5, 0.3);
+            _lockCheck.defaultSelectedSkin = getImage(lockTexture, 0.5, 1);
+            //_lockCheck.label = "lock";
             _lockCheck.addEventListener(Event.CHANGE, function():void{
                 _data.lock = _lockCheck.isSelected;
                 UIEditorApp.instance.documentManager.refresh();
@@ -315,6 +344,14 @@ package starlingbuilder.editor.ui
                 _dropLine = new Quad(width, 1);
                 addChild(_dropLine);
             }
+        }
+
+        public static function getImage(texture:Texture, scale:Number, alpha:Number):Image
+        {
+            var image:Image = new Image(texture);
+            image.scaleX = image.scaleY = scale;
+            image.alpha = alpha;
+            return image;
         }
 
     }

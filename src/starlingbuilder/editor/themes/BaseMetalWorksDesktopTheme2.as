@@ -316,6 +316,8 @@ package starlingbuilder.editor.themes
          */
         protected static const THEME_STYLE_NAME_DATE_TIME_SPINNER_LIST_ITEM_RENDERER:String = "metalworks-desktop-date-time-spinner-list-item-renderer";
 
+        protected static const NO_THEME:String = "no-theme";
+
         /**
          * The default global text renderer factory for this theme creates a
          * TextBlockTextRenderer.
@@ -1047,6 +1049,7 @@ package starlingbuilder.editor.themes
             //toggle button
             this.getStyleProviderForClass(ToggleButton).defaultStyleFunction = this.setButtonStyles;
             this.getStyleProviderForClass(ToggleButton).setFunctionForStyleName(Button.ALTERNATE_STYLE_NAME_QUIET_BUTTON, this.setQuietButtonStyles);
+            this.getStyleProviderForClass(ToggleButton).setFunctionForStyleName(NO_THEME, this.setNoThemeButtonStyles);
 
             //toggle switch
             this.getStyleProviderForClass(ToggleSwitch).defaultStyleFunction = this.setToggleSwitchStyles;
@@ -2830,6 +2833,11 @@ package starlingbuilder.editor.themes
             defaultSkin.height = this.smallControlSize;
             track.defaultSkin = defaultSkin;
             track.hasLabelTextRenderer = false;
+        }
+
+        protected function setNoThemeButtonStyles(button:Button):void
+        {
+            button.stateToSkinFunction = null;
         }
 
     }
