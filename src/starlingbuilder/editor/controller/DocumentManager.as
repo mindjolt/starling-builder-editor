@@ -887,16 +887,9 @@ package starlingbuilder.editor.controller
         {
             var parent:DisplayObjectContainer = getParent();
 
-            if (parent.x == 0 && parent.y == 0)
-            {
-                var centerPanel:CenterPanel = UIEditorScreen.instance.centerPanel;
-
-                var width:Number = Math.min(centerPanel.width, _canvas.width * scale);
-                var height:Number = Math.min(centerPanel.height, _canvas.height * scale);
-
-                data.params.x = (centerPanel.horizontalScrollPosition + width * 0.5) / scale;
-                data.params.y = (centerPanel.verticalScrollPosition + height * 0.5) / scale;
-            }
+            var p:Point = getNewObjectPosition();
+            data.params.x = p.x;
+            data.params.y = p.y;
 
             var result:Object = _uiBuilder.createUIElement(data);
             var paramDict:Dictionary = new Dictionary();
@@ -913,6 +906,26 @@ package starlingbuilder.editor.controller
             setLayerChanged();
 
             setChanged();
+        }
+
+        private function getNewObjectPosition():Point
+        {
+            var parent:DisplayObjectContainer = getParent();
+
+            if (parent.x == 0 && parent.y == 0)
+            {
+                var centerPanel:CenterPanel = UIEditorScreen.instance.centerPanel;
+
+                var width:Number = Math.min(centerPanel.width, _canvas.width * scale);
+                var height:Number = Math.min(centerPanel.height, _canvas.height * scale);
+
+                return new Point((centerPanel.horizontalScrollPosition + width * 0.5) / scale,
+                                (centerPanel.verticalScrollPosition + height * 0.5) / scale);
+            }
+            else
+            {
+                return new Point(0, 0);
+            }
         }
 
         public function get dataProvider():ListCollection
@@ -1054,7 +1067,9 @@ package starlingbuilder.editor.controller
                     var root:DisplayObject = result.object;
                     var paramDict:Dictionary = result.params;
 
-                    root.x = root.y = 0;
+                    var p:Point = getNewObjectPosition();
+                    root.x = p.x;
+                    root.y = p.y;
 
                     var parent:DisplayObjectContainer = getParent();
                     _historyManager.add(new PasteOperation(root, paramDict, parent));
