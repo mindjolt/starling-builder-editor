@@ -912,7 +912,7 @@ package starlingbuilder.editor.controller
         {
             var parent:DisplayObjectContainer = getParent();
 
-            if (parent.x == 0 && parent.y == 0)
+            if (parent === _root && parent.x == 0 && parent.y == 0)
             {
                 var centerPanel:CenterPanel = UIEditorScreen.instance.centerPanel;
 
