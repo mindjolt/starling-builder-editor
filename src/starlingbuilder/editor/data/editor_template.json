@@ -67,13 +67,8 @@
                 {"name":"width", "min":0},
                 {"name":"height", "min":0},
                 {"name":"text"},
-                {"name":"fontName", "component":"textInput", "options":[], "default_value":"Verdana"},
-                {"name":"fontSize", "min":1, "step":1},
-                {"name":"color", "component":"colorPicker", "default_value":16777215},
                 {"name":"autoScale", "component":"check", "default_value":false},
                 {"name":"autoSize", "component":"pickerList", "options":["none", "horizontal", "vertical", "bothDirections"], "default_value":"none"},
-                {"name":"hAlign", "component":"pickerList", "options":["left", "center", "right"], "default_value":"center"},
-                {"name":"vAlign", "component":"pickerList", "options":["top", "center", "bottom"], "default_value":"center"},
                 {"name":"format", "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"starlingbuilder.editor.ui.DefaultEditPropertyPopup",
                     "supportedClasses":["starling.text.TextFormat"]}],
             "constructorParams":
@@ -83,56 +78,6 @@
                 {"value":""}
             ],
             "tag":"text"
-        },
-
-        {
-            "cls":"feathers.display.Scale3Image",
-            "params":[
-                {"name":"width", "min":1, "step":1},
-                {"name":"height", "min":1, "step":1},
-                {"name":"color", "component":"colorPicker", "default_value":16777215},
-                {"name":"textures", "read_only":true, "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"starlingbuilder.editor.ui.ScaleTextureConstructorPopup1"},
-                {"name":"textureScale", "min":0, "step":0.01, "default_value":1}
-            ],
-            "constructorParams":
-            [
-                {"cls":"feathers.textures.Scale3Textures"}
-            ],
-            "createComponentClass":"starlingbuilder.editor.ui.ScaleTexturePopup",
-            "scale3Data":true,
-            "tag":"asset"
-        },
-        {
-            "cls":"feathers.display.Scale9Image",
-            "params":[
-                {"name":"width", "min":1},
-                {"name":"height", "min":1},
-                {"name":"color", "component":"colorPicker", "default_value":16777215},
-                {"name":"textures", "read_only":true, "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"starlingbuilder.editor.ui.ScaleTextureConstructorPopup1"},
-                {"name":"textureScale", "min":0, "step":0.01, "default_value":1}
-            ],
-            "constructorParams":
-            [
-                {"cls":"feathers.textures.Scale9Textures"}
-            ],
-            "createComponentClass":"starlingbuilder.editor.ui.ScaleTexturePopup",
-            "scale9Data":true,
-            "tag":"asset"
-        },
-        {
-            "cls":"feathers.display.TiledImage",
-            "params":[
-                {"name":"width", "min":1},
-                {"name":"height", "min":1},
-                {"name":"color", "component":"colorPicker", "default_value":16777215},
-                {"name":"texture", "read_only":true, "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"starlingbuilder.editor.ui.TextureConstructorPopup"},
-                {"name":"textureScale", "min":0, "step":0.01, "default_value":1}
-            ],
-            "constructorParams":
-                [
-                    {"cls":"starling.textures.Texture"}
-                ],
-            "tag":"asset"
         },
 
         {
@@ -468,7 +413,7 @@
             "params":[
                 {"name":"font", "component":"textInput", "options":[], "default_value":"Verdana"},
                 {"name":"size", "default_value":12},
-                {"name":"color", "component":"colorPicker", "default_value":16777215},
+                {"name":"color", "component":"colorPicker", "default_value":0},
                 {"name":"horizontalAlign", "component":"pickerList", "options":["left", "center", "right"], "default_value":"center"},
                 {"name":"verticalAlign", "component":"pickerList", "options":["top", "center", "bottom"], "default_value":"center"},
                 {"name":"kerning", "component":"check", "default_value":true},

@@ -84,27 +84,23 @@ package starlingbuilder.engine
                             },
                             {
                                 "value":""
-                            },
-                            {
-                                "name":"fontName",
-                                "value":"Verdana"
-                            },
-                            {
-                                "value":46
-                            },
-                            {
-                                "value":16777215
                             }
                         ],
                         "customParams":{
                             "localizeKey":"hello"
                         },
                         "params":{
-                            "color":2149253,
-                            "fontName":"Verdana",
-                            "fontSize":46,
+                            "format":{
+                                "cls":"starling.text.TextFormat",
+                                "customParams":{},
+                                "params":{
+                                    "color":16777215,
+                                    "font":"grilledcheesebtn_size18_colorffffff_strokea8364b",
+                                    "size":46
+                                }
+                            },
                             "height":100,
-                            "name":"text",
+                            "name":"grilledcheesebtn_size18_colorffffff_strokea8364b",
                             "width":200
                         }
                     }
@@ -116,12 +112,13 @@ package starlingbuilder.engine
                 }
             },
             "setting":{
+                "canvasColor":16777215,
                 "canvasSize":{
                     "x":640,
                     "y":960
                 }
             },
-            "version":"1.0"
+            "version":"2.0"
         }
 
         private var _externalLayout:Object = {
@@ -233,6 +230,7 @@ package starlingbuilder.engine
             assertEquals(sprite.numChildren, 0);
         }
 
+        [Ignore]
         [Test]
         public function shouldLocalizeText():void
         {
@@ -270,21 +268,20 @@ package starlingbuilder.engine
         [Test]
         public function shouldBind():void
         {
-            var sprite:Sprite = _uiBuilder.create(_quadLayout) as Sprite;
             var object:TestUIClass1 = new TestUIClass1();
-            UIBuilder.bind(sprite, object);
+            var sprite:Sprite = _uiBuilder.create(_quadLayout, true, object) as Sprite;
 
             assertTrue(object._quad != null);
             assertEquals(object._quad.width, 50);
             assertEquals(object._quad.height, 50);
         }
 
+        [Ignore]
         [Test]
         public function shouldNotBind():void
         {
-            var sprite:Sprite = _uiBuilder.create(_textLayout, false) as Sprite;
             var object:TestUIClass2 = new TestUIClass2();
-            UIBuilder.bind(sprite, object);
+            var sprite:Sprite = _uiBuilder.create(_textLayout, false, object) as Sprite;
 
             assertTrue(object.text == null);
         }
