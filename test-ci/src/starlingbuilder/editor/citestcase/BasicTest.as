@@ -57,6 +57,10 @@ package starlingbuilder.editor.citestcase
             //drag
             function():void{
                 var target:DisplayObject = selectedObject;
+                target.x = 0;
+                target.y = 0;
+                documentManager.setChanged();
+
                 simulateTouch(target, 50, 50, 200, 200);
                 assertNumericEquals(target.x, 200);
                 assertNumericEquals(target.y, 200);
