@@ -60,9 +60,15 @@ package starlingbuilder.editor.ui
 
         private var _documentManager:DocumentManager;
 
+        private var _horizontalPadding:Object;
+        private var _verticalPadding:Object;
+
         public function PositionToolbar()
         {
             _documentManager = UIEditorApp.instance.documentManager;
+
+            _horizontalPadding = {padding:0};
+            _verticalPadding = {padding:0};
 
             createButtons();
         }
@@ -115,7 +121,6 @@ package starlingbuilder.editor.ui
 
         private function onButtonClick(event:Event):void
         {
-            var obj:Object;
             var button:starling.display.Button = event.target as starling.display.Button;
             switch(button.name)
             {
@@ -184,18 +189,16 @@ package starlingbuilder.editor.ui
                     });
                     break;
                 case ALIGN_HORIZONTAL:
-                    obj = {padding:0};
                     var alignHorizontal:Function = function():void{
-                        doAlignHorizontal(obj.padding);
+                        doAlignHorizontal(_horizontalPadding.padding);
                     };
-                    PopUpManager.addPopUp(new SimpleEditPropertyPopup(obj, [{name:"padding", type:"Number"}], alignHorizontal, alignHorizontal));
+                    PopUpManager.addPopUp(new SimpleEditPropertyPopup(_horizontalPadding, [{name:"padding", type:"Number"}], alignHorizontal, alignHorizontal));
                     break;
                 case ALIGN_VERTICAL:
-                    obj = {padding:0};
                     var alignVertical:Function = function():void{
-                        doAlignVertical(obj.padding);
+                        doAlignVertical(_verticalPadding.padding);
                     };
-                    PopUpManager.addPopUp(new SimpleEditPropertyPopup(obj, [{name:"padding", type:"Number"}], alignVertical, alignVertical));
+                    PopUpManager.addPopUp(new SimpleEditPropertyPopup(_verticalPadding, [{name:"padding", type:"Number"}], alignVertical, alignVertical));
                     break;
             }
         }
