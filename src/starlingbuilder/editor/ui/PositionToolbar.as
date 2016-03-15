@@ -13,10 +13,13 @@ package starlingbuilder.editor.ui
 
     import flash.geom.Rectangle;
 
+    import starling.core.Starling;
+
     import starling.display.Button;
 
     import starling.display.DisplayObject;
     import starling.display.Image;
+    import starling.display.Stage;
 
     import starling.events.Event;
     import starling.textures.Texture;
@@ -117,7 +120,7 @@ package starlingbuilder.editor.ui
             switch(button.name)
             {
                 case ALIGN_LEFT:
-                    changePosition(function(first:DisplayObject, obj:DisplayObject, prev:DisplayObject):void{
+                    changePosition(horizontalSortFunc, function(first:DisplayObject, obj:DisplayObject, prev:DisplayObject):void{
                         var r:Rectangle = first.getBounds(obj.parent);
                         var x1:Number = r.x;
                         r = obj.getBounds(obj.parent);
@@ -126,7 +129,7 @@ package starlingbuilder.editor.ui
                     });
                     break;
                 case ALIGN_CENTER:
-                    changePosition(function(first:DisplayObject, obj:DisplayObject, prev:DisplayObject):void{
+                    changePosition(horizontalSortFunc, function(first:DisplayObject, obj:DisplayObject, prev:DisplayObject):void{
                         var r:Rectangle = first.getBounds(obj.parent);
                         var x1:Number = r.x + r.width / 2;
                         r = obj.getBounds(obj.parent);
@@ -135,7 +138,7 @@ package starlingbuilder.editor.ui
                     });
                     break;
                 case ALIGN_RIGHT:
-                    changePosition(function(first:DisplayObject, obj:DisplayObject, prev:DisplayObject):void{
+                    changePosition(horizontalSortFunc, function(first:DisplayObject, obj:DisplayObject, prev:DisplayObject):void{
                         var r:Rectangle = first.getBounds(obj.parent);
                         var x1:Number = r.x + r.width;
                         r = obj.getBounds(obj.parent);
@@ -144,7 +147,7 @@ package starlingbuilder.editor.ui
                     });
                     break;
                 case ALIGN_TOP:
-                    changePosition(function(first:DisplayObject, obj:DisplayObject, prev:DisplayObject):void{
+                    changePosition(verticalSortFunc, function(first:DisplayObject, obj:DisplayObject, prev:DisplayObject):void{
                         var r:Rectangle = first.getBounds(obj.parent);
                         var y1:Number = r.y;
                         r = obj.getBounds(obj.parent);
@@ -153,7 +156,7 @@ package starlingbuilder.editor.ui
                     });
                     break;
                 case ALIGN_MIDDLE:
-                    changePosition(function(first:DisplayObject, obj:DisplayObject, prev:DisplayObject):void{
+                    changePosition(verticalSortFunc, function(first:DisplayObject, obj:DisplayObject, prev:DisplayObject):void{
                         var r:Rectangle = first.getBounds(obj.parent);
                         var y1:Number = r.y + r.height / 2;
                         r = obj.getBounds(obj.parent);
@@ -162,7 +165,7 @@ package starlingbuilder.editor.ui
                     });
                     break;
                 case ALIGN_BOTTOM:
-                    changePosition(function(first:DisplayObject, obj:DisplayObject, prev:DisplayObject):void{
+                    changePosition(verticalSortFunc, function(first:DisplayObject, obj:DisplayObject, prev:DisplayObject):void{
                         var r:Rectangle = first.getBounds(obj.parent);
                         var y1:Number = r.y + r.height;
                         r = obj.getBounds(obj.parent);
@@ -171,12 +174,12 @@ package starlingbuilder.editor.ui
                     });
                     break;
                 case ALIGN_WIDTH:
-                    changeSize(function(first:DisplayObject, obj:DisplayObject):void{
+                    changeSize(horizontalSortFunc, function(first:DisplayObject, obj:DisplayObject):void{
                         obj.width = first.getBounds(obj.parent).width;
                     });
                     break;
                 case ALIGN_HEIGHT:
-                    changeSize(function(first:DisplayObject, obj:DisplayObject):void{
+                    changeSize(verticalSortFunc, function(first:DisplayObject, obj:DisplayObject):void{
                         obj.height = first.getBounds(obj.parent).height;
                     });
                     break;
@@ -199,7 +202,7 @@ package starlingbuilder.editor.ui
 
         private function doAlignHorizontal(padding:Number):void
         {
-            changePosition(function(first:DisplayObject, obj:DisplayObject, prev:DisplayObject):void{
+            changePosition(horizontalSortFunc, function(first:DisplayObject, obj:DisplayObject, prev:DisplayObject):void{
                 var r:Rectangle = prev.getBounds(obj.parent);
                 var x1:Number = r.x + r.width;
                 r = obj.getBounds(obj.parent);
@@ -210,7 +213,7 @@ package starlingbuilder.editor.ui
 
         private function doAlignVertical(padding:Number):void
         {
-            changePosition(function(first:DisplayObject, obj:DisplayObject, prev:DisplayObject):void{
+            changePosition(verticalSortFunc, function(first:DisplayObject, obj:DisplayObject, prev:DisplayObject):void{
                 var r:Rectangle = prev.getBounds(obj.parent);
                 var y1:Number = r.y + r.height;
                 r = obj.getBounds(obj.parent);
@@ -219,9 +222,9 @@ package starlingbuilder.editor.ui
             });
         }
 
-        private function changePosition(func:Function):void
+        private function changePosition(sortFunc:Function, opFunc:Function):void
         {
-            var objects:Array = _documentManager.selectedObjects;
+            var objects:Array = _documentManager.selectedObjects.sort(sortFunc);
 
             var ops:Array = [];
 
@@ -235,7 +238,7 @@ package starlingbuilder.editor.ui
 
                     var oldX:Number = obj.x;
                     var oldY:Number = obj.y;
-                    func(first, obj, prev);
+                    opFunc(first, obj, prev);
                     var dx:Number = obj.x - oldX;
                     var dy:Number = obj.y - oldY;
 
@@ -247,9 +250,9 @@ package starlingbuilder.editor.ui
             }
         }
 
-        private function changeSize(func:Function):void
+        private function changeSize(sortFunc:Function, opFunc:Function):void
         {
-            var objects:Array = _documentManager.selectedObjects;
+            var objects:Array = _documentManager.selectedObjects.sort(sortFunc);
 
             var ops:Array = [];
 
@@ -261,7 +264,7 @@ package starlingbuilder.editor.ui
                     var obj:DisplayObject = objects[i];
 
                     var oldValue:Rectangle = new Rectangle(obj.x, obj.y, obj.width, obj.height);
-                    func(first, obj);
+                    opFunc(first, obj);
                     var newValue:Rectangle = new Rectangle(obj.x, obj.y, obj.width, obj.height);
 
                     ops.push(new ResizeOperation(obj, oldValue, newValue));
@@ -271,5 +274,22 @@ package starlingbuilder.editor.ui
                 _documentManager.setChanged();
             }
         }
+
+        private function horizontalSortFunc(obj1:DisplayObject, obj2:DisplayObject):int
+        {
+            var stage:Stage = Starling.current.stage;
+            var x1:Number = obj1.getBounds(stage).x;
+            var x2:Number = obj2.getBounds(stage).x;
+            return x1 - x2;
+        }
+
+        private function verticalSortFunc(obj1:DisplayObject, obj2:DisplayObject):int
+        {
+            var stage:Stage = Starling.current.stage;
+            var y1:Number = obj1.getBounds(stage).y;
+            var y2:Number = obj2.getBounds(stage).y;
+            return y1 - y2;
+        }
+
     }
 }
