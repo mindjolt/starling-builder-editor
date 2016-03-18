@@ -36,11 +36,8 @@ package starlingbuilder.editor.citestcase
 
             function():void{
                 var target:TextField = selectedObject as TextField;
-                changeInspectorProperty({text:"12345", fontName:"mini", fontSize:50, color:0xff0000}, UIEditorScreen.instance.rightPanel);
+                changeInspectorProperty({text:"12345"}, UIEditorScreen.instance.rightPanel);
                 assertEquals(target.text, "12345");
-                assertEquals(target.fontName, "mini");
-                assertEquals(target.fontSize, 50);
-                assertEquals(target.color, 0xff0000);
             },
 
             function():void{

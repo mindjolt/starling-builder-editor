@@ -3,15 +3,8 @@
  */
 package starlingbuilder.editor.citestcase
 {
-    import feathers.controls.GroupedList;
     import feathers.controls.LayoutGroup;
-    import feathers.controls.List;
-    import feathers.controls.PickerList;
     import feathers.controls.ScrollContainer;
-    import feathers.core.PopUpManager;
-    import feathers.display.Scale3Image;
-    import feathers.display.Scale9Image;
-    import feathers.display.TiledImage;
 
     import flash.utils.getDefinitionByName;
 
@@ -24,6 +17,8 @@ package starlingbuilder.editor.citestcase
     import starling.display.Sprite;
     import starling.display.Sprite3D;
     import starling.filters.BlurFilter;
+    import starling.filters.DropShadowFilter;
+    import starling.filters.GlowFilter;
     import starling.text.TextField;
 
     import starlingbuilder.editor.CITestUtil;
@@ -37,8 +32,6 @@ package starlingbuilder.editor.citestcase
     import starlingbuilder.editor.ui.DefaultEditPropertyPopup;
     import starlingbuilder.engine.util.ParamUtil;
     import starlingbuilder.extensions.filters.ColorFilter;
-    import starlingbuilder.extensions.filters.DropShadowFilter;
-    import starlingbuilder.extensions.filters.GlowFilter;
 
     public class BasicTest extends AbstractTest
     {
@@ -229,52 +222,52 @@ package starlingbuilder.editor.citestcase
                 selectGroupList(0, 0);
             },
 
-            //Scale3Image
-            function():void{
-                documentManager.clear();
-                selectTab("asset");
-                selectPickerListComponent(Scale3Image);
-                selectGroupList(0, 0);
-            },
-
-            function():void{
-                clickButton("OK");
-            },
-
-            function():void{
-                var target:DisplayObject = selectedObject;
-                simulateTouch(target, target.width / target.scaleX, target.height /  target.scaleY, 200, 0);
-            },
-
-            //Scale9Image
-            function():void{
-                documentManager.clear();
-                selectTab("asset");
-                selectPickerListComponent(Scale9Image);
-                selectGroupList(0, 3);
-            },
-
-            function():void{
-                clickButton("OK");
-            },
-
-            function():void{
-                var target:DisplayObject = selectedObject;
-                simulateTouch(target, target.width / target.scaleX, target.height /  target.scaleY, 200, 200);
-            },
-
-            //TiledImage
-            function():void{
-                documentManager.clear();
-                selectTab("asset");
-                selectPickerListComponent(TiledImage);
-                selectGroupList(0, 3);
-            },
-
-            function():void{
-                var target:DisplayObject = selectedObject;
-                simulateTouch(target, target.width / target.scaleX, target.height /  target.scaleY, 200, 200);
-            },
+//            //Scale3Image
+//            function():void{
+//                documentManager.clear();
+//                selectTab("asset");
+//                selectPickerListComponent(Scale3Image);
+//                selectGroupList(0, 0);
+//            },
+//
+//            function():void{
+//                clickButton("OK");
+//            },
+//
+//            function():void{
+//                var target:DisplayObject = selectedObject;
+//                simulateTouch(target, target.width / target.scaleX, target.height /  target.scaleY, 200, 0);
+//            },
+//
+//            //Scale9Image
+//            function():void{
+//                documentManager.clear();
+//                selectTab("asset");
+//                selectPickerListComponent(Scale9Image);
+//                selectGroupList(0, 3);
+//            },
+//
+//            function():void{
+//                clickButton("OK");
+//            },
+//
+//            function():void{
+//                var target:DisplayObject = selectedObject;
+//                simulateTouch(target, target.width / target.scaleX, target.height /  target.scaleY, 200, 200);
+//            },
+//
+//            //TiledImage
+//            function():void{
+//                documentManager.clear();
+//                selectTab("asset");
+//                selectPickerListComponent(TiledImage);
+//                selectGroupList(0, 3);
+//            },
+//
+//            function():void{
+//                var target:DisplayObject = selectedObject;
+//                simulateTouch(target, target.width / target.scaleX, target.height /  target.scaleY, 200, 200);
+//            },
 
             //MovieClip
             function():void{
