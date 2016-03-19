@@ -9,6 +9,6 @@ package starlingbuilder.editor.upgrade
 {
     public class LayoutVersion
     {
-        public static const VERSION:String = "1.0";
+        public static const VERSION:String = "2.0";
     }
 }

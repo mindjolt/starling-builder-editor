@@ -12,6 +12,7 @@ package starlingbuilder.editor.serialize
     import starlingbuilder.editor.UIEditorApp;
     import starlingbuilder.editor.upgrade.ILayoutConverter;
     import starlingbuilder.editor.upgrade.LayoutConverterV1;
+    import starlingbuilder.editor.upgrade.LayoutConverterV2;
     import starlingbuilder.editor.upgrade.LayoutUpgradePolicy;
     import starlingbuilder.util.feathers.popup.InfoPopup;
     import starlingbuilder.util.serialize.IDocumentMediator;
@@ -24,7 +25,7 @@ package starlingbuilder.editor.serialize
 
         public function UIEditorDocumentMediator()
         {
-            _converter = new LayoutConverterV1();
+            _converter = new LayoutConverterV2();
         }
 
         public function read(obj:Object, file:File):void
