@@ -1,5 +1,6 @@
 ﻿package starlingbuilder.editor.ui
 {
+	import feathers.controls.Alert;
 	import feathers.controls.Button;
 	import feathers.controls.Header;
 	import feathers.controls.Label;
@@ -7,8 +8,10 @@
 	import feathers.controls.Panel;
 	import feathers.controls.TextInput;
 	import feathers.core.PopUpManager;
+	import feathers.data.ListCollection;
 	import feathers.layout.VerticalLayout;
 	
+	import starling.animation.Transitions;
 	import starling.display.DisplayObject;
 	import starling.display.Quad;
 	import starling.events.Event;
@@ -62,8 +65,6 @@
 				{
 					"scaleX":  0, 
 					"scaleY": 0,
-					"repeatCount": 0, 
-					"reverse": true,
 					"alpha": 0, 
 					"rotation": 0,
 					"x": 0,
@@ -86,7 +87,8 @@
 					"alpha": 0, 
 					"rotation": 0,
 					"x": 0,
-					"y": 0
+					"y": 0,
+					"transition":Transitions.LINEAR
 				};
 			addChild(propLayout);
 			
@@ -100,8 +102,6 @@
 				{
 					"scaleX":  0, 
 					"scaleY": 0,
-					"repeatCount": 0, 
-					"reverse": true,
 					"alpha": 0, 
 					"rotation": 0,
 					"x": 0,
@@ -181,6 +181,18 @@
 		
 		private function onYes(e:Event):void
 		{
+			if( hasThing(_fromDataGrid.data)==false
+				&& hasThing(_propertiesDataGrid.data)==false
+					&& hasThing(_deltaDataGrid.data)==false
+					&& (_timeInput.text==null || _timeInput.text == "")
+			)
+			{
+				Alert.show("no data","warning", new ListCollection([{label:"OK"}]));
+				return;
+			}
+			
+			if(_editData == null)
+				_editData = new Object();
 			if(hasThing(_fromDataGrid.data)== true)
 			{
 //				trace("from="+_fromDataGrid.data);

@@ -152,7 +152,10 @@ package starlingbuilder.editor.ui
 			function onComplete(resultObj:Object):void
 			{
 				trace("result= \n" + resultObj);
-				target["tweenData"] = resultObj;
+				if(resultObj == null)
+					delete target["tweenData"];
+				else
+					target["tweenData"] = resultObj;
 				_propertiesPanel.reloadData(target, _params);
 			}
 		}

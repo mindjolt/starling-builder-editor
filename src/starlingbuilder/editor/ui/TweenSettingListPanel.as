@@ -63,10 +63,17 @@ package starlingbuilder.editor.ui
 			btnLayout.addChild(_editBtn);
 			addChild(btnLayout);
 			
+			var v:VerticalLayout = new VerticalLayout();
+			v.gap = 1;
+			v.hasVariableItemDimensions = true;
+			v.horizontalAlign = VerticalLayout.HORIZONTAL_ALIGN_JUSTIFY;
 			_tweenList = new List();
 			_tweenList.width = 380;
 			_tweenList.height = 320;
+			_tweenList.horizontalScrollPolicy = List.SCROLL_POLICY_OFF;
+			_tweenList.layout = v;
 			addChild(_tweenList);
+			
 			_tweenList.addEventListener(Event.CHANGE, onTweenListChange);
 			_tweenList.itemRendererFactory = function():IListItemRenderer
 			{
@@ -85,22 +92,25 @@ package starlingbuilder.editor.ui
 			}
 			_tweenList.dataProvider = new ListCollection();
 			var str:String;
-			if(_editData.length > 1)
+			if(_editData != null)
 			{
-				for(var i:int=0; i<_editData.length; ++i)
+				if(_editData.length > 1)
 				{
-					str = JSON.stringify(_editData[i], null, "\t");
+					for(var i:int=0; i<_editData.length; ++i)
+					{
+						str = JSON.stringify(_editData[i], null, "\t");
+						_tweenList.dataProvider.addItem({
+							text:str
+						});
+					}
+				}
+				else 
+				{
+					str = JSON.stringify(_editData,null, "\t");
 					_tweenList.dataProvider.addItem({
 						text:str
 					});
 				}
-			}
-			else 
-			{
-				str = JSON.stringify(_editData,null, "\t");
-				_tweenList.dataProvider.addItem({
-					text:str
-				});
 			}
 			
 			var group:LayoutGroup = FeathersUIUtil.layoutGroupWithHorizontalLayout();
@@ -189,13 +199,13 @@ package starlingbuilder.editor.ui
 		
 		private function onYes(e:Event):void
 		{
-			var resultData:Object;
+			var resultData:Object = null;
 			var str:String;
 			if(_tweenList.dataProvider.length == 1)
 			{
 				str = _tweenList.dataProvider.getItemAt(i).text;
 				resultData = JSON.parse(str);
-			}else
+			}else if(_tweenList.dataProvider.length > 1)
 			{
 				resultData = new Array();
 				for(var i:int=0; i<_tweenList.dataProvider.length; ++i)
