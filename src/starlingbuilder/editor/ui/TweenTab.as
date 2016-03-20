@@ -7,29 +7,25 @@
  */
 package starlingbuilder.editor.ui
 {
+    import flash.utils.Dictionary;
+    
     import feathers.controls.Button;
     import feathers.controls.Check;
+    import feathers.controls.LayoutGroup;
     import feathers.controls.ScrollContainer;
-
-    import flash.utils.Dictionary;
-
+    import feathers.core.PopUpManager;
+    import feathers.layout.VerticalLayout;
+    
     import starling.display.DisplayObject;
-
+    import starling.events.Event;
+    
     import starlingbuilder.editor.UIEditorApp;
     import starlingbuilder.editor.controller.DocumentManager;
     import starlingbuilder.editor.data.TemplateData;
     import starlingbuilder.editor.events.DocumentEventType;
-    import starlingbuilder.engine.localization.ILocalization;
     import starlingbuilder.engine.util.ParamUtil;
     import starlingbuilder.util.feathers.FeathersUIUtil;
     import starlingbuilder.util.ui.inspector.PropertyPanel;
-    import starlingbuilder.util.ui.inspector.UIMapperEventType;
-
-    import feathers.controls.LayoutGroup;
-    import feathers.layout.VerticalLayout;
-
-    import starling.events.Event;
-    import starling.utils.AssetManager;
 
     public class TweenTab extends ScrollContainer
     {
@@ -41,6 +37,10 @@ package starlingbuilder.editor.ui
         private var _documentManager:DocumentManager;
 
         private var _params:Array;
+		
+		private var _tweenSettingBtn:Button;
+		/**tween 面板设置*/
+		private var _tweenSettingListPanel:TweenSettingListPanel;
 
         public function TweenTab()
         {
@@ -77,6 +77,10 @@ package starlingbuilder.editor.ui
             group.addChild(playButton);
             group.addChild(stopButton);
             addChild(group);
+			
+			_tweenSettingBtn = FeathersUIUtil.buttonWithLabel("tween property Setting", onOpenSetting);
+			_tweenSettingBtn.isEnabled = false;
+			addChild(_tweenSettingBtn);
         }
 
         private function onChange(event:Event):void
@@ -86,10 +90,14 @@ package starlingbuilder.editor.ui
                 var target:Object = _documentManager.extraParamsDict[_documentManager.selectedObject];
 
                 _propertiesPanel.reloadData(target, _params);
+				
+				_tweenSettingBtn.isEnabled = true;
             }
             else
             {
                 _propertiesPanel.reloadData();
+				
+				_tweenSettingBtn.isEnabled = false;
             }
         }
 
@@ -134,6 +142,20 @@ package starlingbuilder.editor.ui
             var paramsDict:Dictionary = _documentManager.extraParamsDict;
             _documentManager.uiBuilder.tweenBuilder.stop(root);
         }
+		
+		private function onOpenSetting():void
+		{
+			var target:Object = _documentManager.extraParamsDict[_documentManager.selectedObject];
+			_tweenSettingListPanel = new TweenSettingListPanel(target["tweenData"]);
+			PopUpManager.addPopUp(_tweenSettingListPanel);
+			_tweenSettingListPanel.onComplete = onComplete;
+			function onComplete(resultObj:Object):void
+			{
+				trace("result= \n" + resultObj);
+				target["tweenData"] = resultObj;
+				_propertiesPanel.reloadData(target, _params);
+			}
+		}
 
         override public function dispose():void
         {

@@ -17,7 +17,8 @@ package starlingbuilder.util.ui.inspector
             super(propertyRetriver, param);
 
             _textArea = new TextArea();
-            _textArea.maxWidth = 200;
+            _textArea.maxWidth = 400;
+			_textArea.minWidth = 300;
 
             addChild(_textArea);
 
@@ -61,7 +62,7 @@ package starlingbuilder.util.ui.inspector
             }
             else
             {
-                _textArea.text = JSON.stringify(value);
+                _textArea.text = JSON.stringify(value, null, "\t");
             }
         }
     }
