@@ -27,6 +27,7 @@ package starlingbuilder.editor.controller
     import starlingbuilder.editor.history.CompositeHistoryOperation;
     import starlingbuilder.editor.ui.CenterPanel;
     import starlingbuilder.editor.upgrade.LayoutVersion;
+    import starlingbuilder.engine.IAssetMediator;
     import starlingbuilder.util.KeyboardWatcher;
     import starlingbuilder.editor.helper.PixelSnapper;
     import starlingbuilder.editor.helper.PixelSnapperData;
@@ -72,7 +73,7 @@ package starlingbuilder.editor.controller
     import starling.text.TextField;
     import starling.utils.AssetManager;
 
-    public class DocumentManager extends EventDispatcher implements IUIEditorThemeMediator
+    public class DocumentManager extends EventDispatcher implements IUIEditorThemeMediator, IComponentRenderSupport
     {
         private var _assetManager:AssetManager;
         private var _uiBuilder:IUIBuilder;
@@ -667,6 +668,11 @@ package starlingbuilder.editor.controller
         public function get historyManager():HistoryManager
         {
             return _historyManager;
+        }
+
+        public function get assetMediator():IAssetMediator
+        {
+            return _assetMediator;
         }
 
         public function selectObjectAtIndex(index:int):void

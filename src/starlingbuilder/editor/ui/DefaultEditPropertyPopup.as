@@ -7,6 +7,9 @@
  */
 package starlingbuilder.editor.ui
 {
+    import starlingbuilder.editor.UIEditorApp;
+    import starlingbuilder.editor.controller.ComponentRenderSupport;
+    import starlingbuilder.editor.controller.IComponentRenderSupport;
     import starlingbuilder.editor.data.TemplateData;
     import starlingbuilder.engine.util.ParamUtil;
     import starlingbuilder.util.ui.inspector.PropertyPanel;
@@ -99,7 +102,7 @@ package starlingbuilder.editor.ui
             }
             else
             {
-                _target = _documentManager.uiBuilder.createUIElement({cls:selected, customParams:{}}).object;
+                _target = ComponentRenderSupport.support.uiBuilder.createUIElement({cls:selected, customParams:{}}).object;
             }
 
             _owner[_targetParam.name] = _target;

@@ -19,6 +19,7 @@ package starlingbuilder.editor.ui
     import starling.utils.ScaleMode;
 
     import starlingbuilder.editor.UIEditorApp;
+    import starlingbuilder.editor.controller.ComponentRenderSupport;
 
     public class IconItemRenderer extends DefaultListItemRenderer
     {
@@ -40,7 +41,7 @@ package starlingbuilder.editor.ui
 
         private function createIcon(item:Object):DisplayObject
         {
-            var texture:Texture = UIEditorApp.instance.assetManager.getTexture(item.label);
+            var texture:Texture = ComponentRenderSupport.support.assetMediator.getTexture(item.label);
 
             if (_image == null)
             {

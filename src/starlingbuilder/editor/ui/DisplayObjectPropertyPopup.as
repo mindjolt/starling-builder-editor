@@ -21,6 +21,8 @@ package starlingbuilder.editor.ui
     import starling.events.Event;
 
     import starlingbuilder.editor.SupportedWidget;
+    import starlingbuilder.editor.controller.ComponentRenderSupport;
+    import starlingbuilder.editor.controller.IComponentRenderSupport;
 
     import starlingbuilder.engine.util.ParamUtil;
 
@@ -74,16 +76,16 @@ package starlingbuilder.editor.ui
 
                         PopUpManager.addPopUp(new ScaleTexturePopup(imageData, function(data:Object):void{
 
-                            _target = _documentManager.uiBuilder.createUIElement(data).object;
+                            _target = ComponentRenderSupport.support.uiBuilder.createUIElement(data).object;
 
-                            var param:Object = _documentManager.extraParamsDict[_owner];
+                            var param:Object = ComponentRenderSupport.support.extraParamsDict[_owner];
                             param.params[_targetParam.name] = data;
                             complete();
                         }));
                     }
                     else
                     {
-                        _target = new cls(_assetManager.getTexture(textureName));
+                        _target = new cls(_assetMediator.getTexture(textureName));
                         setCustomParam(textureName);
                         complete();
                     }
@@ -111,7 +113,7 @@ package starlingbuilder.editor.ui
              This problem will be resolved when we use an intermediate format for the inspector in future version
              */
 
-            var param:Object = _documentManager.extraParamsDict[_owner];
+            var param:Object = ComponentRenderSupport.support.extraParamsDict[_owner];
 
             if (param.params == undefined)
             {

@@ -9,12 +9,11 @@ package starlingbuilder.editor.ui
 {
     import starlingbuilder.editor.UIEditorApp;
     import starlingbuilder.editor.controller.DocumentManager;
+    import starlingbuilder.editor.controller.IComponentRenderSupport;
     import starlingbuilder.util.feathers.popup.InfoPopup;
 
     public class AbstractPropertyPopup extends InfoPopup
     {
-        protected var _documentManager:DocumentManager;
-
         protected var _onComplete:Function;
 
         protected var _target:Object;
@@ -28,7 +27,6 @@ package starlingbuilder.editor.ui
 
         public function AbstractPropertyPopup(owner:Object, target:Object, targetParam:Object, onComplete:Function)
         {
-            _documentManager = UIEditorApp.instance.documentManager;
             _owner = owner;
             _targetParam = targetParam;
             _oldTarget = _target = target;
