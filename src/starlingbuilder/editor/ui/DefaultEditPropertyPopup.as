@@ -13,6 +13,7 @@ package starlingbuilder.editor.ui
     import starlingbuilder.editor.controller.IComponentRenderSupport;
 
     import starlingbuilder.editor.data.TemplateData;
+    import starlingbuilder.editor.helper.FontHelper;
     import starlingbuilder.engine.UIBuilder;
     import starlingbuilder.engine.util.ParamUtil;
     import starlingbuilder.util.ui.inspector.PropertyPanel;
@@ -69,7 +70,7 @@ package starlingbuilder.editor.ui
             for each (var clsName:String in _supportedClass)
             {
                 var param:Object = ParamUtil.getParamByClassName(TemplateData.editor_template, clsName);
-                UIMapperUtil.processParamsWithFonts(param as Array, UIEditorScreen.instance.getBitmapFontNames());
+                UIMapperUtil.processParamsWithFonts(param as Array, FontHelper.getBitmapFontNames());
                 _paramDict[clsName] = param;
             }
         }

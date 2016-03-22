@@ -10,6 +10,7 @@ package starlingbuilder.editor.ui
     import starlingbuilder.editor.UIEditorApp;
     import starlingbuilder.editor.UIEditorScreen;
     import starlingbuilder.editor.data.TemplateData;
+    import starlingbuilder.editor.helper.FontHelper;
     import starlingbuilder.editor.helper.UIComponentHelper;
 
     import feathers.controls.LayoutGroup;
@@ -97,7 +98,7 @@ package starlingbuilder.editor.ui
             _list.height = 800;
             _list.selectedIndex = -1;
 
-            var fonts:Array = UIEditorScreen.instance.getBitmapFontNames();
+            var fonts:Array = FontHelper.getBitmapFontNames();
 
             var data:ListCollection = new ListCollection();
 

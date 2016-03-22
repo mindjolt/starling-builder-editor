@@ -375,23 +375,6 @@ package starlingbuilder.editor
             return _workspaceDir;
         }
 
-        // the name container with the registered bitmap fonts
-        private static const BITMAP_FONT_DATA_NAME:String = "starling.display.TextField.BitmapFonts";
-
-        public function getBitmapFontNames():Array
-        {
-            var array:Array = [];
-
-            var dict:Dictionary = Starling.painter.sharedData[BITMAP_FONT_DATA_NAME] as Dictionary;
-            for (var name:String in dict)
-            {
-                array.push(name);
-            }
-            array.sort();
-
-            return array;
-        }
-
         public function get setting():Setting
         {
             return _setting;

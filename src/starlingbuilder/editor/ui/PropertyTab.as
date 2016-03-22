@@ -14,6 +14,7 @@ package starlingbuilder.editor.ui
     import starlingbuilder.editor.controller.DocumentManager;
     import starlingbuilder.editor.data.TemplateData;
     import starlingbuilder.editor.events.DocumentEventType;
+    import starlingbuilder.editor.helper.FontHelper;
     import starlingbuilder.editor.history.CompositeHistoryOperation;
     import starlingbuilder.editor.history.ResetOperation;
     import starlingbuilder.editor.themes.UIEditorStyleProvider;
@@ -161,7 +162,7 @@ package starlingbuilder.editor.ui
                 {
                     var params:Array = ParamUtil.getParams(_template, _documentManager.selectedObject);
 
-                    UIMapperUtil.processParamsWithFonts(params, UIEditorScreen.instance.getBitmapFontNames());
+                    UIMapperUtil.processParamsWithFonts(params, FontHelper.getBitmapFontNames());
 
                     _paramCache[target.constructor] = params;
                 }
