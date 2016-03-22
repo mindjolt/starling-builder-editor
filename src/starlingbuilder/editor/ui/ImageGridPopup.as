@@ -7,6 +7,8 @@
  */
 package starlingbuilder.editor.ui
 {
+    import flash.utils.Dictionary;
+
     import starling.utils.Color;
 
     import starlingbuilder.editor.UIEditorApp;
@@ -48,8 +50,18 @@ package starlingbuilder.editor.ui
         {
             var imageContainer:Sprite = new Sprite();
 
-            _textureName = ComponentRenderSupport.support.extraParamsDict[_owner].constructorParams[0].textureName;
-            _image = new Image(UIEditorApp.instance.assetManager.getTexture(_textureName));
+            var params:Object = ComponentRenderSupport.support.extraParamsDict[_owner];
+
+            if (params)
+            {
+                _textureName = params.constructorParams[0].textureName;
+                _image = new Image(ComponentRenderSupport.support.assetMediator.getTexture(_textureName));
+            }
+            else
+            {
+                _image = new Image(_owner["texture"]);
+            }
+
             _gridContainer = new Sprite();
 
             imageContainer.addChild(_image);
