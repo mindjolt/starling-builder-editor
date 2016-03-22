@@ -19,18 +19,23 @@ package starlingbuilder.editor.ui
     import starling.events.Event;
     import starling.utils.AssetManager;
 
+    import starlingbuilder.editor.controller.ComponentRenderSupport;
+
+    import starlingbuilder.editor.controller.IComponentRenderSupport;
+    import starlingbuilder.engine.IAssetMediator;
+
     public class TexturePropertyPopup extends AbstractPropertyPopup
     {
         protected var _searchTextInput:TextInput;
         protected var _list:List;
 
-        protected var _assetManager:AssetManager;
+        protected var _assetMediator:IAssetMediator;
 
         public function TexturePropertyPopup(owner:Object, target:Object, targetParam:Object, onComplete:Function)
         {
             super(owner, target, targetParam, onComplete);
 
-            _assetManager = UIEditorApp.instance.assetManager;
+            _assetMediator = ComponentRenderSupport.support.assetMediator;
 
             title = "Select texture";
             buttons = ["OK", "Cancel"];
@@ -113,7 +118,7 @@ package starlingbuilder.editor.ui
                 {
                     var textureName:String = _list.selectedItem.label;
 
-                    _target = _assetManager.getTexture(textureName);
+                    _target = _assetMediator.getTexture(textureName);
 
                     setCustomParam(textureName);
                 }
@@ -139,7 +144,7 @@ package starlingbuilder.editor.ui
             This problem will be resolved when we use an intermediate format for the inspector in future version
              */
 
-            var param:Object = _documentManager.extraParamsDict[_owner];
+            var param:Object = ComponentRenderSupport.support.extraParamsDict[_owner];
 
             if (param.params == undefined)
             {

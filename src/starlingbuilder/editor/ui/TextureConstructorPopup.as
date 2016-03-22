@@ -7,6 +7,9 @@
  */
 package starlingbuilder.editor.ui
 {
+    import starlingbuilder.editor.controller.ComponentRenderSupport;
+    import starlingbuilder.editor.controller.IComponentRenderSupport;
+
     public class TextureConstructorPopup extends TexturePropertyPopup
     {
         public function TextureConstructorPopup(owner:Object, target:Object, targetParam:Object, onComplete:Function)
@@ -16,22 +19,22 @@ package starlingbuilder.editor.ui
 
         override protected function setCustomParam(textureName:String):void
         {
-            var param:Object = _documentManager.extraParamsDict[_owner];
+            var param:Object = ComponentRenderSupport.support.extraParamsDict[_owner];
 
-            var param1:Object = param.constructorParams[0];
+            var param1:Object = param ? param.constructorParams[0] : null;
 
-            if (param1.textureName)
+            if (param1 && param1.textureName)
             {
                 param1.textureName = textureName;
             }
 
             if (_owner.hasOwnProperty(_targetParam.name))
-                _owner[_targetParam.name] = _assetManager.getTexture(textureName);
+                _owner[_targetParam.name] = _assetMediator.getTexture(textureName);
 
             if (_owner.hasOwnProperty("readjustSize"))
                 _owner["readjustSize"]();
 
-            _documentManager.setChanged();
+            ComponentRenderSupport.support.setChanged();
         }
     }
 }

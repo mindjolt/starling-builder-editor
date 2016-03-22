@@ -7,12 +7,14 @@
  */
 package starlingbuilder.editor
 {
+    import starlingbuilder.editor.controller.ComponentRenderSupport;
     import starlingbuilder.editor.controller.DocumentManager;
     import starlingbuilder.editor.controller.LocalizationManager;
     import starlingbuilder.editor.themes.MetalWorksDesktopTheme2;
 
     import starling.display.Sprite;
     import starling.events.EventDispatcher;
+
     import starlingbuilder.util.AppUpdater;
     import starling.utils.AssetManager;
 
@@ -60,6 +62,7 @@ package starlingbuilder.editor
         {
             _localizationManager = new LocalizationManager();
             _documentManager = new DocumentManager(_assetManager, _localizationManager);
+            ComponentRenderSupport.support = _documentManager;
         }
 
         public function get assetManager():AssetManager

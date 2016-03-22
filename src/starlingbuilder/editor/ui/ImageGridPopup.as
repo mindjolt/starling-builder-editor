@@ -10,6 +10,7 @@ package starlingbuilder.editor.ui
     import starling.utils.Color;
 
     import starlingbuilder.editor.UIEditorApp;
+    import starlingbuilder.editor.controller.ComponentRenderSupport;
 
     import starlingbuilder.util.DrawUtil;
     import starlingbuilder.util.ui.inspector.PropertyPanel;
@@ -47,7 +48,7 @@ package starlingbuilder.editor.ui
         {
             var imageContainer:Sprite = new Sprite();
 
-            _textureName = _documentManager.extraParamsDict[_owner].constructorParams[0].textureName;
+            _textureName = ComponentRenderSupport.support.extraParamsDict[_owner].constructorParams[0].textureName;
             _image = new Image(UIEditorApp.instance.assetManager.getTexture(_textureName));
             _gridContainer = new Sprite();
 

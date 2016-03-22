@@ -17,6 +17,7 @@ package starlingbuilder.editor.ui
     import starling.events.Event;
 
     import starlingbuilder.editor.SupportedWidget;
+    import starlingbuilder.editor.controller.ComponentRenderSupport;
 
     import starlingbuilder.engine.util.ParamUtil;
 
@@ -79,7 +80,7 @@ package starlingbuilder.editor.ui
 //                    }
 //                    else
 //                    {
-                        _target = new cls(_assetManager.getTexture(textureName));
+                        _target = new cls(_assetMediator.getTexture(textureName));
                         setCustomParam(textureName);
                         complete();
 //                    }
@@ -107,7 +108,7 @@ package starlingbuilder.editor.ui
              This problem will be resolved when we use an intermediate format for the inspector in future version
              */
 
-            var param:Object = _documentManager.extraParamsDict[_owner];
+            var param:Object = ComponentRenderSupport.support.extraParamsDict[_owner];
 
             if (param.params == undefined)
             {
