@@ -73,6 +73,7 @@ package starlingbuilder.editor.themes
     import feathers.controls.renderers.DefaultListItemRenderer;
     import feathers.controls.text.TextBlockTextEditor;
     import feathers.controls.text.TextBlockTextRenderer;
+    import feathers.controls.text.TextFieldTextEditor;
     import feathers.controls.text.TextFieldTextEditorViewPort;
     import feathers.core.FeathersControl;
     import feathers.core.FocusManager;
@@ -331,9 +332,9 @@ package starlingbuilder.editor.themes
          * The default global text editor factory for this theme creates a
          * TextBlockTextEditor.
          */
-        protected static function textEditorFactory():TextBlockTextEditor
+        protected static function textEditorFactory():TextFieldTextEditor
         {
-            return new TextBlockTextEditor();
+            return new TextFieldTextEditor();
         }
 
         /**
@@ -635,6 +636,9 @@ package starlingbuilder.editor.themes
         protected var popUpVolumeSliderTrackSkinTexture:Texture;
         protected var seekSliderProgressSkinTexture:Texture;
 
+        protected var textFieldTextFormat:TextFormat;
+        protected var disabledTextFieldTextFormat:TextFormat;
+
         /**
          * Disposes the texture atlas before calling super.dispose()
          */
@@ -748,6 +752,9 @@ package starlingbuilder.editor.themes
             this.largeDarkElementFormat = new ElementFormat(this.regularFontDescription, this.largeFontSize, DARK_TEXT_COLOR);
             this.largeLightElementFormat = new ElementFormat(this.regularFontDescription, this.largeFontSize, LIGHT_TEXT_COLOR);
             this.largeDisabledElementFormat = new ElementFormat(this.regularFontDescription, this.largeFontSize, DISABLED_TEXT_COLOR);
+
+            this.textFieldTextFormat = new TextFormat(FONT_NAME, this.regularFontSize, LIGHT_TEXT_COLOR);
+            this.disabledTextFieldTextFormat = new TextFormat(FONT_NAME, this.regularFontSize, DISABLED_TEXT_COLOR);
         }
 
         /**
@@ -2533,6 +2540,9 @@ package starlingbuilder.editor.themes
             input.paddingBottom = this.smallGutterSize;
             input.paddingLeft = this.gutterSize;
             input.paddingRight = this.gutterSize;
+
+            input.textEditorProperties.textFormat = this.textFieldTextFormat;
+            input.textEditorProperties.disabledTextFormat = this.disabledTextFieldTextFormat;
         }
 
         protected function setTextInputStyles(input:TextInput):void
