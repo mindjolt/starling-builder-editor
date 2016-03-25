@@ -28,6 +28,7 @@ package starlingbuilder.editor.controller
     import starlingbuilder.editor.ui.CenterPanel;
     import starlingbuilder.editor.upgrade.LayoutVersion;
     import starlingbuilder.engine.IAssetMediator;
+    import starlingbuilder.engine.util.DisplayObjectUtil;
     import starlingbuilder.util.KeyboardWatcher;
     import starlingbuilder.editor.helper.PixelSnapper;
     import starlingbuilder.editor.helper.PixelSnapperData;
@@ -906,6 +907,8 @@ package starlingbuilder.editor.controller
 
             _historyManager.add(new CreateOperation(obj, paramDict, parent));
 
+            setDefaultPivot(obj);
+
             addFrom(obj, result.params, parent);
 
             selectObject(obj);
@@ -1343,6 +1346,11 @@ package starlingbuilder.editor.controller
         public function get boundingBoxContainer():BoundingBoxContainer
         {
             return _boundingBoxContainer;
+        }
+
+        private function setDefaultPivot(obj:DisplayObject):void
+        {
+            DisplayObjectUtil.movePivotToAlign(obj, _setting.defaultHorizontalPivot, _setting.defaultVerticalPivot);
         }
 
         public function snapshot():void
