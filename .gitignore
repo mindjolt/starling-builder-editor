@@ -1,2 +1,6 @@
 out/
+bin-debug/
 .idea/workspace.xml
+.settings/
+.project
+.actionScriptProperties

@@ -184,7 +184,7 @@
 			if( hasThing(_fromDataGrid.data)==false
 				&& hasThing(_propertiesDataGrid.data)==false
 					&& hasThing(_deltaDataGrid.data)==false
-					&& (_timeInput.text==null || _timeInput.text == "")
+					|| (_timeInput.text==null || _timeInput.text == "")
 			)
 			{
 				Alert.show("no data","warning", new ListCollection([{label:"OK"}]));
@@ -197,17 +197,27 @@
 			{
 //				trace("from="+_fromDataGrid.data);
 				_editData.from = _fromDataGrid.data;
+			}else
+			{
+				delete _editData.from;
 			}
 			if(hasThing(_propertiesDataGrid.data) == true)
 			{
 //				trace("properties="+_propertiesDataGrid.data);
 				_editData.properties = _propertiesDataGrid.data;
+			}else
+			{
+				delete _editData.properties;
 			}
 			if(hasThing(_deltaDataGrid.data) == true)
 			{
 //				trace("delta="+_deltaDataGrid.data);
 				_editData.delta = _deltaDataGrid.data;
+			}else
+			{
+				delete _editData.delta;
 			}
+			
 			_editData.time = _timeInput.text;
 			if(onComplete != null)
 				onComplete.call(this, _editData);
