@@ -9,10 +9,6 @@ package starlingbuilder.extensions.filters
 {
     import starling.filters.ColorMatrixFilter;
 
-    /**
-     *  There's a limitation of this class:
-     *  ONLY one of the properties will work each time since there's a reset for every property setter
-     */
     public class ColorFilter extends ColorMatrixFilter
     {
         private var _hue:Number = 0;
@@ -28,8 +24,7 @@ package starlingbuilder.extensions.filters
         public function set hue(value:Number):void
         {
             _hue = value;
-            reset();
-            adjustHue(_hue);
+            adjustValues();
         }
 
         public function get hue():Number
@@ -40,8 +35,7 @@ package starlingbuilder.extensions.filters
         public function set contrast(value:Number):void
         {
             _contrast = value;
-            reset();
-            adjustContrast(_contrast);
+            adjustValues();
         }
 
         public function get contrast():Number
@@ -52,8 +46,7 @@ package starlingbuilder.extensions.filters
         public function set brightness(value:Number):void
         {
             _brightness = value;
-            reset();
-            adjustBrightness(_brightness);
+            adjustValues();
         }
 
         public function get brightness():Number
@@ -64,13 +57,21 @@ package starlingbuilder.extensions.filters
         public function set saturation(value:Number):void
         {
             _saturation = value;
-            reset();
-            adjustSaturation(_saturation);
+            adjustValues();
         }
 
         public function get saturation():Number
         {
             return _saturation;
+        }
+
+        private function adjustValues():void
+        {
+            reset();
+            adjustHue(_hue);
+            adjustBrightness(_brightness);
+            adjustContrast(_contrast);
+            adjustSaturation(_saturation);
         }
     }
 }
