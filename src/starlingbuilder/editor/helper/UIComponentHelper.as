@@ -51,6 +51,8 @@ package starlingbuilder.editor.helper
 
             data.params.name = editorData.name;
 
+            setDefaultPosition(data.params, editorData);
+
             setTextureName(constructorParams, editorData.textureName);
 
             setFontParams(data, editorData);
@@ -93,6 +95,13 @@ package starlingbuilder.editor.helper
             }
         }
 
+        private static function setDefaultPosition(params:Object, editorData:Object):void
+        {
+            if ("x" in editorData)
+                params.x = editorData.x;
 
+            if ("y" in editorData)
+                params.y = editorData.y;
+        }
     }
 }

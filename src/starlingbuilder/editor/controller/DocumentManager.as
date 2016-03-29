@@ -893,11 +893,24 @@ package starlingbuilder.editor.controller
 
         public function createFromData(data:Object):void
         {
+            var p:Point;
+
             var parent:DisplayObjectContainer = getParent();
 
-            var p:Point = getNewObjectPosition();
-            data.params.x = p.x;
-            data.params.y = p.y;
+            if ("x" in data.params && "y" in data.params)
+            {
+                var centerPanel:CenterPanel = UIEditorScreen.instance.centerPanel;
+                p = _container.localToGlobal(new Point(centerPanel.horizontalScrollPosition + data.params.x, centerPanel.verticalScrollPosition + data.params.y));
+                p = parent.globalToLocal(new Point(p.x, p.y));
+                data.params.x = p.x;
+                data.params.y = p.y;
+            }
+            else
+            {
+                p = getNewObjectPosition();
+                data.params.x = p.x;
+                data.params.y = p.y;
+            }
 
             var result:Object = _uiBuilder.createUIElement(data);
             var paramDict:Dictionary = new Dictionary();

@@ -25,7 +25,7 @@ package starlingbuilder.editor.upgrade
 
         public function upgrade(data:Object):Object
         {
-            var data:Object = JSON.parse(data as String);
+            data = JSON.parse(data as String);
             data.version = getCurrentVersion();
 
             traverseChildren(data.layout);

@@ -15,5 +15,25 @@ package starlingbuilder.editor.ui
 
             createTabs([{"label":"layout"}, {"label":"asset"}, {"label":"text"}, {"label":"container"}, {"label":"feathers"}, {"label":"bg"}], [new LayoutTab(), new AssetTab(), new TextTab(), new ContainerTab(), new FeathersTab(), new BackgroundTab()]);
         }
+
+        public function get assetTab():AssetTab
+        {
+            return _tabScreens[1];
+        }
+
+        public function get textTab():TextTab
+        {
+            return _tabScreens[2];
+        }
+
+        public function get containerTab():ContainerTab
+        {
+            return _tabScreens[3];
+        }
+
+        public function get feathersTab():FeathersTab
+        {
+            return _tabScreens[4];
+        }
     }
 }

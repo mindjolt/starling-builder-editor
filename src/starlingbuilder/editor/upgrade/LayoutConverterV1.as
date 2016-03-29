@@ -16,7 +16,7 @@ package starlingbuilder.editor.upgrade
 
         override public function getUpgradePolicy(data:Object):String
         {
-            var data:Object = JSON.parse(data as String);
+            data = JSON.parse(data as String);
 
             var majorVersion:String = data.version.charAt(0);
 

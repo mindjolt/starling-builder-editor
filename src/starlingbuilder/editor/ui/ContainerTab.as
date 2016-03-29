@@ -7,12 +7,16 @@
  */
 package starlingbuilder.editor.ui
 {
+    import feathers.controls.renderers.IListItemRenderer;
     import feathers.controls.text.TextBlockTextRenderer;
     import feathers.controls.text.TextFieldTextRenderer;
     import feathers.core.ITextRenderer;
 
+    import flash.geom.Point;
+
     import starlingbuilder.editor.UIEditorApp;
     import starlingbuilder.editor.data.TemplateData;
+    import starlingbuilder.editor.helper.DragToCanvasHelper;
     import starlingbuilder.editor.helper.UIComponentHelper;
     import starlingbuilder.engine.util.ParamUtil;
 
@@ -59,15 +63,26 @@ package starlingbuilder.editor.ui
         {
             if (_list.selectedIndex != -1)
             {
-                var cls:String = _list.selectedItem.label;
-                var name:String = ParamUtil.getDisplayObjectName(cls);
-
-                var editorData:Object = {cls:cls, name:name};
-
-                UIComponentHelper.createComponent(editorData);
+                create(_list.selectedItem.label);
 
                 _list.selectedIndex = -1;
             }
+        }
+
+        public function create(label:String, position:Point = null):void
+        {
+            var cls:String = label;
+            var name:String = ParamUtil.getDisplayObjectName(cls);
+
+            var editorData:Object = {cls:cls, name:name};
+
+            if (position)
+            {
+                editorData.x = position.x;
+                editorData.y = position.y;
+            }
+
+            UIComponentHelper.createComponent(editorData);
         }
 
         private function listAssets():void
@@ -77,14 +92,7 @@ package starlingbuilder.editor.ui
             _list.width = 280;
             _list.height = 800;
             _list.selectedIndex = -1;
-
-            _list.itemRendererProperties.labelFactory = function():ITextRenderer
-            {
-                var textRenderer:TextBlockTextRenderer = new TextBlockTextRenderer();
-                textRenderer.wordWrap = true;
-                return textRenderer;
-            }
-            _list.itemRendererProperties.height = 50;
+            _list.itemRendererFactory = listItemRenderer;
 
             var data:ListCollection = new ListCollection();
 
@@ -103,6 +111,11 @@ package starlingbuilder.editor.ui
             _list.layoutData = anchorLayoutData;
 
             addChild(_list);
+        }
+
+        protected function listItemRenderer():IListItemRenderer
+        {
+            return new ComponentItemRenderer(DragToCanvasHelper.CONTAINER_TAB);
         }
     }
 }

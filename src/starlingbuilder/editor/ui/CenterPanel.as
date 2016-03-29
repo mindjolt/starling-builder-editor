@@ -7,7 +7,15 @@
  */
 package starlingbuilder.editor.ui
 {
+    import feathers.dragDrop.DragData;
+    import feathers.dragDrop.DragDropManager;
+    import feathers.dragDrop.IDropTarget;
+    import feathers.events.DragDropEvent;
+
+    import flash.geom.Point;
+
     import starlingbuilder.editor.UIEditorApp;
+    import starlingbuilder.editor.UIEditorScreen;
     import starlingbuilder.editor.controller.DocumentManager;
 
     import feathers.controls.LayoutGroup;
@@ -17,7 +25,9 @@ package starlingbuilder.editor.ui
     import starling.events.Event;
     import starling.utils.AssetManager;
 
-    public class CenterPanel extends ScrollContainer
+    import starlingbuilder.editor.helper.DragToCanvasHelper;
+
+    public class CenterPanel extends ScrollContainer implements IDropTarget
     {
         private var _group:LayoutGroup;
 
@@ -43,6 +53,11 @@ package starlingbuilder.editor.ui
 
             width = 670;
             height = 900;
+
+            addEventListener(DragDropEvent.DRAG_ENTER, onDragEnter);
+            addEventListener(DragDropEvent.DRAG_MOVE, onDragMove);
+            addEventListener(DragDropEvent.DRAG_EXIT, onDragExit);
+            addEventListener(DragDropEvent.DRAG_DROP, onDragDrop);
         }
 
         override public function get isFocusEnabled():Boolean
@@ -54,6 +69,51 @@ package starlingbuilder.editor.ui
         {
             _container.removeChildren(); //make sure DocumentManager component is not disposed
             super.dispose();
+        }
+
+        private function onDragEnter(event:DragDropEvent, dragData:DragData):void
+        {
+            DragDropManager.acceptDrag(this);
+        }
+
+        private function onDragMove(event:DragDropEvent, dragData:DragData):void
+        {
+
+
+        }
+
+        private function onDragDrop(event:DragDropEvent, dragData:DragData):void
+        {
+            var label:String = dragData.getDataForFormat(DragToCanvasHelper.LABEL);
+            var tab:String = dragData.getDataForFormat(DragToCanvasHelper.TAB);
+
+            var tabPanel:Object;
+
+            var leftPanel:LeftPanel = UIEditorScreen.instance.leftPanel;
+
+            switch (tab)
+            {
+                case DragToCanvasHelper.ASSET_TAB:
+                    tabPanel = leftPanel.assetTab;
+                    break;
+                case DragToCanvasHelper.TEXT_TAB:
+                    tabPanel = leftPanel.textTab;
+                    break;
+                case DragToCanvasHelper.CONTAINER_TAB:
+                    tabPanel = leftPanel.containerTab;
+                    break;
+                case DragToCanvasHelper.FEATHERS_TAB:
+                    tabPanel = leftPanel.feathersTab;
+                    break;
+            }
+
+            tabPanel.create(label, new Point(Math.round(event.localX), Math.round(event.localY)));
+
+            trace(label, tab, event.localX, event.localY);
+        }
+
+        private function onDragExit(event:DragDropEvent, dragData:DragData):void
+        {
         }
 
     }
