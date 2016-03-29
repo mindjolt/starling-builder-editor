@@ -7,6 +7,8 @@
  */
 package starlingbuilder.editor.ui
 {
+    import flash.geom.Point;
+
     import starlingbuilder.editor.SupportedWidget;
     import starlingbuilder.editor.UIEditorApp;
     import starlingbuilder.editor.UIEditorScreen;
@@ -158,19 +160,28 @@ package starlingbuilder.editor.ui
         {
             if (_list.selectedItem)
             {
-                var name:String = _list.selectedItem.label;
-
-                var editorData:Object = {name:name, textureName:name};
-                editorData.cls = _supportedTypes[_typePicker.selectedIndex];
-                if (_textInput.text != "")
-                {
-                    editorData.scaleData = JSON.parse(_textInput.text) as Array;
-                }
-
-                UIComponentHelper.createComponent(editorData);
+                create(_list.selectedItem.label);
 
                 _list.setSelectedLocation(-1, -1);
             }
+        }
+
+        public function create(label:String, position:Point = null):void
+        {
+            var editorData:Object = {name:label, textureName:label};
+            editorData.cls = _supportedTypes[_typePicker.selectedIndex];
+            if (_textInput.text != "")
+            {
+                editorData.scaleData = JSON.parse(_textInput.text) as Array;
+            }
+
+            if (position)
+            {
+                editorData.x = position.x;
+                editorData.y = position.y;
+            }
+
+            UIComponentHelper.createComponent(editorData);
         }
 
         private function listAssets():void
@@ -227,7 +238,7 @@ package starlingbuilder.editor.ui
 
             var itemDict:Dictionary = new Dictionary();
 
-            for each (var atlasName:String in atlasNames)
+            for each (atlasName in atlasNames)
             {
                 atlas = _assetManager.getTextureAtlas(atlasName);
 

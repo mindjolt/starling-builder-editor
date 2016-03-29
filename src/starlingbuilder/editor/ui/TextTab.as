@@ -7,6 +7,8 @@
  */
 package starlingbuilder.editor.ui
 {
+    import flash.geom.Point;
+
     import starlingbuilder.editor.UIEditorApp;
     import starlingbuilder.editor.UIEditorScreen;
     import starlingbuilder.editor.data.TemplateData;
@@ -72,15 +74,25 @@ package starlingbuilder.editor.ui
         {
             if (_list.selectedIndex != -1)
             {
-                var cls:String = _supportedTypes[_typePicker.selectedIndex];
-                var name:String = _list.selectedItem.label;
-
-                var editorData:Object = {cls:cls, fontName:name, name:name, text:DEFAULT_TEXT};
-
-                UIComponentHelper.createComponent(editorData);
+                create(_list.selectedItem.label);
 
                 _list.selectedIndex = -1;
             }
+        }
+
+        public function create(label:String, position:Point = null):void
+        {
+            var cls:String = _supportedTypes[_typePicker.selectedIndex];
+
+            var editorData:Object = {cls:cls, fontName:label, name:label, text:DEFAULT_TEXT};
+
+            if (position)
+            {
+                editorData.x = position.x;
+                editorData.y = position.y;
+            }
+
+            UIComponentHelper.createComponent(editorData);
         }
 
         private function listAssets():void

@@ -8,12 +8,15 @@
 package starlingbuilder.editor.ui
 {
     import feathers.controls.renderers.DefaultListItemRenderer;
+    import feathers.dragDrop.IDragSource;
 
     import starling.display.DisplayObject;
     import starling.text.TextField;
     import starling.utils.Color;
 
-    public class TextItemRenderer extends DefaultListItemRenderer
+    import starlingbuilder.editor.helper.DragToCanvasHelper;
+
+    public class TextItemRenderer extends DefaultListItemRenderer implements IDragSource
     {
         private var _text:TextField;
 
@@ -21,6 +24,9 @@ package starlingbuilder.editor.ui
         {
             super();
             _iconFunction = createIcon;
+
+            new DragToCanvasHelper(this);
+            name = DragToCanvasHelper.TEXT_TAB;
         }
 
         private function createIcon(item:Object):DisplayObject

@@ -33,10 +33,12 @@ package starlingbuilder.editor.serialize
             {
                 var policy:String = _converter.getUpgradePolicy(obj);
 
+                var popup:InfoPopup;
+
                 if (policy == LayoutUpgradePolicy.CAN_UPGRADE)
                 {
-                    var popup:InfoPopup = InfoPopup.show("Your layout version is older than the editor version.\nWould you like to convert to a newer layout version format?", ["OK", "Cancel"]);
-                    popup.addEventListener(Event.COMPLETE, function(event:Event) {
+                    popup = InfoPopup.show("Your layout version is older than the editor version.\nWould you like to convert to a newer layout version format?", ["OK", "Cancel"]);
+                    popup.addEventListener(Event.COMPLETE, function(event:Event):void {
                         if (event.data == 0)
                             obj = _converter.upgrade(obj);
 
@@ -45,8 +47,8 @@ package starlingbuilder.editor.serialize
                 }
                 else if (policy == LayoutUpgradePolicy.CANNOT_UPGRADE)
                 {
-                    var popup:InfoPopup = InfoPopup.show("Your layout version is newer than the editor version.\nYou may need to upgrade the editor to properly load it.", ["OK"])
-                    popup.addEventListener(Event.COMPLETE, function(event:Event) {
+                    popup = InfoPopup.show("Your layout version is newer than the editor version.\nYou may need to upgrade the editor to properly load it.", ["OK"])
+                    popup.addEventListener(Event.COMPLETE, function(event:Event):void {
                         UIEditorApp.instance.documentManager.importData(obj, file);
                     });
                 }

@@ -53,6 +53,8 @@ package starlingbuilder.editor.helper
 
             data.params.name = editorData.name;
 
+            setDefaultPosition(data.params, editorData);
+
             setTextureName(constructorParams, editorData.textureName);
 
             setScaleRatio(constructorParams, editorData.scaleData);
@@ -97,6 +99,13 @@ package starlingbuilder.editor.helper
             if (text) params.text = text;
         }
 
+        private static function setDefaultPosition(params:Object, editorData:Object):void
+        {
+            if ("x" in editorData)
+                params.x = editorData.x;
 
+            if ("y" in editorData)
+                params.y = editorData.y;
+        }
     }
 }

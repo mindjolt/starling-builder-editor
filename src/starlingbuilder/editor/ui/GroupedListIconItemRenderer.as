@@ -9,6 +9,8 @@ package starlingbuilder.editor.ui
 {
     import feathers.controls.LayoutGroup;
     import feathers.controls.renderers.DefaultGroupedListItemRenderer;
+    import feathers.dragDrop.IDragSource;
+    import feathers.dragDrop.IDropTarget;
 
     import flash.geom.Rectangle;
 
@@ -19,8 +21,9 @@ package starlingbuilder.editor.ui
     import starling.utils.ScaleMode;
 
     import starlingbuilder.editor.UIEditorApp;
+    import starlingbuilder.editor.helper.DragToCanvasHelper;
 
-    public class GroupedListIconItemRenderer extends DefaultGroupedListItemRenderer
+    public class GroupedListIconItemRenderer extends DefaultGroupedListItemRenderer implements IDragSource, IDropTarget
     {
         private static var fitRect:Rectangle = new Rectangle();
         private static var srcRect:Rectangle = new Rectangle();
@@ -36,6 +39,9 @@ package starlingbuilder.editor.ui
             super();
             _defaultSize = defaultSize;
             _iconFunction = createIcon;
+
+            new DragToCanvasHelper(this);
+            name = DragToCanvasHelper.ASSET_TAB;
         }
 
         private function createIcon(item:Object):DisplayObject

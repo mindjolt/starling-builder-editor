@@ -130,7 +130,7 @@ package starlingbuilder.editor.ui
             });
             _group.addChild(_lockCheck);
 
-            var layout:HorizontalLayout = new HorizontalLayout();
+            layout = new HorizontalLayout();
             layout.gap = 2;
             layout.verticalAlign = HorizontalLayout.VERTICAL_ALIGN_MIDDLE;
             _group2 = new LayoutGroup();
