@@ -36,7 +36,7 @@ package starlingbuilder.editor.ui
         {
             var param:Object = ComponentRenderSupport.support.extraParamsDict[_owner];
 
-            var popup2:ScaleTextureConstructorPopup2 = new ScaleTextureConstructorPopup2(_owner, param, _onComplete);
+            var popup2:ScaleTextureConstructorPopup2 = new ScaleTextureConstructorPopup2(_owner, _targetParam.name, param, _onComplete);
             PopUpManager.addPopUp(popup2);
         }
     }
