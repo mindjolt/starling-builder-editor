@@ -273,7 +273,9 @@ package starlingbuilder.editor.controller
 
                 if (!(selectedObject is DisplayObjectContainer) || !DisplayObjectContainer(selectedObject).contains(object))
                 {
-                    if (_keyboardWatcher.hasKeyPressed(Keyboard.CONTROL) || _keyboardWatcher.hasKeyPressed(Keyboard.COMMAND))
+                    if (_keyboardWatcher.hasKeyPressed(Keyboard.CONTROL) ||
+                            _keyboardWatcher.hasKeyPressed(Keyboard.COMMAND) ||
+                            _keyboardWatcher.hasKeyPressed(Keyboard.SHIFT))
                     {
                         if (_selectManager.isSelected(object))
                         {
