@@ -15,9 +15,14 @@ package starlingbuilder.editor.helper
     import flash.utils.getDefinitionByName;
 
     import starling.display.DisplayObject;
+    import starling.display.Image;
     import starling.events.Touch;
     import starling.events.TouchEvent;
     import starling.events.TouchPhase;
+
+    import starlingbuilder.editor.UIEditorApp;
+
+    import starlingbuilder.editor.controller.ComponentRenderSupport;
 
     import starlingbuilder.engine.util.ParamUtil;
 
@@ -50,15 +55,12 @@ package starlingbuilder.editor.helper
             var touch:Touch = event.getTouch(_renderer);
             if (touch && touch.phase == TouchPhase.MOVED)
             {
-                var cls:Class = getDefinitionByName(ParamUtil.getClassName(_renderer)) as Class;
+                var clone:DisplayObject;
 
-                var clone:Object = new cls();
-                clone.width = _renderer.width;
-                clone.height = _renderer.height;
-                clone.styleName = _renderer.styleName;
-                clone.data = _renderer.data;
-                clone.owner = _renderer["owner"];
-                clone.alpha = 0.5;
+                if (_renderer.name == ASSET_TAB)
+                    clone = createImageClone();
+                else
+                    clone = createRendererClone();
 
                 var dragData:DragData = new DragData();
                 dragData.setDataForFormat(TAB, _renderer.name);
@@ -68,6 +70,25 @@ package starlingbuilder.editor.helper
             }
         }
 
+        private function createRendererClone():DisplayObject
+        {
+            var cls:Class = getDefinitionByName(ParamUtil.getClassName(_renderer)) as Class;
+            var clone:Object = new cls();
+            clone.width = _renderer.width;
+            clone.height = _renderer.height;
+            clone.styleName = _renderer.styleName;
+            clone.data = _renderer.data;
+            clone.owner = _renderer["owner"];
+            clone.alpha = 0.5;
+            return clone as DisplayObject;
+        }
 
+        private function createImageClone():DisplayObject
+        {
+            var clone:Image = new Image(ComponentRenderSupport.support.assetMediator.getTexture(_renderer.data.label));
+            clone.scaleX = clone.scaleY = UIEditorApp.instance.documentManager.scale;
+            clone.alpha = 0.5;
+            return clone;
+        }
     }
 }
