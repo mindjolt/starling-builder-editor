@@ -1,5 +1,16 @@
 # Starling Builder Release Notes:
 
+## 0.8.2
+* [engine] Add LayoutLoader helper class
+* [engine] Add ASDoc and documentation
+* [editor] New UI components can be dragged to canvas
+* [editor] Sort selectedObjects horizontally/vertically in PositionToolbar
+* [editor] Add distribute horizontal/vertical buttons in PositionToolbar
+* [editor] Add layout data compatibility check for Starling 2.0
+* [editor] Add defaultHorizontalPivot and defaultVerticalPivot to SettingPopup
+* [editor] Add shift key for multiple selection
+* [editor] Fix ColorFilter limitation
+
 ## 0.8.1
 * [editor] Add filter support (BlurFilter, GlowFilter, DropShadowFilter, ColorFilter)
 * [editor] Implement canvas snapshot
