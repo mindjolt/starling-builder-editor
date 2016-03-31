@@ -46,6 +46,9 @@ package starlingbuilder.editor.ui
         public static const ALIGN_WIDTH:String = "align width";
         public static const ALIGN_HEIGHT:String = "align height";
 
+        public static const DISTRIBUTE_HORIZONTAL:String = "distribute horizontal";
+        public static const DISTRIBUTE_VERTICAL:String = "distribute vertical";
+
         public static const ALIGN_HORIZONTAL:String = "align horizontal";
         public static const ALIGN_VERTICAL:String = "align vertical";
 
@@ -113,6 +116,9 @@ package starlingbuilder.editor.ui
 
                 {name:ALIGN_WIDTH, textureName:"", triggered:onButtonClick},
                 {name:ALIGN_HEIGHT, textureName:"", triggered:onButtonClick},
+
+                {name:DISTRIBUTE_HORIZONTAL, textureName:"", triggered:onButtonClick},
+                {name:DISTRIBUTE_VERTICAL, textureName:"", triggered:onButtonClick},
 
                 {name:ALIGN_HORIZONTAL, textureName:"", triggered:onButtonClick},
                 {name:ALIGN_VERTICAL, textureName:"", triggered:onButtonClick},
@@ -187,6 +193,12 @@ package starlingbuilder.editor.ui
                     changeSize(verticalSortFunc, function(first:DisplayObject, obj:DisplayObject):void{
                         obj.height = first.getBounds(obj.parent).height;
                     });
+                    break;
+                case DISTRIBUTE_HORIZONTAL:
+                    doAlignHorizontal(getHorizontalPadding());
+                    break;
+                case DISTRIBUTE_VERTICAL:
+                    doAlignVertical(getVerticalPadding());
                     break;
                 case ALIGN_HORIZONTAL:
                     var alignHorizontal:Function = function():void{
@@ -293,6 +305,48 @@ package starlingbuilder.editor.ui
             var y2:Number = obj2.getBounds(stage).y;
             return y1 - y2;
         }
+
+        public function getHorizontalPadding():Number
+        {
+            var objects:Array = _documentManager.selectedObjects;
+
+            if (objects == null || objects.length < 2) return 0;
+
+            var left:Number = Number.MAX_VALUE;
+            var right:Number = Number.MIN_VALUE;
+            var width:Number = 0;
+
+            for each (var obj:DisplayObject in objects)
+            {
+                left = Math.min(left, obj.getBounds(obj.parent).left);
+                right = Math.max(right, obj.getBounds(obj.parent).right);
+                width += obj.width;
+            }
+
+            return (right - left - width) / (objects.length - 1);
+        }
+
+        public function getVerticalPadding():Number
+        {
+            var objects:Array = _documentManager.selectedObjects;
+
+            if (objects == null || objects.length < 2) return 0;
+
+            var top:Number = Number.MAX_VALUE;
+            var bottom:Number = Number.MIN_VALUE;
+            var height:Number = 0;
+
+            for each (var obj:DisplayObject in objects)
+            {
+                top = Math.min(top, obj.getBounds(obj.parent).top);
+                bottom = Math.max(bottom, obj.getBounds(obj.parent).bottom);
+                height += obj.height;
+            }
+
+            return (bottom - top - height) / (objects.length - 1);
+        }
+
+
 
     }
 }
