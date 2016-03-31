@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
-<!-- $TexturePacker:SmartUpdate:af84894f868b8089850a5383a0084c1e:92c6e651e1f0441528bf9650e976e7f6:c529afe306b3393b3216b4802ec28c32$ -->
+<!-- $TexturePacker:SmartUpdate:2911d2a9671073b74005f79f2837e523:c4cf7ae450a5b2f7f6df675f26c233f9:c529afe306b3393b3216b4802ec28c32$ -->
 <TextureAtlas imagePath="position_tool.png">
-    <SubTexture name="align_bottom" x="35" y="35" width="28" height="26" frameX="-2" frameY="-3" frameWidth="32" frameHeight="32"/>
-    <SubTexture name="align_center" x="126" y="29" width="22" height="32" frameX="-5" frameY="0" frameWidth="32" frameHeight="32"/>
-    <SubTexture name="align_height" x="2" y="35" width="31" height="25" frameX="-1" frameY="-4" frameWidth="32" frameHeight="32"/>
-    <SubTexture name="align_horizontal" x="2" y="2" width="31" height="31" frameX="-1" frameY="-1" frameWidth="32" frameHeight="32"/>
-    <SubTexture name="align_left" x="95" y="2" width="26" height="28" frameX="-3" frameY="-2" frameWidth="32" frameHeight="32"/>
-    <SubTexture name="align_middle" x="65" y="35" width="31" height="22" frameX="-1" frameY="-5" frameWidth="32" frameHeight="32"/>
-    <SubTexture name="align_right" x="98" y="32" width="26" height="27" frameX="-3" frameY="-3" frameWidth="32" frameHeight="32"/>
-    <SubTexture name="align_top" x="123" y="2" width="27" height="25" frameX="-3" frameY="-4" frameWidth="32" frameHeight="32"/>
-    <SubTexture name="align_vertical" x="35" y="2" width="31" height="31" frameX="-1" frameY="-1" frameWidth="32" frameHeight="32"/>
-    <SubTexture name="align_width" x="68" y="2" width="25" height="31" frameX="-4" frameY="-1" frameWidth="32" frameHeight="32"/>
+    <SubTexture name="align_bottom" x="274" y="2" width="42" height="38" frameX="-1" frameY="-3" frameWidth="44" frameHeight="44"/>
+    <SubTexture name="align_center" x="74" y="2" width="30" height="44" frameX="-7" frameY="0" frameWidth="44" frameHeight="44"/>
+    <SubTexture name="align_height" x="362" y="2" width="44" height="36" frameX="0" frameY="-4" frameWidth="44" frameHeight="44"/>
+    <SubTexture name="align_horizontal" x="106" y="2" width="42" height="42" frameX="-1" frameY="-1" frameWidth="44" frameHeight="44"/>
+    <SubTexture name="align_left" x="194" y="2" width="38" height="42" frameX="-3" frameY="-1" frameWidth="44" frameHeight="44"/>
+    <SubTexture name="align_middle" x="454" y="2" width="44" height="30" frameX="0" frameY="-7" frameWidth="44" frameHeight="44"/>
+    <SubTexture name="align_right" x="234" y="2" width="38" height="42" frameX="-3" frameY="-1" frameWidth="44" frameHeight="44"/>
+    <SubTexture name="align_top" x="318" y="2" width="42" height="38" frameX="-1" frameY="-3" frameWidth="44" frameHeight="44"/>
+    <SubTexture name="align_vertical" x="150" y="2" width="42" height="42" frameX="-1" frameY="-1" frameWidth="44" frameHeight="44"/>
+    <SubTexture name="align_width" x="2" y="2" width="36" height="44" frameX="-4" frameY="0" frameWidth="44" frameHeight="44"/>
+    <SubTexture name="distribute_horizontal" x="40" y="2" width="32" height="44" frameX="-6" frameY="0" frameWidth="44" frameHeight="44"/>
+    <SubTexture name="distribute_vertical" x="408" y="2" width="44" height="32" frameX="0" frameY="-6" frameWidth="44" frameHeight="44"/>
 </TextureAtlas>
