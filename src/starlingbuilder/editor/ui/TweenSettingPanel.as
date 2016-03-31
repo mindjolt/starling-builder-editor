@@ -19,6 +19,9 @@
 
     public class TweenSettingPanel extends InfoPopup
     {
+        private static const FROM:String = "from";
+        private static const PROPERTIES:String = "properties";
+        private static const DELTA:String = "delta";
         private static const _templeteGridData:Object={from: {"scaleX": 0, "scaleY": 0, "alpha": 0, "rotation": 0, "x": 0, "y": 0}, properties: {"scaleX": 0, "scaleY": 0, "repeatCount": 0, "reverse": true, "alpha": 0, "rotation": 0, "x": 0, "y": 0, "transition": Transitions.LINEAR}, delta: {"scaleX": 0, "scaleY": 0, "alpha": 0, "rotation": 0, "x": 0, "y": 0}};
         /**origin data*/
         private var _editData:Object;
@@ -102,15 +105,18 @@
          */
         private function readObject(o:Object):void
         {
-            if (o.from != undefined)
-                readFrom(o.from);
-
-            if (o.properties != undefined)
-                readProperties(o.properties);
-
-            if (o.delta != undefined)
-                readDela(o.delta);
-
+            if (o.hasOwnProperty(FROM))
+            {
+                readFrom(o[FROM]);
+            }
+            if(o.hasOwnProperty(PROPERTIES))
+            {
+                readProperties(o[PROPERTIES]);
+            }
+            if(o.hasOwnProperty(DELTA))
+            {
+                readDela(o[DELTA]);
+            }
             if (o.time != undefined)
                 _timeInput.text=o.time.toString();
         }
