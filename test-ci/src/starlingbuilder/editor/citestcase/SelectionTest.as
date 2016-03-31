@@ -7,7 +7,10 @@ package starlingbuilder.editor.citestcase
 
     import org.flexunit.asserts.assertEquals;
 
+    import starling.core.Starling;
+
     import starling.display.Image;
+    import starling.display.Stage;
     import starling.events.KeyboardEvent;
 
     import starlingbuilder.editor.citestutil.assertNumericEquals;
@@ -257,7 +260,25 @@ package starlingbuilder.editor.citestcase
 
                 assertNumericEquals(image1.y + image1.height, image2.y);
                 assertNumericEquals(image2.y + image2.height, image3.y);
-            }
+            },
+
+            function():void{
+                image2.x += 20;
+                clickButtonWithName("distribute horizontal");
+
+                var stage:Stage = Starling.current.stage;
+                assertNumericEquals(image2.getBounds(stage).left - image1.getBounds(stage).right,
+                                image3.getBounds(stage).left - image2.getBounds(stage).right);
+            },
+
+            function():void{
+                image2.y += 20;
+                clickButtonWithName("distribute vertical");
+
+                var stage:Stage = Starling.current.stage;
+                assertNumericEquals(image2.getBounds(stage).top - image1.getBounds(stage).bottom,
+                                image3.getBounds(stage).top - image2.getBounds(stage).bottom);
+            },
         ]
     }
 }
