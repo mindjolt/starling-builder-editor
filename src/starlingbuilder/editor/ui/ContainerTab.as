@@ -93,6 +93,13 @@ package starlingbuilder.editor.ui
             _list.height = 800;
             _list.selectedIndex = -1;
             _list.itemRendererFactory = listItemRenderer;
+            _list.itemRendererProperties.labelFactory = function():ITextRenderer
+            {
+                var textRenderer:TextBlockTextRenderer = new TextBlockTextRenderer();
+                textRenderer.wordWrap = true;
+                return textRenderer;
+            }
+            _list.itemRendererProperties.height = 50;
 
             var data:ListCollection = new ListCollection();
 

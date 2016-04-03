@@ -20,15 +20,6 @@ package starlingbuilder.editor.ui
         {
             super();
 
-            _labelFactory = function():ITextRenderer
-            {
-                var textRenderer:TextBlockTextRenderer = new TextBlockTextRenderer();
-                textRenderer.wordWrap = true;
-                return textRenderer;
-            };
-
-            this.height = 50;
-
             this.name = name;
             new DragToCanvasHelper(this);
         }
