@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?> 
+     <update xmlns="http://ns.adobe.com/air/framework/update/description/2.5"> 
+       <versionNumber>2.0.0</versionNumber>
+       <url>http://starlingbuilder.github.io/download/2.x/v2.0.0/starling-builder.air</url>
+       <description>
+[editor] Migrate to Starling 2.0 and Feathers UI 3.0
+       </description>
+    </update>
