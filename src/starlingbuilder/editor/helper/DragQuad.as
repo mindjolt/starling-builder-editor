@@ -51,10 +51,13 @@ package starlingbuilder.editor.helper
                             onComplete(quad.getBounds(Starling.current.stage));
                     }
 
-                    quad.x = Math.min(startX, touch.globalX);
-                    quad.y = Math.min(startY, touch.globalY);
-                    quad.width = Math.abs(touch.globalX - startX);
-                    quad.height = Math.abs(touch.globalY - startY);
+                    if (!isNaN(startX) && !isNaN(startY))
+                    {
+                        quad.x = Math.min(startX, touch.globalX);
+                        quad.y = Math.min(startY, touch.globalY);
+                        quad.width = Math.abs(touch.globalX - startX);
+                        quad.height = Math.abs(touch.globalY - startY);
+                    }
                 }
             }
 
