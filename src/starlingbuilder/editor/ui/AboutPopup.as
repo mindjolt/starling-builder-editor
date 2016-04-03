@@ -35,7 +35,7 @@ package starlingbuilder.editor.ui
         {
             _iconTexture = Texture.fromBitmap(new ICON());
             super();
-            title = "Starling Builder";
+            title = "Starling Builder 2";
             buttons = ["OK"];
         }
 
