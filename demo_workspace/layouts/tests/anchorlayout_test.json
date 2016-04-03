@@ -384,10 +384,11 @@
     }
   },
   "setting":{
+    "canvasColor":16777215,
     "canvasSize":{
       "x":600,
       "y":700
     }
   },
-  "version":"1.0"
+  "version":"2.0"
 }

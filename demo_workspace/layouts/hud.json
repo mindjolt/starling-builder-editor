@@ -14,7 +14,6 @@
             "customParams":{},
             "params":{
               "name":"score_element_background",
-              "scaleY":1,
               "x":17,
               "y":26.5
             }
@@ -30,23 +29,21 @@
               },
               {
                 "value":"Abc123"
-              },
-              {
-                "value":"Verdana"
-              },
-              {
-                "value":46
-              },
-              {
-                "value":16777215
               }
             ],
             "customParams":{},
             "params":{
               "autoSize":"bothDirections",
-              "fontName":"grilledcheesebtn_size18_colorffffff_strokea8364b",
-              "fontSize":18,
-              "height":17,
+              "format":{
+                "cls":"starling.text.TextFormat",
+                "customParams":{},
+                "params":{
+                  "color":16777215,
+                  "font":"grilledcheesebtn_size18_colorffffff_strokea8364b",
+                  "size":18
+                }
+              },
+              "height":20,
               "name":"GrilledCheeseBTN_Size18_ColorFFFFFF_StrokeA8364B",
               "text":"SCORE",
               "width":60,
@@ -65,23 +62,21 @@
               },
               {
                 "value":"Abc123"
-              },
-              {
-                "value":"Verdana"
-              },
-              {
-                "value":46
-              },
-              {
-                "value":16777215
               }
             ],
             "customParams":{},
             "params":{
               "autoSize":"bothDirections",
-              "fontName":"grilledcheesebtn_size18_colorffffff_strokea8364b",
-              "fontSize":18,
-              "height":17,
+              "format":{
+                "cls":"starling.text.TextFormat",
+                "customParams":{},
+                "params":{
+                  "color":16777215,
+                  "font":"grilledcheesebtn_size18_colorffffff_strokea8364b",
+                  "size":18
+                }
+              },
+              "height":20,
               "name":"GrilledCheeseBTN_Size18_ColorFFFFFF_StrokeA8364B",
               "text":"OBJECTIVES",
               "width":107,
@@ -100,23 +95,21 @@
               },
               {
                 "value":"Abc123"
-              },
-              {
-                "value":"Verdana"
-              },
-              {
-                "value":46
-              },
-              {
-                "value":16777215
               }
             ],
             "customParams":{},
             "params":{
               "autoSize":"bothDirections",
-              "fontName":"grilledcheesebtn_size18_colorffffff_strokea8364b",
-              "fontSize":18,
-              "height":17,
+              "format":{
+                "cls":"starling.text.TextFormat",
+                "customParams":{},
+                "params":{
+                  "color":16777215,
+                  "font":"grilledcheesebtn_size18_colorffffff_strokea8364b",
+                  "size":18
+                }
+              },
+              "height":20,
               "name":"GrilledCheeseBTN_Size18_ColorFFFFFF_StrokeA8364B",
               "text":"MOVES",
               "width":63,
@@ -135,26 +128,24 @@
               },
               {
                 "value":"Abc123"
-              },
-              {
-                "value":"Verdana"
-              },
-              {
-                "value":46
-              },
-              {
-                "value":16777215
               }
             ],
             "customParams":{},
             "params":{
               "autoSize":"bothDirections",
-              "fontName":"grilledcheesebtn_size36_colorffffff_strokea8364b",
-              "fontSize":36,
-              "height":33,
+              "format":{
+                "cls":"starling.text.TextFormat",
+                "customParams":{},
+                "params":{
+                  "color":16777215,
+                  "font":"grilledcheesebtn_size36_colorffffff_strokea8364b",
+                  "size":36
+                }
+              },
+              "height":35,
               "name":"GrilledCheeseBTN_Size36_ColorFFFFFF_StrokeA8364B",
               "text":"20",
-              "width":54,
+              "width":53,
               "x":497,
               "y":179
             }
@@ -170,23 +161,21 @@
               },
               {
                 "value":"Abc123"
-              },
-              {
-                "value":"Verdana"
-              },
-              {
-                "value":46
-              },
-              {
-                "value":16777215
               }
             ],
             "customParams":{},
             "params":{
               "autoSize":"bothDirections",
-              "fontName":"grilledcheesebtn_size36_colorffffff_strokea8364b",
-              "fontSize":36,
-              "height":33,
+              "format":{
+                "cls":"starling.text.TextFormat",
+                "customParams":{},
+                "params":{
+                  "color":16777215,
+                  "font":"grilledcheesebtn_size36_colorffffff_strokea8364b",
+                  "size":36
+                }
+              },
+              "height":35,
               "name":"GrilledCheeseBTN_Size36_ColorFFFFFF_StrokeA8364B",
               "text":"1234",
               "width":88,
@@ -256,23 +245,26 @@
       {
         "children":[
           {
-            "cls":"feathers.display.Scale3Image",
+            "cls":"starling.display.Image",
             "constructorParams":[
               {
-                "cls":"feathers.textures.Scale3Textures",
-                "scaleRatio":[
-                  0.49,
-                  0.02,
-                  "horizontal"
-                ],
+                "cls":"starling.textures.Texture",
                 "textureName":"generic_panel_darkwood"
               }
             ],
             "customParams":{},
             "params":{
-              "height":91,
               "name":"generic_panel_darkwood",
-              "width":483,
+              "scale9Grid":{
+                "cls":"flash.geom.Rectangle",
+                "customParams":{},
+                "params":{
+                  "width":1.04,
+                  "x":25.48,
+                  "y":45.5
+                }
+              },
+              "scaleX":9.29,
               "x":8
             }
           },
@@ -290,9 +282,13 @@
                 "params":{
                   "height":83.73,
                   "name":"boostslot_bg_green",
-                  "scaleX":0.82,
-                  "scaleY":0.82,
-                  "width":110
+                  "textFormat":{
+                    "cls":"starling.text.TextFormat",
+                    "customParams":{},
+                    "params":{}
+                  },
+                  "width":110,
+                  "x":-7
                 }
               },
               {
@@ -307,10 +303,13 @@
                 "params":{
                   "height":83.73,
                   "name":"boostslot_bg_green",
-                  "scaleX":0.82,
-                  "scaleY":0.82,
+                  "textFormat":{
+                    "cls":"starling.text.TextFormat",
+                    "customParams":{},
+                    "params":{}
+                  },
                   "width":110,
-                  "x":110
+                  "x":107
                 }
               },
               {
@@ -325,10 +324,13 @@
                 "params":{
                   "height":83.73,
                   "name":"boostslot_bg_green",
-                  "scaleX":0.82,
-                  "scaleY":0.82,
+                  "textFormat":{
+                    "cls":"starling.text.TextFormat",
+                    "customParams":{},
+                    "params":{}
+                  },
                   "width":110,
-                  "x":220
+                  "x":221
                 }
               },
               {
@@ -343,10 +345,13 @@
                 "params":{
                   "height":83.73,
                   "name":"boostslot_bg_green",
-                  "scaleX":0.82,
-                  "scaleY":0.82,
+                  "textFormat":{
+                    "cls":"starling.text.TextFormat",
+                    "customParams":{},
+                    "params":{}
+                  },
                   "width":110,
-                  "x":330
+                  "x":335
                 }
               }
             ],
@@ -387,13 +392,18 @@
         ],
         "customParams":{},
         "params":{
-          "height":78,
+          "height":81.9,
           "name":"settings_button",
           "pivotX":72,
           "pivotY":74,
           "scaleX":1.08,
           "scaleY":1.05,
-          "width":78,
+          "textFormat":{
+            "cls":"starling.text.TextFormat",
+            "customParams":{},
+            "params":{}
+          },
+          "width":84.24,
           "x":640,
           "y":860
         }
@@ -412,5 +422,5 @@
       "y":860
     }
   },
-  "version":"1.0"
+  "version":"2.0"
 }

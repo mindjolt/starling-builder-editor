@@ -12,25 +12,21 @@
           },
           {
             "value":""
-          },
-          {
-            "name":"fontName",
-            "value":"Verdana"
-          },
-          {
-            "value":46
-          },
-          {
-            "value":16777215
           }
         ],
         "customParams":{
           "localizeKey":"hello"
         },
         "params":{
-          "color":3523141,
-          "fontName":"mini",
-          "fontSize":46,
+          "format":{
+            "cls":"starling.text.TextFormat",
+            "customParams":{},
+            "params":{
+              "color":3523141,
+              "font":"mini",
+              "size":46
+            }
+          },
           "height":100,
           "name":"mini",
           "width":200,
@@ -49,25 +45,21 @@
           },
           {
             "value":""
-          },
-          {
-            "name":"fontName",
-            "value":"Verdana"
-          },
-          {
-            "value":46
-          },
-          {
-            "value":16777215
           }
         ],
         "customParams":{
           "localizeKey":"world"
         },
         "params":{
-          "color":1305849,
-          "fontName":"mini",
-          "fontSize":46,
+          "format":{
+            "cls":"starling.text.TextFormat",
+            "customParams":{},
+            "params":{
+              "color":1305849,
+              "font":"mini",
+              "size":46
+            }
+          },
           "height":100,
           "name":"mini",
           "width":200,
@@ -83,10 +75,11 @@
     }
   },
   "setting":{
+    "canvasColor":16777215,
     "canvasSize":{
       "x":640,
       "y":960
     }
   },
-  "version":"1.0"
+  "version":"2.0"
 }

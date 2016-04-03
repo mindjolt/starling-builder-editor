@@ -2,46 +2,53 @@
   "layout":{
     "children":[
       {
-        "cls":"feathers.display.Scale3Image",
+        "cls":"starling.display.Image",
         "constructorParams":[
           {
-            "cls":"feathers.textures.Scale3Textures",
-            "scaleRatio":[
-              0.28,
-              0.3,
-              "vertical"
-            ],
+            "cls":"starling.textures.Texture",
             "textureName":"generic_popup_bg"
           }
         ],
         "customParams":{},
         "params":{
-          "height":645,
           "name":"generic_popup_bg",
-          "width":638,
+          "scale9Grid":{
+            "cls":"flash.geom.Rectangle",
+            "customParams":{},
+            "params":{
+              "height":30.9,
+              "x":319,
+              "y":28.84
+            }
+          },
+          "scaleY":6.26,
           "x":-1.5,
           "y":51
         }
       },
       {
-        "cls":"feathers.display.Scale9Image",
+        "cls":"starling.display.Image",
         "constructorParams":[
           {
-            "cls":"feathers.textures.Scale9Textures",
-            "scaleRatio":[
-              0.3,
-              0.3,
-              0.4,
-              0.4
-            ],
+            "cls":"starling.textures.Texture",
             "textureName":"generic_box_white"
           }
         ],
         "customParams":{},
         "params":{
-          "height":453,
           "name":"generic_box_white",
-          "width":550,
+          "scale9Grid":{
+            "cls":"flash.geom.Rectangle",
+            "customParams":{},
+            "params":{
+              "height":22.8,
+              "width":21.6,
+              "x":16.2,
+              "y":17.1
+            }
+          },
+          "scaleX":10.19,
+          "scaleY":7.95,
           "x":42.5,
           "y":83.5
         }
@@ -58,6 +65,11 @@
         "params":{
           "height":73,
           "name":"generic_exit",
+          "textFormat":{
+            "cls":"starling.text.TextFormat",
+            "customParams":{},
+            "params":{}
+          },
           "width":77,
           "x":559.5,
           "y":41
@@ -104,26 +116,24 @@
           },
           {
             "value":"Abc123"
-          },
-          {
-            "value":"Verdana"
-          },
-          {
-            "value":46
-          },
-          {
-            "value":16777215
           }
         ],
         "customParams":{},
         "params":{
           "autoSize":"bothDirections",
-          "fontName":"lobstertworegular_size54_colorffffff_strokeaf384e_dropshadow560d1b",
-          "fontSize":55,
-          "height":59.07,
+          "format":{
+            "cls":"starling.text.TextFormat",
+            "customParams":{},
+            "params":{
+              "color":16777215,
+              "font":"lobstertworegular_size54_colorffffff_strokeaf384e_dropshadow560d1b",
+              "size":55
+            }
+          },
+          "height":52.96,
           "name":"LobsterTwoRegular_Size54_ColorFFFFFF_StrokeAF384E_DropShadow560D1B",
           "text":"Connect Facebook",
-          "width":371.76,
+          "width":369.72,
           "x":135.62,
           "y":37.9
         }
@@ -139,22 +149,19 @@
           },
           {
             "value":"Abc123"
-          },
-          {
-            "value":"Verdana"
-          },
-          {
-            "value":46
-          },
-          {
-            "value":16777215
           }
         ],
         "customParams":{},
         "params":{
-          "color":10761216,
-          "fontName":"grilledcheesebtn_size36_colorffffff",
-          "fontSize":49,
+          "format":{
+            "cls":"starling.text.TextFormat",
+            "customParams":{},
+            "params":{
+              "color":10761216,
+              "font":"grilledcheesebtn_size36_colorffffff",
+              "size":49
+            }
+          },
           "height":152,
           "name":"GrilledCheeseBTN_Size36_ColoFFFFFF_DropShadow1C0900",
           "text":"Connect Facebook to have more fun!",
@@ -175,6 +182,11 @@
         "params":{
           "height":110,
           "name":"generic_button_blue",
+          "textFormat":{
+            "cls":"starling.text.TextFormat",
+            "customParams":{},
+            "params":{}
+          },
           "width":265,
           "x":189,
           "y":543.5
@@ -196,5 +208,5 @@
       "y":860
     }
   },
-  "version":"1.0"
+  "version":"2.0"
 }

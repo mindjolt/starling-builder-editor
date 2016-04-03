@@ -17,7 +17,7 @@
             "params":{
               "label":"two",
               "name":"button",
-              "x":93
+              "x":97
             }
           },
           {
@@ -26,7 +26,7 @@
             "params":{
               "label":"three",
               "name":"button",
-              "x":187
+              "x":195
             }
           },
           {
@@ -35,7 +35,7 @@
             "params":{
               "label":"four",
               "name":"button",
-              "x":297
+              "x":309
             }
           },
           {
@@ -44,7 +44,7 @@
             "params":{
               "label":"five",
               "name":"button",
-              "y":68
+              "y":72
             }
           },
           {
@@ -53,8 +53,8 @@
             "params":{
               "label":"six",
               "name":"button",
-              "x":92,
-              "y":68
+              "x":96,
+              "y":72
             }
           }
         ],
@@ -163,25 +163,21 @@
               },
               {
                 "value":""
-              },
-              {
-                "name":"fontName",
-                "value":"Verdana"
-              },
-              {
-                "value":46
-              },
-              {
-                "value":16777215
               }
             ],
             "customParams":{},
             "params":{
               "autoSize":"bothDirections",
-              "color":16732964,
-              "fontName":"mini",
-              "fontSize":46,
-              "height":40.25,
+              "format":{
+                "cls":"starling.text.TextFormat",
+                "customParams":{},
+                "params":{
+                  "color":16732964,
+                  "font":"mini",
+                  "size":46
+                }
+              },
+              "height":28.75,
               "name":"mini",
               "text":"Abc123",
               "width":172.5
@@ -198,29 +194,25 @@
               },
               {
                 "value":""
-              },
-              {
-                "name":"fontName",
-                "value":"Verdana"
-              },
-              {
-                "value":46
-              },
-              {
-                "value":16777215
               }
             ],
             "customParams":{},
             "params":{
               "autoSize":"bothDirections",
-              "color":16710144,
-              "fontName":"mini",
-              "fontSize":46,
-              "height":40.25,
+              "format":{
+                "cls":"starling.text.TextFormat",
+                "customParams":{},
+                "params":{
+                  "color":16710144,
+                  "font":"mini",
+                  "size":46
+                }
+              },
+              "height":28.75,
               "name":"mini",
               "text":"Abc123",
               "width":172.5,
-              "y":52.25
+              "y":40.75
             }
           },
           {
@@ -234,29 +226,25 @@
               },
               {
                 "value":""
-              },
-              {
-                "name":"fontName",
-                "value":"Verdana"
-              },
-              {
-                "value":46
-              },
-              {
-                "value":16777215
               }
             ],
             "customParams":{},
             "params":{
               "autoSize":"bothDirections",
-              "color":4710397,
-              "fontName":"mini",
-              "fontSize":46,
-              "height":40.25,
+              "format":{
+                "cls":"starling.text.TextFormat",
+                "customParams":{},
+                "params":{
+                  "color":4710397,
+                  "font":"mini",
+                  "size":46
+                }
+              },
+              "height":28.75,
               "name":"mini",
               "text":"Abc123",
               "width":172.5,
-              "y":104.5
+              "y":81.5
             }
           },
           {
@@ -270,29 +258,25 @@
               },
               {
                 "value":""
-              },
-              {
-                "name":"fontName",
-                "value":"Verdana"
-              },
-              {
-                "value":46
-              },
-              {
-                "value":16777215
               }
             ],
             "customParams":{},
             "params":{
               "autoSize":"bothDirections",
-              "color":1424731,
-              "fontName":"mini",
-              "fontSize":46,
-              "height":40.25,
+              "format":{
+                "cls":"starling.text.TextFormat",
+                "customParams":{},
+                "params":{
+                  "color":1424731,
+                  "font":"mini",
+                  "size":46
+                }
+              },
+              "height":28.75,
               "name":"mini",
               "text":"Abc123",
               "width":172.5,
-              "y":156.75
+              "y":122.25
             }
           }
         ],
@@ -472,10 +456,11 @@
     }
   },
   "setting":{
+    "canvasColor":16777215,
     "canvasSize":{
       "x":640,
       "y":960
     }
   },
-  "version":"1.0"
+  "version":"2.0"
 }

@@ -95,10 +95,11 @@
     }
   },
   "setting":{
+    "canvasColor":16777215,
     "canvasSize":{
       "x":640,
       "y":960
     }
   },
-  "version":"1.0"
+  "version":"2.0"
 }
