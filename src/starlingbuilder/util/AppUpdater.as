@@ -19,7 +19,7 @@ package starlingbuilder.util
     public class AppUpdater
     {
         //Set the location of your update descriptor file here
-        public static const UPDATE_URL:String = null;
+        public static const UPDATE_URL:String = "http://starlingbuilder.github.io/download/2.x/updateConfig.xml";
 
         private var _appUpdater:ApplicationUpdaterUI;
 
