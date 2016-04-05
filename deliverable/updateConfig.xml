@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?> 
      <update xmlns="http://ns.adobe.com/air/framework/update/description/2.5"> 
-       <versionNumber>0.8.1</versionNumber>
-       <url>http://cache.mindjolt.com/starling-builder/v0.8.1/starling-builder.air</url>
+       <versionNumber>0.8.2</versionNumber>
+       <url>http://starlingbuilder.github.io/download/1.x/v0.8.2/starling-builder.air</url>
        <description>
-[editor] Add filter support (BlurFilter, GlowFilter, DropShadowFilter, ColorFilter)
-[editor] Implement canvas snapshot
-[editor] New UI element position will default to center of the canvas
-[editor] Replace hidden and lock check to icons
-[editor] Upgrade to Starling 1.8 and AIR19
-[editor] Add default_option to texture_options.json
-[editor] Various bug fixes
-[template] Add scaleWhenDown property to starling.display.Button
-[extensions] Add a universal ContainerButton (A customized button you can add whatever you want inside. You need to download the new latest demo_workspace.zip to try it)
+[engine] Add LayoutLoader helper class
+[engine] Add ASDoc and documentation
+[editor] New UI components can be dragged to canvas
+[editor] Sort selectedObjects horizontally/vertically in PositionToolbar
+[editor] Add distribute horizontal/vertical buttons in PositionToolbar
+[editor] Add layout data compatibility check for Starling 2.0
+[editor] Add defaultHorizontalPivot and defaultVerticalPivot to SettingPopup
+[editor] Add shift key for multiple selection
+[editor] Fix ColorFilter limitation
        </description>
     </update>
