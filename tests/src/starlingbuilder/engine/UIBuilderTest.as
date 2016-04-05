@@ -270,9 +270,8 @@ package starlingbuilder.engine
         [Test]
         public function shouldBind():void
         {
-            var sprite:Sprite = _uiBuilder.create(_quadLayout) as Sprite;
             var object:TestUIClass1 = new TestUIClass1();
-            UIBuilder.bind(sprite, object);
+            var sprite:Sprite = _uiBuilder.create(_quadLayout, true, object) as Sprite;
 
             assertTrue(object._quad != null);
             assertEquals(object._quad.width, 50);
@@ -282,9 +281,8 @@ package starlingbuilder.engine
         [Test]
         public function shouldNotBind():void
         {
-            var sprite:Sprite = _uiBuilder.create(_textLayout, false) as Sprite;
             var object:TestUIClass2 = new TestUIClass2();
-            UIBuilder.bind(sprite, object);
+            var sprite:Sprite = _uiBuilder.create(_textLayout, false, object) as Sprite;
 
             assertTrue(object.text == null);
         }

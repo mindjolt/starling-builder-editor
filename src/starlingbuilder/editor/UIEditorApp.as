@@ -7,6 +7,7 @@
  */
 package starlingbuilder.editor
 {
+    import starlingbuilder.editor.controller.ComponentRenderSupport;
     import starlingbuilder.editor.controller.DocumentManager;
     import starlingbuilder.editor.controller.LocalizationManager;
     import starlingbuilder.editor.themes.MetalWorksDesktopTheme2;
@@ -14,6 +15,8 @@ package starlingbuilder.editor
     import starling.display.Sprite;
     import starling.events.EventDispatcher;
     import starling.utils.AssetManager;
+
+    import starlingbuilder.editor.ui.AbstractPropertyPopup;
     import starlingbuilder.util.AppUpdater;
 
     public class UIEditorApp extends Sprite
@@ -60,6 +63,7 @@ package starlingbuilder.editor
         {
             _localizationManager = new LocalizationManager();
             _documentManager = new DocumentManager(_assetManager, _localizationManager);
+            ComponentRenderSupport.support = _documentManager;
         }
 
         public function get assetManager():AssetManager

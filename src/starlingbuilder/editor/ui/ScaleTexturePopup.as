@@ -10,6 +10,8 @@ package starlingbuilder.editor.ui
     import starling.utils.Color;
 
     import starlingbuilder.editor.UIEditorApp;
+    import starlingbuilder.editor.controller.ComponentRenderSupport;
+    import starlingbuilder.engine.IAssetMediator;
     import starlingbuilder.util.DrawUtil;
     import starlingbuilder.util.feathers.popup.InfoPopup;
     import starlingbuilder.util.ui.inspector.PropertyPanel;
@@ -34,7 +36,7 @@ package starlingbuilder.editor.ui
     {
         private static const MAX_SIZE:int = 700;
 
-        private var _assetManager:AssetManager;
+        private var _assetMediator:IAssetMediator;
 
         private var _gridContainer:Sprite;
 
@@ -57,7 +59,7 @@ package starlingbuilder.editor.ui
         {
             _data = data;
 
-            _assetManager = UIEditorApp.instance.assetManager;
+            _assetMediator = ComponentRenderSupport.support.assetMediator;
             _textureName = data.constructorParams[0].textureName;
             _scaleRatio = data.constructorParams[0].scaleRatio;
             _direction = Scale3Textures.DIRECTION_HORIZONTAL;
@@ -78,7 +80,7 @@ package starlingbuilder.editor.ui
         {
             var imageContainer:Sprite = new Sprite();
 
-            _image = new Image(_assetManager.getTexture(_textureName));
+            _image = new Image(_assetMediator.getTexture(_textureName));
             _gridContainer = new Sprite();
 
             _rect = new Rectangle();

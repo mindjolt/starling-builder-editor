@@ -19,6 +19,10 @@ package starlingbuilder.editor
 
         public var defaultCanvasHeight:int = 960;
 
+        public var defaultHorizontalPivot:String = "left";
+
+        public var defaultVerticalPivot:String = "top";
+
         public var prettyJSON:Boolean = true;
     }
 }

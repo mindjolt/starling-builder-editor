@@ -5,6 +5,8 @@ package starlingbuilder.util.ui.inspector
 {
     import starling.display.Image;
 
+    import starlingbuilder.editor.UIEditorApp;
+
     import starlingbuilder.util.feathers.FeathersUIUtil;
 
     import feathers.controls.Button;

@@ -26,6 +26,9 @@ package starlingbuilder.editor.controller
     import starlingbuilder.editor.helper.SnapshotHelper;
     import starlingbuilder.editor.history.CompositeHistoryOperation;
     import starlingbuilder.editor.ui.CenterPanel;
+    import starlingbuilder.editor.upgrade.LayoutVersion;
+    import starlingbuilder.engine.IAssetMediator;
+    import starlingbuilder.engine.util.DisplayObjectUtil;
     import starlingbuilder.util.KeyboardWatcher;
     import starlingbuilder.editor.helper.PixelSnapper;
     import starlingbuilder.editor.helper.PixelSnapperData;
@@ -71,7 +74,7 @@ package starlingbuilder.editor.controller
     import starling.text.TextField;
     import starling.utils.AssetManager;
 
-    public class DocumentManager extends EventDispatcher implements IUIEditorThemeMediator
+    public class DocumentManager extends EventDispatcher implements IUIEditorThemeMediator, IComponentRenderSupport
     {
         private var _assetManager:AssetManager;
         private var _uiBuilder:IUIBuilder;
@@ -270,7 +273,9 @@ package starlingbuilder.editor.controller
 
                 if (!(selectedObject is DisplayObjectContainer) || !DisplayObjectContainer(selectedObject).contains(object))
                 {
-                    if (_keyboardWatcher.hasKeyPressed(Keyboard.CONTROL) || _keyboardWatcher.hasKeyPressed(Keyboard.COMMAND))
+                    if (_keyboardWatcher.hasKeyPressed(Keyboard.CONTROL) ||
+                            _keyboardWatcher.hasKeyPressed(Keyboard.COMMAND) ||
+                            _keyboardWatcher.hasKeyPressed(Keyboard.SHIFT))
                     {
                         if (_selectManager.isSelected(object))
                         {
@@ -668,6 +673,11 @@ package starlingbuilder.editor.controller
             return _historyManager;
         }
 
+        public function get assetMediator():IAssetMediator
+        {
+            return _assetMediator;
+        }
+
         public function selectObjectAtIndex(index:int):void
         {
             var item:Object = _dataProvider.getItemAt(index);
@@ -711,7 +721,7 @@ package starlingbuilder.editor.controller
         {
             _testContainer.removeChildren(0, -1, true);
 
-            var data:Object = _uiBuilder.save(_layoutContainer, _extraParamsDict, TemplateData.editor_template);
+            var data:Object = _uiBuilder.save(_layoutContainer, _extraParamsDict, LayoutVersion.VERSION, TemplateData.editor_template);
 
             var setting:Object = exportSetting();
 
@@ -743,7 +753,7 @@ package starlingbuilder.editor.controller
 
         public function export():Object
         {
-            return _uiBuilder.save(_layoutContainer, _extraParamsDict, exportSetting());
+            return _uiBuilder.save(_layoutContainer, _extraParamsDict, LayoutVersion.VERSION, exportSetting());
         }
 
         private function exportSetting():Object
@@ -885,11 +895,24 @@ package starlingbuilder.editor.controller
 
         public function createFromData(data:Object):void
         {
+            var p:Point;
+
             var parent:DisplayObjectContainer = getParent();
 
-            var p:Point = getNewObjectPosition();
-            data.params.x = p.x;
-            data.params.y = p.y;
+            if ("x" in data.params && "y" in data.params)
+            {
+                var centerPanel:CenterPanel = UIEditorScreen.instance.centerPanel;
+                p = _container.localToGlobal(new Point(centerPanel.horizontalScrollPosition + data.params.x, centerPanel.verticalScrollPosition + data.params.y));
+                p = parent.globalToLocal(new Point(p.x, p.y));
+                data.params.x = p.x;
+                data.params.y = p.y;
+            }
+            else
+            {
+                p = getNewObjectPosition();
+                data.params.x = p.x;
+                data.params.y = p.y;
+            }
 
             var result:Object = _uiBuilder.createUIElement(data);
             var paramDict:Dictionary = new Dictionary();
@@ -898,6 +921,8 @@ package starlingbuilder.editor.controller
             paramDict[obj] = result.params;
 
             _historyManager.add(new CreateOperation(obj, paramDict, parent));
+
+            setDefaultPivot(obj);
 
             addFrom(obj, result.params, parent);
 
@@ -912,7 +937,7 @@ package starlingbuilder.editor.controller
         {
             var parent:DisplayObjectContainer = getParent();
 
-            if (parent.x == 0 && parent.y == 0)
+            if (parent === _root && parent.x == 0 && parent.y == 0)
             {
                 var centerPanel:CenterPanel = UIEditorScreen.instance.centerPanel;
 
@@ -1336,6 +1361,11 @@ package starlingbuilder.editor.controller
         public function get boundingBoxContainer():BoundingBoxContainer
         {
             return _boundingBoxContainer;
+        }
+
+        private function setDefaultPivot(obj:DisplayObject):void
+        {
+            DisplayObjectUtil.movePivotToAlign(obj, _setting.defaultHorizontalPivot, _setting.defaultVerticalPivot);
         }
 
         public function snapshot():void

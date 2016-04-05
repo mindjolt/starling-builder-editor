@@ -7,27 +7,26 @@
  */
 package starlingbuilder.editor.ui
 {
-    import starlingbuilder.editor.UIEditorApp;
-    import starlingbuilder.editor.controller.DocumentManager;
+    import starlingbuilder.editor.controller.ComponentRenderSupport;
 
     public class ScaleTextureConstructorPopup2 extends ScaleTexturePopup
     {
-        private var _documentManager:DocumentManager;
         private var _target:Object;
+        private var _propertyName:String;
 
-        public function ScaleTextureConstructorPopup2(target:Object, data:Object, onComplete:Function)
+        public function ScaleTextureConstructorPopup2(target:Object, propertyName:String, data:Object, onComplete:Function)
         {
             super(data, onComplete);
             _target = target;
-            _documentManager = UIEditorApp.instance.documentManager;
+            _propertyName = propertyName;
         }
 
         override protected function complete():void
         {
-            if (_target.hasOwnProperty("textures"))
-                _target["textures"] = _documentManager.uiBuilder.createUIElement(_data.constructorParams[0]).object;
+            if (_target.hasOwnProperty(_propertyName))
+                _target[_propertyName] = ComponentRenderSupport.support.uiBuilder.createUIElement(_data.constructorParams[0]).object;
 
-            _documentManager.setChanged();
+            ComponentRenderSupport.support.setChanged();
 
             super.complete();
         }
