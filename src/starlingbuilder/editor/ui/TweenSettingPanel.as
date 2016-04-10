@@ -1,5 +1,7 @@
 ﻿package starlingbuilder.editor.ui
 {
+    import flash.utils.Dictionary;
+    
     import feathers.controls.Alert;
     import feathers.controls.Button;
     import feathers.controls.Header;
@@ -19,15 +21,14 @@
 
     public class TweenSettingPanel extends InfoPopup
     {
-        private static const FROM:String = "from";
-        private static const PROPERTIES:String = "properties";
-        private static const DELTA:String = "delta";
-        private static const _templeteGridData:Object={from: {"scaleX": 0, "scaleY": 0, "alpha": 0, "rotation": 0, "x": 0, "y": 0}, properties: {"scaleX": 0, "scaleY": 0, "repeatCount": 0, "reverse": true, "alpha": 0, "rotation": 0, "x": 0, "y": 0, "transition": Transitions.LINEAR}, delta: {"scaleX": 0, "scaleY": 0, "alpha": 0, "rotation": 0, "x": 0, "y": 0}};
+        private static const _templeteGridData:Object={
+            from: {"scaleX": 0, "scaleY": 0, "alpha": 0, "rotation": 0, "x": 0, "y": 0}, 
+            properties: {"scaleX": 0, "scaleY": 0, "repeatCount": 0, "reverse": true, "alpha": 0, "rotation": 0, "x": 0, "y": 0, "transition": Transitions.LINEAR}, 
+            delta: {"scaleX": 0, "scaleY": 0, "alpha": 0, "rotation": 0, "x": 0, "y": 0}
+        };
         /**origin data*/
         private var _editData:Object;
-        private var _fromDataGrid:KeyValueDataGrid;
-        private var _propertiesDataGrid:KeyValueDataGrid;
-        private var _deltaDataGrid:KeyValueDataGrid;
+        private var _dataGridDic:Dictionary = new Dictionary();
         private var _timeInput:TextInput;
         public var onComplete:Function;
 
@@ -42,34 +43,20 @@
             var closeBtn:Button=FeathersUIUtil.buttonWithLabel("X", onClose);
             closeBtn.width=40;
             this.headerProperties.rightItems=new <DisplayObject>[closeBtn];
-
-            var fromLayout:LayoutGroup=FeathersUIUtil.layoutGroupWithHorizontalLayout();
-            var fromLabel:Label=FeathersUIUtil.labelWithText("         from:");
-            fromLayout.addChild(fromLabel);
-            _fromDataGrid=new KeyValueDataGrid();
-            fromLayout.addChild(_fromDataGrid);
-            _fromDataGrid.width=200;
-            _fromDataGrid.dataTemplate=_templeteGridData.from;
-            addChild(fromLayout);
-
-            var propLayout:LayoutGroup=FeathersUIUtil.layoutGroupWithHorizontalLayout();
-            var propLabel:Label=FeathersUIUtil.labelWithText("properties:");
-            propLayout.addChild(propLabel);
-            _propertiesDataGrid=new KeyValueDataGrid();
-            propLayout.addChild(_propertiesDataGrid);
-            _propertiesDataGrid.width=200;
-            _propertiesDataGrid.dataTemplate=_templeteGridData.properties;
-            addChild(propLayout);
-
-            var deltaLayout:LayoutGroup=FeathersUIUtil.layoutGroupWithHorizontalLayout();
-            var deltaLabel:Label=FeathersUIUtil.labelWithText("        delta:");
-            deltaLayout.addChild(deltaLabel);
-            _deltaDataGrid=new KeyValueDataGrid();
-            deltaLayout.addChild(_deltaDataGrid);
-            _deltaDataGrid.width=200;
-            _deltaDataGrid.dataTemplate=_templeteGridData.delta;
-            addChild(deltaLayout);
-
+            
+            for(var key:String in _templeteGridData)
+            {
+                var layout:LayoutGroup=FeathersUIUtil.layoutGroupWithHorizontalLayout();
+                var label:Label=FeathersUIUtil.labelWithText(key + ":");
+                layout.addChild(label);
+                var dataGrid:KeyValueDataGrid=new KeyValueDataGrid();
+                layout.addChild(dataGrid);
+                dataGrid.width=200;
+                dataGrid.dataTemplate=_templeteGridData[key];
+                addChild(layout);
+                _dataGridDic[key] = dataGrid;
+            }
+            
             var timeGroup:LayoutGroup=FeathersUIUtil.layoutGroupWithHorizontalLayout();
             var timelabel:Label=FeathersUIUtil.labelWithText("time");
             _timeInput=new TextInput();
@@ -78,6 +65,7 @@
             timeGroup.addChild(timelabel);
             timeGroup.addChild(_timeInput);
             addChild(timeGroup);
+            _dataGridDic["time"] = _timeInput;
             var group:LayoutGroup=FeathersUIUtil.layoutGroupWithHorizontalLayout();
             var yesButton:Button=FeathersUIUtil.buttonWithLabel("Save", onYes);
             var noButton:Button=FeathersUIUtil.buttonWithLabel("Cancel", onCanel);
@@ -105,82 +93,48 @@
          */
         private function readObject(o:Object):void
         {
-            if (o.hasOwnProperty(FROM))
+            for(var key:String in o)
             {
-                readFrom(o[FROM]);
+                //time is special
+                if(_dataGridDic[key] != null && key != "time")
+                {
+                    (_dataGridDic[key] as KeyValueDataGrid).data = o[key];
+                }else if(key = "time")
+                {
+                   (_dataGridDic[key] as TextInput).text = o.time.toString();
+                }
+                else
+                {
+                    throw new Error("the key is no exist", key);
+                }
             }
-            if(o.hasOwnProperty(PROPERTIES))
-            {
-                readProperties(o[PROPERTIES]);
-            }
-            if(o.hasOwnProperty(DELTA))
-            {
-                readDela(o[DELTA]);
-            }
-            if (o.time != undefined)
-                _timeInput.text=o.time.toString();
-        }
-
-        /**
-         * properties data
-         */
-        private function readProperties(properties:Object):void
-        {
-            _propertiesDataGrid.data=properties;
-        }
-
-        /**
-         *delta data
-         */
-        private function readDela(delta:Object):void
-        {
-            _deltaDataGrid.data=delta;
-        }
-
-        /**
-         * from data
-         */
-        private function readFrom(from:Object):void
-        {
-            _fromDataGrid.data=from;
         }
 
         private function onYes(e:Event):void
         {
-            if (hasThing(_fromDataGrid.data) == false && hasThing(_propertiesDataGrid.data) == false && hasThing(_deltaDataGrid.data) == false || (_timeInput.text == null || _timeInput.text == ""))
+            if (_editData == null)
+                _editData=new Object();
+            var isHasData:Boolean;
+            for(var key:String in _dataGridDic)
+            {
+                if(key != "time")
+                {
+                    if(hasThing(_dataGridDic[key].data) == true)
+                    {
+                        isHasData = true;
+                        _editData[key]=_dataGridDic[key].data;
+                    }else
+                    {
+                        delete _editData[key];
+                    }
+                }
+            }
+            if (!isHasData || (_timeInput.text == null || _timeInput.text == ""))
             {
                 Alert.show("no data", "warning", new ListCollection([{label: "OK"}]));
                 return;
             }
-
-            if (_editData == null)
-                _editData=new Object();
-            if (hasThing(_fromDataGrid.data) == true)
-            {
-                _editData.from=_fromDataGrid.data;
-            }
-            else
-            {
-                delete _editData.from;
-            }
-            if (hasThing(_propertiesDataGrid.data) == true)
-            {
-                _editData.properties=_propertiesDataGrid.data;
-            }
-            else
-            {
-                delete _editData.properties;
-            }
-            if (hasThing(_deltaDataGrid.data) == true)
-            {
-                _editData.delta=_deltaDataGrid.data;
-            }
-            else
-            {
-                delete _editData.delta;
-            }
-
-            _editData.time=_timeInput.text;
+            _editData.time= Number(_timeInput.text);
             if (onComplete != null)
                 onComplete.call(this, _editData);
             onCanel(null);
