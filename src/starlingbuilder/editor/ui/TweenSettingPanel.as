@@ -1,7 +1,7 @@
 ﻿package starlingbuilder.editor.ui
 {
     import flash.utils.Dictionary;
-    
+
     import feathers.controls.Alert;
     import feathers.controls.Button;
     import feathers.controls.Header;
@@ -10,25 +10,21 @@
     import feathers.controls.TextInput;
     import feathers.core.PopUpManager;
     import feathers.data.ListCollection;
-    
+
     import starling.animation.Transitions;
     import starling.display.DisplayObject;
     import starling.events.Event;
-    
+
     import starlingbuilder.util.feathers.FeathersUIUtil;
     import starlingbuilder.util.feathers.KeyValueDataGrid;
     import starlingbuilder.util.feathers.popup.InfoPopup;
 
     public class TweenSettingPanel extends InfoPopup
     {
-        private static const _templeteGridData:Object={
-            from: {"scaleX": 0, "scaleY": 0, "alpha": 0, "rotation": 0, "x": 0, "y": 0}, 
-            properties: {"scaleX": 0, "scaleY": 0, "repeatCount": 0, "reverse": true, "alpha": 0, "rotation": 0, "x": 0, "y": 0, "transition": Transitions.LINEAR}, 
-            delta: {"scaleX": 0, "scaleY": 0, "alpha": 0, "rotation": 0, "x": 0, "y": 0}
-        };
+        private static const _templeteGridData:Object={from: {"scaleX": 0, "scaleY": 0, "alpha": 0, "rotation": 0, "x": 0, "y": 0}, properties: {"scaleX": 0, "scaleY": 0, "repeatCount": 0, "reverse": true, "alpha": 0, "rotation": 0, "x": 0, "y": 0, "transition": Transitions.LINEAR}, delta: {"scaleX": 0, "scaleY": 0, "alpha": 0, "rotation": 0, "x": 0, "y": 0}};
         /**origin data*/
         private var _editData:Object;
-        private var _dataGridDic:Dictionary = new Dictionary();
+        private var _dataGridDic:Dictionary=new Dictionary();
         private var _timeInput:TextInput;
         public var onComplete:Function;
 
@@ -43,8 +39,8 @@
             var closeBtn:Button=FeathersUIUtil.buttonWithLabel("X", onClose);
             closeBtn.width=40;
             this.headerProperties.rightItems=new <DisplayObject>[closeBtn];
-            
-            for(var key:String in _templeteGridData)
+
+            for (var key:String in _templeteGridData)
             {
                 var layout:LayoutGroup=FeathersUIUtil.layoutGroupWithHorizontalLayout();
                 var label:Label=FeathersUIUtil.labelWithText(key + ":");
@@ -54,9 +50,9 @@
                 dataGrid.width=200;
                 dataGrid.dataTemplate=_templeteGridData[key];
                 addChild(layout);
-                _dataGridDic[key] = dataGrid;
+                _dataGridDic[key]=dataGrid;
             }
-            
+
             var timeGroup:LayoutGroup=FeathersUIUtil.layoutGroupWithHorizontalLayout();
             var timelabel:Label=FeathersUIUtil.labelWithText("time");
             _timeInput=new TextInput();
@@ -65,7 +61,7 @@
             timeGroup.addChild(timelabel);
             timeGroup.addChild(_timeInput);
             addChild(timeGroup);
-            _dataGridDic["time"] = _timeInput;
+            _dataGridDic["time"]=_timeInput;
             var group:LayoutGroup=FeathersUIUtil.layoutGroupWithHorizontalLayout();
             var yesButton:Button=FeathersUIUtil.buttonWithLabel("Save", onYes);
             var noButton:Button=FeathersUIUtil.buttonWithLabel("Cancel", onCanel);
@@ -93,15 +89,16 @@
          */
         private function readObject(o:Object):void
         {
-            for(var key:String in o)
+            for (var key:String in o)
             {
                 //time is special
-                if(_dataGridDic[key] != null && key != "time")
+                if (_dataGridDic[key] != null && key != "time")
                 {
-                    (_dataGridDic[key] as KeyValueDataGrid).data = o[key];
-                }else if(key = "time")
+                    (_dataGridDic[key] as KeyValueDataGrid).data=o[key];
+                }
+                else if (key="time")
                 {
-                   (_dataGridDic[key] as TextInput).text = o.time.toString();
+                    (_dataGridDic[key] as TextInput).text=o.time.toString();
                 }
                 else
                 {
@@ -115,15 +112,16 @@
             if (_editData == null)
                 _editData=new Object();
             var isHasData:Boolean;
-            for(var key:String in _dataGridDic)
+            for (var key:String in _dataGridDic)
             {
-                if(key != "time")
+                if (key != "time")
                 {
-                    if(hasThing(_dataGridDic[key].data) == true)
+                    if (hasThing(_dataGridDic[key].data) == true)
                     {
-                        isHasData = true;
+                        isHasData=true;
                         _editData[key]=_dataGridDic[key].data;
-                    }else
+                    }
+                    else
                     {
                         delete _editData[key];
                     }
@@ -134,7 +132,7 @@
                 Alert.show("no data", "warning", new ListCollection([{label: "OK"}]));
                 return;
             }
-            _editData.time= Number(_timeInput.text);
+            _editData.time=Number(_timeInput.text);
             if (onComplete != null)
                 onComplete.call(this, _editData);
             onCanel(null);
