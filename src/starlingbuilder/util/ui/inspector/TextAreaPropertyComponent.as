@@ -8,6 +8,8 @@ package starlingbuilder.util.ui.inspector
 
     import starling.events.Event;
 
+    import starlingbuilder.engine.format.StableJSONEncoder;
+
     public class TextAreaPropertyComponent extends BasePropertyComponent
     {
         protected var _textArea:TextArea;
@@ -62,7 +64,7 @@ package starlingbuilder.util.ui.inspector
             }
             else
             {
-                _textArea.text = JSON.stringify(value, null, "\t");
+                _textArea.text = StableJSONEncoder.stringify(value);
             }
         }
     }

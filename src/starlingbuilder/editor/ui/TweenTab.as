@@ -78,7 +78,7 @@ package starlingbuilder.editor.ui
             group.addChild(stopButton);
             addChild(group);
 
-            _tweenSettingBtn=FeathersUIUtil.buttonWithLabel("tween property Setting", onOpenSetting);
+            _tweenSettingBtn=FeathersUIUtil.buttonWithLabel("tween property editor", onOpenSetting);
             _tweenSettingBtn.isEnabled=false;
             addChild(_tweenSettingBtn);
         }

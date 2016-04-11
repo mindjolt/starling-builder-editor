@@ -29,7 +29,7 @@ package starlingbuilder.editor.ui
         {
             this._editData=editData;
             super();
-            title="Tween Attribute List";
+            title="Tween Property Editor";
         }
 
         override protected function createContent(container:LayoutGroup):void
