@@ -21,7 +21,8 @@
 
     public class TweenSettingPanel extends InfoPopup
     {
-        private static const _templeteGridData:Object={from: {"scaleX": 0, "scaleY": 0, "alpha": 0, "rotation": 0, "x": 0, "y": 0}, properties: {"scaleX": 0, "scaleY": 0, "repeatCount": 0, "reverse": true, "alpha": 0, "rotation": 0, "x": 0, "y": 0, "transition": Transitions.LINEAR}, delta: {"scaleX": 0, "scaleY": 0, "alpha": 0, "rotation": 0, "x": 0, "y": 0}};
+        public static const TIME:String = "time";
+        private static const TEMPLATE_GRID_DATA:Object={from: {"scaleX": 0, "scaleY": 0, "alpha": 0, "rotation": 0, "x": 0, "y": 0}, properties: {"scaleX": 0, "scaleY": 0, "repeatCount": 0, "reverse": true, "alpha": 0, "rotation": 0, "x": 0, "y": 0, "transition": Transitions.LINEAR}, delta: {"scaleX": 0, "scaleY": 0, "alpha": 0, "rotation": 0, "x": 0, "y": 0}};
         /**origin data*/
         private var _editData:Object;
         private var _dataGridDic:Dictionary=new Dictionary();
@@ -32,6 +33,7 @@
         {
             this._editData=editData;
             super();
+            title = "Edit Tween Property";
         }
 
         override protected function createContent(container:LayoutGroup):void
@@ -40,7 +42,7 @@
             closeBtn.width=40;
             this.headerProperties.rightItems=new <DisplayObject>[closeBtn];
 
-            for (var key:String in _templeteGridData)
+            for (var key:String in TEMPLATE_GRID_DATA)
             {
                 var layout:LayoutGroup=FeathersUIUtil.layoutGroupWithHorizontalLayout();
                 var label:Label=FeathersUIUtil.labelWithText(key + ":");
@@ -48,20 +50,20 @@
                 var dataGrid:KeyValueDataGrid=new KeyValueDataGrid();
                 layout.addChild(dataGrid);
                 dataGrid.width=200;
-                dataGrid.dataTemplate=_templeteGridData[key];
+                dataGrid.dataTemplate=TEMPLATE_GRID_DATA[key];
                 addChild(layout);
                 _dataGridDic[key]=dataGrid;
             }
 
             var timeGroup:LayoutGroup=FeathersUIUtil.layoutGroupWithHorizontalLayout();
-            var timelabel:Label=FeathersUIUtil.labelWithText("time");
+            var timelabel:Label=FeathersUIUtil.labelWithText(TIME);
             _timeInput=new TextInput();
             _timeInput.width=100;
             _timeInput.restrict="0-9.";
             timeGroup.addChild(timelabel);
             timeGroup.addChild(_timeInput);
             addChild(timeGroup);
-            _dataGridDic["time"]=_timeInput;
+            _dataGridDic[TIME]=_timeInput;
             var group:LayoutGroup=FeathersUIUtil.layoutGroupWithHorizontalLayout();
             var yesButton:Button=FeathersUIUtil.buttonWithLabel("Save", onYes);
             var noButton:Button=FeathersUIUtil.buttonWithLabel("Cancel", onCanel);
@@ -92,17 +94,13 @@
             for (var key:String in o)
             {
                 //time is special
-                if (_dataGridDic[key] != null && key != "time")
+                    if (_dataGridDic[key] != null && key != TIME)
                 {
                     (_dataGridDic[key] as KeyValueDataGrid).data=o[key];
                 }
-                else if (key="time")
+                else if (key == TIME)
                 {
                     (_dataGridDic[key] as TextInput).text=o.time.toString();
-                }
-                else
-                {
-                    throw new Error("the key is no exist", key);
                 }
             }
         }
@@ -111,14 +109,12 @@
         {
             if (_editData == null)
                 _editData=new Object();
-            var isHasData:Boolean;
             for (var key:String in _dataGridDic)
             {
-                if (key != "time")
+                if (key != TIME)
                 {
                     if (hasThing(_dataGridDic[key].data) == true)
                     {
-                        isHasData=true;
                         _editData[key]=_dataGridDic[key].data;
                     }
                     else
@@ -127,9 +123,9 @@
                     }
                 }
             }
-            if (!isHasData || (_timeInput.text == null || _timeInput.text == ""))
+            if ((_timeInput.text == null || _timeInput.text == ""))
             {
-                Alert.show("no data", "warning", new ListCollection([{label: "OK"}]));
+                Alert.show("Please input time", "warning", new ListCollection([{label: "OK"}]));
                 return;
             }
             _editData.time=Number(_timeInput.text);
