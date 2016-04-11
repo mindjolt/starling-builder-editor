@@ -7,33 +7,29 @@
  */
 package starlingbuilder.editor.ui
 {
-    import feathers.controls.Button;
-    import feathers.controls.Check;
-    import feathers.controls.ScrollContainer;
-
     import flash.utils.Dictionary;
 
+    import feathers.controls.Button;
+    import feathers.controls.Check;
+    import feathers.controls.LayoutGroup;
+    import feathers.controls.ScrollContainer;
+    import feathers.core.PopUpManager;
+    import feathers.layout.VerticalLayout;
+
     import starling.display.DisplayObject;
+    import starling.events.Event;
 
     import starlingbuilder.editor.UIEditorApp;
     import starlingbuilder.editor.controller.DocumentManager;
     import starlingbuilder.editor.data.TemplateData;
     import starlingbuilder.editor.events.DocumentEventType;
-    import starlingbuilder.engine.localization.ILocalization;
     import starlingbuilder.engine.util.ParamUtil;
     import starlingbuilder.util.feathers.FeathersUIUtil;
     import starlingbuilder.util.ui.inspector.PropertyPanel;
-    import starlingbuilder.util.ui.inspector.UIMapperEventType;
-
-    import feathers.controls.LayoutGroup;
-    import feathers.layout.VerticalLayout;
-
-    import starling.events.Event;
-    import starling.utils.AssetManager;
 
     public class TweenTab extends ScrollContainer
     {
-        public static const TWEEN_DATA:String = "tweenData";
+        public static const TWEEN_DATA:String="tweenData";
 
         private var _propertiesPanel:PropertyPanel;
         private var _tweenAllCheck:Check;
@@ -42,69 +38,82 @@ package starlingbuilder.editor.ui
 
         private var _params:Array;
 
+        private var _tweenSettingBtn:Button;
+        /**tween 面板设置*/
+        private var _tweenSettingListPanel:TweenSettingListPanel;
+
         public function TweenTab()
         {
-            _params = ParamUtil.getTweenParams(TemplateData.editor_template);
+            _params=ParamUtil.getTweenParams(TemplateData.editor_template);
 
-            _documentManager = UIEditorApp.instance.documentManager;
+            _documentManager=UIEditorApp.instance.documentManager;
             _documentManager.addEventListener(DocumentEventType.CHANGE, onChange);
 
-            width = 350;
+            width=350;
 
-            var layout:VerticalLayout = new VerticalLayout();
-            layout.paddingTop = layout.gap = 20;
-            this.layout = layout;
+            var layout:VerticalLayout=new VerticalLayout();
+            layout.paddingTop=layout.gap=20;
+            this.layout=layout;
 
-            layoutData = FeathersUIUtil.anchorLayoutData(60, 0);
+            layoutData=FeathersUIUtil.anchorLayoutData(60, 0);
 
             initUI();
         }
 
         private function initUI():void
         {
-            _propertiesPanel = new PropertyPanel({}, []);
+            _propertiesPanel=new PropertyPanel({}, []);
 
             addChild(_propertiesPanel);
 
-            _tweenAllCheck = new Check();
-            _tweenAllCheck.label = "tween all";
-            _tweenAllCheck.isSelected = true;
+            _tweenAllCheck=new Check();
+            _tweenAllCheck.label="tween all";
+            _tweenAllCheck.isSelected=true;
             addChild(_tweenAllCheck);
 
-            var group:LayoutGroup = FeathersUIUtil.layoutGroupWithHorizontalLayout();
-            var playButton:Button = FeathersUIUtil.buttonWithLabel("start", onPlay);
-            var stopButton:Button = FeathersUIUtil.buttonWithLabel("stop", onStop);
+            var group:LayoutGroup=FeathersUIUtil.layoutGroupWithHorizontalLayout();
+            var playButton:Button=FeathersUIUtil.buttonWithLabel("start", onPlay);
+            var stopButton:Button=FeathersUIUtil.buttonWithLabel("stop", onStop);
             group.addChild(playButton);
             group.addChild(stopButton);
             addChild(group);
+
+            _tweenSettingBtn=FeathersUIUtil.buttonWithLabel("tween property Setting", onOpenSetting);
+            _tweenSettingBtn.isEnabled=false;
+            addChild(_tweenSettingBtn);
         }
 
         private function onChange(event:Event):void
         {
             if (_documentManager.selectedObject)
             {
-                var target:Object = _documentManager.extraParamsDict[_documentManager.selectedObject];
+                var target:Object=_documentManager.extraParamsDict[_documentManager.selectedObject];
 
                 _propertiesPanel.reloadData(target, _params);
+
+                _tweenSettingBtn.isEnabled=true;
             }
             else
             {
                 _propertiesPanel.reloadData();
+
+                _tweenSettingBtn.isEnabled=false;
             }
         }
 
         private function findName(root:DisplayObject, object:DisplayObject, paramsDict:Dictionary):String
         {
-            var name:String = "";
+            var name:String="";
 
             while (object !== root)
             {
-                if (object == null) return null;
+                if (object == null)
+                    return null;
 
                 if (paramsDict[object])
-                    name = object.name + "." + name;
+                    name=object.name + "." + name;
 
-                object = object.parent;
+                object=object.parent;
             }
 
             return name.substring(0, name.length - 1);
@@ -112,17 +121,18 @@ package starlingbuilder.editor.ui
 
         private function onPlay(event:*):void
         {
-            var root:DisplayObject = _documentManager.root;
-            var selected:DisplayObject = _documentManager.selectedObject;
-            var paramsDict:Dictionary = _documentManager.extraParamsDict;
+            var root:DisplayObject=_documentManager.root;
+            var selected:DisplayObject=_documentManager.selectedObject;
+            var paramsDict:Dictionary=_documentManager.extraParamsDict;
             var names:Array;
 
             _documentManager.uiBuilder.tweenBuilder.stop(root, paramsDict);
 
             if (!_tweenAllCheck.isSelected)
             {
-                var name:String = findName(root, selected, paramsDict);
-                if (name) names = [name];
+                var name:String=findName(root, selected, paramsDict);
+                if (name)
+                    names=[name];
             }
 
             _documentManager.uiBuilder.tweenBuilder.start(root, paramsDict, names);
@@ -130,9 +140,26 @@ package starlingbuilder.editor.ui
 
         private function onStop(event:*):void
         {
-            var root:DisplayObject = _documentManager.root;
-            var paramsDict:Dictionary = _documentManager.extraParamsDict;
+            var root:DisplayObject=_documentManager.root;
+            var paramsDict:Dictionary=_documentManager.extraParamsDict;
             _documentManager.uiBuilder.tweenBuilder.stop(root);
+        }
+
+        private function onOpenSetting():void
+        {
+            var target:Object=_documentManager.extraParamsDict[_documentManager.selectedObject];
+            _tweenSettingListPanel=new TweenSettingListPanel(target["tweenData"]);
+            PopUpManager.addPopUp(_tweenSettingListPanel);
+            _tweenSettingListPanel.onComplete=onComplete;
+            function onComplete(resultObj:Object):void
+            {
+                trace("result= \n" + resultObj);
+                if (resultObj == null)
+                    delete target["tweenData"];
+                else
+                    target["tweenData"]=resultObj;
+                _propertiesPanel.reloadData(target, _params);
+            }
         }
 
         override public function dispose():void
