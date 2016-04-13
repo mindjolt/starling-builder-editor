@@ -22,7 +22,15 @@
     public class TweenSettingPanel extends InfoPopup
     {
         public static const TIME:String = "time";
-        private static const TEMPLATE_GRID_DATA:Object={from: {"scaleX": 0, "scaleY": 0, "alpha": 0, "rotation": 0, "x": 0, "y": 0}, properties: {"scaleX": 0, "scaleY": 0, "repeatCount": 0, "reverse": true, "alpha": 0, "rotation": 0, "x": 0, "y": 0, "transition": Transitions.LINEAR}, delta: {"scaleX": 0, "scaleY": 0, "alpha": 0, "rotation": 0, "x": 0, "y": 0}};
+        private static const TEMPLATE_GRID_DATA:Object=
+        {
+            properties: {scaleX:0, scaleY:0, repeatCount:0, reverse:true, delay:0, alpha:0, rotation:0, x:0, y: 0, transition:Transitions.LINEAR},
+            from: {scaleX:0, scaleY:0, alpha:0, rotation:0, x:0, y:0},
+            delta: {scaleX:0, scaleY:0, alpha:0, rotation:0, x:0, y:0},
+            fromDelta: {scaleX:0, scaleY:0, alpha:0, rotation:0, x:0, y:0}
+        };
+
+
         /**origin data*/
         private var _editData:Object;
         private var _dataGridDic:Dictionary=new Dictionary();
