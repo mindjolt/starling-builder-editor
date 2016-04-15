@@ -14,12 +14,12 @@ package starlingbuilder.util.history
     {
         public static const RESET:String = "reset";
 
-        private var _maxHistoryRecord:int = 15;
+        private var _maxHistoryRecord:int;
 
         private var _operations:Array = [];
         private var _currentIndex:int = -1;
 
-        public function HistoryManager(maxHistoryRecord:int = 15)
+        public function HistoryManager(maxHistoryRecord:int = 50)
         {
             _maxHistoryRecord = maxHistoryRecord;
         }
