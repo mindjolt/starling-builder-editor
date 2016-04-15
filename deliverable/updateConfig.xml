@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?> 
      <update xmlns="http://ns.adobe.com/air/framework/update/description/2.5"> 
-       <versionNumber>0.8.2</versionNumber>
-       <url>http://starlingbuilder.github.io/download/1.x/v0.8.2/starling-builder.air</url>
+       <versionNumber>0.8.3</versionNumber>
+       <url>http://starlingbuilder.github.io/download/1.x/v0.8.3/starling-builder.air</url>
        <description>
-[engine] Add LayoutLoader helper class
-[engine] Add ASDoc and documentation
-[editor] New UI components can be dragged to canvas
-[editor] Sort selectedObjects horizontally/vertically in PositionToolbar
-[editor] Add distribute horizontal/vertical buttons in PositionToolbar
-[editor] Add layout data compatibility check for Starling 2.0
-[editor] Add defaultHorizontalPivot and defaultVerticalPivot to SettingPopup
-[editor] Add shift key for multiple selection
-[editor] Fix ColorFilter limitation
+[engine] Add fromDelta field to DefaultTweenBuilder
+[engine] Add LayoutLoader.loadByClass()
+[engine] Add StageUtil.fitBackground() and StageUtil.fitNativeBackground()
+[editor] Added tween property editor to tween tab
+[template] Add scaleX and scaleY property for Scale3Image/Scale9Image/TiledImage
        </description>
     </update>
