@@ -15,7 +15,10 @@ package starlingbuilder.editor
     import starlingbuilder.editor.helper.AssetLoaderWithOptions;
     import starlingbuilder.editor.helper.CustomComponentHelper;
     import starlingbuilder.editor.helper.CustomThemeHelper;
+    import starlingbuilder.editor.helper.CustomThemeHelper;
+    import starlingbuilder.editor.helper.FileListingHelper;
     import starlingbuilder.editor.helper.KeyboardHelper;
+    import starlingbuilder.editor.helper.LoadSwfHelper;
     import starlingbuilder.editor.ui.CenterPanel;
     import starlingbuilder.editor.ui.LeftPanel;
     import starlingbuilder.editor.ui.MainMenu;
@@ -228,13 +231,16 @@ package starlingbuilder.editor
 
             menu.unregisterAll();
 
-            CustomComponentHelper.load(_assetManager, _workspaceDir, onComplete);
+            var libFiles:Array = FileListingHelper.getFileList(_workspaceDir, "libs", ["swf"]);
+            LoadSwfHelper.loads(libFiles, _assetManager, onComplete);
 
             function onComplete():void
             {
+                CustomComponentHelper.load(_workspaceDir);
+
                 UIEditorApp.instance.init();
 
-                CustomThemeHelper.load(_assetManager);
+                CustomThemeHelper.load();
 
                 KeyboardHelper.startKeyboard(UIEditorApp.instance.documentManager);
 

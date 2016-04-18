@@ -9,39 +9,26 @@ package starlingbuilder.editor.helper
 {
     import feathers.core.PopUpManager;
 
+    import flash.utils.getDefinitionByName;
+
     import starlingbuilder.editor.UIEditorApp;
     import starlingbuilder.editor.themes.BaseMetalWorksDesktopTheme2;
 
-    import flash.display.Loader;
-    import flash.events.Event;
-    import flash.system.LoaderContext;
-    import flash.utils.ByteArray;
-
     import starling.core.Starling;
-    import starling.utils.AssetManager;
 
     public class CustomThemeHelper
     {
-        public static const NAME:String = "EmbeddedTheme";
+        private static const NAME:String = "EmbeddedTheme";
 
-        public function CustomThemeHelper()
+        public static function load():void
         {
-        }
-
-        public static function load(assetManager:AssetManager):void
-        {
-            LoadSwfHelper.load(NAME, assetManager, onComplete);
-
-            function onComplete(loader:Loader):void{
-
-                if (loader)
-                {
-                    var cls:Class = loader.contentLoaderInfo.applicationDomain.getDefinition(NAME) as Class;
-                    new cls.theme(UIEditorApp.instance.documentManager);
-                    initializeStage();
-                }
-
+            try
+            {
+                var cls:Class = getDefinitionByName(NAME) as Class;
+                new cls.theme(false, UIEditorApp.instance.documentManager);
+                initializeStage();
             }
+            catch (e:Error){}
         }
 
         protected static function initializeStage():void
