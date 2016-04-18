@@ -1374,7 +1374,8 @@ package starlingbuilder.editor.controller
 
         private function setDefaultPivot(obj:DisplayObject):void
         {
-            DisplayObjectUtil.movePivotToAlign(obj, _setting.defaultHorizontalPivot, _setting.defaultVerticalPivot);
+            if (obj.pivotX == 0 && obj.pivotY == 0)
+                DisplayObjectUtil.movePivotToAlign(obj, _setting.defaultHorizontalPivot, _setting.defaultVerticalPivot);
         }
 
         public function snapshot():void
