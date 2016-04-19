@@ -60,6 +60,7 @@ package starlingbuilder.editor
             _starling.enableErrorChecking = false;
             _starling.showStatsAt(Align.RIGHT, Align.TOP);
             _starling.supportHighResolutions = true;
+            _starling.skipUnchangedFrames = true;
 
             _starling.stage3D.addEventListener(Event.CONTEXT3D_CREATE, _start);
 
