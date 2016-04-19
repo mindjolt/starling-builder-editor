@@ -25,7 +25,7 @@ package starlingbuilder.editor.helper
             try
             {
                 var cls:Class = getDefinitionByName(NAME) as Class;
-                new cls.theme(false, UIEditorApp.instance.documentManager);
+                new cls.theme(UIEditorApp.instance.documentManager);
                 initializeStage();
             }
             catch (e:Error){}
