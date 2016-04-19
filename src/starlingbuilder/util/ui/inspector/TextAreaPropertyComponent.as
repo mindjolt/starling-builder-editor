@@ -8,6 +8,8 @@ package starlingbuilder.util.ui.inspector
 
     import starling.events.Event;
 
+    import starlingbuilder.engine.format.StableJSONEncoder;
+
     public class TextAreaPropertyComponent extends BasePropertyComponent
     {
         protected var _textArea:TextArea;
@@ -17,7 +19,8 @@ package starlingbuilder.util.ui.inspector
             super(propertyRetriver, param);
 
             _textArea = new TextArea();
-            _textArea.maxWidth = 200;
+            _textArea.maxWidth = 400;
+			_textArea.minWidth = 300;
 
             addChild(_textArea);
 
@@ -61,7 +64,7 @@ package starlingbuilder.util.ui.inspector
             }
             else
             {
-                _textArea.text = JSON.stringify(value);
+                _textArea.text = StableJSONEncoder.stringify(value);
             }
         }
     }

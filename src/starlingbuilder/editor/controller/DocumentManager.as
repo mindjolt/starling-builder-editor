@@ -13,6 +13,7 @@ package starlingbuilder.editor.controller
     import feathers.layout.AnchorLayout;
 
     import flash.ui.Keyboard;
+    import flash.utils.getDefinitionByName;
 
     import starlingbuilder.editor.Setting;
     import starlingbuilder.editor.UIEditorScreen;
@@ -135,7 +136,15 @@ package starlingbuilder.editor.controller
 
             _assetMediator = new AssetMediator(_assetManager);
 
-            _tweenBuilder = new DefaultTweenBuilder();
+            if (TemplateData.editor_template.uiBuilder && TemplateData.editor_template.uiBuilder.tweenBuilder)
+            {
+                var cls:Class = getDefinitionByName(TemplateData.editor_template.uiBuilder.tweenBuilder) as Class;
+                _tweenBuilder = new cls();
+            }
+            else
+            {
+                _tweenBuilder = new DefaultTweenBuilder();
+            }
 
             _uiBuilder = new UIBuilder(_assetMediator, true, TemplateData.editor_template, _localizationManager.localization, _tweenBuilder);
             _uiBuilderForGame = new UIBuilder(_assetMediator, false, TemplateData.editor_template, _localizationManager.localization, _tweenBuilder);
@@ -1365,7 +1374,8 @@ package starlingbuilder.editor.controller
 
         private function setDefaultPivot(obj:DisplayObject):void
         {
-            DisplayObjectUtil.movePivotToAlign(obj, _setting.defaultHorizontalPivot, _setting.defaultVerticalPivot);
+            if (obj.pivotX == 0 && obj.pivotY == 0)
+                DisplayObjectUtil.movePivotToAlign(obj, _setting.defaultHorizontalPivot, _setting.defaultVerticalPivot);
         }
 
         public function snapshot():void

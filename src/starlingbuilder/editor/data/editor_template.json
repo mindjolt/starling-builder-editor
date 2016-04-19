@@ -528,8 +528,14 @@
         ]
     },
 
+    "uiBuilder":
+    {
+        "localizationWrapper":"starlingbuilder.editor.localization.DefaultLocalizationFileWrapper",
+        "tweenBuilder":"starlingbuilder.engine.tween.DefaultTweenBuilder"
+    },
+
     "version":1.0,
 
-    "revision":27
+    "revision":10000
 
 }
