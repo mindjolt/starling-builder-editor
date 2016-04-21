@@ -298,7 +298,7 @@ package starlingbuilder.editor.controller
                 dy /= scale;
                 return move(dx, dy);
             }, function():void{
-
+                historyManager.change();
                 endMove();
             });
 

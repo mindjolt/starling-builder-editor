@@ -7,15 +7,15 @@
  */
 package starlingbuilder.editor.helper
 {
-    import starlingbuilder.editor.controller.DocumentManager;
+import flash.ui.Keyboard;
 
-    import flash.ui.Keyboard;
+import starling.core.Starling;
+import starling.display.Stage;
+import starling.events.KeyboardEvent;
 
-    import starling.core.Starling;
-    import starling.display.Stage;
-    import starling.events.KeyboardEvent;
+import starlingbuilder.editor.controller.DocumentManager;
 
-    public class KeyboardHelper
+public class KeyboardHelper
     {
         public function KeyboardHelper()
         {
@@ -25,9 +25,10 @@ package starlingbuilder.editor.helper
         {
             var stage:Stage = Starling.current.stage;
 
+            stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
             stage.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
 
-            function onKeyUp(event:KeyboardEvent):void
+            function onKeyDown(event:KeyboardEvent):void
             {
                 switch (event.keyCode)
                 {
@@ -44,6 +45,11 @@ package starlingbuilder.editor.helper
                         if (documentManager.hasFocus) documentManager.move(1, 0, true);
                         break;
                 }
+            }
+
+            function onKeyUp(event:KeyboardEvent):void
+            {
+                if (documentManager.hasFocus) documentManager.historyManager.change();;
             }
         }
 
