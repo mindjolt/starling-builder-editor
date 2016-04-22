@@ -534,7 +534,8 @@
             {"name":"constructorParams", "component":"textArea", "disable":"true"},
             {"name":"customParams.customComponentClass", "label":"customComponentClass", "component":"textInput", "width":200, "default_value":"null"},
             {"name":"customParams.forEditor", "label":"forEditor", "component":"check", "default_value":false},
-            {"name":"customParams.localizeKey", "label":"localizeKey", "default_value":"null"}
+            {"name":"customParams.localizeKey", "label":"localizeKey", "default_value":"null"},
+            {"name":"customParams.tag", "label":"tag", "default_value":""}
         ],
 
         "tweenParams":[
@@ -573,6 +574,6 @@
 
     "version":1.0,
 
-    "revision":29
+    "revision":30
 
 }
