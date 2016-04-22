@@ -7,10 +7,12 @@
  */
 package starlingbuilder.util.history
 {
-    import starling.events.Event;
-    import starling.events.EventDispatcher;
+import starling.events.Event;
+import starling.events.EventDispatcher;
 
-    public class HistoryManager extends EventDispatcher
+import starlingbuilder.editor.history.OperationType;
+
+public class HistoryManager extends EventDispatcher
     {
         public static const RESET:String = "reset";
 
@@ -62,6 +64,13 @@ package starlingbuilder.util.history
                 --_currentIndex;
             }
 
+            if(operation.type != OperationType.MOVE){
+                change();
+            }
+
+        }
+
+        public function change():void{
             dispatchEventWith(Event.CHANGE);
         }
 

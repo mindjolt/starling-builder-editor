@@ -7,15 +7,15 @@
  */
 package starlingbuilder.editor.helper
 {
-    import starlingbuilder.editor.controller.DocumentManager;
+import flash.ui.Keyboard;
 
-    import flash.ui.Keyboard;
+import starling.core.Starling;
+import starling.display.Stage;
+import starling.events.KeyboardEvent;
 
-    import starling.core.Starling;
-    import starling.display.Stage;
-    import starling.events.KeyboardEvent;
+import starlingbuilder.editor.controller.DocumentManager;
 
-    public class KeyboardHelper
+public class KeyboardHelper
     {
         public function KeyboardHelper()
         {
@@ -25,25 +25,34 @@ package starlingbuilder.editor.helper
         {
             var stage:Stage = Starling.current.stage;
 
+            stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
             stage.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
-
-            function onKeyUp(event:KeyboardEvent):void
+            var isMoved:Boolean = false;
+            function onKeyDown(event:KeyboardEvent):void
             {
                 switch (event.keyCode)
                 {
                     case Keyboard.UP:
-                        if (documentManager.hasFocus) documentManager.move(0, -1, true);
+                        if (documentManager.hasFocus) isMoved = documentManager.move(0, -1, isMoved);
                         break;
                     case Keyboard.DOWN:
-                        if (documentManager.hasFocus) documentManager.move(0, 1, true);
+                        if (documentManager.hasFocus) isMoved = documentManager.move(0, 1, isMoved);
                         break;
                     case Keyboard.LEFT:
-                        if (documentManager.hasFocus) documentManager.move(-1, 0, true);
+                        if (documentManager.hasFocus) isMoved = documentManager.move(-1, 0, isMoved);
                         break;
                     case Keyboard.RIGHT:
-                        if (documentManager.hasFocus) documentManager.move(1, 0, true);
+                        if (documentManager.hasFocus) isMoved = documentManager.move(1, 0, isMoved);
                         break;
                 }
+
+//                event.stopPropagation();
+            }
+
+            function onKeyUp(event:KeyboardEvent):void
+            {
+                if (isMoved && documentManager.hasFocus) documentManager.historyManager.change();
+//                event.stopPropagation();
             }
         }
 

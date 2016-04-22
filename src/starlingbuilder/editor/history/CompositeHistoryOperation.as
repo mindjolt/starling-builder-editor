@@ -7,11 +7,11 @@
  */
 package starlingbuilder.editor.history
 {
-    import starlingbuilder.editor.UIEditorApp;
-    import starlingbuilder.editor.controller.DocumentManager;
-    import starlingbuilder.util.history.IHistoryOperation;
+import starlingbuilder.editor.UIEditorApp;
+import starlingbuilder.editor.controller.DocumentManager;
+import starlingbuilder.util.history.IHistoryOperation;
 
-    public class CompositeHistoryOperation extends AbstractHistoryOperation
+public class CompositeHistoryOperation extends AbstractHistoryOperation
     {
         private var _operations:Array;
         private var _documentManager:DocumentManager;
@@ -23,7 +23,7 @@ package starlingbuilder.editor.history
             var type:String;
             _operations = operations;
             if (_operations && _operations.length)
-                type = _operations[0];
+                type = _operations[0].type;
             super(type);
         }
 
