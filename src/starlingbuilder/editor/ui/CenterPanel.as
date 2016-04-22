@@ -14,6 +14,8 @@ package starlingbuilder.editor.ui
 
     import flash.geom.Point;
 
+    import starling.events.KeyboardEvent;
+
     import starlingbuilder.editor.UIEditorApp;
     import starlingbuilder.editor.UIEditorScreen;
     import starlingbuilder.editor.controller.DocumentManager;
@@ -116,5 +118,10 @@ package starlingbuilder.editor.ui
         {
         }
 
+        override protected function stage_keyDownHandler(event:KeyboardEvent):void
+        {
+            if(_documentManager.selectedIndex == -1)
+                super.stage_keyDownHandler(event);
+        }
     }
 }
