@@ -7,46 +7,45 @@
  */
 package starlingbuilder.editor.ui
 {
-    import starlingbuilder.editor.UIEditorApp;
-    import starlingbuilder.editor.UIEditorScreen;
-    import starlingbuilder.editor.controller.DocumentManager;
-    import starlingbuilder.editor.events.DocumentEventType;
-    import starlingbuilder.editor.helper.NativeDragAndDropHelper;
-    import starlingbuilder.editor.serialize.LoadExternalDocumentMediator;
-    import starlingbuilder.editor.serialize.UIEditorDocumentMediator;
-    import starlingbuilder.util.feathers.FeathersUIUtil;
-    import starlingbuilder.util.feathers.popup.InfoPopup;
-    import starlingbuilder.util.history.HistoryManager;
-    import starlingbuilder.util.history.OpenRecentManager;
-    import starlingbuilder.util.serialize.DocumentSerializer;
-    import starlingbuilder.util.serialize.IDocumentMediator;
+import feathers.controls.Button;
+import feathers.controls.ButtonGroup;
+import feathers.controls.LayoutGroup;
+import feathers.controls.TextInput;
+import feathers.core.PopUpManager;
+import feathers.data.ListCollection;
+import feathers.events.FeathersEventType;
+import feathers.layout.HorizontalLayout;
 
-    import feathers.controls.Button;
-    import feathers.controls.ButtonGroup;
-    import feathers.controls.LayoutGroup;
-    import feathers.controls.TextInput;
-    import feathers.core.PopUpManager;
-    import feathers.data.ListCollection;
-    import feathers.events.FeathersEventType;
-    import feathers.layout.HorizontalLayout;
+import flash.display.NativeMenu;
+import flash.display.NativeMenuItem;
+import flash.display.NativeWindow;
+import flash.events.Event;
+import flash.filesystem.File;
+import flash.geom.Point;
+import flash.net.URLRequest;
+import flash.net.navigateToURL;
+import flash.utils.getTimer;
 
-    import flash.display.NativeMenu;
+import starling.core.Starling;
+import starling.display.Sprite;
+import starling.events.Event;
+import starling.utils.AssetManager;
 
-    import flash.display.NativeMenuItem;
-    import flash.display.NativeWindow;
-    import flash.events.Event;
-    import flash.filesystem.File;
-    import flash.geom.Point;
-    import flash.net.URLRequest;
-    import flash.net.navigateToURL;
+import starlingbuilder.editor.UIEditorApp;
+import starlingbuilder.editor.UIEditorScreen;
+import starlingbuilder.editor.controller.DocumentManager;
+import starlingbuilder.editor.events.DocumentEventType;
+import starlingbuilder.editor.serialize.LoadExternalDocumentMediator;
+import starlingbuilder.editor.serialize.UIEditorDocumentMediator;
+import starlingbuilder.util.feathers.FeathersUIUtil;
+import starlingbuilder.util.feathers.popup.InfoPopup;
+import starlingbuilder.util.history.HistoryManager;
+import starlingbuilder.util.history.OpenRecentManager;
+import starlingbuilder.util.serialize.DocumentSerializer;
+import starlingbuilder.util.serialize.IDocumentMediator;
+import starlingbuilder.util.ui.inspector.ColorPicker;
 
-    import starling.core.Starling;
-    import starling.display.Sprite;
-    import starling.events.Event;
-    import starling.utils.AssetManager;
-    import starlingbuilder.util.ui.inspector.ColorPicker;
-
-    public class Toolbar extends LayoutGroup
+public class Toolbar extends LayoutGroup
     {
         public static const BROWSE:String = "browse";
         public static const RELOAD:String = "reload";
@@ -463,9 +462,10 @@ package starlingbuilder.editor.ui
         {
             _documentManager.snapshot();
         }
-
+        private var _timeNum:Number = 0;
         private function updateHistoryManager():void
         {
+            _timeNum = getTimer();
             var hint:String = _documentManager.historyManager.getNextRedoHint();
             var item:NativeMenuItem = MainMenu.instance.getItemByName(MainMenu.REDO);
             if (hint)
@@ -478,7 +478,8 @@ package starlingbuilder.editor.ui
                 item.label = MainMenu.REDO;
                 item.enabled = false;
             }
-
+            trace("updateHistoryManager1: ", (getTimer() - _timeNum));
+            _timeNum = getTimer();
             hint = _documentManager.historyManager.getNextUndoHint();
             item = MainMenu.instance.getItemByName(MainMenu.UNDO);
             if (hint)
@@ -491,7 +492,8 @@ package starlingbuilder.editor.ui
                 item.label = MainMenu.UNDO;
                 item.enabled = false;
             }
-
+            trace("updateHistoryManager2: ", (getTimer() - _timeNum));
+            _timeNum = getTimer();
         }
 
         private function registerMenuActions():void

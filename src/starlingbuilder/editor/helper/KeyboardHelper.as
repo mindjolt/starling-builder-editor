@@ -27,29 +27,29 @@ public class KeyboardHelper
 
             stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
             stage.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
-
+            var isMoved:Boolean = false;
             function onKeyDown(event:KeyboardEvent):void
             {
                 switch (event.keyCode)
                 {
                     case Keyboard.UP:
-                        if (documentManager.hasFocus) documentManager.move(0, -1, true);
+                        if (documentManager.hasFocus) isMoved = documentManager.move(0, -1, isMoved);
                         break;
                     case Keyboard.DOWN:
-                        if (documentManager.hasFocus) documentManager.move(0, 1, true);
+                        if (documentManager.hasFocus) isMoved = documentManager.move(0, 1, isMoved);
                         break;
                     case Keyboard.LEFT:
-                        if (documentManager.hasFocus) documentManager.move(-1, 0, true);
+                        if (documentManager.hasFocus) isMoved = documentManager.move(-1, 0, isMoved);
                         break;
                     case Keyboard.RIGHT:
-                        if (documentManager.hasFocus) documentManager.move(1, 0, true);
+                        if (documentManager.hasFocus) isMoved = documentManager.move(1, 0, isMoved);
                         break;
                 }
             }
 
             function onKeyUp(event:KeyboardEvent):void
             {
-                if (documentManager.hasFocus) documentManager.historyManager.change();;
+                if (isMoved && documentManager.hasFocus) documentManager.historyManager.change();
             }
         }
 

@@ -10,6 +10,8 @@ package starlingbuilder.util.history
 import starling.events.Event;
 import starling.events.EventDispatcher;
 
+import starlingbuilder.editor.history.OperationType;
+
 public class HistoryManager extends EventDispatcher
     {
         public static const RESET:String = "reset";
@@ -60,6 +62,10 @@ public class HistoryManager extends EventDispatcher
                 var op:IHistoryOperation = _operations.shift();
                 //op.dispose(); //We can't dispose it in case the target is still on the stage or on other operations
                 --_currentIndex;
+            }
+
+            if(operation.type != OperationType.MOVE){
+                change();
             }
 
         }
