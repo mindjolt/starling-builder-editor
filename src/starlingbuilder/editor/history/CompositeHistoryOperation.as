@@ -23,7 +23,7 @@ package starlingbuilder.editor.history
             var type:String;
             _operations = operations;
             if (_operations && _operations.length)
-                type = _operations[0];
+                type = _operations[0].type;
             super(type);
         }
 
