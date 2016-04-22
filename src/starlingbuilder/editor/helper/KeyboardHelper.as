@@ -45,11 +45,14 @@ public class KeyboardHelper
                         if (documentManager.hasFocus) isMoved = documentManager.move(1, 0, isMoved);
                         break;
                 }
+
+//                event.stopPropagation();
             }
 
             function onKeyUp(event:KeyboardEvent):void
             {
                 if (isMoved && documentManager.hasFocus) documentManager.historyManager.change();
+//                event.stopPropagation();
             }
         }
 

@@ -7,27 +7,25 @@
  */
 package starlingbuilder.editor.ui
 {
-    import feathers.dragDrop.DragData;
-    import feathers.dragDrop.DragDropManager;
-    import feathers.dragDrop.IDropTarget;
-    import feathers.events.DragDropEvent;
+import feathers.controls.LayoutGroup;
+import feathers.controls.ScrollContainer;
+import feathers.dragDrop.DragData;
+import feathers.dragDrop.DragDropManager;
+import feathers.dragDrop.IDropTarget;
+import feathers.events.DragDropEvent;
 
-    import flash.geom.Point;
+import flash.geom.Point;
 
-    import starlingbuilder.editor.UIEditorApp;
-    import starlingbuilder.editor.UIEditorScreen;
-    import starlingbuilder.editor.controller.DocumentManager;
+import starling.display.Sprite;
+import starling.events.KeyboardEvent;
+import starling.utils.AssetManager;
 
-    import feathers.controls.LayoutGroup;
-    import feathers.controls.ScrollContainer;
+import starlingbuilder.editor.UIEditorApp;
+import starlingbuilder.editor.UIEditorScreen;
+import starlingbuilder.editor.controller.DocumentManager;
+import starlingbuilder.editor.helper.DragToCanvasHelper;
 
-    import starling.display.Sprite;
-    import starling.events.Event;
-    import starling.utils.AssetManager;
-
-    import starlingbuilder.editor.helper.DragToCanvasHelper;
-
-    public class CenterPanel extends ScrollContainer implements IDropTarget
+public class CenterPanel extends ScrollContainer implements IDropTarget
     {
         private var _group:LayoutGroup;
 
@@ -114,6 +112,12 @@ package starlingbuilder.editor.ui
 
         private function onDragExit(event:DragDropEvent, dragData:DragData):void
         {
+        }
+
+        override protected function stage_keyDownHandler(event:KeyboardEvent):void {
+            if(_documentManager.selectedIndex == -1){
+                super.stage_keyDownHandler(event);
+            }
         }
 
     }
