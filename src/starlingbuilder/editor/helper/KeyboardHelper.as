@@ -25,9 +25,9 @@ package starlingbuilder.editor.helper
         {
             var stage:Stage = Starling.current.stage;
 
-            stage.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
+            stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 
-            function onKeyUp(event:KeyboardEvent):void
+            function onKeyDown(event:KeyboardEvent):void
             {
                 switch (event.keyCode)
                 {
