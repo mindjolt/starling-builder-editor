@@ -26,6 +26,7 @@ package starlingbuilder.util.history
 
         public function add(operation:IHistoryOperation):void
         {
+            var hasChanged:Boolean = false;
 
             //cut off history if it's not on the end
             while (_currentIndex < _operations.length - 1)
@@ -49,6 +50,7 @@ package starlingbuilder.util.history
             else
             {
                 trace(operation.info());
+                hasChanged = true;
             }
 
             _operations.push(operation);
@@ -62,7 +64,8 @@ package starlingbuilder.util.history
                 --_currentIndex;
             }
 
-            dispatchEventWith(Event.CHANGE);
+            if (hasChanged)
+                dispatchEventWith(Event.CHANGE);
         }
 
         public function undo():void
