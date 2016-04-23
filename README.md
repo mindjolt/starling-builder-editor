@@ -9,8 +9,9 @@ It’s built on top of Starling/Feathers UI framework. You can edit your user in
 There are 2 parts in Starling Builder: the [engine](https://github.com/mindjolt/starling-builder-engine) and [editor](https://github.com/mindjolt/starling-builder-editor). The engine is a module responsible for converting layout files into display objects. Both the game and the editor rely on it. The editor is a standalone application where you create your UI layouts.
 
 Normally you don't need to check out the editor source unless you want to expand the tool,
-you can download the latest binary at http://cache.mindjolt.com/starling-builder/v0.8.0/starling-builder.air
-and the demo workspace at http://cache.mindjolt.com/starling-builder/v0.8.0/demo_workspace.zip
+you can download the latest editor app and demo workspace at http://starlingbuilder.github.io/
+
+There are 2 versions of the editors (Starling 1.x version and Starling 2.x version), please make sure to download the one you are planning to use in your project.
 
 ####Check out editor repository:
 ```
@@ -18,7 +19,7 @@ git clone https://github.com/mindjolt/starling-builder-editor --recursive
 ```
 
 
-You will need to checkout the engine repo to put it into your game. It also contains a demo project, available at http://cache.mindjolt.com/starling-builder/demo/demo_web.html
+You will need to checkout the engine repo to put it into your game. It also contains a demo project, available at http://starlingbuilder.github.io/demo/demo_web.html
 
 ####Check out engine repository:
 ```

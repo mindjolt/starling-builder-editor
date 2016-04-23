@@ -429,7 +429,8 @@
             "cls":"starling.filters.BlurFilter",
             "params":[
                 {"name":"blurX", "default_value":1},
-                {"name":"blurY", "default_value":1}
+                {"name":"blurY", "default_value":1},
+                {"name":"resolution", "component":"slider", "min":0.1, "max":1, "step":0.01}
             ]
         },
 
@@ -438,7 +439,8 @@
             "params":[
                 {"name":"color", "component":"colorPicker", "default_value":16776960},
                 {"name":"alpha", "default_value":1},
-                {"name":"blur", "default_value":1}
+                {"name":"blur", "default_value":1},
+                {"name":"resolution", "component":"slider", "min":0.1, "max":1, "step":0.01}
             ]
         },
 
@@ -449,7 +451,8 @@
                 {"name":"alpha", "default_value":1},
                 {"name":"distance", "default_value":4},
                 {"name":"angle", "default_value":0.785},
-                {"name":"blur", "default_value":1}
+                {"name":"blur", "default_value":1},
+                {"name":"resolution", "component":"slider", "min":0.1, "max":1, "step":0.01}
             ]
         },
 
@@ -497,7 +500,8 @@
             {"name":"constructorParams", "component":"textArea", "disable":"true"},
             {"name":"customParams.customComponentClass", "label":"customComponentClass", "component":"textInput", "width":200, "default_value":"null"},
             {"name":"customParams.forEditor", "label":"forEditor", "component":"check", "default_value":false},
-            {"name":"customParams.localizeKey", "label":"localizeKey", "default_value":"null"}
+            {"name":"customParams.localizeKey", "label":"localizeKey", "default_value":"null"},
+            {"name":"customParams.tag", "label":"tag", "default_value":""}
         ],
 
         "tweenParams":[
@@ -536,6 +540,6 @@
 
     "version":1.0,
 
-    "revision":10000
+    "revision":10001
 
 }

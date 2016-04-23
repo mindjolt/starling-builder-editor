@@ -46,7 +46,9 @@ package starlingbuilder.engine
                                 "value":50
                             }
                         ],
-                        "customParams":{},
+                        "customParams":{
+                            "tag":"abc"
+                        },
                         "params":{
                             "color":6804084,
                             "name":"_quad",
@@ -56,7 +58,9 @@ package starlingbuilder.engine
                     }
                 ],
                 "cls":"starling.display.Sprite",
-                "customParams":{},
+                "customParams":{
+                    "tag":"abc"
+                },
                 "params":{
                     "name":"root"
                 }
@@ -284,6 +288,23 @@ package starlingbuilder.engine
             var sprite:Sprite = _uiBuilder.create(_textLayout, false, object) as Sprite;
 
             assertTrue(object.text == null);
+        }
+
+        [Test]
+        public function shouldFindByTag():void
+        {
+            var res:Object = _uiBuilder.load(_quadLayout);
+            var params:Dictionary = res.params;
+
+            var array:Array;
+
+            array = UIBuilder.findByTag("abc", params);
+            assertEquals(array.length, 2);
+            assertTrue(array[0] is DisplayObject);
+            assertTrue(array[1] is DisplayObject);
+
+            array = UIBuilder.findByTag("ab", params);
+            assertEquals(array.length, 0);
         }
     }
 }
