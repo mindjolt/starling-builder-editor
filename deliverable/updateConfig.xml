@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?> 
      <update xmlns="http://ns.adobe.com/air/framework/update/description/2.5"> 
-       <versionNumber>0.8.3</versionNumber>
-       <url>http://starlingbuilder.github.io/download/1.x/v0.8.3/starling-builder.air</url>
+       <versionNumber>0.8.4</versionNumber>
+       <url>http://starlingbuilder.github.io/download/1.x/v0.8.4/starling-builder.air</url>
        <description>
-[engine] Add fromDelta field to DefaultTweenBuilder
-[engine] Add LayoutLoader.loadByClass()
-[engine] Add StageUtil.fitBackground() and StageUtil.fitNativeBackground()
-[editor] Added tween property editor to tween tab
-[template] Add scaleX and scaleY property for Scale3Image/Scale9Image/TiledImage
+[engine] UIElementFactory set property order is now deterministic
+[engine] Add UIBuilder.findByTag()
+[editor] Fix performance problem when dragging UI component on canvas
+[editor] Arrow key UX improvement
+[editor] Localization and TweenBuilder implementation become configurable through editor_template.json
+[template] Add a tag field to customParams
+[extensions] Add new custom UI component: Gauge
        </description>
     </update>
