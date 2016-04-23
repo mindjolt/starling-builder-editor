@@ -1,5 +1,14 @@
 # Starling Builder Release Notes:
 
+## 0.8.4
+* [engine] UIElementFactory set property order is now deterministic
+* [engine] Add UIBuilder.findByTag()
+* [editor] Fix performance problem when dragging UI component on canvas
+* [editor] Arrow key UX improvement
+* [editor] Localization and TweenBuilder implementation become configurable through editor_template.json
+* [template] Add a tag field to customParams
+* [extensions] Add new custom UI component: Gauge
+
 ## 0.8.3
 * [engine] Add fromDelta field to DefaultTweenBuilder
 * [engine] Add LayoutLoader.loadByClass()
