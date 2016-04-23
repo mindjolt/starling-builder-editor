@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?> 
      <update xmlns="http://ns.adobe.com/air/framework/update/description/2.5"> 
-       <versionNumber>2.0.1</versionNumber>
-       <url>http://starlingbuilder.github.io/download/2.x/v2.0.1/starling-builder.air</url>
+       <versionNumber>2.0.2</versionNumber>
+       <url>http://starlingbuilder.github.io/download/2.x/v2.0.2/starling-builder.air</url>
        <description>
-[editor] Build with Starling 2.0 and Feathers UI 3.0
-[editor] Various bug fixes
+[engine] UIElementFactory set property order is now deterministic
+[engine] Add UIBuilder.findByTag()
+[editor] Fix performance problem when dragging UI component on canvas
+[editor] Arrow key UX improvement
+[editor] Localization and TweenBuilder implementation become configurable through editor_template.json
+[template] Add a tag field to customParams
+[extensions] Add new custom UI component: Gauge
        </description>
     </update>
