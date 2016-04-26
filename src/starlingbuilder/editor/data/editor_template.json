@@ -41,13 +41,11 @@
         {
             "cls":"starling.display.Button",
             "params":[
-                {"name":"width", "min":0, "link":true},
-                {"name":"height", "min":0, "link":true},
+                {"name":"width", "min":0},
+                {"name":"height", "min":0},
                 {"name":"text", "default_value":""},
                 {"name":"textFormat", "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"starlingbuilder.editor.ui.DefaultEditPropertyPopup",
                     "supportedClasses":["starling.text.TextFormat"]},
-                {"name":"scaleX", "step":0.01, "default_value":1},
-                {"name":"scaleY", "step":0.01, "default_value":1},
                 {"name":"scale9Grid", "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"starlingbuilder.editor.ui.ImageGridPopup",
                     "supportedClasses":["null", "flash.geom.Rectangle"]},
                 {"name":"upState", "read_only":true, "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"starlingbuilder.editor.ui.TextureConstructorPopup"},
@@ -540,6 +538,6 @@
 
     "version":1.0,
 
-    "revision":10001
+    "revision":10002
 
 }
