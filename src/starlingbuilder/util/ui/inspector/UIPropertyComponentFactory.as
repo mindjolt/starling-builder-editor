@@ -3,7 +3,7 @@
  */
 package starlingbuilder.util.ui.inspector
 {
-    import org.as3commons.lang.ObjectUtils;
+    import starlingbuilder.engine.UIBuilder;
 
     public class UIPropertyComponentFactory
     {
@@ -44,7 +44,7 @@ package starlingbuilder.util.ui.inspector
                 _componentMapping[id] = DEFAULT_COMPONENT_MAPPING[id];
             }
 
-            _itemsMapping = ObjectUtils.clone(DEFAULT_ITEMS_MAPPING);
+            _itemsMapping = UIBuilder.cloneObject(DEFAULT_ITEMS_MAPPING);
         }
 
         public function registerComponentMapping(type:String, cls:Class):void
