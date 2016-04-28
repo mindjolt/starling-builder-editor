@@ -68,7 +68,8 @@
                 {"name":"autoScale", "component":"check", "default_value":false},
                 {"name":"autoSize", "component":"pickerList", "options":["none", "horizontal", "vertical", "bothDirections"], "default_value":"none"},
                 {"name":"hAlign", "component":"pickerList", "options":["left", "center", "right"], "default_value":"center"},
-                {"name":"vAlign", "component":"pickerList", "options":["top", "center", "bottom"], "default_value":"center"}
+                {"name":"vAlign", "component":"pickerList", "options":["top", "center", "bottom"], "default_value":"center"},
+                {"name":"leading", "default_value":0}
             ],
             "constructorParams":
             [
@@ -574,6 +575,6 @@
 
     "version":1.0,
 
-    "revision":30
+    "revision":31
 
 }
