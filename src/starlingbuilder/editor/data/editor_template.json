@@ -68,7 +68,9 @@
                 {"name":"autoScale", "component":"check", "default_value":false},
                 {"name":"autoSize", "component":"pickerList", "options":["none", "horizontal", "vertical", "bothDirections"], "default_value":"none"},
                 {"name":"format", "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"starlingbuilder.editor.ui.DefaultEditPropertyPopup",
-                    "supportedClasses":["starling.text.TextFormat"]}],
+                    "supportedClasses":["starling.text.TextFormat"]},
+                {"name":"batchable", "component":"check", "default_value":false}
+            ],
             "constructorParams":
             [
                 {"value":200},
