@@ -225,6 +225,15 @@
         },
 
         {
+            "cls":"feathers.controls.ButtonGroup",
+            "params":[
+                {"name":"dataProvider", "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"starlingbuilder.editor.ui.ListCollectionPopup"},
+                {"name":"direction", "component":"pickerList", "options":["vertical", "horizontal"], "default_value":"vertical"}
+            ],
+            "tag":"feathers"
+        },
+
+        {
             "cls":"feathers.controls.Check",
             "params":[
                 {"name":"label"}
@@ -244,6 +253,7 @@
         {
             "cls":"feathers.controls.GroupedList",
             "params":[
+                {"name":"dataProvider", "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"starlingbuilder.editor.ui.HierarchicalCollectionPopup"}
             ],
             "tag":"feathers"
         },
@@ -277,11 +287,10 @@
         {
             "cls":"feathers.controls.List",
             "params":[
+                {"name":"dataProvider", "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"starlingbuilder.editor.ui.ListCollectionPopup"}
             ],
             "tag":"feathers"
         },
-
-
 
         {
             "cls":"feathers.controls.NumericStepper",
@@ -297,6 +306,7 @@
         {
             "cls":"feathers.controls.PickerList",
             "params":[
+                {"name":"dataProvider", "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"starlingbuilder.editor.ui.ListCollectionPopup"}
             ],
             "tag":"feathers"
         },
@@ -304,6 +314,7 @@
         {
             "cls":"feathers.controls.PageIndicator",
             "params":[
+                {"name":"pageCount", "default_value":1}
             ],
             "tag":"feathers"
         },
@@ -345,6 +356,22 @@
                 {"name":"maximum"},
                 {"name":"step"},
                 {"name":"value"}
+            ],
+            "tag":"feathers"
+        },
+
+        {
+            "cls":"feathers.controls.SpinnerList",
+            "params":[
+                {"name":"dataProvider", "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"starlingbuilder.editor.ui.ListCollectionPopup"}
+            ],
+            "tag":"feathers"
+        },
+
+        {
+            "cls":"feathers.controls.TabBar",
+            "params":[
+                {"name":"dataProvider", "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"starlingbuilder.editor.ui.ListCollectionPopup"}
             ],
             "tag":"feathers"
         },

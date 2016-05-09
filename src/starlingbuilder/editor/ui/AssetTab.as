@@ -52,7 +52,7 @@ package starlingbuilder.editor.ui
     public class AssetTab extends LayoutGroup
     {
         private static const linker:Array = [ScaleTexturePopup, DefaultCreateComponentPopup, DefaultEditPropertyPopup, TexturePropertyPopup, DisplayObjectPropertyPopup,
-            TextureConstructorPopup, ScaleTextureConstructorPopup1, ScaleTextureConstructorPopup2, ObjectPropertyPopup, XmlPropertyPopup];
+            TextureConstructorPopup, ScaleTextureConstructorPopup1, ScaleTextureConstructorPopup2, ObjectPropertyPopup, XmlPropertyPopup, ListCollectionPopup, HierarchicalCollectionPopup];
 
         public static var assetList:Vector.<String>;
 
