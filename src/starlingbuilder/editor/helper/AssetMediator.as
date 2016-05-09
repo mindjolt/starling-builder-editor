@@ -7,6 +7,7 @@
  */
 package starlingbuilder.editor.helper
 {
+    import starlingbuilder.engine.DefaultAssetMediator;
     import starlingbuilder.engine.IAssetMediator;
 
     import flash.filesystem.File;
@@ -16,28 +17,16 @@ package starlingbuilder.editor.helper
     import starling.textures.Texture;
     import starling.utils.AssetManager;
 
-    public class AssetMediator implements IAssetMediator
+    public class AssetMediator extends DefaultAssetMediator implements IAssetMediator
     {
-        private var _assetManager:AssetManager;
-
         private var _file:File;
 
         public function AssetMediator(assetManager:AssetManager)
         {
-            _assetManager = assetManager;
+            super(assetManager);
         }
 
-        public function getTexture(name:String):Texture
-        {
-            return _assetManager.getTexture(name);
-        }
-
-        public function getTextures(prefix:String="", result:Vector.<Texture>=null):Vector.<Texture>
-        {
-            return _assetManager.getTextures(prefix, result);
-        }
-
-        public function getExternalData(name:String):Object
+        override public function getExternalData(name:String):Object
         {
             if (_file == null)
             {

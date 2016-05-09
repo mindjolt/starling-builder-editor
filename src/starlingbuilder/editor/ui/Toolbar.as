@@ -417,7 +417,7 @@ package starlingbuilder.editor.ui
                 if (template.exists)
                 {
                     template.deleteFile();
-                    InfoPopup.show("Template deleted.");
+                    InfoPopup.show("Template deleted. Reload the editor take effect.");
                 }
                 else
                 {

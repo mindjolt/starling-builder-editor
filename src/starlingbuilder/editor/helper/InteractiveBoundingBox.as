@@ -339,8 +339,15 @@ package starlingbuilder.editor.helper
             dx /= UIEditorApp.instance.documentManager.scale;
             dy /= UIEditorApp.instance.documentManager.scale;
 
-            var ratioX:Number = 1 - _target.pivotX / (_target.width / _target.scaleX);
-            var ratioY:Number = 1 - _target.pivotY / (_target.height / _target.scaleY);
+
+            var ratioX:Number = 1;
+            var ratioY:Number = 1;
+
+            if (_target.width != 0)
+                ratioX = 1 - _target.pivotX / (_target.width / _target.scaleX);
+            if (_target.height != 0)
+                ratioY = 1 - _target.pivotY / (_target.height / _target.scaleY);
+
             if (isNaN(ratioX)) ratioX = 1;
             if (isNaN(ratioY)) ratioY = 1;
 
