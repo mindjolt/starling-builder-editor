@@ -1,5 +1,15 @@
 # Starling Builder Release Notes:
 
+## 0.8.5
+* [engine] Extends IAssetMediator to support getXml() and getObject()
+* [engine] Support feathers.data.ListColletion and feathers.data.HierarchicalCollection
+* [engine] Fixed that localization doesn’t work on external layout
+* [template] Support dataProvider property for feathers Components
+* [template] Support more feathers components: ButtonGroup, SpinnerList and TabBar
+* [template] Add leading and batchable property to TextField
+* [extensions] Reimplement ContainerButton
+* [extensions] Integrate with FFParticleSystem through FFParticleSprite
+
 ## 0.8.4
 * [engine] UIElementFactory set property order is now deterministic
 * [engine] Add UIBuilder.findByTag()
