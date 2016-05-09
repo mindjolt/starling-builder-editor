@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?> 
      <update xmlns="http://ns.adobe.com/air/framework/update/description/2.5"> 
-       <versionNumber>0.8.4</versionNumber>
-       <url>http://starlingbuilder.github.io/download/1.x/v0.8.4/starling-builder.air</url>
+       <versionNumber>0.8.5</versionNumber>
+       <url>http://starlingbuilder.github.io/download/1.x/v0.8.5/starling-builder.air</url>
        <description>
-[engine] UIElementFactory set property order is now deterministic
-[engine] Add UIBuilder.findByTag()
-[editor] Fix performance problem when dragging UI component on canvas
-[editor] Arrow key UX improvement
-[editor] Localization and TweenBuilder implementation become configurable through editor_template.json
-[template] Add a tag field to customParams
-[extensions] Add new custom UI component: Gauge
+[engine] Extends IAssetMediator to support getXml() and getObject()
+[engine] Support feathers.data.ListColletion and feathers.data.HierarchicalCollection
+[engine] Fixed that localization doesn’t work on external layout
+[template] Support dataProvider property for feathers Components
+[template] Support more feathers components: ButtonGroup, SpinnerList and TabBar
+[template] Add leading and batchable property to TextField
+[extensions] Reimplement ContainerButton
+[extensions] Integrate with FFParticleSystem through FFParticleSprite
        </description>
     </update>
