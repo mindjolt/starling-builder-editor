@@ -30,5 +30,17 @@ package starlingbuilder.engine
             record("getExternalData", name);
             return expectedReturnFor();
         }
+
+        public function getXml(name:String):XML
+        {
+            record("getXml", name);
+            return expectedReturnFor();
+        }
+
+        public function getObject(name:String):Object
+        {
+            record("getObject", name);
+            return expectedReturnFor();
+        }
     }
 }
