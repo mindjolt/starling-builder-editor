@@ -1,0 +1,42 @@
+<particleEmitterConfig>
+  <angle value="-270.00"/>
+  <angleVariance value="-10.00"/>
+  <duration value="-1.00"/>
+  <emitterType value="0.00"/>
+  <emitAngleAlignedRotation value="0"/>
+  <excactBounds value="0"/>
+  <finishParticleSize value="0.00"/>
+  <finishParticleSizeVariance value="0.00"/>
+  <gravity x="0.00" y="0.00"/>
+  <maxParticles value="150.00"/>
+  <maxRadius value="0.00"/>
+  <maxRadiusVariance value="0.00"/>
+  <minRadius value="300.00"/>
+  <minRadiusVariance value="0.00"/>
+  <particleLifeSpan value="1.00"/>
+  <particleLifespanVariance value="0.00"/>
+  <radialAcceleration value="0.00"/>
+  <radialAccelVariance value="0.00"/>
+  <rotatePerSecond value="360.00"/>
+  <rotatePerSecondVariance value="0.00"/>
+  <rotationEnd value="0.00"/>
+  <rotationEndVariance value="0.00"/>
+  <rotationStart value="0.00"/>
+  <rotationStartVariance value="0.00"/>
+  <sourcePosition x="0.00" y="0.00"/>
+  <sourcePositionVariance x="0.00" y="0.00"/>
+  <speed value="270.00"/>
+  <speedVariance value="30.00"/>
+  <startParticleSize value="64.00"/>
+  <startParticleSizeVariance value="5.00"/>
+  <tangentialAcceleration value="0.00"/>
+  <tangentialAccelVariance value="0.00"/>
+  <tinted value="1"/>
+  <premultipliedAlpha value="true"/>
+  <startColor red="0.84" green="0.73" blue="0.5" alpha="0.5"/>
+  <startColorVariance red="0" green="0" blue="0" alpha="0"/>
+  <finishColor red="0" green="0" blue="0" alpha="0"/>
+  <finishColorVariance red="0" green="0" blue="0" alpha="0"/>
+  <blendFuncSource value="ONE"/>
+  <blendFuncDestination value="ONE_MINUS_SOURCE_ALPHA"/>
+</particleEmitterConfig>
