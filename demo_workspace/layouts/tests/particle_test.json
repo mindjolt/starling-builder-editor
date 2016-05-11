@@ -13,7 +13,7 @@
           "particleId":"1",
           "texture":{
             "cls":"starling.textures.Texture",
-            "textureName":"default_particle"
+            "textureName":"default_particle_png"
           },
           "x":187,
           "y":121
