@@ -98,6 +98,7 @@ package starlingbuilder.editor.ui
         private function listAssets():void
         {
             _list = new List();
+            _list.isFocusEnabled = false;
             _list.itemRendererFactory = function():IListItemRenderer
             {
                 return new TextItemRenderer();

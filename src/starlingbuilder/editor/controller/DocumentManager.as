@@ -8,6 +8,7 @@
 package starlingbuilder.editor.controller
 {
     import feathers.controls.LayoutGroup;
+    import feathers.controls.TextArea;
     import feathers.controls.TextInput;
     import feathers.core.FocusManager;
     import feathers.layout.AnchorLayout;
@@ -1243,8 +1244,7 @@ package starlingbuilder.editor.controller
 
         public function get hasFocus():Boolean
         {
-            var obj:DisplayObject = FocusManager.focus as DisplayObject;
-            return obj && UIEditorScreen.instance.centerPanel.contains(obj);
+            return !(FocusManager.focus is TextInput || FocusManager.focus is TextArea)
         }
 
         public function get root():DisplayObjectContainer
