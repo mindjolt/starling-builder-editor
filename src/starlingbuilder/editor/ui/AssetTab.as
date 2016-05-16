@@ -188,6 +188,7 @@ package starlingbuilder.editor.ui
         private function listAssets():void
         {
             _list = new ExpandableGroupedList();
+            _list.isFocusEnabled = false;
             _list.width = 280;
             _list.height = 800;
             _list.setSelectedLocation(-1, -1);
