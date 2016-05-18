@@ -7,6 +7,7 @@
  */
 package starlingbuilder.editor.controller
 {
+    import flash.filesystem.File;
     import flash.utils.getDefinitionByName;
 
     import starlingbuilder.editor.UIEditorApp;
@@ -31,11 +32,11 @@ package starlingbuilder.editor.controller
             if (TemplateData.editor_template.uiBuilder && TemplateData.editor_template.uiBuilder.localizationWrapper)
             {
                 var cls:Class = getDefinitionByName(TemplateData.editor_template.uiBuilder.localizationWrapper) as Class;
-                _localizationFileWrapper = new cls(UIEditorScreen.instance.workspaceDir);
+                _localizationFileWrapper = new cls(localizationDir);
             }
             else
             {
-                _localizationFileWrapper = new DefaultLocalizationFileWrapper(UIEditorScreen.instance.workspaceDir);
+                _localizationFileWrapper = new DefaultLocalizationFileWrapper(localizationDir);
             }
 
             _localization = _localizationFileWrapper.localization;
@@ -126,6 +127,11 @@ package starlingbuilder.editor.controller
         public function get localization():ILocalization
         {
             return _localization;
+        }
+
+        public function get localizationDir():File
+        {
+            return UIEditorScreen.instance.workspaceDir.resolvePath(UIEditorScreen.instance.workspaceSetting.localizationPath);
         }
 
     }

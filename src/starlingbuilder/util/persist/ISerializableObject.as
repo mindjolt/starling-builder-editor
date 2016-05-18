@@ -7,8 +7,10 @@
  */
 package starlingbuilder.util.persist
 {
-    public interface IPersistableObject extends ISerializableObject
+    public interface ISerializableObject
     {
-        function persist():void;
+        function save():Object;
+        function load(data:Object):void;
+        function setChanged():void;
     }
 }

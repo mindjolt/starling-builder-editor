@@ -39,7 +39,7 @@ package starlingbuilder.util.ui.inspector
             _textArea.addEventListener(FeathersEventType.ENTER, onTextInput);
         }
 
-        private function onTextInput(event:Event):void
+        protected function onTextInput(event:Event):void
         {
             try
             {

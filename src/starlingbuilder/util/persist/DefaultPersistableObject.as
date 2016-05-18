@@ -7,15 +7,10 @@
  */
 package starlingbuilder.util.persist
 {
-    import starling.events.Event;
-    import starling.events.EventDispatcher;
-
-    import starlingbuilder.util.ObjectUtil;
-
     import flash.net.SharedObject;
     import flash.utils.getQualifiedClassName;
 
-    public class DefaultPersistableObject extends EventDispatcher implements IPersistableObject
+    public class DefaultPersistableObject extends DefaultSerializableObject implements IPersistableObject
     {
         private var _defaultName:String = "persistable";
 
@@ -34,26 +29,12 @@ package starlingbuilder.util.persist
             sharedObject.setProperty(getQualifiedClassName(this), data);
         }
 
-        private function recover():void
+        protected function recover():void
         {
             var sharedObject:SharedObject = SharedObject.getLocal(_defaultName);
             load(sharedObject.data[getQualifiedClassName(this)]);
         }
 
-        public function load(data:Object):void
-        {
-            if (data)
-                ObjectUtil.fromJSONObject(this, data);
-        }
 
-        public function save():Object
-        {
-            return ObjectUtil.toJSONObject(this);
-        }
-
-        public function setChanged():void
-        {
-            dispatchEventWith(Event.CHANGE);
-        }
     }
 }
