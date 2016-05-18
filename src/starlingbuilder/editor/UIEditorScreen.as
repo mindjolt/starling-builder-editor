@@ -69,6 +69,8 @@ package starlingbuilder.editor
 
         private var _setting:Setting;
 
+        private var _workspaceSetting:WorkspaceSetting;
+
         private static var _instance:UIEditorScreen;
 
         public static function get instance():UIEditorScreen
@@ -102,6 +104,7 @@ package starlingbuilder.editor
         private function initWorkspaceDir():void
         {
             _setting = new Setting();
+
 
             if (_setting.workspaceUrl)
             {
@@ -139,10 +142,11 @@ package starlingbuilder.editor
             assetManager.purge();
 
             var assetLoader:AssetLoaderWithOptions = new AssetLoaderWithOptions(assetManager, _workspaceDir);
-            assetLoader.enqueue(_workspaceDir.resolvePath("textures"));
-            assetLoader.enqueue(_workspaceDir.resolvePath("fonts"));
-            assetLoader.enqueue(_workspaceDir.resolvePath("backgrounds"));
-            assetLoader.enqueue(_workspaceDir.resolvePath("libs"));
+
+            for each (var path:String in _workspaceSetting.getAssetManagerPaths())
+            {
+                assetLoader.enqueue(_workspaceDir.resolvePath(path));
+            }
 
             assetManager.loadQueue(function(ratio:Number):void{
                 if (ratio == 1)
@@ -196,9 +200,11 @@ package starlingbuilder.editor
 
         private function prepareWorkspace():void
         {
-            const DIRS:Array = ["textures", "fonts", "backgrounds", "libs", "localization", "settings"];
+            createDefaultSettings();
 
-            for each (var path:String in DIRS)
+            _workspaceSetting = new WorkspaceSetting();
+
+            for each (var path:String in _workspaceSetting.getAssetManagerPaths())
             {
                 var dir:File = _workspaceDir.resolvePath(path);
 
@@ -208,22 +214,41 @@ package starlingbuilder.editor
                 }
             }
 
-            createDefaultSettings();
+
         }
 
         private function createDefaultSettings():void
         {
-            var file:File = _workspaceDir.resolvePath("settings/texture_options.json");
+            var dir:File = _workspaceDir.resolvePath("settings");
+
+            if (!dir.exists)
+            {
+                dir.createDirectory();
+            }
+
+            var fs:FileStream;
+            var file:File;
+
+            file = _workspaceDir.resolvePath("settings/texture_options.json");
 
             if (!file.exists)
             {
-                var fs:FileStream = new FileStream();
+                fs = new FileStream();
                 fs.open(file, FileMode.WRITE);
                 fs.writeUTFBytes(new EmbeddedData.texture_options);
                 fs.close();
             }
-        }
 
+            file = _workspaceDir.resolvePath("settings/workspace_setting.json");
+
+            if (!file.exists)
+            {
+                fs = new FileStream();
+                fs.open(file, FileMode.WRITE);
+                fs.writeUTFBytes(new EmbeddedData.workspace_setting);
+                fs.close();
+            }
+        }
 
         private function init():void
         {
@@ -231,7 +256,7 @@ package starlingbuilder.editor
 
             menu.unregisterAll();
 
-            var libFiles:Array = FileListingHelper.getFileList(_workspaceDir, "libs", ["swf"]);
+            var libFiles:Array = FileListingHelper.getFileList(_workspaceDir, _workspaceSetting.libraryPath, ["swf"]);
             LoadSwfHelper.loads(libFiles, _assetManager, onComplete);
 
             function onComplete():void
@@ -245,6 +270,7 @@ package starlingbuilder.editor
                 KeyboardHelper.startKeyboard(UIEditorApp.instance.documentManager);
 
                 menu.registerAction(MainMenu.SETTING, onSetting);
+                menu.registerAction(MainMenu.WORKSPACE_SETTING, onWorkspaceSetting);
 
                 initUI();
                 initTests();
@@ -269,7 +295,13 @@ package starlingbuilder.editor
 
         private function onSetting():void
         {
-            var popup:SettingPopup = new SettingPopup(_setting, SettingParams.PARAMS);
+            var popup:SettingPopup = new SettingPopup("Setting", _setting, SettingParams.PARAMS);
+            PopUpManager.addPopUp(popup);
+        }
+
+        private function onWorkspaceSetting():void
+        {
+            var popup:SettingPopup = new SettingPopup("Workspace Setting (Reload editor to take effect)", _workspaceSetting, WorkspaceSettingParams.PARAMS);
             PopUpManager.addPopUp(popup);
         }
 
@@ -384,6 +416,11 @@ package starlingbuilder.editor
         public function get setting():Setting
         {
             return _setting;
+        }
+
+        public function get workspaceSetting():WorkspaceSetting
+        {
+            return _workspaceSetting;
         }
 
         protected function initTests():void
