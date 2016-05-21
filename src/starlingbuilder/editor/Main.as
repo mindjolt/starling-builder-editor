@@ -7,6 +7,8 @@
  */
 package starlingbuilder.editor
 {
+    import flash.events.ErrorEvent;
+
     import starling.utils.Align;
 
     import starlingbuilder.util.AppUpdater;
@@ -78,6 +80,10 @@ package starlingbuilder.editor
             if (event.error is Error)
             {
                 message = Error(event.error).getStackTrace();
+            }
+            else if (event.error is ErrorEvent)
+            {
+                message = ErrorEvent(event.error).text;
             }
             else
             {

@@ -905,42 +905,49 @@ package starlingbuilder.editor.controller
 
         public function createFromData(data:Object):void
         {
-            var p:Point;
-
-            var parent:DisplayObjectContainer = getParent();
-
-            if ("x" in data.params && "y" in data.params)
+            try
             {
-                var centerPanel:CenterPanel = UIEditorScreen.instance.centerPanel;
-                p = _container.localToGlobal(new Point(centerPanel.horizontalScrollPosition + data.params.x, centerPanel.verticalScrollPosition + data.params.y));
-                p = parent.globalToLocal(new Point(p.x, p.y));
-                data.params.x = p.x;
-                data.params.y = p.y;
+                var p:Point;
+
+                var parent:DisplayObjectContainer = getParent();
+
+                if ("x" in data.params && "y" in data.params)
+                {
+                    var centerPanel:CenterPanel = UIEditorScreen.instance.centerPanel;
+                    p = _container.localToGlobal(new Point(centerPanel.horizontalScrollPosition + data.params.x, centerPanel.verticalScrollPosition + data.params.y));
+                    p = parent.globalToLocal(new Point(p.x, p.y));
+                    data.params.x = p.x;
+                    data.params.y = p.y;
+                }
+                else
+                {
+                    p = getNewObjectPosition();
+                    data.params.x = p.x;
+                    data.params.y = p.y;
+                }
+
+                var result:Object = _uiBuilder.createUIElement(data);
+                var paramDict:Dictionary = new Dictionary();
+
+                var obj:DisplayObject = result.object;
+                paramDict[obj] = result.params;
+
+                _historyManager.add(new CreateOperation(obj, paramDict, parent));
+
+                setDefaultPivot(obj);
+
+                addFrom(obj, result.params, parent);
+
+                selectObject(obj);
+
+                setLayerChanged();
+
+                setChanged();
             }
-            else
+            catch(e:Error)
             {
-                p = getNewObjectPosition();
-                data.params.x = p.x;
-                data.params.y = p.y;
+                InfoPopup.show(e.getStackTrace());
             }
-
-            var result:Object = _uiBuilder.createUIElement(data);
-            var paramDict:Dictionary = new Dictionary();
-
-            var obj:DisplayObject = result.object;
-            paramDict[obj] = result.params;
-
-            _historyManager.add(new CreateOperation(obj, paramDict, parent));
-
-            setDefaultPivot(obj);
-
-            addFrom(obj, result.params, parent);
-
-            selectObject(obj);
-
-            setLayerChanged();
-
-            setChanged();
         }
 
         private function getNewObjectPosition():Point
