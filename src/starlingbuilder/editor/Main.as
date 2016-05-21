@@ -7,6 +7,8 @@
  */
 package starlingbuilder.editor
 {
+    import flash.events.ErrorEvent;
+
     import starlingbuilder.util.AppUpdater;
     import starlingbuilder.util.feathers.popup.InfoPopup;
 
@@ -79,6 +81,10 @@ package starlingbuilder.editor
             if (event.error is Error)
             {
                 message = Error(event.error).getStackTrace();
+            }
+            else if (event.error is ErrorEvent)
+            {
+                message = ErrorEvent(event.error).text;
             }
             else
             {
