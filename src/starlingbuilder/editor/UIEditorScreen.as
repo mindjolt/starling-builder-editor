@@ -21,6 +21,7 @@ package starlingbuilder.editor
     import starlingbuilder.editor.helper.LoadSwfHelper;
     import starlingbuilder.editor.ui.CenterPanel;
     import starlingbuilder.editor.ui.LeftPanel;
+    import starlingbuilder.editor.ui.LoadingPopup;
     import starlingbuilder.editor.ui.MainMenu;
     import starlingbuilder.editor.ui.PositionToolbar;
     import starlingbuilder.editor.ui.RightPanel;
@@ -148,14 +149,19 @@ package starlingbuilder.editor
                 assetLoader.enqueue(_workspaceDir.resolvePath(path));
             }
 
+            var loadingPopup:LoadingPopup = new LoadingPopup();
+            PopUpManager.addPopUp(loadingPopup);
+
             assetManager.loadQueue(function(ratio:Number):void{
+
+                loadingPopup.ratio = ratio;
+
                 if (ratio == 1)
                 {
                     setTimeout(function():void{
 
+                        PopUpManager.removePopUp(loadingPopup, true);
                         init();
-
-
 
                     }, 1);
                 }
