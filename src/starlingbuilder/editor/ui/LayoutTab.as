@@ -9,6 +9,8 @@ package starlingbuilder.editor.ui
 {
     import feathers.layout.VerticalLayout;
 
+    import flash.desktop.NativeApplication;
+
     import starlingbuilder.editor.UIEditorApp;
     import starlingbuilder.editor.controller.DocumentManager;
     import starlingbuilder.editor.events.DocumentEventType;
@@ -232,17 +234,26 @@ package starlingbuilder.editor.ui
 
         private function cut():void
         {
-            _documentManager.cut();
+            if (_documentManager.hasFocus)
+                _documentManager.cut();
+            else
+                NativeApplication.nativeApplication.cut();
         }
 
         private function copy():void
         {
-            _documentManager.copy();
+            if (_documentManager.hasFocus)
+                _documentManager.copy();
+            else
+                NativeApplication.nativeApplication.copy();
         }
 
         private function paste():void
         {
-            _documentManager.paste();
+            if (_documentManager.hasFocus)
+                _documentManager.paste();
+            else
+                NativeApplication.nativeApplication.paste();
         }
 
         private function duplicate():void
