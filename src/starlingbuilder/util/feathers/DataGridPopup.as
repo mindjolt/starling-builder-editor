@@ -56,7 +56,7 @@ package starlingbuilder.util.feathers
         {
             _okButton.removeEventListener(Event.TRIGGERED, onOK);
 
-            PopUpManager.removePopUp(this);
+            PopUpManager.removePopUp(this, true);
         }
     }
 }

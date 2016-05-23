@@ -76,7 +76,7 @@ package starlingbuilder.util.feathers.popup
                 }
             }
 
-            PopUpManager.removePopUp(this);
+            PopUpManager.removePopUp(this, true);
         }
 
         private function removeButtons():void
