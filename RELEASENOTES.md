@@ -1,5 +1,13 @@
 # Starling Builder Release Notes:
 
+## 0.8.6
+* [editor] Implement workspace setting UI and save to settings/workspace_setting.json
+* [editor] Change copy/paste shortcut to ctrl+c and ctrl+v
+* [editor] Fix some DocumentManager focus issues
+* [editor] Improve error handling
+* [editor] Memory optimization
+* [demo_workspace] Removed fonts folders by default, asset folders can be added through main menu -> workspace -> workspace setting
+
 ## 0.8.5
 * [engine] Extends IAssetMediator to support getXml() and getObject()
 * [engine] Support feathers.data.ListColletion and feathers.data.HierarchicalCollection
