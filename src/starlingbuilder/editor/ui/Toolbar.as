@@ -249,7 +249,14 @@ package starlingbuilder.editor.ui
 
         private function open():void
         {
-            _serializer.open();
+            try
+            {
+                _serializer.open();
+            }
+            catch (e:Error)
+            {
+                InfoPopup.show(e.getStackTrace());
+            }
         }
 
         private function save():void
@@ -417,7 +424,7 @@ package starlingbuilder.editor.ui
                 if (template.exists)
                 {
                     template.deleteFile();
-                    InfoPopup.show("Template deleted. Reload the editor take effect.");
+                    InfoPopup.show("Template deleted. Reload the editor to take effect.");
                 }
                 else
                 {
@@ -625,7 +632,14 @@ package starlingbuilder.editor.ui
 
                 if (file.exists)
                 {
-                    _serializer.openWithFile(file);
+                    try
+                    {
+                        _serializer.openWithFile(file);
+                    }
+                    catch (e:Error)
+                    {
+                        InfoPopup.show(e.getStackTrace());
+                    }
                 }
                 else
                 {

@@ -59,6 +59,7 @@ package starlingbuilder.editor.ui
         public static const EDIT_TEMPLATE:String = "Edit template override";
         public static const DELETE_TEMPLATE:String = "Delete template override";
         public static const SETTING:String = "Setting";
+        public static const WORKSPACE_SETTING:String = "Workspace Setting";
 
         public static const DOCUMENTATION:String = "Documentation";
         public static const GITHUB_PAGE:String = "Github Page";
@@ -87,8 +88,8 @@ package starlingbuilder.editor.ui
             {"label":REDO, "key":"Z", "disabled":true},
             {"separator":true},
             {"label":CUT, "key":"x"},
-            {"label":COPY, "key":"C"},
-            {"label":PASTE, "key":"V"},
+            {"label":COPY, "key":"c"},
+            {"label":PASTE, "key":"v"},
             {"label":DUPLICATE, "key":"d"},
             {"label":DESELECT},
             {"label":DELETE},
@@ -111,9 +112,11 @@ package starlingbuilder.editor.ui
         ]
 
         public static const WORKSPACE_MENU:Array = [
+            {"label":WORKSPACE_SETTING},
+            {"separator":true},
             {"label":OPEN_WORKSPACE},
             {"label":EDIT_TEMPLATE},
-            {"label":DELETE_TEMPLATE},
+            {"label":DELETE_TEMPLATE}
         ]
 
         public static const HELP_MENU:Array = [

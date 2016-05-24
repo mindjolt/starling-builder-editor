@@ -112,6 +112,7 @@ package starlingbuilder.editor.ui
         private function listAssets():void
         {
             _list = new List();
+            _list.isFocusEnabled = false;
             _list.width = 280;
             _list.height = 800;
             _list.selectedIndex = -1;
@@ -120,7 +121,7 @@ package starlingbuilder.editor.ui
                 return new IconItemRenderer();
             }
 
-            var array:Array = FileListingHelper.getFileList(UIEditorScreen.instance.workspaceDir, "backgrounds", ["png", "jpg", "atf"]);
+            var array:Array = FileListingHelper.getFileList(UIEditorScreen.instance.workspaceDir, UIEditorScreen.instance.workspaceSetting.backgroundPath, ["png", "jpg", "atf"]);
 
             var data:ListCollection = new ListCollection();
 

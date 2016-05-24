@@ -7,8 +7,8 @@
  */
 package starlingbuilder.editor.ui
 {
-    import starlingbuilder.editor.Setting;
     import starlingbuilder.util.feathers.popup.InfoPopup;
+    import starlingbuilder.util.persist.IPersistableObject;
     import starlingbuilder.util.ui.inspector.PropertyPanel;
 
     import feathers.controls.LayoutGroup;
@@ -19,12 +19,12 @@ package starlingbuilder.editor.ui
     {
         private var _propertyPanel:PropertyPanel;
 
-        private var _setting:Setting;
+        private var _setting:IPersistableObject;
         private var _params:Array;
 
         private var _oldSetting:Object;
 
-        public function SettingPopup(setting:Setting, params:Array)
+        public function SettingPopup(title:String, setting:IPersistableObject, params:Array)
         {
             _setting = setting;
             _params = params;
@@ -35,7 +35,7 @@ package starlingbuilder.editor.ui
 
             super();
 
-            title = "Setting";
+            this.title = title;
             buttons = ["OK", "Cancel"];
 
             addEventListener(Event.COMPLETE, onDialogComplete);

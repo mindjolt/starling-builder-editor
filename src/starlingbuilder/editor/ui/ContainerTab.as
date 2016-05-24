@@ -88,6 +88,7 @@ package starlingbuilder.editor.ui
         private function listAssets():void
         {
             _list = new List();
+            _list.isFocusEnabled = false;
 
             _list.width = 280;
             _list.height = 800;
