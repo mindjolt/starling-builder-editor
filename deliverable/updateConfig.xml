@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?> 
      <update xmlns="http://ns.adobe.com/air/framework/update/description/2.5"> 
-       <versionNumber>0.8.5</versionNumber>
-       <url>http://starlingbuilder.github.io/download/1.x/v0.8.5/starling-builder.air</url>
+       <versionNumber>0.8.6</versionNumber>
+       <url>http://starlingbuilder.github.io/download/1.x/v0.8.6/starling-builder.air</url>
        <description>
-[engine] Extends IAssetMediator to support getXml() and getObject()
-[engine] Support feathers.data.ListColletion and feathers.data.HierarchicalCollection
-[engine] Fixed that localization doesn’t work on external layout
-[template] Support dataProvider property for feathers Components
-[template] Support more feathers components: ButtonGroup, SpinnerList and TabBar
-[template] Add leading and batchable property to TextField
-[extensions] Reimplement ContainerButton
-[extensions] Integrate with FFParticleSystem through FFParticleSprite
+[editor] Implement workspace setting UI and save to settings/workspace_setting.json
+[editor] Change copy/paste shortcut to ctrl+c and ctrl+v
+[editor] Fix some DocumentManager focus issues
+[editor] Improve error handling
+[editor] Memory optimization
+[demo_workspace] Removed fonts folder by default, asset folders can be added through main menu -> workspace -> workspace setting
        </description>
     </update>
