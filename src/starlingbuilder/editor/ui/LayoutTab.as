@@ -9,6 +9,8 @@ package starlingbuilder.editor.ui
 {
     import feathers.layout.VerticalLayout;
 
+    import flash.desktop.NativeApplication;
+
     import starlingbuilder.editor.UIEditorApp;
     import starlingbuilder.editor.controller.DocumentManager;
     import starlingbuilder.editor.events.DocumentEventType;
@@ -70,6 +72,7 @@ package starlingbuilder.editor.ui
         private function createList():void
         {
             _list = new List();
+            _list.isFocusEnabled = false;
             _list.width = 280;
             _list.height = 400;
 
@@ -79,8 +82,6 @@ package starlingbuilder.editor.ui
             }
 
             _list.addEventListener(Event.CHANGE, onListChange);
-            _list.addEventListener(FeathersEventType.FOCUS_IN, onFocusIn);
-            _list.addEventListener(FeathersEventType.FOCUS_OUT, onFocusOut);
 
             var layout:VerticalLayout = new VerticalLayout();
             layout.useVirtualLayout = true;
@@ -233,17 +234,26 @@ package starlingbuilder.editor.ui
 
         private function cut():void
         {
-            _documentManager.cut();
+            if (_documentManager.hasFocus)
+                _documentManager.cut();
+            else
+                NativeApplication.nativeApplication.cut();
         }
 
         private function copy():void
         {
-            _documentManager.copy();
+            if (_documentManager.hasFocus)
+                _documentManager.copy();
+            else
+                NativeApplication.nativeApplication.copy();
         }
 
         private function paste():void
         {
-            _documentManager.paste();
+            if (_documentManager.hasFocus)
+                _documentManager.paste();
+            else
+                NativeApplication.nativeApplication.paste();
         }
 
         private function duplicate():void
@@ -295,22 +305,10 @@ package starlingbuilder.editor.ui
             {
                 case Keyboard.BACKSPACE:
                 case Keyboard.DELETE:
-                    if (_documentManager.hasFocus || _focus)
+                    if (_documentManager.hasFocus)
                         remove();
                     break;
             }
-        }
-
-        private var _focus:Boolean = false;
-
-        protected function onFocusIn(event:Event):void
-        {
-            _focus = true;
-        }
-
-        protected function onFocusOut(event:Event):void
-        {
-            _focus = false;
         }
     }
 }

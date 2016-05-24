@@ -107,11 +107,14 @@ package starlingbuilder.editor.ui
                 case DragToCanvasHelper.FEATHERS_TAB:
                     tabPanel = leftPanel.feathersTab;
                     break;
+                default:
+                    return;
+                    break;
             }
 
             tabPanel.create(label, new Point(Math.round(event.localX), Math.round(event.localY)));
 
-            trace(label, tab, event.localX, event.localY);
+            //trace(label, tab, event.localX, event.localY);
         }
 
         private function onDragExit(event:DragDropEvent, dragData:DragData):void

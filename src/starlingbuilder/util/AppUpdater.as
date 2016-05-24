@@ -25,13 +25,13 @@ package starlingbuilder.util
 
         private var _showPopup:Boolean = false;
 
-        public function AppUpdater()
+        public function AppUpdater(url:String = null)
         {
             _appUpdater = new ApplicationUpdaterUI();
             _appUpdater.addEventListener(ErrorEvent.ERROR, onError);
             _appUpdater.addEventListener(StatusUpdateEvent.UPDATE_STATUS, onUpdateStatus);
 
-            _appUpdater.updateURL = UPDATE_URL;
+            _appUpdater.updateURL = url ? url : UPDATE_URL;
             _appUpdater.delay = 1;
             _appUpdater.isCheckForUpdateVisible = false;
             _appUpdater.isDownloadUpdateVisible = true;

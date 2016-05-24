@@ -15,6 +15,9 @@ package starlingbuilder.util.ui.inspector
             "textInputHex":TextInputPropertyComponentHex,
             "colorPicker":ColorPickerPropertyComponent,
             "textArea":TextAreaPropertyComponent,
+            "textAreaString":TextAreaStringPropertyComponent,
+            "editPath":EditPathPropertyComponent,
+            "addPath":AddPathPropertyComponent,
             "popup":ButtonPropertyComponent,
             "check":CheckPropertyComponent
         };
@@ -27,7 +30,8 @@ package starlingbuilder.util.ui.inspector
             "textArea":["textArea"],
             "popup":["textInput", "popup"],
             "check":["check"],
-
+            "editPath":["textAreaString", "editPath"],
+            "addPath":["textAreaString", "addPath"],
             "default":["textInput"]
         }
 

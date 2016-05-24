@@ -14,5 +14,8 @@ package starlingbuilder.editor.data
 
         [Embed(source="texture_options.json", mimeType="application/octet-stream")]
         public static const texture_options:Class;
+
+        [Embed(source="workspace_setting.json", mimeType="application/octet-stream")]
+        public static const workspace_setting:Class;
     }
 }

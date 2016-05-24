@@ -24,7 +24,8 @@ package starlingbuilder.editor.localization
         {
             _workspace = workspace;
 
-            var template:File = _workspace.resolvePath("localization/strings.json");
+
+            var template:File = _workspace.resolvePath("strings.json");
 
             if (template.exists)
             {

@@ -196,7 +196,7 @@ package starlingbuilder.editor.ui
         {
             if (PopUpManager.isPopUp(this))
             {
-                PopUpManager.removePopUp(this);
+                PopUpManager.removePopUp(this, true);
             }
         }
     }
