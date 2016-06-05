@@ -13,7 +13,8 @@ package starlingbuilder.editor
             {name:"assetPath", label:"Asset Path(s)", component:"addPath"},
             {name:"libraryPath", label:"Library Path", component:"editPath"},
             {name:"localizationPath", label:"Localization Path", component:"editPath"},
-            {name:"backgroundPath", label:"Background Path", component:"editPath"}
+            {name:"backgroundPath", label:"Background Path", component:"editPath"},
+            {name:"layoutPath", label:"Layout Path", component:"editPath"},
         ]
     }
 }

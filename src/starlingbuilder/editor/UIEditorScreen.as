@@ -414,6 +414,11 @@ package starlingbuilder.editor
             return _centerPanel;
         }
 
+        public function get toolbar():Toolbar
+        {
+            return _toolbar;
+        }
+
         public function get workspaceDir():File
         {
             return _workspaceDir;

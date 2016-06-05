@@ -25,6 +25,8 @@ package starlingbuilder.editor
 
         public var localizationPath:String = "";
 
+        public var layoutPath:String = "";
+
         public static const PATH:String = "settings/workspace_setting.json";
 
         override public function persist():void

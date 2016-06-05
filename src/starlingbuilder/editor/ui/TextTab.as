@@ -107,7 +107,7 @@ package starlingbuilder.editor.ui
                 return new TextItemRenderer();
             }
 
-            _list.width = 280;
+            _list.width = 330;
             _list.height = 800;
             _list.selectedIndex = -1;
 

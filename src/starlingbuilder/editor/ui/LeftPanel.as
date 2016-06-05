@@ -13,7 +13,8 @@ package starlingbuilder.editor.ui
         {
             super();
 
-            createTabs([{"label":"layout"}, {"label":"asset"}, {"label":"text"}, {"label":"container"}, {"label":"feathers"}, {"label":"bg"}], [new LayoutTab(), new AssetTab(), new TextTab(), new ContainerTab(), new FeathersTab(), new BackgroundTab()]);
+            createTabs([{"label":"layout"}, {"label":"asset"}, {"label":"text"}, {"label":"container"}, {"label":"feathers"}, {"label":"bg"}, {label:"files"}],
+                    [new LayoutTab(), new AssetTab(), new TextTab(), new ContainerTab(), new FeathersTab(), new BackgroundTab(), new FilesTab()]);
         }
 
         public function get assetTab():AssetTab
