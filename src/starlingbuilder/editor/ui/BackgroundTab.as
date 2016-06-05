@@ -113,7 +113,7 @@ package starlingbuilder.editor.ui
         {
             _list = new List();
             _list.isFocusEnabled = false;
-            _list.width = 280;
+            _list.width = 330;
             _list.height = 800;
             _list.selectedIndex = -1;
             _list.itemRendererFactory = function():IListItemRenderer
