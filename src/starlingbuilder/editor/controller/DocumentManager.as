@@ -735,6 +735,10 @@ package starlingbuilder.editor.controller
 
             var setting:Object = exportSetting();
 
+            var canvas:Quad = new Quad(canvasSize.x, canvasSize.y);
+            canvas.color = canvasColor;
+            _testContainer.addChild(canvas);
+
             if (setting.background)
             {
                 _testContainer.addChild(createBackground(setting.background));
@@ -1389,10 +1393,6 @@ package starlingbuilder.editor.controller
         {
             var sprite:Sprite = new Sprite();
 
-            var canvas:Quad = new Quad(_canvas.width, _canvas.height);
-            canvas.color = _canvas.color;
-
-            sprite.addChild(canvas);
             sprite.addChild(startTest());
             SnapshotHelper.snapshot(sprite, new Point(_canvas.width, _canvas.height), getSnapshotFileName());
 
