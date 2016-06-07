@@ -111,8 +111,26 @@ package starlingbuilder.editor.ui
         {
             if (event.data.target !== _setting) return;
 
-            var width:int = _setting.deviceWidth;
-            var height:int = _setting.deviceHeight;
+            if (_setting.preset)
+            {
+                _setting.deviceWidth = _setting.preset.split(",")[0];
+                _setting.deviceHeight = _setting.preset.split(",")[1];
+                _propertyPanel.reloadData(_setting, TestSetting.PARAMS);
+            }
+
+            var width:int;
+            var height:int;
+
+            if (_setting.rotated)
+            {
+                width = _setting.deviceHeight;
+                height = _setting.deviceWidth;
+            }
+            else
+            {
+                width = _setting.deviceWidth;
+                height = _setting.deviceHeight;
+            }
 
             var canvas:DisplayObject = _container.getChildAt(0);
             canvas.width = width;
