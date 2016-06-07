@@ -122,6 +122,8 @@ package starlingbuilder.editor.ui
 
             scaleContent(_designWidth, _designHeight, width, height);
 
+            fitBackground();
+
             //make sure anchor works
             var root:LayoutGroup = _container.getChildAt(_container.numChildren - 1) as LayoutGroup;
             if (root)
@@ -154,6 +156,12 @@ package starlingbuilder.editor.ui
             PropertyPanel.globalDispatcher.removeEventListener(UIMapperEventType.PROPERTY_CHANGE, onPropertyChange);
 
             super.dispose();
+        }
+
+        private function fitBackground():void
+        {
+            if (_container.numChildren == 3)
+                BackgroundTab.fitBackground(_container.getChildAt(1), _container.getChildAt(0));
         }
 
         private function scaleContent(designWidth:int, designHeight:int, deviceWidth:int, deviceHeight:int):void
