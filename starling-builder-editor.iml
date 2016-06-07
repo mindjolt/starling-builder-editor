@@ -14,6 +14,9 @@
             <entry library-id="08011c12-ce9c-4cee-9c3d-c1f76e999a10">
               <dependency linkage="Merged" />
             </entry>
+            <entry library-id="3b2d11db-1834-417f-90e7-7439176a46be">
+              <dependency linkage="Merged" />
+            </entry>
           </entries>
           <sdk name="AIRSDK" />
         </dependencies>
@@ -38,6 +41,9 @@
               <dependency linkage="Merged" />
             </entry>
             <entry library-id="1e2c03d7-dae2-4cbe-81f0-f5ee4fccb560">
+              <dependency linkage="Merged" />
+            </entry>
+            <entry library-id="f122fd91-8eab-495b-8d2e-567134463088">
               <dependency linkage="Merged" />
             </entry>
           </entries>
@@ -68,6 +74,9 @@
             <entry library-id="50e7b3c8-bb2f-49e3-b532-864a812954f7">
               <dependency linkage="Merged" />
             </entry>
+            <entry library-id="497ce9d5-3557-4201-8293-1b71b9bfc1e0">
+              <dependency linkage="Merged" />
+            </entry>
           </entries>
           <sdk name="AIRSDK" />
         </dependencies>
@@ -87,12 +96,6 @@
   </component>
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
-    <content url="file://$USER_HOME$/projects/Starling-Framework">
-      <sourceFolder url="file://$USER_HOME$/projects/Starling-Framework/starling/src" isTestSource="false" />
-    </content>
-    <content url="file://$USER_HOME$/projects/feathers">
-      <sourceFolder url="file://$USER_HOME$/projects/feathers/source" isTestSource="false" />
-    </content>
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/starling-builder-engine/src" isTestSource="false" />
@@ -192,6 +195,39 @@
         </CLASSES>
         <JAVADOC />
         <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library type="flex">
+        <properties id="3b2d11db-1834-417f-90e7-7439176a46be" />
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/libs" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+        <jarDirectory url="file://$MODULE_DIR$/libs" recursive="false" />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library type="flex">
+        <properties id="f122fd91-8eab-495b-8d2e-567134463088" />
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/libs" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+        <jarDirectory url="file://$MODULE_DIR$/libs" recursive="false" />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library type="flex">
+        <properties id="497ce9d5-3557-4201-8293-1b71b9bfc1e0" />
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/libs" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+        <jarDirectory url="file://$MODULE_DIR$/libs" recursive="false" />
       </library>
     </orderEntry>
   </component>
