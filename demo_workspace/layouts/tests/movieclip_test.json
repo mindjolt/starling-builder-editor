@@ -28,6 +28,7 @@
     }
   },
   "setting":{
+    "canvasColor":16777215,
     "canvasSize":{
       "x":640,
       "y":960

@@ -7,6 +7,13 @@
  */
 package starlingbuilder.editor.ui
 {
+    import feathers.core.FeathersControl;
+
+    import starling.display.DisplayObject;
+
+    import starling.events.Event;
+
+    import starlingbuilder.editor.TestSetting;
     import starlingbuilder.editor.UIEditorApp;
     import starlingbuilder.util.feathers.FeathersUIUtil;
 
@@ -25,6 +32,9 @@ package starlingbuilder.editor.ui
     import starling.display.Stage;
     import starling.events.ResizeEvent;
 
+    import starlingbuilder.util.ui.inspector.PropertyPanel;
+    import starlingbuilder.util.ui.inspector.UIMapperEventType;
+
     public class TestPanel extends LayoutGroup
     {
         private var _exitButton:Button;
@@ -35,8 +45,18 @@ package starlingbuilder.editor.ui
 
         private var _background:Quad;
 
-        public function TestPanel(scale:Number)
+        private var _setting:TestSetting;
+
+        private var _propertyPanel:PropertyPanel;
+
+        private var _designWidth:int;
+
+        private var _designHeight:int;
+
+        public function TestPanel(container:Sprite)
         {
+            _container = container;
+
             layout = new AnchorLayout();
 
             var stage:Stage = Starling.current.stage;
@@ -50,28 +70,87 @@ package starlingbuilder.editor.ui
             addChild(_background);
 
             _scrollContainer = new ScrollContainer();
-            _scrollContainer.x = 200;
-            _scrollContainer.width = 1000;
-            _scrollContainer.height = 900;
+            var layoutData:AnchorLayoutData = new AnchorLayoutData(0, 20, 0, 200);
+            _scrollContainer.layoutData = layoutData;
             addChild(_scrollContainer);
 
-            var layoutData:AnchorLayoutData = new AnchorLayoutData();
-            layoutData.top = 0;
-            layoutData.bottom = 0;
-            _scrollContainer.layoutData = layoutData;
+            _container.scaleX = _container.scaleY = UIEditorApp.instance.documentManager.scale;
 
-            _container = new Sprite();
-            _container.scaleX = _container.scaleY = scale;
-            _scrollContainer.addChild(_container);
+            var layoutGroup:LayoutGroup = new LayoutGroup();
+            layoutGroup.addChild(_container);
+            _scrollContainer.addChild(layoutGroup);
 
             var canvasSize:Point = UIEditorApp.instance.documentManager.canvasSize;
-            var canvas:Quad = new Quad(canvasSize.x, canvasSize.y);
-            canvas.color = UIEditorApp.instance.documentManager.canvasColor;
+            _designWidth = canvasSize.x;
+            _designHeight = canvasSize.y;
+
             _container.clipRect = new Rectangle(0, 0, canvasSize.x, canvasSize.y);
-            _container.addChild(canvas);
 
             _exitButton = FeathersUIUtil.buttonWithLabel("exit", onExit);
             addChild(_exitButton);
+
+            createSettingPanel();
+
+            layoutData.rightAnchorDisplayObject = _propertyPanel;
+
+            (_container.parent as FeathersControl).invalidate();
+        }
+
+        private function createSettingPanel():void
+        {
+            _setting = new TestSetting();
+            _setting.deviceWidth = _designWidth;
+            _setting.deviceHeight = _designHeight;
+            _propertyPanel = new PropertyPanel(_setting, TestSetting.PARAMS);
+            _propertyPanel.layoutData = new AnchorLayoutData(20, 20, 20);
+            PropertyPanel.globalDispatcher.addEventListener(UIMapperEventType.PROPERTY_CHANGE, onPropertyChange);
+            addChild(_propertyPanel);
+        }
+
+        private function onPropertyChange(event:Event):void
+        {
+            if (event.data.target !== _setting) return;
+
+            if (_setting.preset)
+            {
+                _setting.deviceWidth = _setting.preset.split(",")[0];
+                _setting.deviceHeight = _setting.preset.split(",")[1];
+                _propertyPanel.reloadData(_setting, TestSetting.PARAMS);
+            }
+
+            var width:int;
+            var height:int;
+
+            if (_setting.rotated)
+            {
+                width = _setting.deviceHeight;
+                height = _setting.deviceWidth;
+            }
+            else
+            {
+                width = _setting.deviceWidth;
+                height = _setting.deviceHeight;
+            }
+
+            var canvas:DisplayObject = _container.getChildAt(0);
+            canvas.width = width;
+            canvas.height = height;
+
+            _container.clipRect = new Rectangle(0, 0, width, height);
+
+            scaleContent(_designWidth, _designHeight, width, height);
+
+            fitBackground();
+
+            //make sure anchor works
+            var root:LayoutGroup = _container.getChildAt(_container.numChildren - 1) as LayoutGroup;
+            if (root)
+            {
+                root.width = width / root.scaleX;
+                root.height = height / root.scaleY;
+            }
+
+            (_container.parent as FeathersControl).invalidate();
         }
 
         private function onExit():void
@@ -88,6 +167,40 @@ package starlingbuilder.editor.ui
         {
             width = _background.width = event.width;
             height = _background.height =  event.height;
+        }
+
+        override public function dispose():void
+        {
+            PropertyPanel.globalDispatcher.removeEventListener(UIMapperEventType.PROPERTY_CHANGE, onPropertyChange);
+
+            super.dispose();
+        }
+
+        private function fitBackground():void
+        {
+            if (_container.numChildren == 3)
+                BackgroundTab.fitBackground(_container.getChildAt(1), _container.getChildAt(0));
+        }
+
+        private function scaleContent(designWidth:int, designHeight:int, deviceWidth:int, deviceHeight:int):void
+        {
+            switch (_setting.fitStrategy)
+            {
+                case TestSetting.FIT_ALL:
+                    fitAll(designWidth, designHeight, deviceWidth, deviceHeight);
+                    break;
+            }
+        }
+
+        private function fitAll(designWidth:int, designHeight:int, deviceWidth:int, deviceHeight:int):void
+        {
+            var scale:Number = Math.min(1.0 * deviceWidth / designWidth, 1.0 * deviceHeight / designHeight);
+
+            for (var i:int = 1; i < _container.numChildren; ++i)
+            {
+                var obj:DisplayObject = _container.getChildAt(i);
+                obj.scaleX = obj.scaleY = scale;
+            }
         }
     }
 }

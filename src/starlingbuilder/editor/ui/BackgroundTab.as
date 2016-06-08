@@ -7,13 +7,20 @@
  */
 package starlingbuilder.editor.ui
 {
+    import feathers.controls.ButtonGroup;
+
+    import flash.geom.Rectangle;
+
+    import starling.display.DisplayObject;
+    import starling.utils.RectangleUtil;
+    import starling.utils.ScaleMode;
+
     import starlingbuilder.editor.UIEditorApp;
     import starlingbuilder.editor.UIEditorScreen;
     import starlingbuilder.editor.controller.DocumentManager;
     import starlingbuilder.editor.data.TemplateData;
     import starlingbuilder.editor.events.DocumentEventType;
     import starlingbuilder.editor.helper.FileListingHelper;
-    import starlingbuilder.util.feathers.FeathersUIUtil;
     import starlingbuilder.util.ui.inspector.PropertyPanel;
 
     import feathers.controls.Button;
@@ -37,7 +44,7 @@ package starlingbuilder.editor.ui
 
         private var _list:List;
 
-        private var _resetButton:Button;
+        private var _buttonGroup:ButtonGroup;
 
         private var _propertyPanel:PropertyPanel;
 
@@ -89,7 +96,7 @@ package starlingbuilder.editor.ui
             var anchorLayoutData:AnchorLayoutData = new AnchorLayoutData();
             anchorLayoutData.bottom = 10;
             anchorLayoutData.left = anchorLayoutData.right = 5;
-            anchorLayoutData.bottomAnchorDisplayObject = _resetButton;
+            anchorLayoutData.bottomAnchorDisplayObject = _buttonGroup;
             _propertyPanel.layoutData = anchorLayoutData;
 
             addChild(_propertyPanel);
@@ -97,23 +104,44 @@ package starlingbuilder.editor.ui
 
         private function createResetButton():void
         {
-            _resetButton = FeathersUIUtil.buttonWithLabel("reset background", function(event:Event):void{
-                _documentManager.background = null;
-                _documentManager.setChanged();
-            });
+            _buttonGroup = new ButtonGroup();
+            _buttonGroup.direction = ButtonGroup.DIRECTION_HORIZONTAL;
+            _buttonGroup.dataProvider = new ListCollection([
+                {label:"reset", triggered:onButton},
+                {label:"fit", triggered:onButton}
+            ]);
 
             var anchorLayoutData:AnchorLayoutData = new AnchorLayoutData();
             anchorLayoutData.bottom = 0;
-            _resetButton.layoutData = anchorLayoutData;
+            _buttonGroup.layoutData = anchorLayoutData;
 
-            addChild(_resetButton);
+            addChild(_buttonGroup);
+        }
+
+        private function onButton(event:Event):void
+        {
+            var button:Button = event.target as Button;
+            switch (button.label)
+            {
+                case "reset":
+                    _documentManager.background = null;
+                    _documentManager.setChanged();
+                    break;
+                case "fit":
+                    if (_documentManager.background)
+                    {
+                        fitBackground(_documentManager.background, _documentManager.container);
+                        _documentManager.setChanged();
+                    }
+                    break;
+            }
         }
 
         private function listAssets():void
         {
             _list = new List();
             _list.isFocusEnabled = false;
-            _list.width = 280;
+            _list.width = 330;
             _list.height = 800;
             _list.selectedIndex = -1;
             _list.itemRendererFactory = function():IListItemRenderer
@@ -166,6 +194,17 @@ package starlingbuilder.editor.ui
             {
                 _propertyPanel.reloadData();
             }
+        }
+
+        public static function fitBackground(object:DisplayObject, canvas:DisplayObject):void
+        {
+            var objectRect:Rectangle = new Rectangle(0, 0, object.width, object.height);
+            var canvasRect:Rectangle = new Rectangle(0, 0, canvas.width, canvas.height);
+            var rect:Rectangle = RectangleUtil.fit(objectRect, canvasRect, ScaleMode.NO_BORDER);
+            object.x = rect.x;
+            object.y = rect.y;
+            object.width = rect.width;
+            object.height = rect.height;
         }
     }
 }

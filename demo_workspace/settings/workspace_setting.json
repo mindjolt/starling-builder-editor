@@ -1,7 +1,7 @@
 {
   "assetPath":"textures",
   "backgroundPath":"backgrounds",
+  "layoutPath":"layouts",
   "libraryPath":"libs",
-  "localizationPath":"localization",
-  "layoutPath":""
+  "localizationPath":"localization"
 }

@@ -24,7 +24,7 @@ package starlingbuilder.editor
     import starling.utils.HAlign;
     import starling.utils.VAlign;
 
-    [SWF(frameRate=60, width=1350, height=960, backgroundColor="#000")]
+    [SWF(frameRate=60, width=1400, height=960, backgroundColor="#000")]
     public class Main extends Sprite
     {
         public static var STAGE : Stage;

@@ -30,7 +30,7 @@
                 ],
                 "customParams":{},
                 "params":{
-                  "name":"meter_element_fill",
+                  "name":"_fill",
                   "pivotX":89,
                   "pivotY":89,
                   "rotation":-1.57,
@@ -49,7 +49,8 @@
             "cls":"starling.extensions.pixelmask.PixelMaskDisplayObject",
             "customParams":{},
             "params":{
-              "mask":{
+              "name":"pixelMaskDisplayObject",
+              "pixelMask":{
                 "cls":"starling.display.Image",
                 "constructorParams":[
                   {
@@ -61,8 +62,7 @@
                 "params":{
                   "name":null
                 }
-              },
-              "name":"pixelMaskDisplayObject"
+              }
             }
           }
         ],
@@ -82,6 +82,7 @@
     }
   },
   "setting":{
+    "canvasColor":16777215,
     "canvasSize":{
       "x":640,
       "y":960
