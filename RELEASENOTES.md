@@ -1,5 +1,13 @@
 # Starling Builder Release Notes:
 
+## 0.8.7
+* [editor] Implement FilesTab to be able to quickly open layout files in a specific path
+* [editor] Implement multiple resolution support for TestPanel
+* [editor] Implement fitBackground in BackgroundTab and TestPanel
+* [extensions] Fix bug of pixel mask not working correctly with starling 1.7+ when stencil buffer is enabled (especially web build)
+* [extensions] Fix interaction issue of FFParticleSprite
+* [demo] Add pixelmask to demo project
+
 ## 0.8.6
 * [editor] Implement workspace setting UI and save to settings/workspace_setting.json
 * [editor] Change copy/paste shortcut to ctrl+c and ctrl+v
