@@ -39,7 +39,7 @@ package starlingbuilder.editor.citestcase
             },
 
             function():void{
-                clickButton("reset background", UIEditorScreen.instance.leftPanel);
+                clickButton("reset", UIEditorScreen.instance.leftPanel);
                 assertTrue(documentManager.background == null);
             }
         ];

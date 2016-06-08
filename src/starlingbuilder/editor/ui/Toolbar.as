@@ -299,22 +299,12 @@ package starlingbuilder.editor.ui
 
         private function startTest():void
         {
-            var testPanel:TestPanel = new TestPanel(_documentManager.scale);
-
-            var sprite:Sprite = _documentManager.startTest();
-            testPanel.container.addChild(sprite);
-
-            testPanel.invalidate();
+            new TestPanel(_documentManager.startTest());
         }
 
         private function startTestGame():void
         {
-            var testPanel:TestPanel = new TestPanel(_documentManager.scale);
-
-            var sprite:Sprite = _documentManager.startTest(true);
-            testPanel.container.addChild(sprite);
-
-            testPanel.invalidate();
+            new TestPanel(_documentManager.startTest(true));
         }
 
         private function quit():void
