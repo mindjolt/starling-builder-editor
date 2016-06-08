@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?> 
      <update xmlns="http://ns.adobe.com/air/framework/update/description/2.5"> 
-       <versionNumber>0.8.6</versionNumber>
-       <url>http://starlingbuilder.github.io/download/1.x/v0.8.6/starling-builder.air</url>
+       <versionNumber>0.8.7</versionNumber>
+       <url>http://starlingbuilder.github.io/download/1.x/v0.8.7/starling-builder.air</url>
        <description>
-[editor] Implement workspace setting UI and save to settings/workspace_setting.json
-[editor] Change copy/paste shortcut to ctrl+c and ctrl+v
-[editor] Fix some DocumentManager focus issues
-[editor] Improve error handling
-[editor] Memory optimization
-[demo_workspace] Removed fonts folder by default, asset folders can be added through main menu -> workspace -> workspace setting
+[editor] Implement FilesTab to be able to quickly open layout files in a specific path
+[editor] Implement multiple resolution support for TestPanel
+[editor] Implement fitBackground in BackgroundTab and TestPanel
+[extensions] Fix bug of pixel mask not working correctly with starling 1.7+ when stencil buffer is enabled (especially web build)
+[extensions] Fix interaction issue of FFParticleSprite
+[demo] Add pixelmask to demo project
        </description>
     </update>
