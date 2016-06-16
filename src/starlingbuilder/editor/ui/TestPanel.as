@@ -146,8 +146,8 @@ package starlingbuilder.editor.ui
             var root:LayoutGroup = _container.getChildAt(_container.numChildren - 1) as LayoutGroup;
             if (root)
             {
-                root.width = width / root.scaleX;
-                root.height = height / root.scaleY;
+                root.width = width;
+                root.height = height;
             }
 
             (_container.parent as FeathersControl).invalidate();
