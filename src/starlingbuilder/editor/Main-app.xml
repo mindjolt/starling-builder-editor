@@ -26,7 +26,7 @@
     <versionNumber>2.0.0</versionNumber>
 
     <!-- A string value (such as "v1", "2.5", or "Alpha 1") that represents the version of the application, as it should be shown to users. Optional. -->
-    <versionLabel>2.0.0 prerelease</versionLabel>
+    <versionLabel>2.0.0</versionLabel>
 
     <!-- An application version designator (such as "v1", "2.5", or "Alpha 1"). Required for namespace < 2.5. -->
     <!--<version>0.0.0</version>-->
