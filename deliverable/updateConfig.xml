@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?> 
      <update xmlns="http://ns.adobe.com/air/framework/update/description/2.5"> 
-       <versionNumber>2.0.5</versionNumber>
-       <url>http://starlingbuilder.github.io/download/2.x/v2.0.5/starling-builder.air</url>
+       <versionNumber>2.0.6</versionNumber>
+       <url>http://starlingbuilder.github.io/download/2.x/v2.0.6/starling-builder.air</url>
        <description>
-[editor] Implement FilesTab to be able to quickly open layout files in a specific path
-[editor] Implement multiple resolution support for TestPanel
-[editor] Implement fitBackground in BackgroundTab and TestPanel
+[editor] Upgrade to Feathers UI 3.0.1
+[editor] Fix AnchorLayout not working correctly in TestPanel
        </description>
     </update>
