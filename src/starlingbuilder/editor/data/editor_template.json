@@ -412,6 +412,16 @@
         },
 
         {
+            "cls":"feathers.media.VideoPlayer",
+            "params":[
+                {"name":"videoSource", "default_value":null},
+                {"name":"autoPlay", "component":"check", "default_value":true}
+            ],
+            "container":true,
+            "tag":"feathers"
+        },
+
+        {
             "cls":"feathers.layout.HorizontalLayout",
             "params":[
                 {"name":"gap", "default_value":0},
@@ -603,6 +613,6 @@
 
     "version":1.0,
 
-    "revision":31
+    "revision":32
 
 }
