@@ -15,6 +15,7 @@ package starlingbuilder.editor
     import feathers.layout.VerticalLayout;
     import feathers.layout.VerticalSpinnerLayout;
     import feathers.layout.WaterfallLayout;
+    import feathers.media.VideoPlayer;
 
     import starling.display.Button;
     import starling.display.Image;
@@ -88,6 +89,7 @@ package starlingbuilder.editor
             TextInput,
             ToggleButton,
             ToggleSwitch,
+            VideoPlayer,
             WebView,
 
             HorizontalLayout,
