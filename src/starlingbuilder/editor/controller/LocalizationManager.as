@@ -14,6 +14,7 @@ package starlingbuilder.editor.controller
     import starlingbuilder.editor.UIEditorScreen;
     import starlingbuilder.editor.data.TemplateData;
     import starlingbuilder.editor.localization.DefaultLocalizationFileWrapper;
+    import starlingbuilder.editor.localization.ILocalizationFileWrapper;
     import starlingbuilder.editor.ui.MainMenu;
     import starlingbuilder.editor.ui.MainMenu;
     import starlingbuilder.engine.localization.ILocalization;
@@ -25,7 +26,7 @@ package starlingbuilder.editor.controller
         public static const DEFAULT_LOCALE:String = "en_US";
 
         private var _localization:ILocalization;
-        private var _localizationFileWrapper:DefaultLocalizationFileWrapper;
+        private var _localizationFileWrapper:ILocalizationFileWrapper;
 
         public function LocalizationManager()
         {

@@ -14,7 +14,7 @@ package starlingbuilder.editor.localization
     import flash.filesystem.FileMode;
     import flash.filesystem.FileStream;
 
-    public class DefaultLocalizationFileWrapper
+    public class DefaultLocalizationFileWrapper implements ILocalizationFileWrapper
     {
         private var _workspace:File;
 
