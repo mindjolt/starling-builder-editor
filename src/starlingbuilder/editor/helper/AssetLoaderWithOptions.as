@@ -78,18 +78,31 @@ package starlingbuilder.editor.helper
             {
                 var re:RegExp = new RegExp(key);
 
-                var res:Array = url.match(re)
+                var res:Array = url.match(re);
 
                 if (res && res.length > 0)
-                {
-                    return new TextureOptions(_options[key].scale);
-                }
+                    return toTextureOptions(_options[key]);
             }
 
             if (DEFAULT_OPTION in _options)
-                return new TextureOptions(_options[DEFAULT_OPTION].scale);
+                return toTextureOptions(_options[DEFAULT_OPTION]);
 
             return null;
+        }
+
+        private static const TEXTURE_OPTIONS_FIELDS:Array = ["scale", "mipMapping", "format", "repeat"];
+
+        private function toTextureOptions(option:Object):TextureOptions
+        {
+            var textureOptions:TextureOptions = new TextureOptions();
+
+            for each (var field:String in TEXTURE_OPTIONS_FIELDS)
+            {
+                if (field in option)
+                    textureOptions[field] = option[field];
+            }
+
+            return textureOptions;
         }
     }
 }

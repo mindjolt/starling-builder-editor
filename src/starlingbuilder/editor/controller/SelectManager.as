@@ -14,6 +14,7 @@ package starlingbuilder.editor.controller
     import starling.display.DisplayObject;
 
     import starling.display.DisplayObject;
+    import starling.display.DisplayObjectContainer;
     import starling.events.EventDispatcher;
 
     import starlingbuilder.editor.events.DocumentEventType;
@@ -116,13 +117,27 @@ package starlingbuilder.editor.controller
 
                 var bound:Rectangle = obj.getBounds(Starling.current.stage);
 
-                if (rect.intersects(bound) && _selectedObjects.indexOf(obj) == -1 && !uiBuilder.isContainer(paramsDict[obj]))
+                if (_selectedObjects.indexOf(obj) == -1)
                 {
-                    _selectedObjects.push(obj);
+                    if (rect.intersects(bound) && (!uiBuilder.isContainer(paramsDict[obj])))
+                    {
+                        _selectedObjects.push(obj);
+                    }
+
+                    //allow empty container to be selected
+                    if ((bound.width == 0 && bound.height == 0) && rect.contains(bound.x, bound.y) && isEmptyContainer(obj))
+                    {
+                        _selectedObjects.push(obj);
+                    }
                 }
             }
 
             setChanged();
+        }
+
+        private function isEmptyContainer(obj:DisplayObject):Boolean
+        {
+            return (obj is DisplayObjectContainer && (obj as DisplayObjectContainer).numChildren == 0);
         }
     }
 }
