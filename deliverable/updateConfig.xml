@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?> 
      <update xmlns="http://ns.adobe.com/air/framework/update/description/2.5"> 
-       <versionNumber>0.8.7</versionNumber>
-       <url>http://starlingbuilder.github.io/download/1.x/v0.8.7/starling-builder.air</url>
+       <versionNumber>0.8.8</versionNumber>
+       <url>http://starlingbuilder.github.io/download/1.x/v0.8.8/starling-builder.air</url>
        <description>
-[editor] Implement FilesTab to be able to quickly open layout files in a specific path
-[editor] Implement multiple resolution support for TestPanel
-[editor] Implement fitBackground in BackgroundTab and TestPanel
-[extensions] Fix bug of pixel mask not working correctly with starling 1.7+ when stencil buffer is enabled (especially web build)
-[extensions] Fix interaction issue of FFParticleSprite
-[demo] Add pixelmask to demo project
+[editor] Add ILocalizationFileWrapper to better support custom localization override, add defaultLocale to editor_template.json
+[editor] texture_options.json supports more properties beside scale (mipMapping, format and repeat)
+[editor] Drag select works with empty container
+[template] New supported feathers component: VideoPlayer
        </description>
     </update>
