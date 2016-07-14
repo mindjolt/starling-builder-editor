@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?> 
      <update xmlns="http://ns.adobe.com/air/framework/update/description/2.5"> 
-       <versionNumber>2.0.6</versionNumber>
-       <url>http://starlingbuilder.github.io/download/2.x/v2.0.6/starling-builder.air</url>
+       <versionNumber>2.0.7</versionNumber>
+       <url>http://starlingbuilder.github.io/download/2.x/v2.0.7/starling-builder.air</url>
        <description>
-[editor] Upgrade to Feathers UI 3.0.1
-[editor] Fix AnchorLayout not working correctly in TestPanel
+[editor] Add ILocalizationFileWrapper to better support custom localization override, add defaultLocale to editor_template.json
+[editor] texture_options.json supports more properties beside scale (mipMapping, format and repeat)
+[editor] Drag select works with empty container
+[template] New supported feathers component: VideoPlayer
        </description>
     </update>
