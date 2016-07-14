@@ -14,6 +14,7 @@ package starlingbuilder.editor.controller
     import starlingbuilder.editor.UIEditorScreen;
     import starlingbuilder.editor.data.TemplateData;
     import starlingbuilder.editor.localization.DefaultLocalizationFileWrapper;
+    import starlingbuilder.editor.localization.ILocalizationFileWrapper;
     import starlingbuilder.editor.ui.MainMenu;
     import starlingbuilder.editor.ui.MainMenu;
     import starlingbuilder.engine.localization.ILocalization;
@@ -22,10 +23,10 @@ package starlingbuilder.editor.controller
 
     public class LocalizationManager
     {
-        public static const DEFAULT_LOCALE:String = "en_US";
+        public static var DEFAULT_LOCALE:String = "en_US";
 
         private var _localization:ILocalization;
-        private var _localizationFileWrapper:DefaultLocalizationFileWrapper;
+        private var _localizationFileWrapper:ILocalizationFileWrapper;
 
         public function LocalizationManager()
         {
@@ -37,6 +38,11 @@ package starlingbuilder.editor.controller
             else
             {
                 _localizationFileWrapper = new DefaultLocalizationFileWrapper(localizationDir);
+            }
+
+            if (TemplateData.editor_template.uiBuilder && TemplateData.editor_template.uiBuilder.defaultLocale)
+            {
+                DEFAULT_LOCALE = TemplateData.editor_template.uiBuilder.defaultLocale;
             }
 
             _localization = _localizationFileWrapper.localization;
@@ -88,11 +94,11 @@ package starlingbuilder.editor.controller
         {
             //Make sure default locales are on the top
             locales.sort(function(a:String, b:String):int{
-                if (a == DEFAULT_LOCALE)
+                if (isDefaultLocale(a))
                 {
                     return -1;
                 }
-                else if (b == DEFAULT_LOCALE)
+                else if (isDefaultLocale(b))
                 {
                     return 1;
                 }
@@ -101,6 +107,12 @@ package starlingbuilder.editor.controller
                     return a < b ? -1 : 1;
                 }
             })
+        }
+
+        private function isDefaultLocale(locale:String):Boolean
+        {
+            return locale.substr(0, 2) == DEFAULT_LOCALE.substr(0, 2) &&
+                    locale.substr(-2, 2) == DEFAULT_LOCALE.substr(-2, 2);
         }
 
         public function onLocale(event:Event):void

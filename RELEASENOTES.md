@@ -1,5 +1,11 @@
 # Starling Builder Release Notes:
 
+## 0.8.8
+* [editor] Add ILocalizationFileWrapper to better support custom localization override, add defaultLocale to editor_template.json
+* [editor] texture_options.json supports more properties beside scale (mipMapping, format and repeat)
+* [editor] Drag select works with empty container
+* [template] New supported feathers component: VideoPlayer
+
 ## 0.8.7
 * [editor] Implement FilesTab to be able to quickly open layout files in a specific path
 * [editor] Implement multiple resolution support for TestPanel
