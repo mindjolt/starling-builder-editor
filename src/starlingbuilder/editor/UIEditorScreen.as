@@ -9,6 +9,8 @@ package starlingbuilder.editor
 {
     import adobe.utils.ProductManager;
 
+    import flash.utils.getTimer;
+
     import starlingbuilder.editor.data.EmbeddedData;
 
     import starlingbuilder.editor.data.TemplateData;
@@ -144,13 +146,19 @@ package starlingbuilder.editor
 
             var assetLoader:AssetLoaderWithOptions = new AssetLoaderWithOptions(assetManager, _workspaceDir);
 
+            var t:int = getTimer();
+
             for each (var path:String in _workspaceSetting.getAssetManagerPaths())
             {
                 assetLoader.enqueue(_workspaceDir.resolvePath(path));
             }
 
+            trace("Enqueue time: ", getTimer() - t);
+
             var loadingPopup:LoadingPopup = new LoadingPopup();
             PopUpManager.addPopUp(loadingPopup);
+
+            t = getTimer();
 
             assetManager.loadQueue(function(ratio:Number):void{
 
@@ -158,6 +166,8 @@ package starlingbuilder.editor
 
                 if (ratio == 1)
                 {
+                    trace("Loading time: ", getTimer() - t);
+
                     setTimeout(function():void{
 
                         PopUpManager.removePopUp(loadingPopup, true);
