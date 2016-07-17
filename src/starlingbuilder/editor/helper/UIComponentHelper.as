@@ -7,8 +7,10 @@
  */
 package starlingbuilder.editor.helper
 {
+    import starlingbuilder.editor.SupportedWidget;
     import starlingbuilder.editor.UIEditorApp;
     import starlingbuilder.editor.data.TemplateData;
+    import starlingbuilder.editor.helper.EmptyTexture;
     import starlingbuilder.engine.util.ParamUtil;
 
     import feathers.core.PopUpManager;
@@ -63,9 +65,15 @@ package starlingbuilder.editor.helper
             return data;
         }
 
+        public static function createDefaultComponentData(clsName:String):Object
+        {
+            var editorData:Object = {cls:clsName, constructorParams:[], params:{}, customParams:{}};
+            return createComponentData(editorData);
+        }
+
         private static function setTextureName(constructorParams:Array, textureName:String):void
         {
-            if (!textureName) return;
+            if (!textureName) textureName = EmptyTexture.NAME;
 
             for each (var param:Object in constructorParams)
             {

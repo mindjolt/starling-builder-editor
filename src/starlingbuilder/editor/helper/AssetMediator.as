@@ -26,6 +26,14 @@ package starlingbuilder.editor.helper
             super(assetManager);
         }
 
+        override public function getTexture(name:String):Texture
+        {
+            if (name == EmptyTexture.NAME)
+                return EmptyTexture.texture;
+
+            return super.getTexture(name);
+        }
+
         override public function getExternalData(name:String):Object
         {
             if (_file == null)

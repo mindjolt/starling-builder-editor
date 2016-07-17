@@ -21,9 +21,9 @@ package starlingbuilder.util.ui.inspector
     {
         private var _button:Button;
 
-        public function ButtonPropertyComponent(propertyRetriver:IPropertyRetriever, param:Object)
+        public function ButtonPropertyComponent(propertyRetriver:IPropertyRetriever, param:Object, customParam:Object = null)
         {
-            super(propertyRetriver, param);
+            super(propertyRetriver, param, customParam);
 
             _button = FeathersUIUtil.buttonWithLabel("edit", onEdit);
             addChild(_button);
@@ -36,7 +36,7 @@ package starlingbuilder.util.ui.inspector
                 var target:Object = _propertyRetriever.get(_param.name);
 
                 var cls:Class = getDefinitionByName(param.editPropertyClass) as Class;
-                var popup:DisplayObject = new cls(_propertyRetriever.target, target, param, function(item:Object):void{
+                var popup:DisplayObject = new cls(_propertyRetriever.target, target, param, _customParam, function(item:Object):void{
                     if (!_param.read_only)
                     {
                         _oldValue = _propertyRetriever.get(_param.name);

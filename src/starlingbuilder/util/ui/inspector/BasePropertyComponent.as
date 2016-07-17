@@ -15,18 +15,25 @@ package starlingbuilder.util.ui.inspector
         protected var _propertyRetriever:IPropertyRetriever;
         protected var _param:Object;
         protected var _oldValue:Object;
+        protected var _customParam:Object;
 
-        public function BasePropertyComponent(propertyRetriver:IPropertyRetriever, param:Object)
+        public function BasePropertyComponent(propertyRetriver:IPropertyRetriever, param:Object, customParam:Object = null)
         {
             super();
 
             _propertyRetriever = propertyRetriver;
             _param = param;
+            _customParam = customParam;
         }
 
         public function set target(value:Object):void
         {
             _propertyRetriever.target = value;
+        }
+
+        public function set customParam(value:Object):void
+        {
+            _customParam = value;
         }
 
         public function update():void

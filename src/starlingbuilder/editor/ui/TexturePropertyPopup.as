@@ -31,9 +31,9 @@ package starlingbuilder.editor.ui
 
         protected var _assetMediator:IAssetMediator;
 
-        public function TexturePropertyPopup(owner:Object, target:Object, targetParam:Object, onComplete:Function)
+        public function TexturePropertyPopup(owner:Object, target:Object, targetParam:Object, customParam:Object, onComplete:Function)
         {
-            super(owner, target, targetParam, onComplete);
+            super(owner, target, targetParam, customParam, onComplete);
 
             _assetMediator = ComponentRenderSupport.support.assetMediator;
 
@@ -144,18 +144,21 @@ package starlingbuilder.editor.ui
             This problem will be resolved when we use an intermediate format for the inspector in future version
              */
 
-            var param:Object = ComponentRenderSupport.support.extraParamsDict[_owner];
-
-            if (param.params == undefined)
+            if (_customParam)
             {
-                param.params = {};
+                if (_customParam.params == undefined)
+                {
+                    _customParam.params = {};
+                }
+
+                _customParam.params[_targetParam.name] =
+                {
+                    cls:"starling.textures.Texture",
+                    textureName: textureName
+                };
             }
 
-            param.params[_targetParam.name] =
-            {
-                cls:"starling.textures.Texture",
-                textureName: textureName
-            };
+
         }
 
         protected function complete():void

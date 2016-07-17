@@ -26,6 +26,8 @@ package starlingbuilder.util.ui.inspector
         protected var _target:Object;
         protected var _params:Array;
 
+        protected var _customParam:Object;
+
         protected var _propertyRetrieverFactory:Function;
 
         protected var _linkButton:LinkButton;
@@ -33,7 +35,7 @@ package starlingbuilder.util.ui.inspector
 
         protected var _setting:Object;
 
-        public function PropertyPanel(target:Object = null, params:Array = null, propertyRetrieverFactory:Function = null, setting:Object = null)
+        public function PropertyPanel(target:Object = null, params:Array = null, customParam:Object = null, propertyRetrieverFactory:Function = null, setting:Object = null)
         {
             _linkButton = new LinkButton();
             _linkOperation = new DefaultLinkOperation();
@@ -45,7 +47,7 @@ package starlingbuilder.util.ui.inspector
             addChild(_container);
 
             if (target && params)
-                reloadData(target, params);
+                reloadData(target, params, customParam);
 
             globalDispatcher.addEventListener(UIMapperEventType.PROPERTY_CHANGE, onGlobalPropertyChange);
         }
@@ -77,7 +79,7 @@ package starlingbuilder.util.ui.inspector
                 {
                     if (hasProperty(_target, param.name))
                     {
-                        var mapper:BasePropertyUIMapper = new BasePropertyUIMapper(_target, param, _propertyRetrieverFactory, _setting);
+                        var mapper:BasePropertyUIMapper = new BasePropertyUIMapper(_target, param, _customParam, _propertyRetrieverFactory, _setting);
                         _container.addChild(mapper);
                     }
                 }
@@ -109,10 +111,12 @@ package starlingbuilder.util.ui.inspector
             }
         }
 
-        public function reloadData(target:Object = null, params:Array = null):void
+        public function reloadData(target:Object = null, params:Array = null, customParam:Object = null):void
         {
             if (target !== _target)
             {
+                _customParam = customParam;
+
                 if (params !== _params) //both target and params change
                 {
                     _params = params;
@@ -121,7 +125,7 @@ package starlingbuilder.util.ui.inspector
                 else    //only target changes
                 {
                     _target = target;
-                    BasePropertyUIMapper.updateAll(this, _target);
+                    BasePropertyUIMapper.updateAll(this, _target, _customParam);
                 }
             }
             else

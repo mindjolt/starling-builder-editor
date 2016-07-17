@@ -15,16 +15,14 @@ package starlingbuilder.editor.ui
 
     public class ScaleTextureConstructorPopup1 extends TexturePropertyPopup
     {
-        public function ScaleTextureConstructorPopup1(owner:Object, target:Object, targetParam:Object, onComplete:Function)
+        public function ScaleTextureConstructorPopup1(owner:Object, target:Object, targetParam:Object, customParam:Object, onComplete:Function)
         {
-            super(owner, target, targetParam, onComplete);
+            super(owner, target, targetParam, customParam, onComplete);
         }
 
         override protected function setCustomParam(textureName:String):void
         {
-            var param:Object = ComponentRenderSupport.support.extraParamsDict[_owner];
-
-            var param1:Object = param ? param.constructorParams[0] : null;
+            var param1:Object = _customParam ? _customParam.constructorParams[0] : null;
 
             if (param1 && param1.textureName)
             {
@@ -34,9 +32,7 @@ package starlingbuilder.editor.ui
 
         override protected function complete():void
         {
-            var param:Object = ComponentRenderSupport.support.extraParamsDict[_owner];
-
-            var popup2:ScaleTextureConstructorPopup2 = new ScaleTextureConstructorPopup2(_owner, _targetParam.name, param, _onComplete);
+            var popup2:ScaleTextureConstructorPopup2 = new ScaleTextureConstructorPopup2(_owner, _targetParam.name, _customParam, _onComplete);
             PopUpManager.addPopUp(popup2);
         }
     }

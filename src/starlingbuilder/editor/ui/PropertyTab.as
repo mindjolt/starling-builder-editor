@@ -203,7 +203,7 @@ package starlingbuilder.editor.ui
             {
                 var params:Array = getObjectParams(obj);
                 updatePropertyPanel(obj);
-                _propertyPanel.reloadData(obj, params);
+                _propertyPanel.reloadData(obj, params, _documentManager.extraParamsDict[obj]);
             }
             else
             {

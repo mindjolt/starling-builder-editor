@@ -24,12 +24,14 @@ package starlingbuilder.editor.ui
 
         protected var _targetParam:Object;
 
+        protected var _customParam:Object;
 
-        public function AbstractPropertyPopup(owner:Object, target:Object, targetParam:Object, onComplete:Function)
+        public function AbstractPropertyPopup(owner:Object, target:Object, targetParam:Object, customParam:Object, onComplete:Function)
         {
             _owner = owner;
             _targetParam = targetParam;
             _oldTarget = _target = target;
+            _customParam = customParam;
             _onComplete = onComplete;
 
             super();

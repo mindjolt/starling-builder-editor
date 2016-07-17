@@ -31,9 +31,9 @@ package starlingbuilder.editor.ui
 
         protected var _assetMediator:IAssetMediator;
 
-        public function ObjectPropertyPopup(owner:Object, target:Object, targetParam:Object, onComplete:Function)
+        public function ObjectPropertyPopup(owner:Object, target:Object, targetParam:Object, customParam:Object, onComplete:Function)
         {
-            super(owner, target, targetParam, onComplete);
+            super(owner, target, targetParam, customParam, onComplete);
 
             _assetMediator = ComponentRenderSupport.support.assetMediator;
 
@@ -138,18 +138,19 @@ package starlingbuilder.editor.ui
 
         protected function setCustomParam(name:String):void
         {
-            var param:Object = ComponentRenderSupport.support.extraParamsDict[_owner];
-
-            if (param.params == undefined)
+            if (_customParam)
             {
-                param.params = {};
+                if (_customParam.params == undefined)
+                {
+                    _customParam.params = {};
+                }
+
+                _customParam.params[_targetParam.name] =
+                {
+                    cls:"Object",
+                    name: name
+                };
             }
-
-            param.params[_targetParam.name] =
-            {
-                cls:"Object",
-                name: name
-            };
         }
 
         protected function getDataNames():Vector.<String>

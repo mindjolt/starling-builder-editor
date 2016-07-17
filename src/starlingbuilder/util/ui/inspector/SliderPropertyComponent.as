@@ -11,9 +11,9 @@ package starlingbuilder.util.ui.inspector
     {
         private var _slider:Slider;
 
-        public function SliderPropertyComponent(propertyRetriver:IPropertyRetriever, param:Object)
+        public function SliderPropertyComponent(propertyRetriver:IPropertyRetriever, param:Object, customParam:Object)
         {
-            super(propertyRetriver, param);
+            super(propertyRetriver, param, customParam);
 
             _slider = new Slider();
             addChild(_slider);

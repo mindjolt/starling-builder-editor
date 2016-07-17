@@ -19,9 +19,9 @@ package starlingbuilder.util.ui.inspector
 
         protected var _check:Check;
 
-        public function TextInputPropertyComponent(propertyRetriver:IPropertyRetriever, param:Object)
+        public function TextInputPropertyComponent(propertyRetriver:IPropertyRetriever, param:Object, customParam:Object = null)
         {
-            super(propertyRetriver, param);
+            super(propertyRetriver, param, customParam);
 
             layout = FeathersUIUtil.horizontalLayout();
 
