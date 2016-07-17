@@ -21,15 +21,17 @@ package starlingbuilder.util.ui.inspector
 
         protected var _target:Object;
         protected var _param:Object;
+        protected var _customParam:Object;
         protected var _propertyRetriever:IPropertyRetriever;
 
         protected var _factory:UIPropertyComponentFactory;
         protected var _setting:Object;
 
-        public function BasePropertyUIMapper(target:Object, param:Object, propertyRetrieverFactory:Function = null, setting:Object = null)
+        public function BasePropertyUIMapper(target:Object, param:Object, customParam:Object = null, propertyRetrieverFactory:Function = null, setting:Object = null)
         {
             _target = target;
             _param = param;
+            _customParam = customParam;
             _setting = setting;
 
             _factory = new UIPropertyComponentFactory();
@@ -79,6 +81,11 @@ package starlingbuilder.util.ui.inspector
             _target = value;
         }
 
+        public function set customParam(value:Object):void
+        {
+            _customParam = value;
+        }
+
         public function update():void
         {
 
@@ -107,17 +114,17 @@ package starlingbuilder.util.ui.inspector
 
             for each (var item:String in items)
             {
-                createComponent(item, param);
+                createComponent(item, param, _customParam);
             }
         }
 
-        private function createComponent(type:String, param:Object):void
+        private function createComponent(type:String, param:Object, customParam:Object):void
         {
             var component:BasePropertyComponent;
 
             var cls:Class = _factory.getComponent(type);
 
-            component = new cls(_propertyRetriever, param);
+            component = new cls(_propertyRetriever, param, customParam);
             component.addEventListener(Event.CHANGE, onChange);
             addChild(component);
         }
@@ -144,7 +151,7 @@ package starlingbuilder.util.ui.inspector
             return _factory;
         }
 
-        public static function updateAll(container:DisplayObjectContainer, target:Object = null):void
+        public static function updateAll(container:DisplayObjectContainer, target:Object = null, customParam:Object = null):void
         {
             var array:Array = [];
             getAll(array, container, BasePropertyComponent);
@@ -161,6 +168,7 @@ package starlingbuilder.util.ui.inspector
                     if (target)
                     {
                         it.target = target;
+                        it.customParam = customParam;
                     }
                 }
             }
@@ -170,6 +178,7 @@ package starlingbuilder.util.ui.inspector
                 if (target)
                 {
                     item.target = target;
+                    item.customParam = customParam;
                 }
                 item.update();
             }

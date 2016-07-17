@@ -17,9 +17,9 @@ package starlingbuilder.util.ui.inspector
     {
         protected var _button:Button;
 
-        public function EditPathPropertyComponent(propertyRetriver:IPropertyRetriever, param:Object)
+        public function EditPathPropertyComponent(propertyRetriver:IPropertyRetriever, param:Object, customParam:Object = null)
         {
-            super(propertyRetriver, param);
+            super(propertyRetriver, param, customParam);
 
             _button = new Button();
             _button.label = "Edit";

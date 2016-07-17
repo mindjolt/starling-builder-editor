@@ -6,6 +6,7 @@ package starlingbuilder.util.ui.inspector
     public interface IUIMapper
     {
         function set target(value:Object):void;
+        function set customParam(value:Object):void;
         function update():void;
     }
 }

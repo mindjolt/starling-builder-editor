@@ -21,9 +21,9 @@ package starlingbuilder.editor.ui
     {
         protected var _textArea:TextArea;
 
-        public function ListCollectionPopup(owner:Object, target:Object, targetParam:Object, onComplete:Function)
+        public function ListCollectionPopup(owner:Object, target:Object, targetParam:Object, customParam:Object, onComplete:Function)
         {
-            super(owner, target, targetParam, onComplete);
+            super(owner, target, targetParam, customParam, onComplete);
 
             title = "Edit Data";
             buttons = ["OK", "Cancel"];
@@ -36,10 +36,9 @@ package starlingbuilder.editor.ui
             _textArea = new TextArea();
             addChild(_textArea);
 
-            var param:Object = ComponentRenderSupport.support.extraParamsDict[_owner];
-            if (param && param.params && _targetParam.name in param.params)
+            if (_customParam && _customParam.params && _targetParam.name in _customParam.params)
             {
-                _textArea.text = StableJSONEncoder.stringify(param.params[_targetParam.name].data);
+                _textArea.text = StableJSONEncoder.stringify(_customParam.params[_targetParam.name].data);
             }
         }
 
@@ -79,25 +78,28 @@ package starlingbuilder.editor.ui
              This problem will be resolved when we use an intermediate format for the inspector in future version
              */
 
-            var param:Object = ComponentRenderSupport.support.extraParamsDict[_owner];
-
-            if (param.params == undefined)
+            if (_customParam)
             {
-                param.params = {};
-            }
-
-            if (obj)
-            {
-                param.params[_targetParam.name] =
+                if (_customParam.params == undefined)
                 {
-                    cls:getClsName(),
-                    data: obj
-                };
+                    _customParam.params = {};
+                }
+
+                if (obj)
+                {
+                    _customParam.params[_targetParam.name] =
+                    {
+                        cls:getClsName(),
+                        data: obj
+                    };
+                }
+                else
+                {
+                    delete _customParam.params[_targetParam.name];
+                }
             }
-            else
-            {
-                delete param.params[_targetParam.name];
-            }
+
+
         }
 
         protected function complete():void
