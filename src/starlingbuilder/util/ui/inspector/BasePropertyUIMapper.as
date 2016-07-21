@@ -3,20 +3,18 @@
  */
 package starlingbuilder.util.ui.inspector
 {
-    import starlingbuilder.engine.UIElementFactory;
-    import starlingbuilder.util.feathers.FeathersUIUtil;
+    import feathers.controls.LayoutGroup;
+    import feathers.layout.FlowLayout;
 
-    import feathers.controls.Label;
-    import feathers.controls.ScrollContainer;
-    import feathers.layout.HorizontalLayout;
+    import starlingbuilder.engine.UIElementFactory;
+    import starlingbuilder.engine.util.ObjectLocaterUtil;
 
     import starling.display.DisplayObject;
     import starling.display.DisplayObjectContainer;
     import starling.events.Event;
 
-    public class BasePropertyUIMapper extends ScrollContainer implements IUIMapper
+    public class BasePropertyUIMapper extends LayoutGroup implements IUIMapper
     {
-        public static const DEFAULT_LABEL_WIDTH:int = 55;
         public static const DEFAULT_COLUMN_GAP:int = 10;
 
         protected var _target:Object;
@@ -45,25 +43,17 @@ package starlingbuilder.util.ui.inspector
                 _propertyRetriever = new DefaultPropertyRetriever(_target, param);
             }
 
-            var layout:HorizontalLayout = new HorizontalLayout();
-            layout.gap = columnGap;
+            var layout:FlowLayout = new FlowLayout();
+            layout.gap = DEFAULT_COLUMN_GAP;
             this.layout = layout;
 
-            var component:LabelPropertyComponent = new LabelPropertyComponent(_propertyRetriever, _param, labelWidth);
+            applySetting(this, UIPropertyComponentFactory.ROW);
+
+            var component:LabelPropertyComponent = new LabelPropertyComponent(_propertyRetriever, _param, _customParam, _setting);
             component.addEventListener(Event.CHANGE, onChange);
             addChild(component);
 
             createComponents(param);
-        }
-
-        public function get labelWidth():int
-        {
-            return (_setting && _setting.hasOwnProperty("labelWidth")) ? _setting.labelWidth : DEFAULT_LABEL_WIDTH;
-        }
-
-        public function get columnGap():int
-        {
-            return (_setting && _setting.hasOwnProperty("columnGap")) ? _setting.columnGap : DEFAULT_COLUMN_GAP;
         }
 
         public function get propertyRetriever():IPropertyRetriever
@@ -88,7 +78,7 @@ package starlingbuilder.util.ui.inspector
 
         public function update():void
         {
-
+            updateVisibility();
         }
 
         private static function getAll(array:Array, container:DisplayObjectContainer, cls:Class):void
@@ -114,17 +104,17 @@ package starlingbuilder.util.ui.inspector
 
             for each (var item:String in items)
             {
-                createComponent(item, param, _customParam);
+                createComponent(item, param, _customParam, _setting);
             }
         }
 
-        private function createComponent(type:String, param:Object, customParam:Object):void
+        private function createComponent(type:String, param:Object, customParam:Object, setting:Object):void
         {
             var component:BasePropertyComponent;
 
             var cls:Class = _factory.getComponent(type);
 
-            component = new cls(_propertyRetriever, param, customParam);
+            component = new cls(_propertyRetriever, param, customParam, setting);
             component.addEventListener(Event.CHANGE, onChange);
             addChild(component);
         }
@@ -158,19 +148,17 @@ package starlingbuilder.util.ui.inspector
 
             sortBasePropertyComponent(array, UIElementFactory.PARAMS);
 
-            if (target)
-            {
-                var array2:Array = [];
-                getAll(array2, container, BasePropertyUIMapper);
+            var array2:Array = [];
+            getAll(array2, container, BasePropertyUIMapper);
 
-                for each (var it:BasePropertyUIMapper in array2)
+            for each (var it:BasePropertyUIMapper in array2)
+            {
+                if (target)
                 {
-                    if (target)
-                    {
-                        it.target = target;
-                        it.customParam = customParam;
-                    }
+                    it.target = target;
+                    it.customParam = customParam;
                 }
+                it.update();
             }
 
             for each (var item:IUIMapper in array)
@@ -182,6 +170,41 @@ package starlingbuilder.util.ui.inspector
                 }
                 item.update();
             }
+        }
+
+        protected function applySetting(obj:DisplayObject, componentName:String):void
+        {
+            PropertyPanel.applySetting(obj, _setting, componentName);
+        }
+
+        private function updateVisibility():void
+        {
+            if ("if" in _param)
+            {
+                //handle condition: {if:{name==value}}
+                var array:Array = _param["if"].split("==");
+                if (array.length == 2)
+                {
+                    var name:String = array[0];
+                    var value:String = array[1];
+
+                    if (_target[name].toString() == value)
+                    {
+                        visible = true;
+                        includeInLayout = true;
+                    }
+                    else
+                    {
+                        visible = false;
+                        includeInLayout = false;
+                    }
+
+                    return;
+                }
+            }
+
+            visible = true;
+            includeInLayout = true;
         }
     }
 }

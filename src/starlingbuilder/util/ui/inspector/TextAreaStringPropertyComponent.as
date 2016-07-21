@@ -7,9 +7,9 @@ package starlingbuilder.util.ui.inspector
 
     public class TextAreaStringPropertyComponent extends TextAreaPropertyComponent
     {
-        public function TextAreaStringPropertyComponent(propertyRetriver:IPropertyRetriever, param:Object, customParam:Object = null)
+        public function TextAreaStringPropertyComponent(propertyRetriever:IPropertyRetriever, param:Object, customParam:Object = null, setting:Object = null)
         {
-            super(propertyRetriver, param, customParam);
+            super(propertyRetriever, param, customParam, setting);
 
             _textArea.height = 100;
         }

@@ -21,11 +21,12 @@ package starlingbuilder.util.ui.inspector
     {
         private var _button:Button;
 
-        public function ButtonPropertyComponent(propertyRetriver:IPropertyRetriever, param:Object, customParam:Object = null)
+        public function ButtonPropertyComponent(propertyRetriever:IPropertyRetriever, param:Object, customParam:Object = null, setting:Object = null)
         {
-            super(propertyRetriver, param, customParam);
+            super(propertyRetriever, param, customParam, setting);
 
             _button = FeathersUIUtil.buttonWithLabel("edit", onEdit);
+            applySetting(_button, UIPropertyComponentFactory.POPUP);
             addChild(_button);
         }
 

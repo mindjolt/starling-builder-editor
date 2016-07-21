@@ -11,11 +11,12 @@ package starlingbuilder.util.ui.inspector
     {
         protected var _check:Check;
 
-        public function CheckPropertyComponent(propertyRetriver:IPropertyRetriever, param:Object, customParam:Object = null)
+        public function CheckPropertyComponent(propertyRetriever:IPropertyRetriever, param:Object, customParam:Object = null, setting:Object = null)
         {
-            super(propertyRetriver, param, customParam);
+            super(propertyRetriever, param, customParam, setting);
 
             _check = new Check();
+            applySetting(_check, UIPropertyComponentFactory.CHECK);
             addChild(_check);
 
             update();

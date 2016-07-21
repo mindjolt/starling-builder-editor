@@ -9,11 +9,12 @@ package starlingbuilder.util.ui.inspector
     {
         protected var _colorPicker:ColorPicker;
 
-        public function ColorPickerPropertyComponent(propertyRetriver:IPropertyRetriever, param:Object, customParam:Object = null)
+        public function ColorPickerPropertyComponent(propertyRetriever:IPropertyRetriever, param:Object, customParam:Object = null, setting:Object = null)
         {
-            super(propertyRetriver, param, customParam);
+            super(propertyRetriever, param, customParam, setting);
 
             _colorPicker = new ColorPicker();
+            applySetting(_colorPicker, UIPropertyComponentFactory.COLOR_PICKER);
             addChild(_colorPicker);
 
             update();
