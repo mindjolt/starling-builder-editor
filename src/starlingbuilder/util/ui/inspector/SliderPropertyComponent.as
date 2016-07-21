@@ -11,11 +11,12 @@ package starlingbuilder.util.ui.inspector
     {
         private var _slider:Slider;
 
-        public function SliderPropertyComponent(propertyRetriver:IPropertyRetriever, param:Object, customParam:Object)
+        public function SliderPropertyComponent(propertyRetriever:IPropertyRetriever, param:Object, customParam:Object = null, setting:Object = null)
         {
-            super(propertyRetriver, param, customParam);
+            super(propertyRetriever, param, customParam, setting);
 
             _slider = new Slider();
+            applySetting(_slider, UIPropertyComponentFactory.SLIDER);
             addChild(_slider);
 
             var min:Number = param["min"];

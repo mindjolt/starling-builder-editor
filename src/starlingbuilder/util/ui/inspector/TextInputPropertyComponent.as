@@ -19,13 +19,14 @@ package starlingbuilder.util.ui.inspector
 
         protected var _check:Check;
 
-        public function TextInputPropertyComponent(propertyRetriver:IPropertyRetriever, param:Object, customParam:Object = null)
+        public function TextInputPropertyComponent(propertyRetriever:IPropertyRetriever, param:Object, customParam:Object = null, setting:Object = null)
         {
-            super(propertyRetriver, param, customParam);
+            super(propertyRetriever, param, customParam, setting);
 
             layout = FeathersUIUtil.horizontalLayout();
 
             _textInput = new AutoCompleteWithDropDown();
+            applySetting(_textInput, UIPropertyComponentFactory.TEXT_INPUT);
             addChild(_textInput);
 
             if (_param.width)

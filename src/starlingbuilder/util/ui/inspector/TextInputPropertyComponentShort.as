@@ -5,11 +5,12 @@ package starlingbuilder.util.ui.inspector
 {
     public class TextInputPropertyComponentShort extends TextInputPropertyComponent
     {
-        public function TextInputPropertyComponentShort(propertyRetriver:IPropertyRetriever, param:Object, customParam:Object = null)
+        public function TextInputPropertyComponentShort(propertyRetriever:IPropertyRetriever, param:Object, customParam:Object = null, setting:Object = null)
         {
-            super(propertyRetriver, param, customParam);
+            super(propertyRetriever, param, customParam, setting);
 
             _textInput.width = 50;
+            applySetting(_textInput, UIPropertyComponentFactory.TEXT_INPUT_SHORT);
         }
     }
 }

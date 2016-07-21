@@ -12,11 +12,12 @@ package starlingbuilder.util.ui.inspector
     {
         protected var _pickerList:PickerList;
 
-        public function PickerListPropertyComponent(propertyRetriver:IPropertyRetriever, param:Object, customParam:Object = null)
+        public function PickerListPropertyComponent(propertyRetriever:IPropertyRetriever, param:Object, customParam:Object = null, setting:Object = null)
         {
-            super(propertyRetriver, param, customParam);
+            super(propertyRetriever, param, customParam, setting);
 
             _pickerList = new PickerList();
+            applySetting(_pickerList, UIPropertyComponentFactory.PICKER_LIST);
             addChild(_pickerList);
 
             _pickerList.dataProvider = new ListCollection(_param["options"]);

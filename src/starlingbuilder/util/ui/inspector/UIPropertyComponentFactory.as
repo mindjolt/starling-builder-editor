@@ -7,6 +7,19 @@ package starlingbuilder.util.ui.inspector
 
     public class UIPropertyComponentFactory
     {
+        public static const CONTAINER:String = "container";
+        public static const ROW:String = "row";
+        public static const LABEL:String = "label";
+        public static const PICKER_LIST:String = "pickerList";
+        public static const SLIDER:String = "slider";
+        public static const TEXT_INPUT:String = "textInput";
+        public static const TEXT_INPUT_SHORT:String = "textInputShort";
+        public static const COLOR_PICKER:String = "colorPicker";
+        public static const TEXT_AREA:String = "textArea";
+        public static const EDIT_PATH:String = "editPath";
+        public static const POPUP:String = "popup";
+        public static const CHECK:String = "check";
+
         public static const DEFAULT_COMPONENT_MAPPING:Object = {
             "slider":SliderPropertyComponent,
             "pickerList":PickerListPropertyComponent,
