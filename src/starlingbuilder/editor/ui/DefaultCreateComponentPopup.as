@@ -54,7 +54,7 @@ package starlingbuilder.editor.ui
 
             getData();
 
-            _propertyPanel = new PropertyPanel(_target, params, propertyRetrieverFactory);
+            _propertyPanel = new PropertyPanel(_target, params, null, propertyRetrieverFactory);
             addChild(_propertyPanel);
         }
 
