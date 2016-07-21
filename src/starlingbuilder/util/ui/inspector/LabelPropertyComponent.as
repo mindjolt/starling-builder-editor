@@ -24,8 +24,6 @@ package starlingbuilder.util.ui.inspector
 
         private var _isNumeric:Boolean;
 
-        public static const DEFAULT_VERTICAL_ARROW_FIELDS:Array = ["y", "height"];
-
         public function LabelPropertyComponent(propertyRetriver:IPropertyRetriever, param:Object, labelWidth:Number)
         {
             CursorRegister.init();
@@ -45,14 +43,6 @@ package starlingbuilder.util.ui.inspector
             _isNumeric = (_propertyRetriever.get(_param.name) is Number);
         }
 
-        private function useVerticalArrow():Boolean
-        {
-            if ("vertical_arrow" in _param)
-                return _param.vertical_arrow;
-            else
-                return DEFAULT_VERTICAL_ARROW_FIELDS.indexOf(_param.name) >= 0;
-        }
-
         private function onTouch(event:TouchEvent):void
         {
             var touch:Touch = event.getTouch(this);
@@ -61,12 +51,10 @@ package starlingbuilder.util.ui.inspector
                 switch (touch.phase)
                 {
                     case TouchPhase.MOVED:
-                        var delta:Number;
+                        var delta:Number = 0;
 
-                        if (useVerticalArrow())
-                            delta = Math.round(touch.globalY - touch.previousGlobalY);
-                        else
-                            delta = Math.round(touch.globalX - touch.previousGlobalX);
+                        delta += Math.round(touch.globalY - touch.previousGlobalY);
+                        delta += Math.round(touch.globalX - touch.previousGlobalX);
 
                         var value:Object = _propertyRetriever.get(_param.name);
 
@@ -89,10 +77,7 @@ package starlingbuilder.util.ui.inspector
                     case TouchPhase.HOVER:
                         if (_isNumeric)
                         {
-                            if (useVerticalArrow())
-                                Mouse.cursor = CursorRegister.VERTICAL_ARROW;
-                            else
-                                Mouse.cursor = CursorRegister.HORIZONTAL_ARROW;
+                            Mouse.cursor = CursorRegister.HORIZONTAL_ARROW;
                         }
                         break;
                     case TouchPhase.ENDED:
