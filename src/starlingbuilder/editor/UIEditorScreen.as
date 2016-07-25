@@ -14,6 +14,7 @@ package starlingbuilder.editor
     import starlingbuilder.editor.data.EmbeddedData;
 
     import starlingbuilder.editor.data.TemplateData;
+    import starlingbuilder.editor.data.UIBuilderTemplate;
     import starlingbuilder.editor.helper.AssetLoaderWithOptions;
     import starlingbuilder.editor.helper.CustomComponentHelper;
     import starlingbuilder.editor.helper.CustomThemeHelper;
@@ -21,6 +22,7 @@ package starlingbuilder.editor
     import starlingbuilder.editor.helper.FileListingHelper;
     import starlingbuilder.editor.helper.KeyboardHelper;
     import starlingbuilder.editor.helper.LoadSwfHelper;
+    import starlingbuilder.editor.helper.TemplateLoader;
     import starlingbuilder.editor.ui.CenterPanel;
     import starlingbuilder.editor.ui.LeftPanel;
     import starlingbuilder.editor.ui.LoadingPopup;
@@ -277,6 +279,7 @@ package starlingbuilder.editor
 
             function onComplete():void
             {
+                TemplateLoader.load(_workspaceDir, "ui_builder", UIBuilderTemplate);
                 CustomComponentHelper.load(_workspaceDir);
 
                 UIEditorApp.instance.init();

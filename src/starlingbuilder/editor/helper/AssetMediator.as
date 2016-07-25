@@ -20,6 +20,7 @@ package starlingbuilder.editor.helper
     public class AssetMediator extends DefaultAssetMediator implements IAssetMediator
     {
         private var _file:File;
+        private var _workspaceDir:File;
 
         public function AssetMediator(assetManager:AssetManager)
         {
@@ -65,6 +66,16 @@ package starlingbuilder.editor.helper
         public function set file(value:File):void
         {
             _file = value;
+        }
+
+        public function get workspaceDir():File
+        {
+            return _workspaceDir;
+        }
+
+        public function set workspaceDir(value:File):void
+        {
+            _workspaceDir = value;
         }
     }
 }
