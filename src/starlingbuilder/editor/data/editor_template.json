@@ -569,15 +569,8 @@
         ]
     },
 
-    "uiBuilder":
-    {
-        "defaultLocale":"en_US",
-        "localizationWrapper":"starlingbuilder.editor.localization.DefaultLocalizationFileWrapper",
-        "tweenBuilder":"starlingbuilder.engine.tween.DefaultTweenBuilder"
-    },
-
     "version":1.0,
 
-    "revision":10003
+    "revision":10004
 
 }
