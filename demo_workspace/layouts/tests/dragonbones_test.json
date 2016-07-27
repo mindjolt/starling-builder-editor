@@ -12,6 +12,7 @@
         "params":{
           "animationName":"walk",
           "armatureName":"Dragon",
+          "autoPlay":true,
           "name":"dBSprite",
           "x":339,
           "y":458.91
@@ -28,6 +29,7 @@
         "params":{
           "animationName":"walk",
           "armatureName":"Dragon",
+          "autoPlay":true,
           "name":"dBSprite",
           "x":399.31,
           "y":643.05
@@ -44,6 +46,7 @@
         "params":{
           "animationName":"walk",
           "armatureName":"Dragon",
+          "autoPlay":true,
           "filter":{
             "cls":"starlingbuilder.extensions.filters.ColorFilter",
             "customParams":{},
