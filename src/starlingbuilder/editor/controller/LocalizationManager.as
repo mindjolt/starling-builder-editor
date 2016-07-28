@@ -22,6 +22,8 @@ package starlingbuilder.editor.controller
 
     import starling.events.Event;
 
+    import starlingbuilder.util.feathers.popup.InfoPopup;
+
     public class LocalizationManager
     {
         public static var DEFAULT_LOCALE:String = "en_US";
@@ -33,8 +35,16 @@ package starlingbuilder.editor.controller
         {
             if (UIBuilderTemplate.template.localizationWrapper)
             {
-                var cls:Class = getDefinitionByName(UIBuilderTemplate.template.localizationWrapper) as Class;
-                _localizationFileWrapper = new cls(localizationDir);
+                try
+                {
+                    var cls:Class = getDefinitionByName(UIBuilderTemplate.template.localizationWrapper) as Class;
+                    _localizationFileWrapper = new cls(localizationDir);
+                }
+                catch (e:Error)
+                {
+                    InfoPopup.show(e.getStackTrace());
+                    _localizationFileWrapper = new DefaultLocalizationFileWrapper(localizationDir);
+                }
             }
             else
             {

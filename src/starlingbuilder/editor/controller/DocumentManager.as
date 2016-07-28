@@ -140,8 +140,16 @@ package starlingbuilder.editor.controller
 
             if (UIBuilderTemplate.template.assetMediator)
             {
-                cls = getDefinitionByName(UIBuilderTemplate.template.assetMediator) as Class;
-                _assetMediator = new cls(_assetManager);
+                try
+                {
+                    cls = getDefinitionByName(UIBuilderTemplate.template.assetMediator) as Class;
+                    _assetMediator = new cls(_assetManager);
+                }
+                catch (e:Error)
+                {
+                    InfoPopup.show(e.getStackTrace());
+                    _assetMediator = new AssetMediator(_assetManager);
+                }
             }
             else
             {
@@ -152,8 +160,16 @@ package starlingbuilder.editor.controller
 
             if (UIBuilderTemplate.template.tweenBuilder)
             {
-                cls = getDefinitionByName(UIBuilderTemplate.template.tweenBuilder) as Class;
-                _tweenBuilder = new cls();
+                try
+                {
+                    cls = getDefinitionByName(UIBuilderTemplate.template.tweenBuilder) as Class;
+                    _tweenBuilder = new cls();
+                }
+                catch (e:Error)
+                {
+                    InfoPopup.show(e.getStackTrace());
+                    _tweenBuilder = new DefaultTweenBuilder();
+                }
             }
             else
             {
