@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?> 
      <update xmlns="http://ns.adobe.com/air/framework/update/description/2.5"> 
-       <versionNumber>2.0.7</versionNumber>
-       <url>http://starlingbuilder.github.io/download/2.x/v2.0.7/starling-builder.air</url>
+       <versionNumber>2.1.0</versionNumber>
+       <url>http://starlingbuilder.github.io/download/2.x/v2.1.0/starling-builder.air</url>
        <description>
-[editor] Add ILocalizationFileWrapper to better support custom localization override, add defaultLocale to editor_template.json
-[editor] texture_options.json supports more properties beside scale (mipMapping, format and repeat)
-[editor] Drag select works with empty container
-[template] New supported feathers component: VideoPlayer
+[engine] Add IAssetMediator.getCustomData()
+[editor] Improve load time
+[editor] Inspector UI fully customizable by setting
+[editor] Inspector UI can drag mouse horizontal and vertical at the same time
+[editor] Separate ui_builder item inside editor_template.json to ui_builder.json
        </description>
     </update>
