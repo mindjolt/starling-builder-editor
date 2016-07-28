@@ -9,9 +9,12 @@ package starlingbuilder.editor
 {
     import adobe.utils.ProductManager;
 
+    import flash.utils.getTimer;
+
     import starlingbuilder.editor.data.EmbeddedData;
 
     import starlingbuilder.editor.data.TemplateData;
+    import starlingbuilder.editor.data.UIBuilderTemplate;
     import starlingbuilder.editor.helper.AssetLoaderWithOptions;
     import starlingbuilder.editor.helper.CustomComponentHelper;
     import starlingbuilder.editor.helper.CustomThemeHelper;
@@ -19,6 +22,7 @@ package starlingbuilder.editor
     import starlingbuilder.editor.helper.FileListingHelper;
     import starlingbuilder.editor.helper.KeyboardHelper;
     import starlingbuilder.editor.helper.LoadSwfHelper;
+    import starlingbuilder.editor.helper.TemplateLoader;
     import starlingbuilder.editor.ui.CenterPanel;
     import starlingbuilder.editor.ui.LeftPanel;
     import starlingbuilder.editor.ui.LoadingPopup;
@@ -144,13 +148,19 @@ package starlingbuilder.editor
 
             var assetLoader:AssetLoaderWithOptions = new AssetLoaderWithOptions(assetManager, _workspaceDir);
 
+            var t:int = getTimer();
+
             for each (var path:String in _workspaceSetting.getAssetManagerPaths())
             {
                 assetLoader.enqueue(_workspaceDir.resolvePath(path));
             }
 
+            trace("Enqueue time: ", getTimer() - t);
+
             var loadingPopup:LoadingPopup = new LoadingPopup();
             PopUpManager.addPopUp(loadingPopup);
+
+            t = getTimer();
 
             assetManager.loadQueue(function(ratio:Number):void{
 
@@ -158,6 +168,8 @@ package starlingbuilder.editor
 
                 if (ratio == 1)
                 {
+                    trace("Loading time: ", getTimer() - t);
+
                     setTimeout(function():void{
 
                         PopUpManager.removePopUp(loadingPopup, true);
@@ -267,6 +279,7 @@ package starlingbuilder.editor
 
             function onComplete():void
             {
+                TemplateLoader.load(_workspaceDir, "ui_builder", UIBuilderTemplate);
                 CustomComponentHelper.load(_workspaceDir);
 
                 UIEditorApp.instance.init();

@@ -21,10 +21,12 @@ package starlingbuilder.util.ui.inspector
 
         public static var globalDispatcher:EventDispatcher = new EventDispatcher();
 
-        protected var _container:ScrollContainer;
+        protected var _container:LayoutGroup;
 
         protected var _target:Object;
         protected var _params:Array;
+
+        protected var _customParam:Object;
 
         protected var _propertyRetrieverFactory:Function;
 
@@ -33,7 +35,7 @@ package starlingbuilder.util.ui.inspector
 
         protected var _setting:Object;
 
-        public function PropertyPanel(target:Object = null, params:Array = null, propertyRetrieverFactory:Function = null, setting:Object = null)
+        public function PropertyPanel(target:Object = null, params:Array = null, customParam:Object = null, propertyRetrieverFactory:Function = null, setting:Object = null)
         {
             _linkButton = new LinkButton();
             _linkOperation = new DefaultLinkOperation();
@@ -41,18 +43,14 @@ package starlingbuilder.util.ui.inspector
             _propertyRetrieverFactory = propertyRetrieverFactory;
             _setting = setting;
 
-            _container = FeathersUIUtil.scrollContainerWithVerticalLayout(rowGap);
+            _container = FeathersUIUtil.layoutGroupWithVerticalLayout(DEFAULT_ROW_GAP);
+            applySetting(_container, _setting, UIPropertyComponentFactory.CONTAINER);
             addChild(_container);
 
             if (target && params)
-                reloadData(target, params);
+                reloadData(target, params, customParam);
 
             globalDispatcher.addEventListener(UIMapperEventType.PROPERTY_CHANGE, onGlobalPropertyChange);
-        }
-
-        public function get rowGap():int
-        {
-            return (_setting && _setting.hasOwnProperty("rowGap")) ? _setting.rowGap : DEFAULT_ROW_GAP;
         }
 
         private function onGlobalPropertyChange(event:Event):void
@@ -77,7 +75,7 @@ package starlingbuilder.util.ui.inspector
                 {
                     if (hasProperty(_target, param.name))
                     {
-                        var mapper:BasePropertyUIMapper = new BasePropertyUIMapper(_target, param, _propertyRetrieverFactory, _setting);
+                        var mapper:BasePropertyUIMapper = new BasePropertyUIMapper(_target, param, _customParam, _propertyRetrieverFactory, _setting);
                         _container.addChild(mapper);
                     }
                 }
@@ -109,10 +107,12 @@ package starlingbuilder.util.ui.inspector
             }
         }
 
-        public function reloadData(target:Object = null, params:Array = null):void
+        public function reloadData(target:Object = null, params:Array = null, customParam:Object = null):void
         {
             if (target !== _target)
             {
+                _customParam = customParam;
+
                 if (params !== _params) //both target and params change
                 {
                     _params = params;
@@ -121,7 +121,7 @@ package starlingbuilder.util.ui.inspector
                 else    //only target changes
                 {
                     _target = target;
-                    BasePropertyUIMapper.updateAll(this, _target);
+                    BasePropertyUIMapper.updateAll(this, _target, _customParam);
                 }
             }
             else
@@ -200,6 +200,19 @@ package starlingbuilder.util.ui.inspector
         public function get linkOperation():ILinkOperation
         {
             return _linkOperation;
+        }
+
+        public static function applySetting(obj:DisplayObject, setting:Object, componentName:String):void
+        {
+            if (setting)
+            {
+                var data:Object = setting[componentName];
+                if (data)
+                {
+                    for (var name:String in data)
+                        ObjectLocaterUtil.set(obj, name, data[name]);
+                }
+            }
         }
     }
 }

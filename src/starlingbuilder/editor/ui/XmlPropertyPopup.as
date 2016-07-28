@@ -12,25 +12,26 @@ package starlingbuilder.editor.ui
 
     public class XmlPropertyPopup extends ObjectPropertyPopup
     {
-        public function XmlPropertyPopup(owner:Object, target:Object, targetParam:Object, onComplete:Function)
+        public function XmlPropertyPopup(owner:Object, target:Object, targetParam:Object, customParam:Object, onComplete:Function)
         {
-            super(owner, target, targetParam, onComplete);
+            super(owner, target, targetParam, customParam, onComplete);
         }
 
         override protected function setCustomParam(name:String):void
         {
-            var param:Object = ComponentRenderSupport.support.extraParamsDict[_owner];
-
-            if (param.params == undefined)
+            if (_customParam)
             {
-                param.params = {};
+                if (_customParam.params == undefined)
+                {
+                    _customParam.params = {};
+                }
+
+                _customParam.params[_targetParam.name] =
+                {
+                    cls:"XML",
+                    name: name
+                };
             }
-
-            param.params[_targetParam.name] =
-            {
-                cls:"XML",
-                name: name
-            };
         }
 
         override protected function getDataNames():Vector.<String>

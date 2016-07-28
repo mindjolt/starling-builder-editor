@@ -52,6 +52,7 @@ package starlingbuilder.editor
         private function setup():void
         {
             _assetManager = new AssetManager();
+            _assetManager.numConnections = 100;
             _assetManager.keepFontXmls = true;
             _notificationDispatcher = new EventDispatcher();
 

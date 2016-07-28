@@ -7,15 +7,14 @@
  */
 package starlingbuilder.editor.ui
 {
-    import starlingbuilder.editor.UIEditorScreen;
-    import starlingbuilder.editor.UIEditorApp;
     import starlingbuilder.editor.controller.ComponentRenderSupport;
-    import starlingbuilder.editor.controller.IComponentRenderSupport;
 
     import starlingbuilder.editor.data.TemplateData;
+    import starlingbuilder.editor.helper.EmptyTexture;
     import starlingbuilder.editor.helper.FontHelper;
-    import starlingbuilder.engine.UIBuilder;
+    import starlingbuilder.editor.helper.UIComponentHelper;
     import starlingbuilder.engine.util.ParamUtil;
+    import starlingbuilder.util.feathers.popup.InfoPopup;
     import starlingbuilder.util.ui.inspector.PropertyPanel;
 
     import feathers.controls.LayoutGroup;
@@ -39,9 +38,9 @@ package starlingbuilder.editor.ui
 
 
 
-        public function DefaultEditPropertyPopup(owner:Object, target:Object, targetParam:Object, onComplete:Function)
+        public function DefaultEditPropertyPopup(owner:Object, target:Object, targetParam:Object, customParam:Object, onComplete:Function)
         {
-            super(owner, target, targetParam, onComplete);
+            super(owner, target, targetParam, customParam, onComplete);
 
             title = "Edit Property";
             buttons = ["OK", "Cancel"];
@@ -89,7 +88,8 @@ package starlingbuilder.editor.ui
             if (clsName == "") clsName = "null";
 
             _classPicker.selectedIndex = _supportedClass.indexOf(clsName);
-            _propertyPanel = new PropertyPanel(_target, _paramDict[clsName]);
+
+            _propertyPanel = new PropertyPanel(_target, _paramDict[clsName], _customParam.params[_targetParam.name]);
 
             addChild(_classPicker);
 
@@ -110,13 +110,12 @@ package starlingbuilder.editor.ui
             }
             else
             {
-                _target = ComponentRenderSupport.support.uiBuilder.createUIElement({cls:selected, customParams:{}}).object;
-
+                createNewComponent(selected);
                 initDefault();
             }
 
             _owner[_targetParam.name] = _target;
-            _propertyPanel.reloadData(_target, _paramDict[ParamUtil.getClassName(_target)]);
+            _propertyPanel.reloadData(_target, _paramDict[ParamUtil.getClassName(_target)], _customParam.params[_targetParam.name]);
         }
 
         private function onDialogComplete(event:Event):void
@@ -125,13 +124,39 @@ package starlingbuilder.editor.ui
 
             if (index == 0)
             {
-                _onComplete(_target);
+                if (hasEmptyTexture())
+                {
+                    InfoPopup.show("Please select a texture", ["OK"]);
+                }
+                else
+                {
+                    _onComplete(_target);
+                    return;
+                }
             }
-            else
+
+            _owner[_targetParam.name] = _oldTarget;
+            _onComplete = null;
+        }
+
+        private function createNewComponent(cls:String):void
+        {
+            var data:Object = UIComponentHelper.createDefaultComponentData(cls);
+            var res:Object = ComponentRenderSupport.support.uiBuilder.createUIElement(data);
+            _target = res.object;
+            _customParam.params[_targetParam.name] = res.params;
+        }
+
+        private function hasEmptyTexture():Boolean
+        {
+            if (_customParam)
             {
-                _owner[_targetParam.name] = _oldTarget;
-                _onComplete = null;
+                var data:String = JSON.stringify(_customParam);
+                if (data.indexOf(EmptyTexture.NAME) != -1)
+                    return true;
             }
+
+            return false;
         }
 
         protected function createCustom():void

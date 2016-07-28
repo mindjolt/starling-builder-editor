@@ -39,9 +39,9 @@ package starlingbuilder.editor.ui
 
         private var _image:Image;
 
-        public function ImageGridPopup(owner:Object, target:Object, targetParam:Object, onComplete:Function)
+        public function ImageGridPopup(owner:Object, target:Object, targetParam:Object, customParam:Object, onComplete:Function)
         {
-            super(owner, target, targetParam, onComplete);
+            super(owner, target, targetParam, customParam, onComplete);
 
             PropertyPanel.globalDispatcher.addEventListener(UIMapperEventType.PROPERTY_CHANGE, onRectChange);
         }
