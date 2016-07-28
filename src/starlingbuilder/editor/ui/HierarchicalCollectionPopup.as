@@ -13,9 +13,9 @@ package starlingbuilder.editor.ui
 
     public class HierarchicalCollectionPopup extends ListCollectionPopup
     {
-        public function HierarchicalCollectionPopup(owner:Object, target:Object, targetParam:Object, onComplete:Function)
+        public function HierarchicalCollectionPopup(owner:Object, target:Object, targetParam:Object, customParam:Object, onComplete:Function)
         {
-            super(owner, target, targetParam, onComplete);
+            super(owner, target, targetParam, customParam, onComplete);
         }
 
         override protected function createData(data:Object):Object

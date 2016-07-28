@@ -184,7 +184,7 @@ package starlingbuilder.editor.ui
 
             if (!_propertyPanelCache[target.constructor])
             {
-                var propertyPanel:PropertyPanel = new PropertyPanel(null, null, displayObjectPropertyFactory);
+                var propertyPanel:PropertyPanel = new PropertyPanel(null, null, null, displayObjectPropertyFactory);
                 _propertyPanelCache[target.constructor] = propertyPanel;
             }
 
@@ -202,7 +202,7 @@ package starlingbuilder.editor.ui
             {
                 var params:Array = getObjectParams(obj);
                 updatePropertyPanel(obj);
-                _propertyPanel.reloadData(obj, params);
+                _propertyPanel.reloadData(obj, params, _documentManager.extraParamsDict[obj]);
             }
             else
             {

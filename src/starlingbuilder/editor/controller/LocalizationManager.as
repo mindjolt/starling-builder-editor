@@ -13,6 +13,7 @@ package starlingbuilder.editor.controller
     import starlingbuilder.editor.UIEditorApp;
     import starlingbuilder.editor.UIEditorScreen;
     import starlingbuilder.editor.data.TemplateData;
+    import starlingbuilder.editor.data.UIBuilderTemplate;
     import starlingbuilder.editor.localization.DefaultLocalizationFileWrapper;
     import starlingbuilder.editor.localization.ILocalizationFileWrapper;
     import starlingbuilder.editor.ui.MainMenu;
@@ -20,6 +21,8 @@ package starlingbuilder.editor.controller
     import starlingbuilder.engine.localization.ILocalization;
 
     import starling.events.Event;
+
+    import starlingbuilder.util.feathers.popup.InfoPopup;
 
     public class LocalizationManager
     {
@@ -30,19 +33,27 @@ package starlingbuilder.editor.controller
 
         public function LocalizationManager()
         {
-            if (TemplateData.editor_template.uiBuilder && TemplateData.editor_template.uiBuilder.localizationWrapper)
+            if (UIBuilderTemplate.template.localizationWrapper)
             {
-                var cls:Class = getDefinitionByName(TemplateData.editor_template.uiBuilder.localizationWrapper) as Class;
-                _localizationFileWrapper = new cls(localizationDir);
+                try
+                {
+                    var cls:Class = getDefinitionByName(UIBuilderTemplate.template.localizationWrapper) as Class;
+                    _localizationFileWrapper = new cls(localizationDir);
+                }
+                catch (e:Error)
+                {
+                    InfoPopup.show(e.getStackTrace());
+                    _localizationFileWrapper = new DefaultLocalizationFileWrapper(localizationDir);
+                }
             }
             else
             {
                 _localizationFileWrapper = new DefaultLocalizationFileWrapper(localizationDir);
             }
 
-            if (TemplateData.editor_template.uiBuilder && TemplateData.editor_template.uiBuilder.defaultLocale)
+            if (UIBuilderTemplate.template.defaultLocale)
             {
-                DEFAULT_LOCALE = TemplateData.editor_template.uiBuilder.defaultLocale;
+                DEFAULT_LOCALE = UIBuilderTemplate.template.defaultLocale;
             }
 
             _localization = _localizationFileWrapper.localization;

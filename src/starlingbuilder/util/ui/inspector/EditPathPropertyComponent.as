@@ -17,12 +17,13 @@ package starlingbuilder.util.ui.inspector
     {
         protected var _button:Button;
 
-        public function EditPathPropertyComponent(propertyRetriver:IPropertyRetriever, param:Object)
+        public function EditPathPropertyComponent(propertyRetriever:IPropertyRetriever, param:Object, customParam:Object = null, setting:Object = null)
         {
-            super(propertyRetriver, param);
+            super(propertyRetriever, param, customParam, setting);
 
             _button = new Button();
             _button.label = "Edit";
+            applySetting(_button, UIPropertyComponentFactory.EDIT_PATH);
             _button.addEventListener(Event.TRIGGERED, onButton);
             addChild(_button);
         }

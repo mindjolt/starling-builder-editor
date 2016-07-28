@@ -14,13 +14,14 @@ package starlingbuilder.util.ui.inspector
     {
         protected var _textArea:TextArea;
 
-        public function TextAreaPropertyComponent(propertyRetriver:IPropertyRetriever, param:Object)
+        public function TextAreaPropertyComponent(propertyRetriever:IPropertyRetriever, param:Object, customParam:Object = null, setting:Object = null)
         {
-            super(propertyRetriver, param);
+            super(propertyRetriever, param, customParam, setting);
 
             _textArea = new TextArea();
             _textArea.maxWidth = 400;
 			_textArea.minWidth = 300;
+            applySetting(_textArea, UIPropertyComponentFactory.TEXT_AREA);
 
             addChild(_textArea);
 

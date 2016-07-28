@@ -5,9 +5,9 @@ package starlingbuilder.util.ui.inspector
 {
     public class TextInputPropertyComponentHex extends TextInputPropertyComponent
     {
-        public function TextInputPropertyComponentHex(propertyRetriver:IPropertyRetriever, param:Object)
+        public function TextInputPropertyComponentHex(propertyRetriever:IPropertyRetriever, param:Object, customParam:Object = null, setting:Object = null)
         {
-            super(propertyRetriver, param);
+            super(propertyRetriever, param, customParam, setting);
         }
 
         override public function update():void

@@ -3,30 +3,41 @@
  */
 package starlingbuilder.util.ui.inspector
 {
-    import starlingbuilder.util.pool.IPoolable;
+    import starling.display.DisplayObject;
 
     import feathers.controls.LayoutGroup;
     import feathers.core.IFeathersControl;
 
     import starling.events.Event;
 
+    import starlingbuilder.engine.util.ObjectLocaterUtil;
+
     public class BasePropertyComponent extends LayoutGroup implements IUIMapper
     {
         protected var _propertyRetriever:IPropertyRetriever;
         protected var _param:Object;
         protected var _oldValue:Object;
+        protected var _customParam:Object;
+        protected var _setting:Object;
 
-        public function BasePropertyComponent(propertyRetriver:IPropertyRetriever, param:Object)
+        public function BasePropertyComponent(propertyRetriever:IPropertyRetriever, param:Object, customParam:Object = null, setting:Object = null)
         {
             super();
 
-            _propertyRetriever = propertyRetriver;
+            _propertyRetriever = propertyRetriever;
             _param = param;
+            _customParam = customParam;
+            _setting = setting;
         }
 
         public function set target(value:Object):void
         {
             _propertyRetriever.target = value;
+        }
+
+        public function set customParam(value:Object):void
+        {
+            _customParam = value;
         }
 
         public function update():void
@@ -66,6 +77,11 @@ package starlingbuilder.util.ui.inspector
         public function get param():Object
         {
             return _param;
+        }
+
+        protected function applySetting(obj:DisplayObject, componentName:String):void
+        {
+            PropertyPanel.applySetting(obj, _setting, componentName);
         }
     }
 }

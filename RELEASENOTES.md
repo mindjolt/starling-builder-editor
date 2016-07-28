@@ -1,5 +1,14 @@
 # Starling Builder Release Notes:
 
+## 0.9.0
+* [engine] Add IAssetMediator.getCustomData()
+* [editor] Improve load time
+* [editor] Inspector UI fully customizable by setting
+* [editor] Inspector UI can drag mouse horizontal and vertical at the same time
+* [editor] Separate ui_builder item inside editor_template.json to ui_builder.json
+* [extensions] Support DragonBones animation framework
+* [demo_workspace] Add sample layout for DragonBones
+
 ## 0.8.8
 * [editor] Add ILocalizationFileWrapper to better support custom localization override, add defaultLocale to editor_template.json
 * [editor] texture_options.json supports more properties beside scale (mipMapping, format and repeat)

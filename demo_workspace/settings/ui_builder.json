@@ -1,0 +1,6 @@
+{
+    "defaultLocale":"en_US",
+    "localizationWrapper":"starlingbuilder.editor.localization.DefaultLocalizationFileWrapper",
+    "tweenBuilder":"starlingbuilder.engine.tween.DefaultTweenBuilder",
+    "assetMediator":"starlingbuilder.extensions.animation.DBAssetMediator"
+}

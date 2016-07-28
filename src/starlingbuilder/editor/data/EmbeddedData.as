@@ -17,5 +17,10 @@ package starlingbuilder.editor.data
 
         [Embed(source="workspace_setting.json", mimeType="application/octet-stream")]
         public static const workspace_setting:Class;
+
+        [Embed(source="ui_builder.json", mimeType="application/octet-stream")]
+        public static const ui_builder:Class;
+
+
     }
 }

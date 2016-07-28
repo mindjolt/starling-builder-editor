@@ -19,6 +19,7 @@ package starlingbuilder.editor.controller
     import starlingbuilder.editor.Setting;
     import starlingbuilder.editor.UIEditorScreen;
     import starlingbuilder.editor.data.TemplateData;
+    import starlingbuilder.editor.data.UIBuilderTemplate;
     import starlingbuilder.editor.events.DocumentEventType;
     import starlingbuilder.editor.helper.AssetMediator;
     import starlingbuilder.editor.helper.BoundingBoxContainer;
@@ -135,12 +136,40 @@ package starlingbuilder.editor.controller
 
             _dataProvider = new ListCollection();
 
-            _assetMediator = new AssetMediator(_assetManager);
+            var cls:Class;
 
-            if (TemplateData.editor_template.uiBuilder && TemplateData.editor_template.uiBuilder.tweenBuilder)
+            if (UIBuilderTemplate.template.assetMediator)
             {
-                var cls:Class = getDefinitionByName(TemplateData.editor_template.uiBuilder.tweenBuilder) as Class;
-                _tweenBuilder = new cls();
+                try
+                {
+                    cls = getDefinitionByName(UIBuilderTemplate.template.assetMediator) as Class;
+                    _assetMediator = new cls(_assetManager);
+                }
+                catch (e:Error)
+                {
+                    InfoPopup.show(e.getStackTrace());
+                    _assetMediator = new AssetMediator(_assetManager);
+                }
+            }
+            else
+            {
+                _assetMediator = new AssetMediator(_assetManager);
+            }
+            _assetMediator.workspaceDir = UIEditorScreen.instance.workspaceDir;
+
+
+            if (UIBuilderTemplate.template.tweenBuilder)
+            {
+                try
+                {
+                    cls = getDefinitionByName(UIBuilderTemplate.template.tweenBuilder) as Class;
+                    _tweenBuilder = new cls();
+                }
+                catch (e:Error)
+                {
+                    InfoPopup.show(e.getStackTrace());
+                    _tweenBuilder = new DefaultTweenBuilder();
+                }
             }
             else
             {

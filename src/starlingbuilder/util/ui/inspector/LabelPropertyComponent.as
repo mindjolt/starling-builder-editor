@@ -17,6 +17,8 @@ package starlingbuilder.util.ui.inspector
 
     public class LabelPropertyComponent extends BasePropertyComponent
     {
+        public static const DEFAULT_LABEL_WIDTH:int = 55;
+
         private var _label:Label;
         protected var _step:Number;
         private var _min:Number;
@@ -24,16 +26,17 @@ package starlingbuilder.util.ui.inspector
 
         private var _isNumeric:Boolean;
 
-        public static const DEFAULT_VERTICAL_ARROW_FIELDS:Array = ["y", "height"];
-
-        public function LabelPropertyComponent(propertyRetriver:IPropertyRetriever, param:Object, labelWidth:Number)
+        public function LabelPropertyComponent(propertyRetriever:IPropertyRetriever, param:Object, customParam:Object = null, setting:Object = null)
         {
             CursorRegister.init();
 
-            super(propertyRetriver, param);
+            super(propertyRetriever, param, customParam, setting);
 
             _label = FeathersUIUtil.labelWithText(_param.label ? _param.label : _param.name);
-            _label.width = labelWidth;
+            _label.width = DEFAULT_LABEL_WIDTH;
+
+            applySetting(_label, UIPropertyComponentFactory.LABEL);
+
             _label.wordWrap = true;
             _label.addEventListener(TouchEvent.TOUCH, onTouch);
             addChild(_label);
@@ -45,14 +48,6 @@ package starlingbuilder.util.ui.inspector
             _isNumeric = (_propertyRetriever.get(_param.name) is Number);
         }
 
-        private function useVerticalArrow():Boolean
-        {
-            if ("vertical_arrow" in _param)
-                return _param.vertical_arrow;
-            else
-                return DEFAULT_VERTICAL_ARROW_FIELDS.indexOf(_param.name) >= 0;
-        }
-
         private function onTouch(event:TouchEvent):void
         {
             var touch:Touch = event.getTouch(this);
@@ -61,12 +56,10 @@ package starlingbuilder.util.ui.inspector
                 switch (touch.phase)
                 {
                     case TouchPhase.MOVED:
-                        var delta:Number;
+                        var delta:Number = 0;
 
-                        if (useVerticalArrow())
-                            delta = Math.round(touch.globalY - touch.previousGlobalY);
-                        else
-                            delta = Math.round(touch.globalX - touch.previousGlobalX);
+                        delta += Math.round(touch.globalY - touch.previousGlobalY);
+                        delta += Math.round(touch.globalX - touch.previousGlobalX);
 
                         var value:Object = _propertyRetriever.get(_param.name);
 
@@ -89,10 +82,7 @@ package starlingbuilder.util.ui.inspector
                     case TouchPhase.HOVER:
                         if (_isNumeric)
                         {
-                            if (useVerticalArrow())
-                                Mouse.cursor = CursorRegister.VERTICAL_ARROW;
-                            else
-                                Mouse.cursor = CursorRegister.HORIZONTAL_ARROW;
+                            Mouse.cursor = CursorRegister.HORIZONTAL_ARROW;
                         }
                         break;
                     case TouchPhase.ENDED:

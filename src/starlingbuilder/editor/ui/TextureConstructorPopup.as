@@ -12,16 +12,14 @@ package starlingbuilder.editor.ui
 
     public class TextureConstructorPopup extends TexturePropertyPopup
     {
-        public function TextureConstructorPopup(owner:Object, target:Object, targetParam:Object, onComplete:Function)
+        public function TextureConstructorPopup(owner:Object, target:Object, targetParam:Object, customParam:Object, onComplete:Function)
         {
-            super(owner, target, targetParam, onComplete);
+            super(owner, target, targetParam, customParam, onComplete);
         }
 
         override protected function setCustomParam(textureName:String):void
         {
-            var param:Object = ComponentRenderSupport.support.extraParamsDict[_owner];
-
-            var param1:Object = param ? param.constructorParams[0] : null;
+            var param1:Object = _customParam ? _customParam.constructorParams[0] : null;
 
             if (param1 && param1.textureName)
             {

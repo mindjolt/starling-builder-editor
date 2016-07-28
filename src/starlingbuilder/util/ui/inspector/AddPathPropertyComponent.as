@@ -5,9 +5,9 @@ package starlingbuilder.util.ui.inspector
 {
     public class AddPathPropertyComponent extends EditPathPropertyComponent
     {
-        public function AddPathPropertyComponent(propertyRetriver:IPropertyRetriever, param:Object)
+        public function AddPathPropertyComponent(propertyRetriever:IPropertyRetriever, param:Object, customParam:Object = null, setting:Object = null)
         {
-            super(propertyRetriver, param);
+            super(propertyRetriever, param, customParam, setting);
 
             _button.label = "Add";
         }

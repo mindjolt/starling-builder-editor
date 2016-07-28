@@ -32,9 +32,9 @@ package starlingbuilder.editor.ui
 
         private var _typePicker:PickerList;
 
-        public function DisplayObjectPropertyPopup(owner:Object, target:Object, targetParam:Object, onComplete:Function)
+        public function DisplayObjectPropertyPopup(owner:Object, target:Object, targetParam:Object, customParam:Object, onComplete:Function)
         {
-            super(owner, target, targetParam, onComplete);
+            super(owner, target, targetParam, customParam, onComplete);
         }
 
         override protected function createContent(container:LayoutGroup):void
@@ -78,8 +78,10 @@ package starlingbuilder.editor.ui
 
                             _target = ComponentRenderSupport.support.uiBuilder.createUIElement(data).object;
 
-                            var param:Object = ComponentRenderSupport.support.extraParamsDict[_owner];
-                            param.params[_targetParam.name] = data;
+                            if (_customParam)
+                            {
+                                _customParam.params[_targetParam.name] = data;
+                            }
                             complete();
                         }));
                     }
@@ -113,24 +115,29 @@ package starlingbuilder.editor.ui
              This problem will be resolved when we use an intermediate format for the inspector in future version
              */
 
-            var param:Object = ComponentRenderSupport.support.extraParamsDict[_owner];
-
-            if (param.params == undefined)
+            if (_customParam)
             {
-                param.params = {};
+                if (_customParam.params == undefined)
+                {
+                    _customParam.params = {};
+                }
+
+                _customParam.params[_targetParam.name] =
+                {
+                    cls:_typePicker.selectedItem,
+                    constructorParams:[
+                        {
+                            cls:"starling.textures.Texture",
+                            textureName: textureName
+                        }
+                    ],
+                    customParams:{}
+                };
+
             }
 
-            param.params[_targetParam.name] =
-            {
-                cls:_typePicker.selectedItem,
-                constructorParams:[
-                    {
-                        cls:"starling.textures.Texture",
-                        textureName: textureName
-                    }
-                ],
-                customParams:{}
-            };
+
+
         }
 
     }

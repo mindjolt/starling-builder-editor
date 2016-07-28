@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
 <!-- $TexturePacker:SmartUpdate:6f1b0b6d5645aa519ea7d8dec7320ec5:b9b8f62c0b6d6a562678a7ac3c0e4baf:0dbeed7acf6c3264861a2e70e992bcae$ -->
-<TextureAtlas imagePath="ui.png">
+<TextureAtlas imagePath="atlas.png">
     <SubTexture name="boostslot_bg_green" x="863" y="306" width="134" height="102"/>
     <SubTexture name="connectFB_image" x="642" y="2" width="489" height="215" frameX="0" frameY="-8" frameWidth="489" frameHeight="231"/>
     <SubTexture name="generic_app_icon" x="546" y="408" width="76" height="76"/>
