@@ -246,7 +246,7 @@ package starlingbuilder.editor.themes
 		protected static const THEME_STYLE_NAME_VERTICAL_SLIDER_MAXIMUM_TRACK:String = "metalworks-desktop-vertical-slider-maximum-track";
 
 
-        protected static const NO_THEME:String = "no-theme";
+        public static const NO_THEME:String = "no-theme";
 
         /**
 		 * The default global text renderer factory for this theme creates a
@@ -922,6 +922,7 @@ package starlingbuilder.editor.themes
 			this.getStyleProviderForClass(Button).setFunctionForStyleName(THEME_STYLE_NAME_HORIZONTAL_SLIDER_MAXIMUM_TRACK, this.setHorizontalSliderMaximumTrackStyles);
 			this.getStyleProviderForClass(Button).setFunctionForStyleName(THEME_STYLE_NAME_VERTICAL_SLIDER_MINIMUM_TRACK, this.setVerticalSliderMinimumTrackStyles);
 			this.getStyleProviderForClass(Button).setFunctionForStyleName(THEME_STYLE_NAME_VERTICAL_SLIDER_MAXIMUM_TRACK, this.setVerticalSliderMaximumTrackStyles);
+            this.getStyleProviderForClass(Button).setFunctionForStyleName(NO_THEME, this.setNoThemeButtonStyles);
 
 			//tab bar
 			this.getStyleProviderForClass(TabBar).defaultStyleFunction = this.setTabBarStyles;

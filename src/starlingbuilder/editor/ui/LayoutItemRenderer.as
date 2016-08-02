@@ -34,6 +34,7 @@ package starlingbuilder.editor.ui
     import starlingbuilder.editor.UIEditorApp;
     import starlingbuilder.editor.data.EmbeddedImages;
     import starlingbuilder.editor.history.MoveLayerOperation;
+    import starlingbuilder.editor.themes.BaseMetalWorksDesktopTheme2;
     import starlingbuilder.util.feathers.FeathersUIUtil;
 
     public class LayoutItemRenderer extends DefaultListItemRenderer implements IDragSource, IDropTarget
@@ -108,7 +109,7 @@ package starlingbuilder.editor.ui
             _group.layout = layout;
 
             _hiddenCheck = new ToggleButton();
-            _hiddenCheck.styleName = "no-theme";
+            _hiddenCheck.styleName = BaseMetalWorksDesktopTheme2.NO_THEME;
             _hiddenCheck.defaultSkin = getImage(eyeTexture, 0.5, 1);
             _hiddenCheck.defaultSelectedSkin = getImage(eyeTexture, 0.5, 0.3);
             //_hiddenCheck.label = "hidden";
@@ -120,7 +121,7 @@ package starlingbuilder.editor.ui
             _group.addChild(_hiddenCheck);
 
             _lockCheck = new ToggleButton();
-            _lockCheck.styleName = "no-theme";
+            _lockCheck.styleName = BaseMetalWorksDesktopTheme2.NO_THEME;
             _lockCheck.defaultSkin = getImage(lockTexture, 0.5, 0.3);
             _lockCheck.defaultSelectedSkin = getImage(lockTexture, 0.5, 1);
             //_lockCheck.label = "lock";
