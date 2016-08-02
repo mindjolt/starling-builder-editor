@@ -7,6 +7,7 @@
  */
 package starlingbuilder.editor.ui
 {
+    import feathers.controls.Button;
     import feathers.controls.LayoutGroup;
     import feathers.core.PopUpManager;
     import feathers.layout.VerticalLayout;
@@ -14,8 +15,6 @@ package starlingbuilder.editor.ui
     import flash.geom.Rectangle;
 
     import starling.core.Starling;
-
-    import starling.display.Button;
 
     import starling.display.DisplayObject;
     import starling.display.Image;
@@ -31,6 +30,7 @@ package starlingbuilder.editor.ui
     import starlingbuilder.editor.history.CompositeHistoryOperation;
     import starlingbuilder.editor.history.MoveOperation;
     import starlingbuilder.editor.history.ResizeOperation;
+    import starlingbuilder.editor.themes.BaseMetalWorksDesktopTheme2;
     import starlingbuilder.util.feathers.FeathersUIUtil;
 
     public class PositionToolbar extends LayoutGroup
@@ -88,11 +88,15 @@ package starlingbuilder.editor.ui
             for each (var item:Object in createTextButtons())
             {
                 trace(item.name.replace(" ", "_"));
-                var button:starling.display.Button = new starling.display.Button(atlas.getTexture(item.name.replace(" ", "_")));
+                var button:Button = new Button();
+                button.styleName = BaseMetalWorksDesktopTheme2.NO_THEME;
+                button.defaultSkin = new Image(atlas.getTexture(item.name.replace(" ", "_")));
+                button.scaleWhenDown = 0.9;
                 button.width = button.height = 22;
                 button.name = item.name;
                 button.addEventListener(Event.TRIGGERED, item.triggered);
                 button.useHandCursor = false;
+                button.toolTip = item.name;
                 group.addChild(button);
 
             }
@@ -102,9 +106,6 @@ package starlingbuilder.editor.ui
 
         private function createTextButtons():Array
         {
-            var obj:Image = new Image(Texture.fromBitmap(new AboutPopup.ICON()));
-            obj.width = obj.height = 32;
-
             return [
                 {name:ALIGN_LEFT, textureName:"", triggered:onButtonClick},
                 {name:ALIGN_CENTER, textureName:"", triggered:onButtonClick},
@@ -127,7 +128,7 @@ package starlingbuilder.editor.ui
 
         private function onButtonClick(event:Event):void
         {
-            var button:starling.display.Button = event.target as starling.display.Button;
+            var button:Button = event.target as Button;
             switch(button.name)
             {
                 case ALIGN_LEFT:
