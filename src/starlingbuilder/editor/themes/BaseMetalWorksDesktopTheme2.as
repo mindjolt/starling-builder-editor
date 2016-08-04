@@ -67,7 +67,9 @@ package starlingbuilder.editor.themes
     import feathers.controls.text.TextFieldTextEditor;
     import feathers.core.FeathersControl;
     import feathers.core.FocusManager;
+    import feathers.core.IToolTipManager;
     import feathers.core.PopUpManager;
+    import feathers.core.ToolTipManager;
     import feathers.display.Scale3Image;
     import feathers.display.Scale9Image;
     import feathers.display.TiledImage;
@@ -90,6 +92,7 @@ package starlingbuilder.editor.themes
 
     import starling.core.Starling;
     import starling.display.DisplayObject;
+    import starling.display.DisplayObjectContainer;
     import starling.display.Image;
     import starling.display.Quad;
     import starling.textures.SubTexture;
@@ -568,6 +571,8 @@ package starlingbuilder.editor.themes
 		 */
 		override public function dispose():void
 		{
+            ToolTipManager.setEnabledForStage(Starling.current.stage, false);
+
 			if(this.atlas)
 			{
 				this.atlas.dispose();
@@ -614,6 +619,9 @@ package starlingbuilder.editor.themes
 			Callout.stagePadding = this.smallGutterSize;
 
 			FocusManager.setEnabledForStage(Starling.current.stage, true);
+
+            ToolTipManager.toolTipManagerFactory = toolTipManagerFactory;
+            ToolTipManager.setEnabledForStage(Starling.current.stage, true);
 		}
 
 		/**
@@ -850,8 +858,10 @@ package starlingbuilder.editor.themes
 			this.getStyleProviderForClass(Label).defaultStyleFunction = this.setLabelStyles;
 			this.getStyleProviderForClass(Label).setFunctionForStyleName(Label.ALTERNATE_STYLE_NAME_HEADING, this.setHeadingLabelStyles);
 			this.getStyleProviderForClass(Label).setFunctionForStyleName(Label.ALTERNATE_STYLE_NAME_DETAIL, this.setDetailLabelStyles);
+            this.getStyleProviderForClass(Label).setFunctionForStyleName(Label.ALTERNATE_STYLE_NAME_TOOL_TIP, this.setToolTipLabelStyles);
 
-			//layout group
+
+            //layout group
 			this.getStyleProviderForClass(LayoutGroup).setFunctionForStyleName(LayoutGroup.ALTERNATE_STYLE_NAME_TOOLBAR, this.setToolbarLayoutGroupStyles);
 
 			//list (see also: item renderers)
@@ -1409,6 +1419,14 @@ package starlingbuilder.editor.themes
 			label.textRendererProperties.elementFormat = this.smallLightElementFormat;
 			label.textRendererProperties.disabledElementFormat = this.smallDisabledElementFormat;
 		}
+
+        protected function setToolTipLabelStyles(label:Label):void
+        {
+            var backgroundSkin:Scale9Image = new Scale9Image(this.backgroundSkinTextures, this.scale);
+            label.backgroundSkin = backgroundSkin;
+            label.textRendererProperties.elementFormat = this.lightElementFormat;
+            label.padding = this.smallGutterSize;
+        }
 
 	//-------------------------
 	// LayoutGroup
@@ -2369,6 +2387,11 @@ package starlingbuilder.editor.themes
 
 			track.hasLabelTextRenderer = false;
 		}
+
+        public static function toolTipManagerFactory(root:DisplayObjectContainer):IToolTipManager
+        {
+            return new UIEditorToolTipManager(root);
+        }
 
 	}
 }

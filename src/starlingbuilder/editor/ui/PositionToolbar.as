@@ -94,6 +94,7 @@ package starlingbuilder.editor.ui
                 button.scaleWhenDown = 0.9;
                 button.width = button.height = 22;
                 button.name = item.name;
+                button.toolTip = item.name;
                 button.addEventListener(Event.TRIGGERED, item.triggered);
                 button.useHandCursor = false;
                 group.addChild(button);
