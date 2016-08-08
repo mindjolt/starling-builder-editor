@@ -42,6 +42,7 @@ package starlingbuilder.editor.upgrade
 
         override protected function process(data:Object):void
         {
+            if (!data || !data.hasOwnProperty("cls")) return;
             var func:Function = convertMap[data.cls];
             if (func)
             {
@@ -56,13 +57,25 @@ package starlingbuilder.editor.upgrade
             var params:Object = data.params;
             if (!("color" in params))
                 params.color = 0xffffff;
-            params.format = {cls:"starling.text.TextFormat", params:{font:params.fontName, color:params.color, size:params.fontSize, hAlign:params.hAligh, vAlign:params.vAlign}, customParams:{}};
+            params.format = {
+                cls:"starling.text.TextFormat",
+                params:{
+                    font:params.fontName,
+                    color:params.color,
+                    size:params.fontSize,
+                    horizontalAlign:params.hAlign,
+                    verticalAlign:params.vAlign,
+                    leading:params.leading
+                },
+                customParams:{}
+            };
 
             delete params.fontName;
             delete params.fontSize;
             delete params.color;
             delete params.hAlign;
             delete params.vAlign;
+            delete params.leading;
         }
 
         private static function convertScale3Image(data:Object):void
