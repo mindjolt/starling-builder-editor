@@ -12,18 +12,18 @@ package starlingbuilder.editor.ui
     import feathers.core.PopUpManager;
     import feathers.data.ListCollection;
 
-    import flash.utils.getDefinitionByName;
+    import flash.geom.Rectangle;
 
+    import starling.display.Image;
     import starling.events.Event;
-
-    import starlingbuilder.editor.SupportedWidget;
-    import starlingbuilder.editor.controller.ComponentRenderSupport;
-
-    import starlingbuilder.engine.util.ParamUtil;
 
     public class DisplayObjectPropertyPopup extends TexturePropertyPopup
     {
-        public static const SUPPORTED_CLASSES:Array = ["starling.display.Image", "feathers.display.Scale3Image", "feathers.display.Scale9Image", "feathers.display.TiledImage"];
+        private static const NONE:String         = "none";
+        private static const SCALE_9_GRID:String = "scale9Grid";
+        private static const TILE_GRID:String    = "tileGrid";
+
+        public static const SUPPORTED_TYPES:Array = [NONE, SCALE_9_GRID, TILE_GRID];
 
         private var _typePicker:PickerList;
 
@@ -35,7 +35,7 @@ package starlingbuilder.editor.ui
         override protected function createContent(container:LayoutGroup):void
         {
             _typePicker = new PickerList();
-            _typePicker.dataProvider = new ListCollection(SUPPORTED_CLASSES);
+            _typePicker.dataProvider = new ListCollection(SUPPORTED_TYPES);
             addChild(_typePicker);
 
             super.createContent(container);
@@ -50,42 +50,29 @@ package starlingbuilder.editor.ui
                 if (_list.selectedIndex >= 0)
                 {
                     var textureName:String = _list.selectedItem.label;
+                    _target = new Image(_assetMediator.getTexture(textureName));
+                    setCustomParam(textureName);
 
-                    var clsName:String = _typePicker.selectedItem.toString();
+                    var popupType:String = _typePicker.selectedItem.toString();
 
-                    var cls:Class = getDefinitionByName(clsName) as Class;
-
-//                    if (cls == Scale3Image || cls == Scale9Image)
-//                    {
-//                        var textureData:Object = {
-//                            cls:(cls == Scale3Image) ? ParamUtil.getClassName(Scale3Textures) : ParamUtil.getClassName(Scale9Textures),
-//                            textureName: textureName,
-//                            scaleRatio: (cls == Scale3Image) ? SupportedWidget.DEFAULT_SCALE3_RATIO : SupportedWidget.DEFAULT_SCALE9_RATIO
-//                        };
-//
-//                        var imageData:Object = {
-//                            cls:clsName,
-//                            constructorParams:[textureData],
-//                            customParams:{}
-//                        }
-//
-//                        PopUpManager.addPopUp(new ScaleTexturePopup(imageData, function(data:Object):void{
-//
-//                            _target = ComponentRenderSupport.support.uiBuilder.createUIElement(data).object;
-//
-//                            if (_customParam)
-//                            {
-//                                _customParam.params[_targetParam.name] = data;
-//                            }
-//                            complete();
-//                        }));
-//                    }
-//                    else
-//                    {
-                        _target = new cls(_assetMediator.getTexture(textureName));
-                        setCustomParam(textureName);
+                    if (popupType != NONE) {
+                        var popupData:Object = {
+                            "name"             : popupType,
+                            "supportedClasses" : ["null", "flash.geom.Rectangle"]
+                        };
+                        var imageData:Object =  getImageTemplate(textureName);
+                        PopUpManager.addPopUp(new ImageGridPopup(_target, null, popupData, imageData, function(data:Object) : void {
+                            var rect:Rectangle = data as Rectangle;
+                            if (rect)
+                            switch (popupType) {
+                                case SCALE_9_GRID: (_target as Image).scale9Grid = rect; break;
+                                case TILE_GRID:    (_target as Image).tileGrid   = rect; break;
+                            }
+                            complete();
+                        }));
+                    } else {
                         complete();
-//                    }
+                    }
                 }
                 else
                 {
@@ -117,22 +104,23 @@ package starlingbuilder.editor.ui
                     _customParam.params = {};
                 }
 
-                _customParam.params[_targetParam.name] =
-                {
-                    cls:_typePicker.selectedItem,
-                    constructorParams:[
-                        {
-                            cls:"starling.textures.Texture",
-                            textureName: textureName
-                        }
-                    ],
-                    customParams:{}
-                };
+                _customParam.params[_targetParam.name] = getImageTemplate(textureName);
 
             }
+        }
 
-
-
+        private function getImageTemplate(textureName:String) : Object {
+            return {
+                "cls":"starling.display.Image",
+                "constructorParams":[
+                    {
+                        "cls":"starling.textures.Texture",
+                        "textureName":textureName
+                    }
+                ],
+                "customParams":{},
+                "params":{}
+            };
         }
 
     }
