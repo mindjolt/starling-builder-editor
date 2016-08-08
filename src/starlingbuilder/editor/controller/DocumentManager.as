@@ -1187,6 +1187,7 @@ package starlingbuilder.editor.controller
             }
 
             copy();
+            selectObject(selectedObject.parent);
             paste();
         }
 
