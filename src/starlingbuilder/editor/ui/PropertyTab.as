@@ -159,7 +159,7 @@ package starlingbuilder.editor.ui
             {
                 if (!_paramCache[target.constructor])
                 {
-                    var params:Array = ParamUtil.getParams(_template, _documentManager.selectedObject);
+                    var params:Array = ParamUtil.getParams(_template, _documentManager.singleSelectedObject);
 
                     UIMapperUtil.processParamsWithFonts(params, UIEditorScreen.instance.getBitmapFontNames());
 
@@ -196,7 +196,7 @@ package starlingbuilder.editor.ui
 
         private function onChange(event:Event):void
         {
-            var obj:DisplayObject = _documentManager.selectedObject;
+            var obj:DisplayObject = _documentManager.singleSelectedObject;
 
             if (obj)
             {

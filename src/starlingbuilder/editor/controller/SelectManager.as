@@ -80,14 +80,6 @@ package starlingbuilder.editor.controller
             setChanged();
         }
 
-        public function get selectedObject():DisplayObject
-        {
-            if (_selectedObjects.length == 1)
-                return _selectedObjects[0];
-            else
-                return null;
-        }
-
         public function get selectedObjects():Array
         {
             return _selectedObjects;
@@ -138,6 +130,29 @@ package starlingbuilder.editor.controller
         private function isEmptyContainer(obj:DisplayObject):Boolean
         {
             return (obj is DisplayObjectContainer && (obj as DisplayObjectContainer).numChildren == 0);
+        }
+
+        public function selectObjects(array:Array):void
+        {
+            if (array.length == 0)
+            {
+                selectObject(null);
+            }
+            else if (array.length == 1)
+            {
+                selectObject(array[0]);
+            }
+            else
+            {
+                _selectedObjects.length = 0;
+
+                for each (var obj:DisplayObject in array)
+                {
+                    _selectedObjects.push(obj);
+                }
+
+                setChanged();
+            }
         }
     }
 }

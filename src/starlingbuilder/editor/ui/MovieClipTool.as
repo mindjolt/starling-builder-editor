@@ -49,14 +49,14 @@ package starlingbuilder.editor.ui
 
         public function updateMovieClipTool():void
         {
-            var mv:MovieClip = _documentManager.selectedObject as MovieClip;
+            var mv:MovieClip = _documentManager.singleSelectedObject as MovieClip;
 
             _movieClipTool.visible = (mv != null);
         }
 
         private function onPlayButton(event:Event):void
         {
-            var mv:MovieClip = _documentManager.selectedObject as MovieClip;
+            var mv:MovieClip = _documentManager.singleSelectedObject as MovieClip;
 
             if (mv)
             {
@@ -68,7 +68,7 @@ package starlingbuilder.editor.ui
 
         private function onStopButton(event:Event):void
         {
-            var mv:MovieClip = _documentManager.selectedObject as MovieClip;
+            var mv:MovieClip = _documentManager.singleSelectedObject as MovieClip;
 
             if (mv)
             {
