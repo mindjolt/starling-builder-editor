@@ -59,7 +59,7 @@ package starlingbuilder.editor.ui
 
         private function onChange(event:Event):void
         {
-            var clsName:String = ParamUtil.getClassName(_documentManager.selectedObject);
+            var clsName:String = ParamUtil.getClassName(_documentManager.singleSelectedObject);
 
             _label.text = clsName;
 

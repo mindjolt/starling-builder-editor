@@ -20,6 +20,8 @@ package starlingbuilder.editor.ui
     import feathers.layout.HorizontalLayout;
     import feathers.layout.VerticalLayout;
 
+    import flash.ui.Keyboard;
+
     import starling.display.Button;
     import starling.display.DisplayObject;
     import starling.display.DisplayObjectContainer;
@@ -35,6 +37,7 @@ package starlingbuilder.editor.ui
     import starlingbuilder.editor.data.EmbeddedImages;
     import starlingbuilder.editor.history.MoveLayerOperation;
     import starlingbuilder.editor.themes.BaseMetalWorksDesktopTheme2;
+    import starlingbuilder.util.KeyboardWatcher;
     import starlingbuilder.util.feathers.FeathersUIUtil;
 
     public class LayoutItemRenderer extends DefaultListItemRenderer implements IDragSource, IDropTarget
@@ -354,6 +357,36 @@ package starlingbuilder.editor.ui
             image.alpha = alpha;
             return image;
         }
+
+        override protected function itemRenderer_triggeredHandler(event:Event):void
+        {
+            var watcher:KeyboardWatcher = UIEditorApp.instance.documentManager.keyboardWatcher;
+
+            if (watcher.hasKeyPressed(Keyboard.CONTROL) || watcher.hasKeyPressed(Keyboard.COMMAND))
+            {
+                //multiple selection
+                super.itemRenderer_triggeredHandler(event);
+            }
+            else if (watcher.hasKeyPressed(Keyboard.SHIFT))
+            {
+                //shift selection
+                var minIndex:int = Math.min(owner.selectedIndex, this.index);
+                var maxIndex:int = Math.max(owner.selectedIndex, this.index);
+
+                var indices:Vector.<int> = new Vector.<int>();
+                for (var i:int = minIndex; i <= maxIndex; ++i)
+                {
+                    indices.push(i);
+                }
+                this.owner.selectedIndices = indices;
+            }
+            else
+            {
+                //single selection
+                this.owner.selectedIndex = this.index;
+            }
+        }
+
 
     }
 }

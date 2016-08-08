@@ -9,6 +9,8 @@ package starlingbuilder.editor.ui
 {
     import feathers.controls.ScrollContainer;
 
+    import starling.display.DisplayObject;
+
     import starlingbuilder.editor.UIEditorApp;
     import starlingbuilder.editor.controller.DocumentManager;
     import starlingbuilder.editor.data.TemplateData;
@@ -69,9 +71,11 @@ package starlingbuilder.editor.ui
 
         private function onChange(event:Event):void
         {
-            if (_documentManager.selectedObject)
+            var obj:DisplayObject = _documentManager.singleSelectedObject;
+
+            if (obj)
             {
-                var target:Object = _documentManager.extraParamsDict[_documentManager.selectedObject];
+                var target:Object = _documentManager.extraParamsDict[obj];
 
                 _propertiesPanel.reloadData(target, _params);
             }
