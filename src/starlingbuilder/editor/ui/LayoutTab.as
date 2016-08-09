@@ -270,12 +270,18 @@ package starlingbuilder.editor.ui
 
         private function moveUp():void
         {
-            _documentManager.moveUp();
+            if (_documentManager.inverseLayer())
+                _documentManager.moveDown();
+            else
+                _documentManager.moveUp();
         }
 
         private function moveDown():void
         {
-            _documentManager.moveDown();
+            if (_documentManager.inverseLayer())
+                _documentManager.moveUp();
+            else
+                _documentManager.moveDown();
         }
 
         private function remove():void
