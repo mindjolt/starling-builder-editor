@@ -396,19 +396,36 @@ package starlingbuilder.editor.controller
 
         private function getObjectsByPreorderTraversal(container:DisplayObjectContainer, paramDict:Dictionary, result:Array, collapseMap:Dictionary = null):void
         {
+            if (!container) return;
+
             result.push(container);
 
             if (collapseMap && collapseMap[container])
                 return;
 
-            for (var i:int = 0; i < container.numChildren; ++i)
+            var start:int;
+            var end:int;
+            var step:int;
+
+            if (inverseLayer())
+            {
+                start = container.numChildren - 1;
+                end = -1;
+                step = -1;
+            }
+            else
+            {
+                start = 0;
+                end = container.numChildren;
+                step = 1;
+            }
+
+            for (var i:int = start; i != end; i += step)
             {
                 var child:DisplayObject = container.getChildAt(i);
 
                 if (paramDict[child])
                 {
-
-
                     if (_uiBuilder.isContainer(paramDict[child]))
                     {
                         getObjectsByPreorderTraversal(child as DisplayObjectContainer, paramDict, result, collapseMap);
@@ -1423,8 +1440,10 @@ package starlingbuilder.editor.controller
 
         private function onSettingChanged():void
         {
-                _uiBuilder.prettyData = _setting.prettyJSON;
-                }
+            _uiBuilder.prettyData = _setting.prettyJSON;
+            setLayerChanged();
+            setChanged();
+        }
 
 
         public function get boundingBoxContainer():BoundingBoxContainer
@@ -1527,6 +1546,11 @@ package starlingbuilder.editor.controller
         private function compare(x:int, y:int):int
         {
             return x - y;
+        }
+
+        public function inverseLayer():Boolean
+        {
+            return _setting.layoutOrder == "Photoshop";
         }
     }
 }

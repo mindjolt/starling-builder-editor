@@ -34,6 +34,7 @@ package starlingbuilder.editor.ui
     import starling.textures.Texture;
 
     import starlingbuilder.editor.UIEditorApp;
+    import starlingbuilder.editor.controller.DocumentManager;
     import starlingbuilder.editor.data.EmbeddedImages;
     import starlingbuilder.editor.history.MoveLayerOperation;
     import starlingbuilder.editor.themes.BaseMetalWorksDesktopTheme2;
@@ -70,9 +71,13 @@ package starlingbuilder.editor.ui
 
         private var _dropLine:Quad;
 
+        private var _documentManager:DocumentManager;
+
         public function LayoutItemRenderer()
         {
             super();
+
+            _documentManager = UIEditorApp.instance.documentManager;
 
             if (lockTexture == null) lockTexture = Texture.fromBitmap(new LOCK);
             if (eyeTexture == null) eyeTexture = Texture.fromBitmap(new EYE);
@@ -93,11 +98,11 @@ package starlingbuilder.editor.ui
         {
             if (_data.collapse)
             {
-                UIEditorApp.instance.documentManager.expand(_data.obj);
+                _documentManager.expand(_data.obj);
             }
             else
             {
-                UIEditorApp.instance.documentManager.collapse(_data.obj);
+                _documentManager.collapse(_data.obj);
             }
         }
 
@@ -119,7 +124,7 @@ package starlingbuilder.editor.ui
 
             _hiddenCheck.addEventListener(Event.CHANGE, function():void{
                 _data.hidden = _hiddenCheck.isSelected;
-                UIEditorApp.instance.documentManager.refresh();
+                _documentManager.refresh();
             });
             _group.addChild(_hiddenCheck);
 
@@ -130,7 +135,7 @@ package starlingbuilder.editor.ui
             //_lockCheck.label = "lock";
             _lockCheck.addEventListener(Event.CHANGE, function():void{
                 _data.lock = _lockCheck.isSelected;
-                UIEditorApp.instance.documentManager.refresh();
+                _documentManager.refresh();
             });
             _group.addChild(_lockCheck);
 
@@ -229,11 +234,13 @@ package starlingbuilder.editor.ui
 
             if (canDrop(target, source))
             {
+                var beforeIndex:int = source.parent.getChildIndex(source);
+
                 //don't forget to subtract its own index
-                if (source.parent === target && source.parent.getChildIndex(source) < index)
+                if (source.parent === target && beforeIndex < index)
                     --index;
 
-                UIEditorApp.instance.documentManager.historyManager.add(new MoveLayerOperation(source, target, source.parent.getChildIndex(source), index));
+                _documentManager.historyManager.add(new MoveLayerOperation(source, target, beforeIndex, index));
 
                 //var point:Point = source.parent.localToGlobal(new Point(source.x, source.y));
                 target.addChildAt(source, index);
@@ -241,8 +248,8 @@ package starlingbuilder.editor.ui
                 //source.x = point.x;
                 //source.y = point.y;
 
-                UIEditorApp.instance.documentManager.setLayerChanged();
-                UIEditorApp.instance.documentManager.setChanged();
+                _documentManager.setLayerChanged();
+                _documentManager.setChanged();
             }
         }
 
@@ -275,7 +282,7 @@ package starlingbuilder.editor.ui
             var target:DisplayObjectContainer;
             var index:int;
 
-            if (_data.obj === UIEditorApp.instance.documentManager.root)
+            if (_data.obj === _documentManager.root)
             {
                 dropPosition = DROP_INSIDE;
             }
@@ -313,6 +320,9 @@ package starlingbuilder.editor.ui
                 alpha = 1;
                 target = _data.obj.parent;
                 index = target.getChildIndex(_data.obj);
+
+                if (_documentManager.inverseLayer())
+                    ++index;
             }
             else if (dropPosition == DROP_INSIDE)
             {
@@ -327,6 +337,9 @@ package starlingbuilder.editor.ui
                 _dropLine.y = height;
                 target = _data.obj.parent;
                 index = target.getChildIndex(_data.obj) + 1;
+
+                if (_documentManager.inverseLayer())
+                    --index;
             }
 
             dragData.setDataForFormat(TARGET, target);
