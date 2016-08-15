@@ -37,6 +37,10 @@ package starlingbuilder.editor.ui
         public static const UNDO:String = "Undo";
         public static const REDO:String = "Redo";
 
+        public static const GROUP_WITH_SPRITE:String = "Group with Sprite";
+        public static const GROUP_WITH_LAYOUTGROUP:String = "Group with LayoutGroup";
+        public static const UNGROUP:String = "Ungroup";
+
         public static const CUT:String = "Cut";
         public static const COPY:String = "Copy";
         public static const PASTE:String = "Paste";
@@ -96,6 +100,10 @@ package starlingbuilder.editor.ui
             {"separator":true},
             {"label":MOVE_UP, "key":"["},
             {"label":MOVE_DOWN, "key":"]"},
+            {"separator":true},
+            {"label":GROUP_WITH_SPRITE, "key":"g"},
+            {"label":GROUP_WITH_LAYOUTGROUP, "key":"G"},
+            {"label":UNGROUP, "key":"u"},
         ]
 
         public static const VIEW_MENU:Array = [

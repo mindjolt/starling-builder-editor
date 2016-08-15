@@ -21,7 +21,7 @@ package starlingbuilder.editor
             _timer.start();
         }
 
-        public function add(...operations)
+        public function add(...operations):void
         {
             for each (var operation:* in operations)
             {
