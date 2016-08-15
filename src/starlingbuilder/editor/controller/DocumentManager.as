@@ -27,7 +27,10 @@ package starlingbuilder.editor.controller
     import starlingbuilder.editor.helper.DragQuad;
     import starlingbuilder.editor.helper.FileListingHelper;
     import starlingbuilder.editor.helper.SnapshotHelper;
+    import starlingbuilder.editor.helper.UIComponentHelper;
     import starlingbuilder.editor.history.CompositeHistoryOperation;
+    import starlingbuilder.editor.history.GroupOperation;
+    import starlingbuilder.editor.history.UngroupOperation;
     import starlingbuilder.editor.ui.CenterPanel;
     import starlingbuilder.editor.upgrade.LayoutVersion;
     import starlingbuilder.engine.IAssetMediator;
@@ -254,7 +257,7 @@ package starlingbuilder.editor.controller
 
         private function getParent():DisplayObjectContainer
         {
-            var obj = selectedObject;
+            var obj:Object = selectedObject;
 
             if (obj)
             {
@@ -1512,7 +1515,7 @@ package starlingbuilder.editor.controller
             return indices;
         }
 
-        public function selectObjectAtIndices(indices:Vector.<int>)
+        public function selectObjectAtIndices(indices:Vector.<int>):void
         {
             if (sameIndices(selectedIndices, indices))
                 return;
@@ -1528,7 +1531,7 @@ package starlingbuilder.editor.controller
             _selectManager.selectObjects(array);
         }
 
-        private function sameIndices(indices1:Vector.<int>, indices2:Vector.<int>)
+        private function sameIndices(indices1:Vector.<int>, indices2:Vector.<int>):Boolean
         {
             if (indices1.length != indices2.length) return false;
 
@@ -1551,6 +1554,116 @@ package starlingbuilder.editor.controller
         public function inverseLayer():Boolean
         {
             return _setting.layoutOrder == "Photoshop";
+        }
+
+        public function group(cls:Class):void
+        {
+            var array:Array = selectedObjects.concat();
+            array.sort(groupSortFunc);
+
+            if (isRootSelected(array))
+            {
+                InfoPopup.show("Can't group root");
+                return;
+            }
+
+            if (!canGroup(array))
+            {
+                InfoPopup.show("Can't group display objects with different parents")
+                return;
+            }
+
+            var first:DisplayObject = array[0];
+            var parent:DisplayObjectContainer = first.parent;
+            var firstIndex:int = parent.getChildIndex(first);
+
+            var data:Object = UIComponentHelper.createDefaultComponentData(ParamUtil.getClassName(cls));
+
+            var container:DisplayObjectContainer = _uiBuilder.createUIElement(data).object;
+            container.name = "container";
+            parent.addChildAt(container, firstIndex);
+            _extraParamsDict[container] = data;
+
+            for each (var obj:DisplayObject in array)
+                container.addChild(obj);
+
+            _historyManager.add(new GroupOperation(container, array));
+
+            setLayerChanged();
+            setChanged();
+        }
+
+        private function isRootSelected(array:Array):Boolean
+        {
+            return (array.length == 1 && array[0] === _root);
+        }
+
+        private function canGroup(array:Array):Boolean
+        {
+            if (array.length == 0) return false;
+
+            var parent:DisplayObject = array[0].parent;
+
+            for (var i:int = 1; i < array.length; ++i)
+            {
+                if (array[i].parent !== parent)
+                    return false;
+            }
+
+            return true;
+        }
+
+        private function canUngroup(array:Array):Boolean
+        {
+            if (array.length == 1)
+            {
+                var obj:DisplayObject = array[0];
+                if (obj is Sprite || obj is LayoutGroup)
+                    return true;
+            }
+
+            return false;
+        }
+
+        public function ungroup():void
+        {
+            var array:Array = selectedObjects.concat();
+
+            if (isRootSelected(array))
+            {
+                InfoPopup.show("Can't ungroup root");
+                return;
+            }
+
+            if (!canUngroup(array))
+            {
+                InfoPopup.show("Please select a Sprite or LayoutGroup");
+                return;
+            }
+
+            var container:DisplayObjectContainer = array[0];
+            var parent:DisplayObjectContainer = container.parent;
+            var index:int = parent.getChildIndex(container);
+            container.removeFromParent();
+
+            var children:Array = [];
+
+            while (container.numChildren > 0)
+            {
+                var obj:DisplayObject = container.getChildAt(container.numChildren - 1);
+                children.unshift(obj);
+                parent.addChildAt(obj, index);
+            }
+
+            _historyManager.add(new UngroupOperation(container, children));
+
+            setLayerChanged();
+            setChanged();
+        }
+
+        private function groupSortFunc(obj1:DisplayObject, obj2:DisplayObject):int
+        {
+            return obj1.parent.getChildIndex(obj1) - obj2.parent.getChildIndex(obj2);
         }
     }
 }
