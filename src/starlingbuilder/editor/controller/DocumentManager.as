@@ -636,11 +636,11 @@ package starlingbuilder.editor.controller
             var index:int = parent.getChildIndex(obj);
             if (index > 0)
             {
-                _historyManager.add(new MoveLayerOperation(obj, obj.parent, index, index - 1));
-
                 parent.setChildIndex(obj, index - 1);
 
-                setLayerChanged()
+                _historyManager.add(new MoveLayerOperation(obj, obj.parent, index, index - 1));
+
+                setLayerChanged();
 
                 setChanged();
             }
@@ -659,9 +659,9 @@ package starlingbuilder.editor.controller
             var index:int = parent.getChildIndex(obj);
             if (index < parent.numChildren - 1)
             {
-                _historyManager.add(new MoveLayerOperation(obj, obj.parent, index, index + 1));
-
                 parent.setChildIndex(obj, index + 1);
+
+                _historyManager.add(new MoveLayerOperation(obj, obj.parent, index, index + 1));
 
                 setLayerChanged();
 
