@@ -20,6 +20,8 @@ package starlingbuilder.editor.ui
     import feathers.layout.HorizontalLayout;
     import feathers.layout.VerticalLayout;
 
+    import flash.geom.Point;
+
     import flash.ui.Keyboard;
 
     import starling.display.Button;
@@ -240,13 +242,18 @@ package starlingbuilder.editor.ui
                 if (source.parent === target && beforeIndex < index)
                     --index;
 
-                _documentManager.historyManager.add(new MoveLayerOperation(source, target, beforeIndex, index));
+                var beforePosition:Point = new Point(source.x, source.y);
+                var oldParent:DisplayObjectContainer = source.parent;
 
-                //var point:Point = source.parent.localToGlobal(new Point(source.x, source.y));
+                var point:Point = source.parent.localToGlobal(beforePosition);
                 target.addChildAt(source, index);
-                //point = target.globalToLocal(point);
-                //source.x = point.x;
-                //source.y = point.y;
+                point = target.globalToLocal(point);
+                source.x = point.x;
+                source.y = point.y;
+
+                var afterPosition:Point = new Point(source.x, source.y);
+
+                _documentManager.historyManager.add(new MoveLayerOperation(source, oldParent, beforeIndex, index, beforePosition, afterPosition));
 
                 _documentManager.setLayerChanged();
                 _documentManager.setChanged();
