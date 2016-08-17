@@ -184,14 +184,29 @@ package starlingbuilder.editor.controller
             _canvasContainer = new Sprite();
             _canvasContainer.addChild(_canvas);
             SelectHelper.startSelect(_canvas, function(object:DisplayObject):void{
+
+                if (dragMode) return;
+
                 selectObject(null);
             });
 
-            DragQuad.startDrag(_canvas, function(rect:Rectangle):void{
+            DragQuad.startDrag(_canvas,
+                    function():Boolean{
+                        return !dragMode;
+                    },
+                    function(rect:Rectangle):void{
 
-                FocusManager.focus = UIEditorScreen.instance.centerPanel;
-                _selectManager.selectByRect(rect, _extraParamsDict, uiBuilder);
-            });
+                        if (dragMode) return;
+
+                        FocusManager.focus = UIEditorScreen.instance.centerPanel;
+                        _selectManager.selectByRect(rect, _extraParamsDict, uiBuilder);
+                    });
+
+            DragHelper.startDrag(_canvas, null, function(obj:DisplayObject, dx:Number, dy:Number):Boolean
+            {
+                if (dragMode) dragCanvas(dx, dy);
+                return true;
+            }, null);
 
             _backgroundContainer = new Sprite();
             _backgroundContainer.touchable = false;
@@ -311,6 +326,8 @@ package starlingbuilder.editor.controller
         {
             DragHelper.startDrag(obj, function(object:DisplayObject):void{
 
+                if (dragMode) return;
+
                 FocusManager.focus = UIEditorScreen.instance.centerPanel;
 
                 if (!(selectedObject is DisplayObjectContainer) || !DisplayObjectContainer(selectedObject).contains(object))
@@ -336,10 +353,18 @@ package starlingbuilder.editor.controller
                 }
             }, function(obj:DisplayObject, dx:Number, dy:Number):Boolean{
 
+                if (dragMode)
+                {
+                    dragCanvas(dx, dy);
+                    return true;
+                }
+
                 dx /= scale;
                 dy /= scale;
                 return move(dx, dy);
             }, function():void{
+
+                if (dragMode) return;
 
                 endMove();
             });
@@ -1664,6 +1689,24 @@ package starlingbuilder.editor.controller
         private function groupSortFunc(obj1:DisplayObject, obj2:DisplayObject):int
         {
             return obj1.parent.getChildIndex(obj1) - obj2.parent.getChildIndex(obj2);
+        }
+
+        public function get dragMode():Boolean
+        {
+            return _keyboardWatcher.hasKeyPressed(Keyboard.SPACE);
+        }
+
+        private function dragCanvas(dx:Number, dy:Number):void
+        {
+            var centerPanel:CenterPanel = UIEditorScreen.instance.centerPanel;
+
+            centerPanel.horizontalScrollPosition = Math.min(
+                    Math.max(centerPanel.minHorizontalScrollPosition, centerPanel.horizontalScrollPosition - dx),
+                    centerPanel.maxHorizontalScrollPosition);
+
+            centerPanel.verticalScrollPosition = Math.min(
+                    Math.max(centerPanel.minVerticalScrollPosition, centerPanel.verticalScrollPosition - dy),
+                    centerPanel.maxVerticalScrollPosition);
         }
     }
 }
