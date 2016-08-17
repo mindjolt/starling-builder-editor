@@ -16,7 +16,7 @@ package starlingbuilder.editor.helper
 
     public class DragQuad
     {
-        public static function startDrag(obj:DisplayObject, onComplete:Function):void
+        public static function startDrag(obj:DisplayObject, onUpdate:Function, onComplete:Function):void
         {
             var startX:Number;
             var startY:Number;
@@ -50,6 +50,8 @@ package starlingbuilder.editor.helper
                         if (onComplete)
                             onComplete(quad.getBounds(Starling.current.stage));
                     }
+
+                    if (!onUpdate()) quad.visible = false;
 
                     quad.x = Math.min(startX, touch.globalX);
                     quad.y = Math.min(startY, touch.globalY);
