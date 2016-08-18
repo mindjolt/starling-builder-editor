@@ -17,6 +17,8 @@ package starlingbuilder.editor.helper
     import starling.textures.Texture;
     import starling.utils.AssetManager;
 
+    import starlingbuilder.util.feathers.popup.InfoPopup;
+
     public class AssetMediator extends DefaultAssetMediator implements IAssetMediator
     {
         private var _file:File;
@@ -32,7 +34,15 @@ package starlingbuilder.editor.helper
             if (name == EmptyTexture.NAME)
                 return EmptyTexture.texture;
 
-            return super.getTexture(name);
+            var texture:Texture = super.getTexture(name);
+
+            if (texture == null)
+            {
+                texture = EmptyTexture.texture;
+                InfoPopup.stack("Texture " + name + " not found");
+            }
+
+            return texture;
         }
 
         override public function getExternalData(name:String):Object

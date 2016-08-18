@@ -27,7 +27,10 @@ package starlingbuilder.editor.controller
     import starlingbuilder.editor.helper.DragQuad;
     import starlingbuilder.editor.helper.FileListingHelper;
     import starlingbuilder.editor.helper.SnapshotHelper;
+    import starlingbuilder.editor.helper.UIComponentHelper;
     import starlingbuilder.editor.history.CompositeHistoryOperation;
+    import starlingbuilder.editor.history.GroupOperation;
+    import starlingbuilder.editor.history.UngroupOperation;
     import starlingbuilder.editor.ui.CenterPanel;
     import starlingbuilder.editor.upgrade.LayoutVersion;
     import starlingbuilder.engine.IAssetMediator;
@@ -108,8 +111,6 @@ package starlingbuilder.editor.controller
 
         private var _keyboardWatcher:KeyboardWatcher;
 
-        private var _selectedObject:DisplayObject;
-
         private var _extraParamsDict:Dictionary;
 
         private var _dataProvider:ListCollection; //use for listing layout
@@ -183,14 +184,29 @@ package starlingbuilder.editor.controller
             _canvasContainer = new Sprite();
             _canvasContainer.addChild(_canvas);
             SelectHelper.startSelect(_canvas, function(object:DisplayObject):void{
+
+                if (dragMode) return;
+
                 selectObject(null);
             });
 
-            DragQuad.startDrag(_canvas, function(rect:Rectangle):void{
+            DragQuad.startDrag(_canvas,
+                    function():Boolean{
+                        return !dragMode;
+                    },
+                    function(rect:Rectangle):void{
 
-                FocusManager.focus = UIEditorScreen.instance.centerPanel;
-                _selectManager.selectByRect(rect, _extraParamsDict, uiBuilder);
-            });
+                        if (dragMode) return;
+
+                        FocusManager.focus = UIEditorScreen.instance.centerPanel;
+                        _selectManager.selectByRect(rect, _extraParamsDict, uiBuilder);
+                    });
+
+            DragHelper.startDrag(_canvas, null, function(obj:DisplayObject, dx:Number, dy:Number):Boolean
+            {
+                if (dragMode) dragCanvas(dx, dy);
+                return true;
+            }, null);
 
             _backgroundContainer = new Sprite();
             _backgroundContainer.touchable = false;
@@ -256,15 +272,17 @@ package starlingbuilder.editor.controller
 
         private function getParent():DisplayObjectContainer
         {
-            if (_selectedObject)
+            var obj:Object = selectedObject;
+
+            if (obj)
             {
-                if (_uiBuilder.isContainer(_extraParamsDict[_selectedObject]))
+                if (_uiBuilder.isContainer(_extraParamsDict[obj]))
                 {
-                    return _selectedObject as DisplayObjectContainer;
+                    return obj as DisplayObjectContainer;
                 }
                 else
                 {
-                    return _selectedObject.parent;
+                    return obj.parent;
                 }
             }
             else
@@ -308,6 +326,8 @@ package starlingbuilder.editor.controller
         {
             DragHelper.startDrag(obj, function(object:DisplayObject):void{
 
+                if (dragMode) return;
+
                 FocusManager.focus = UIEditorScreen.instance.centerPanel;
 
                 if (!(selectedObject is DisplayObjectContainer) || !DisplayObjectContainer(selectedObject).contains(object))
@@ -333,10 +353,18 @@ package starlingbuilder.editor.controller
                 }
             }, function(obj:DisplayObject, dx:Number, dy:Number):Boolean{
 
+                if (dragMode)
+                {
+                    dragCanvas(dx, dy);
+                    return true;
+                }
+
                 dx /= scale;
                 dy /= scale;
                 return move(dx, dy);
             }, function():void{
+
+                if (dragMode) return;
 
                 endMove();
             });
@@ -396,19 +424,36 @@ package starlingbuilder.editor.controller
 
         private function getObjectsByPreorderTraversal(container:DisplayObjectContainer, paramDict:Dictionary, result:Array, collapseMap:Dictionary = null):void
         {
+            if (!container) return;
+
             result.push(container);
 
             if (collapseMap && collapseMap[container])
                 return;
 
-            for (var i:int = 0; i < container.numChildren; ++i)
+            var start:int;
+            var end:int;
+            var step:int;
+
+            if (inverseLayer())
+            {
+                start = container.numChildren - 1;
+                end = -1;
+                step = -1;
+            }
+            else
+            {
+                start = 0;
+                end = container.numChildren;
+                step = 1;
+            }
+
+            for (var i:int = start; i != end; i += step)
             {
                 var child:DisplayObject = container.getChildAt(i);
 
                 if (paramDict[child])
                 {
-
-
                     if (_uiBuilder.isContainer(paramDict[child]))
                     {
                         getObjectsByPreorderTraversal(child as DisplayObjectContainer, paramDict, result, collapseMap);
@@ -568,7 +613,7 @@ package starlingbuilder.editor.controller
             {
                 _snapContainer.removeChildren(0, -1, true);
 
-                data = PixelSnapper.snap(_selectedObject, _selectedObject.parent, _container.parent, new Point(dx, dy));
+                data = PixelSnapper.snap(selectedObject, selectedObject.parent, _container.parent, new Point(dx, dy));
 
                 if (data)
                 {
@@ -587,8 +632,8 @@ package starlingbuilder.editor.controller
 
             if (data)
             {
-                _snapContainer.x = _selectedObject.parent.x;
-                _snapContainer.y = _selectedObject.parent.y;
+                _snapContainer.x = selectedObject.parent.x;
+                _snapContainer.y = selectedObject.parent.y;
                 PixelSnapper.drawSnapObjectBound(_snapContainer, data);
                 PixelSnapper.drawSnapLine(_snapContainer, data);
             }
@@ -606,19 +651,21 @@ package starlingbuilder.editor.controller
 
         public function moveUp():void
         {
-            if (!_selectedObject)
+            var obj:DisplayObject = singleSelectedObject;
+
+            if (!obj)
                 return;
 
-            var parent:DisplayObjectContainer = _selectedObject.parent;
+            var parent:DisplayObjectContainer = obj.parent;
 
-            var index:int = parent.getChildIndex(_selectedObject);
+            var index:int = parent.getChildIndex(obj);
             if (index > 0)
             {
-                _historyManager.add(new MoveLayerOperation(_selectedObject, _selectedObject.parent, index, index - 1));
+                parent.setChildIndex(obj, index - 1);
 
-                parent.setChildIndex(_selectedObject, index - 1);
+                _historyManager.add(new MoveLayerOperation(obj, obj.parent, index, index - 1));
 
-                setLayerChanged()
+                setLayerChanged();
 
                 setChanged();
             }
@@ -627,17 +674,19 @@ package starlingbuilder.editor.controller
 
         public function moveDown():void
         {
-            if (!_selectedObject)
+            var obj:DisplayObject = singleSelectedObject;
+
+            if (!obj)
                 return;
 
-            var parent:DisplayObjectContainer = _selectedObject.parent;
+            var parent:DisplayObjectContainer = obj.parent;
 
-            var index:int = parent.getChildIndex(_selectedObject);
+            var index:int = parent.getChildIndex(obj);
             if (index < parent.numChildren - 1)
             {
-                _historyManager.add(new MoveLayerOperation(_selectedObject, _selectedObject.parent, index, index + 1));
+                parent.setChildIndex(obj, index + 1);
 
-                parent.setChildIndex(_selectedObject, index + 1);
+                _historyManager.add(new MoveLayerOperation(obj, obj.parent, index, index + 1));
 
                 setLayerChanged();
 
@@ -653,13 +702,11 @@ package starlingbuilder.editor.controller
 
         private function onSelectionChanged(event:Event):void
         {
-            var obj:DisplayObject = _selectManager.selectedObject;
+            var obj:DisplayObject = selectedObject;
 
-            _selectedObject = obj;
-
-            if (_selectedObject is FeathersControl)
+            if (obj is FeathersControl)
             {
-                FeathersControl(_selectedObject).invalidate();
+                FeathersControl(obj).invalidate();
             }
 
             //_boundingBoxContainer.update([_selectedObject]);
@@ -672,7 +719,7 @@ package starlingbuilder.editor.controller
         {
             var target:Object = event.data.target;
 
-            if (target === _background || target === _selectedObject)
+            if (target === _background || target === selectedObject)
             {
                 recordPropertyChangeHistory(event);
 
@@ -730,13 +777,15 @@ package starlingbuilder.editor.controller
 
         public function get selectedIndex():int
         {
-            if (_selectedObject)
+            var obj:DisplayObject = selectedObject;
+
+            if (obj)
             {
                 for (var i:int = 0; i < _dataProvider.length; ++i)
                 {
                     var item:Object = _dataProvider.getItemAt(i);
 
-                    if (item && item.obj === _selectedObject)
+                    if (item && item.obj === obj)
                     {
                         return i;
                     }
@@ -748,7 +797,18 @@ package starlingbuilder.editor.controller
 
         public function get selectedObject():DisplayObject
         {
-            return _selectedObject;
+            if (_selectManager.selectedObjects.length > 0)
+                return _selectManager.selectedObjects[0];
+            else
+                return null;
+        }
+
+        public function get singleSelectedObject():DisplayObject
+        {
+            if (_selectManager.selectedObjects.length == 1)
+                return _selectManager.selectedObjects[0];
+            else
+                return null;
         }
 
         public function get selectedObjects():Array
@@ -1098,9 +1158,11 @@ package starlingbuilder.editor.controller
 
         public function cut():void
         {
-            if (_selectedObject)
+            var obj:DisplayObject = singleSelectedObject;
+
+            if (obj)
             {
-                if (_root === _selectedObject)
+                if (_root === obj)
                 {
                     info("Can't remove root");
                     return;
@@ -1108,9 +1170,9 @@ package starlingbuilder.editor.controller
 
                 copy();
                 var newDict:Dictionary = new Dictionary();
-                recreateFromParam(_selectedObject, _extraParamsDict, newDict);
-                _historyManager.add(new CutOperation(_selectedObject, newDict, _selectedObject.parent));
-                removeTree(_selectedObject);
+                recreateFromParam(obj, _extraParamsDict, newDict);
+                _historyManager.add(new CutOperation(obj, newDict, obj.parent));
+                removeTree(obj);
             }
             else
             {
@@ -1120,8 +1182,10 @@ package starlingbuilder.editor.controller
 
         public function copy():void
         {
-            if (_selectedObject)
-                Clipboard.generalClipboard.setData(ClipboardFormats.TEXT_FORMAT, _uiBuilder.copy(_selectedObject, _extraParamsDict));
+            var obj:DisplayObject = singleSelectedObject;
+
+            if (obj)
+                Clipboard.generalClipboard.setData(ClipboardFormats.TEXT_FORMAT, _uiBuilder.copy(obj, _extraParamsDict));
             else
                 info("Please select 1 item");
         }
@@ -1161,13 +1225,14 @@ package starlingbuilder.editor.controller
 
         public function duplicate():void
         {
-            if (_selectedObject === _root)
+            if (selectedObject === _root)
             {
                 info("Can't duplicate root");
                 return;
             }
 
             copy();
+            selectObject(selectedObject.parent);
             paste();
         }
 
@@ -1403,8 +1468,10 @@ package starlingbuilder.editor.controller
 
         private function onSettingChanged():void
         {
-                _uiBuilder.prettyData = _setting.prettyJSON;
-                }
+            _uiBuilder.prettyData = _setting.prettyJSON;
+            setLayerChanged();
+            setChanged();
+        }
 
 
         public function get boundingBoxContainer():BoundingBoxContainer
@@ -1445,6 +1512,201 @@ package starlingbuilder.editor.controller
                 if (!workspace.resolvePath(name).exists)
                     return name;
             }
+        }
+
+        public function get keyboardWatcher():KeyboardWatcher
+        {
+            return _keyboardWatcher;
+        }
+
+        public function get selectedIndices():Vector.<int>
+        {
+            var indices:Vector.<int> = new Vector.<int>();
+
+            for each (var obj:Object in _selectManager.selectedObjects)
+            {
+                for (var i:int = 0; i < _dataProvider.length; ++i)
+                {
+                    var item:Object = _dataProvider.getItemAt(i);
+
+                    if (item && item.obj === obj)
+                    {
+                        indices.push(i);
+                        break;
+                    }
+                }
+            }
+
+            return indices;
+        }
+
+        public function selectObjectAtIndices(indices:Vector.<int>):void
+        {
+            if (sameIndices(selectedIndices, indices))
+                return;
+
+            var array:Array = [];
+
+            for each (var index:int in indices)
+            {
+                var obj:DisplayObject = _dataProvider.getItemAt(index).obj;
+                array.push(obj);
+            }
+
+            _selectManager.selectObjects(array);
+        }
+
+        private function sameIndices(indices1:Vector.<int>, indices2:Vector.<int>):Boolean
+        {
+            if (indices1.length != indices2.length) return false;
+
+            indices1.concat().sort(compare);
+            indices2.concat().sort(compare);
+
+            for (var i:int = 0, l:int = indices1.length; i < l; ++i)
+            {
+                if (indices1[i] != indices2[i]) return false;
+            }
+
+            return true;
+        }
+
+        private function compare(x:int, y:int):int
+        {
+            return x - y;
+        }
+
+        public function inverseLayer():Boolean
+        {
+            return _setting.layoutOrder == "Photoshop";
+        }
+
+        public function group(cls:Class):void
+        {
+            var array:Array = selectedObjects.concat();
+            array.sort(groupSortFunc);
+
+            if (isRootSelected(array))
+            {
+                InfoPopup.show("Can't group root");
+                return;
+            }
+
+            if (!canGroup(array))
+            {
+                InfoPopup.show("Can't group display objects with different parents")
+                return;
+            }
+
+            var first:DisplayObject = array[0];
+            var parent:DisplayObjectContainer = first.parent;
+            var firstIndex:int = parent.getChildIndex(first);
+
+            var data:Object = UIComponentHelper.createDefaultComponentData(ParamUtil.getClassName(cls));
+
+            var container:DisplayObjectContainer = _uiBuilder.createUIElement(data).object;
+            container.name = "container";
+            parent.addChildAt(container, firstIndex);
+            _extraParamsDict[container] = data;
+
+            for each (var obj:DisplayObject in array)
+                container.addChild(obj);
+
+            _historyManager.add(new GroupOperation(container, array));
+
+            setLayerChanged();
+            setChanged();
+        }
+
+        private function isRootSelected(array:Array):Boolean
+        {
+            return (array.length == 1 && array[0] === _root);
+        }
+
+        private function canGroup(array:Array):Boolean
+        {
+            if (array.length == 0) return false;
+
+            var parent:DisplayObject = array[0].parent;
+
+            for (var i:int = 1; i < array.length; ++i)
+            {
+                if (array[i].parent !== parent)
+                    return false;
+            }
+
+            return true;
+        }
+
+        private function canUngroup(array:Array):Boolean
+        {
+            if (array.length == 1)
+            {
+                var obj:DisplayObject = array[0];
+                if (obj is Sprite || obj is LayoutGroup)
+                    return true;
+            }
+
+            return false;
+        }
+
+        public function ungroup():void
+        {
+            var array:Array = selectedObjects.concat();
+
+            if (isRootSelected(array))
+            {
+                InfoPopup.show("Can't ungroup root");
+                return;
+            }
+
+            if (!canUngroup(array))
+            {
+                InfoPopup.show("Please select a Sprite or LayoutGroup");
+                return;
+            }
+
+            var container:DisplayObjectContainer = array[0];
+            var parent:DisplayObjectContainer = container.parent;
+            var index:int = parent.getChildIndex(container);
+            container.removeFromParent();
+
+            var children:Array = [];
+
+            while (container.numChildren > 0)
+            {
+                var obj:DisplayObject = container.getChildAt(container.numChildren - 1);
+                children.unshift(obj);
+                parent.addChildAt(obj, index);
+            }
+
+            _historyManager.add(new UngroupOperation(container, children));
+
+            setLayerChanged();
+            setChanged();
+        }
+
+        private function groupSortFunc(obj1:DisplayObject, obj2:DisplayObject):int
+        {
+            return obj1.parent.getChildIndex(obj1) - obj2.parent.getChildIndex(obj2);
+        }
+
+        public function get dragMode():Boolean
+        {
+            return _keyboardWatcher.hasKeyPressed(Keyboard.SPACE);
+        }
+
+        private function dragCanvas(dx:Number, dy:Number):void
+        {
+            var centerPanel:CenterPanel = UIEditorScreen.instance.centerPanel;
+
+            centerPanel.horizontalScrollPosition = Math.min(
+                    Math.max(centerPanel.minHorizontalScrollPosition, centerPanel.horizontalScrollPosition - dx),
+                    centerPanel.maxHorizontalScrollPosition);
+
+            centerPanel.verticalScrollPosition = Math.min(
+                    Math.max(centerPanel.minVerticalScrollPosition, centerPanel.verticalScrollPosition - dy),
+                    centerPanel.maxVerticalScrollPosition);
         }
     }
 }

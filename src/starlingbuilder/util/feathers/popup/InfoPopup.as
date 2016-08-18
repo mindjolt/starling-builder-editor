@@ -90,6 +90,9 @@ package starlingbuilder.util.feathers.popup
             _buttonContainer.removeChildren();
         }
 
+        protected function createContent(container:LayoutGroup):void
+        {
+        }
 
         public static function show(title:String, buttons:Array = null):InfoPopup
         {
@@ -101,10 +104,27 @@ package starlingbuilder.util.feathers.popup
             return popup;
         }
 
-        protected function createContent(container:LayoutGroup):void
+        private static var _stacked:InfoPopup;
+
+        public static function stack(title:String, buttons:Array = null):InfoPopup
         {
+            if (_stacked == null)
+            {
+                _stacked = show(title, buttons);
+                _stacked.addEventListener(Event.COMPLETE, onButton);
 
+                function onButton(event:Event):void
+                {
+                    _stacked.removeEventListener(Event.COMPLETE, onButton);
+                    _stacked = null;
+                }
+            }
+            else
+            {
+                _stacked.title += "\n" + title;
+            }
 
+            return _stacked;
         }
     }
 }

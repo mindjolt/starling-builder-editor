@@ -250,7 +250,7 @@ package starlingbuilder.editor.ui
                 itemDict[atlasName] = item;
             }
 
-            var array:Vector.<String> = filterList(_searchTextInput.text, assetList);
+            var array:Vector.<String> = filterList(_searchTextInput.text.toLowerCase(), assetList);
 
             var found:Boolean;
 
@@ -298,22 +298,12 @@ package starlingbuilder.editor.ui
         {
             if (text.length)
             {
-                var result:Vector.<String> = new Vector.<String>();
-
-                for each (var s:String in array)
-                {
-                    if (s.indexOf(text) != -1)
-                    {
-                        result.push(s);
-                    }
-                }
-
-                return result;
+                array = array.filter(function(value:String, index:int, arr:Vector.<String>):Boolean{
+                    return value.toLowerCase().indexOf(text) != -1;
+                });
             }
-            else
-            {
-                return array;
-            }
+
+            return array;
         }
 
         private function createToolButtons(buttons:Array, anchorDisplayObject:DisplayObject = null):ButtonGroup

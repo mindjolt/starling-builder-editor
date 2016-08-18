@@ -7,20 +7,6 @@
  */
 package starlingbuilder.editor.ui
 {
-    import starlingbuilder.editor.UIEditorApp;
-    import starlingbuilder.editor.UIEditorScreen;
-    import starlingbuilder.editor.controller.DocumentManager;
-    import starlingbuilder.editor.events.DocumentEventType;
-    import starlingbuilder.editor.helper.NativeDragAndDropHelper;
-    import starlingbuilder.editor.serialize.LoadExternalDocumentMediator;
-    import starlingbuilder.editor.serialize.UIEditorDocumentMediator;
-    import starlingbuilder.util.feathers.FeathersUIUtil;
-    import starlingbuilder.util.feathers.popup.InfoPopup;
-    import starlingbuilder.util.history.HistoryManager;
-    import starlingbuilder.util.history.OpenRecentManager;
-    import starlingbuilder.util.serialize.DocumentSerializer;
-    import starlingbuilder.util.serialize.IDocumentMediator;
-
     import feathers.controls.Button;
     import feathers.controls.ButtonGroup;
     import feathers.controls.LayoutGroup;
@@ -31,7 +17,6 @@ package starlingbuilder.editor.ui
     import feathers.layout.HorizontalLayout;
 
     import flash.display.NativeMenu;
-
     import flash.display.NativeMenuItem;
     import flash.display.NativeWindow;
     import flash.events.Event;
@@ -44,6 +29,19 @@ package starlingbuilder.editor.ui
     import starling.display.Sprite;
     import starling.events.Event;
     import starling.utils.AssetManager;
+
+    import starlingbuilder.editor.UIEditorApp;
+    import starlingbuilder.editor.UIEditorScreen;
+    import starlingbuilder.editor.controller.DocumentManager;
+    import starlingbuilder.editor.events.DocumentEventType;
+    import starlingbuilder.editor.serialize.LoadExternalDocumentMediator;
+    import starlingbuilder.editor.serialize.UIEditorDocumentMediator;
+    import starlingbuilder.util.feathers.FeathersUIUtil;
+    import starlingbuilder.util.feathers.popup.InfoPopup;
+    import starlingbuilder.util.history.HistoryManager;
+    import starlingbuilder.util.history.OpenRecentManager;
+    import starlingbuilder.util.serialize.DocumentSerializer;
+    import starlingbuilder.util.serialize.IDocumentMediator;
     import starlingbuilder.util.ui.inspector.ColorPicker;
 
     public class Toolbar extends LayoutGroup
@@ -533,6 +531,10 @@ package starlingbuilder.editor.ui
             menu.registerAction(MainMenu.ABOUT, onAbout);
             menu.registerAction(MainMenu.CHECK_FOR_UPDATE, onCheckForUpdate);
 
+            menu.registerAction(MainMenu.GROUP_WITH_SPRITE, onGroupWithSprite);
+            menu.registerAction(MainMenu.GROUP_WITH_LAYOUTGROUP, onGroupWithLayoutGroup);
+            menu.registerAction(MainMenu.UNGROUP, onUngroup);
+
             _documentManager.historyManager.addEventListener(starling.events.Event.CHANGE, updateHistoryManager);
             _documentManager.historyManager.addEventListener(HistoryManager.RESET, updateHistoryManager);
 
@@ -636,6 +638,21 @@ package starlingbuilder.editor.ui
                     InfoPopup.show("File not found!");
                 }
             }
+        }
+
+        private function onGroupWithSprite():void
+        {
+            _documentManager.group(Sprite);
+        }
+
+        private function onGroupWithLayoutGroup():void
+        {
+            _documentManager.group(LayoutGroup);
+        }
+
+        private function onUngroup():void
+        {
+            _documentManager.ungroup();
         }
     }
 }

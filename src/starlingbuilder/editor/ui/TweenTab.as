@@ -85,9 +85,11 @@ package starlingbuilder.editor.ui
 
         private function onChange(event:Event):void
         {
-            if (_documentManager.selectedObject)
+            var obj:DisplayObject = _documentManager.singleSelectedObject;
+
+            if (obj)
             {
-                var target:Object=_documentManager.extraParamsDict[_documentManager.selectedObject];
+                var target:Object=_documentManager.extraParamsDict[obj];
 
                 _propertiesPanel.reloadData(target, _params);
 
@@ -122,7 +124,7 @@ package starlingbuilder.editor.ui
         private function onPlay(event:*):void
         {
             var root:DisplayObject=_documentManager.root;
-            var selected:DisplayObject=_documentManager.selectedObject;
+            var selected:DisplayObject=_documentManager.singleSelectedObject;
             var paramsDict:Dictionary=_documentManager.extraParamsDict;
             var names:Array;
 
@@ -147,7 +149,7 @@ package starlingbuilder.editor.ui
 
         private function onOpenSetting():void
         {
-            var target:Object=_documentManager.extraParamsDict[_documentManager.selectedObject];
+            var target:Object=_documentManager.extraParamsDict[_documentManager.singleSelectedObject];
             _tweenSettingListPanel=new TweenSettingListPanel(target["tweenData"]);
             PopUpManager.addPopUp(_tweenSettingListPanel);
             _tweenSettingListPanel.onComplete=onComplete;

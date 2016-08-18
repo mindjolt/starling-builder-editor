@@ -7,6 +7,8 @@
  */
 package starlingbuilder.editor.history
 {
+    import flash.geom.Point;
+
     import starling.display.DisplayObjectContainer;
 
     import starlingbuilder.editor.UIEditorApp;
@@ -19,13 +21,19 @@ package starlingbuilder.editor.history
         private var _oldParent:DisplayObjectContainer;
         private var _newParent:DisplayObjectContainer;
 
-        public function MoveLayerOperation(target:Object, newParent:DisplayObjectContainer, beforeLayer:int, afterLayer:int)
+        private var _beforePosition:Point;
+        private var _afterPosition:Point;
+
+        public function MoveLayerOperation(target:Object, oldParent:DisplayObjectContainer, beforeLayer:int, afterLayer:int, beforePosition:Point = null, afterPosition:Point = null)
         {
             super(OperationType.MOVE_LAYER, target, beforeLayer, afterLayer);
 
             _target = target;
-            _oldParent = _target.parent;
-            _newParent = newParent;
+            _oldParent = oldParent;
+            _newParent = target.parent;
+
+            _beforePosition = beforePosition;
+            _afterPosition = afterPosition;
         }
 
         override public function undo():void
@@ -35,6 +43,11 @@ package starlingbuilder.editor.history
             if (obj)
             {
                 _oldParent.addChildAt(obj, int(_beforeValue));
+                if (_beforePosition)
+                {
+                    obj.x = _beforePosition.x;
+                    obj.y = _beforePosition.y;
+                }
             }
 
             setChanged();
@@ -47,6 +60,11 @@ package starlingbuilder.editor.history
             if (obj)
             {
                 _newParent.addChildAt(obj, int(_afterValue));
+                if (_afterPosition)
+                {
+                    obj.x = _afterPosition.x;
+                    obj.y = _afterPosition.y;
+                }
             }
 
             setChanged();

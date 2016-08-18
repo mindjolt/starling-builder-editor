@@ -87,7 +87,6 @@ package starlingbuilder.editor.citestcase
                     simulateTouch(image3);
                     stage.dispatchEvent(new KeyboardEvent(KeyboardEvent.KEY_UP, 0, Keyboard.CONTROL));
 
-                    assertEquals(documentManager.selectedObject, null);
                     assertEquals(documentManager.selectedObjects.length, 3);
                 },
 
@@ -97,7 +96,6 @@ package starlingbuilder.editor.citestcase
                     simulateTouch(image3, 20, 20);
                     stage.dispatchEvent(new KeyboardEvent(KeyboardEvent.KEY_UP, 0, Keyboard.CONTROL));
 
-                    assertEquals(documentManager.selectedObject, null);
                     assertEquals(documentManager.selectedObjects.length, 2);
                 },
 
@@ -107,7 +105,6 @@ package starlingbuilder.editor.citestcase
                 simulateTouch(image3, 20, 20);
                 stage.dispatchEvent(new KeyboardEvent(KeyboardEvent.KEY_UP, 0, Keyboard.CONTROL));
 
-                assertEquals(documentManager.selectedObject, null);
                 assertEquals(documentManager.selectedObjects.length, 3);
             },
 

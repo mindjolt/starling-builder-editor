@@ -18,5 +18,8 @@ package starlingbuilder.editor.history
         public static const MOVE_PIVOT:String = "movePivot";
         public static const CHANGE_PROPERTY:String = "changeProperty";
         public static const RESET:String = "reset";
+
+        public static const GROUP:String = "group";
+        public static const UNGROUP:String = "ungroup";
     }
 }
