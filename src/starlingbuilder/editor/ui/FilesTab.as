@@ -114,10 +114,14 @@ package starlingbuilder.editor.ui
 
             if (layoutPath)
             {
+                var text:String = _searchTextInput.text.toLowerCase();
                 files = FileListingHelper.getFilesRecursive(UIEditorScreen.instance.workspaceDir.resolvePath(layoutPath));
-                files = files.filter(function(value:String, index:int, arr:Array):Boolean{
-                    return _searchTextInput.text == "" || value.indexOf(_searchTextInput.text) != -1;
-                });
+                if (text.length)
+                {
+                    files = files.filter(function(value:String, index:int, arr:Array):Boolean{
+                        return value.toLowerCase().indexOf(text) != -1;
+                    });
+                }
                 _list.isEnabled = true;
             }
             else
