@@ -35,12 +35,20 @@ package starlingbuilder.editor.upgrade
 
         private function traverseChildren(data:Object):void
         {
-            process(data);
+            traverseParams(data);
 
             for each (var child:Object in data.children)
             {
                 traverseChildren(child);
             }
+        }
+
+        private function traverseParams(data:Object):void
+        {
+            for each(var param:Object in data.params)
+                process(param);
+
+            process(data);
         }
 
         protected function process(data:Object):void
