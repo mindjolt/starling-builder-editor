@@ -72,6 +72,7 @@ package starlingbuilder.editor.ui
         private function createList():void
         {
             _list = new List();
+            _list.allowMultipleSelection = true;
             _list.isFocusEnabled = false;
             _list.width = 330;
             _list.height = 400;
@@ -104,9 +105,9 @@ package starlingbuilder.editor.ui
 
         private function onListChange(event:Event):void
         {
-            if (_list.selectedIndex >= 0)
+            if (_list.selectedIndices.length > 0)
             {
-                _documentManager.selectObjectAtIndex(_list.selectedIndex);
+                _documentManager.selectObjectAtIndices(_list.selectedIndices);
             }
         }
 
@@ -119,16 +120,16 @@ package starlingbuilder.editor.ui
             _list.dataProvider = null;
             _list.dataProvider = _documentManager.dataProvider;
 
-            var index:int = _documentManager.selectedIndex;
+            var indices:Vector.<int> = _documentManager.selectedIndices;
 
-            if (index >= 0)
+            if (indices.length > 0)
             {
-                _list.selectedIndex = index;
+                _list.selectedIndices = indices;
 
-                if (oldIndex == index)
+                if (oldIndex == indices[0])
                     _list.verticalScrollPosition = position;
                 else
-                    _list.scrollToDisplayIndex(index);
+                    _list.scrollToDisplayIndex(indices[0]);
             }
 
 
@@ -269,12 +270,18 @@ package starlingbuilder.editor.ui
 
         private function moveUp():void
         {
-            _documentManager.moveUp();
+            if (_documentManager.inverseLayer())
+                _documentManager.moveDown();
+            else
+                _documentManager.moveUp();
         }
 
         private function moveDown():void
         {
-            _documentManager.moveDown();
+            if (_documentManager.inverseLayer())
+                _documentManager.moveUp();
+            else
+                _documentManager.moveDown();
         }
 
         private function remove():void

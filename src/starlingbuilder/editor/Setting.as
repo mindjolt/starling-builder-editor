@@ -24,5 +24,7 @@ package starlingbuilder.editor
         public var defaultVerticalPivot:String = "top";
 
         public var prettyJSON:Boolean = true;
+
+        public var layoutOrder:String = "Starling";
     }
 }

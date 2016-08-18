@@ -15,7 +15,8 @@ package starlingbuilder.editor
             {name:"defaultCanvasHeight", label:"Default Canvas Height"},
             {name:"defaultHorizontalPivot", label:"Default Horizontal Pivot", component:"pickerList", options:["left", "center", "right"]},
             {name:"defaultVerticalPivot", label:"Default Vertical Pivot", component:"pickerList", options:["top", "center", "bottom"]},
-            {name:"prettyJSON", label:"Pretty JSON", component:"check"}
+            {name:"prettyJSON", label:"Pretty JSON", component:"check"},
+            {name:"layoutOrder", label:"Layout Order", component:"pickerList", options:["Starling", "Photoshop"]}
         ]
     }
 }

@@ -22,7 +22,7 @@ package starlingbuilder.editor
         public static function simulateTouch(target:DisplayObject, offsetX:Number = 0, offsetY:Number = 0, dx:Number = 0, dy:Number = 0):void
         {
             var position:Point = target.localToGlobal(new Point(offsetX, offsetY));
-            var target:DisplayObject = target.stage.hitTest(position);
+            target = target.stage.hitTest(position);
             var touch:Touch = new Touch(0);
             touch.target = target;
             touch.phase = TouchPhase.BEGAN;

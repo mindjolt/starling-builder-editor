@@ -20,6 +20,10 @@ package starlingbuilder.editor.ui
     import feathers.layout.HorizontalLayout;
     import feathers.layout.VerticalLayout;
 
+    import flash.geom.Point;
+
+    import flash.ui.Keyboard;
+
     import starling.display.Button;
     import starling.display.DisplayObject;
     import starling.display.DisplayObjectContainer;
@@ -32,8 +36,11 @@ package starlingbuilder.editor.ui
     import starling.textures.Texture;
 
     import starlingbuilder.editor.UIEditorApp;
+    import starlingbuilder.editor.controller.DocumentManager;
     import starlingbuilder.editor.data.EmbeddedImages;
     import starlingbuilder.editor.history.MoveLayerOperation;
+    import starlingbuilder.editor.themes.BaseMetalWorksDesktopTheme2;
+    import starlingbuilder.util.KeyboardWatcher;
     import starlingbuilder.util.feathers.FeathersUIUtil;
 
     public class LayoutItemRenderer extends DefaultListItemRenderer implements IDragSource, IDropTarget
@@ -66,9 +73,13 @@ package starlingbuilder.editor.ui
 
         private var _dropLine:Quad;
 
+        private var _documentManager:DocumentManager;
+
         public function LayoutItemRenderer()
         {
             super();
+
+            _documentManager = UIEditorApp.instance.documentManager;
 
             if (lockTexture == null) lockTexture = Texture.fromBitmap(new LOCK);
             if (eyeTexture == null) eyeTexture = Texture.fromBitmap(new EYE);
@@ -83,17 +94,19 @@ package starlingbuilder.editor.ui
             addEventListener(DragDropEvent.DRAG_MOVE, onDragMove);
             addEventListener(DragDropEvent.DRAG_EXIT, onDragExit);
             addEventListener(DragDropEvent.DRAG_DROP, onDragDrop);
+
+            addEventListener(Event.TRIGGERED, itemRenderer_triggeredHandler);
         }
 
         private function onTrigger(event:Event):void
         {
             if (_data.collapse)
             {
-                UIEditorApp.instance.documentManager.expand(_data.obj);
+                _documentManager.expand(_data.obj);
             }
             else
             {
-                UIEditorApp.instance.documentManager.collapse(_data.obj);
+                _documentManager.collapse(_data.obj);
             }
         }
 
@@ -108,25 +121,25 @@ package starlingbuilder.editor.ui
             _group.layout = layout;
 
             _hiddenCheck = new ToggleButton();
-            _hiddenCheck.styleName = "no-theme";
+            _hiddenCheck.styleName = BaseMetalWorksDesktopTheme2.NO_THEME;
             _hiddenCheck.defaultSkin = getImage(eyeTexture, 0.5, 1);
             _hiddenCheck.defaultSelectedSkin = getImage(eyeTexture, 0.5, 0.3);
             //_hiddenCheck.label = "hidden";
 
             _hiddenCheck.addEventListener(Event.CHANGE, function():void{
                 _data.hidden = _hiddenCheck.isSelected;
-                UIEditorApp.instance.documentManager.refresh();
+                _documentManager.refresh();
             });
             _group.addChild(_hiddenCheck);
 
             _lockCheck = new ToggleButton();
-            _lockCheck.styleName = "no-theme";
+            _lockCheck.styleName = BaseMetalWorksDesktopTheme2.NO_THEME;
             _lockCheck.defaultSkin = getImage(lockTexture, 0.5, 0.3);
             _lockCheck.defaultSelectedSkin = getImage(lockTexture, 0.5, 1);
             //_lockCheck.label = "lock";
             _lockCheck.addEventListener(Event.CHANGE, function():void{
                 _data.lock = _lockCheck.isSelected;
-                UIEditorApp.instance.documentManager.refresh();
+                _documentManager.refresh();
             });
             _group.addChild(_lockCheck);
 
@@ -225,20 +238,27 @@ package starlingbuilder.editor.ui
 
             if (canDrop(target, source))
             {
+                var beforeIndex:int = source.parent.getChildIndex(source);
+
                 //don't forget to subtract its own index
-                if (source.parent === target && source.parent.getChildIndex(source) < index)
+                if (source.parent === target && beforeIndex < index)
                     --index;
 
-                UIEditorApp.instance.documentManager.historyManager.add(new MoveLayerOperation(source, target, source.parent.getChildIndex(source), index));
+                var beforePosition:Point = new Point(source.x, source.y);
+                var oldParent:DisplayObjectContainer = source.parent;
 
-                //var point:Point = source.parent.localToGlobal(new Point(source.x, source.y));
+                var point:Point = source.parent.localToGlobal(beforePosition);
                 target.addChildAt(source, index);
-                //point = target.globalToLocal(point);
-                //source.x = point.x;
-                //source.y = point.y;
+                point = target.globalToLocal(point);
+                source.x = point.x;
+                source.y = point.y;
 
-                UIEditorApp.instance.documentManager.setLayerChanged();
-                UIEditorApp.instance.documentManager.setChanged();
+                var afterPosition:Point = new Point(source.x, source.y);
+
+                _documentManager.historyManager.add(new MoveLayerOperation(source, oldParent, beforeIndex, index, beforePosition, afterPosition));
+
+                _documentManager.setLayerChanged();
+                _documentManager.setChanged();
             }
         }
 
@@ -271,7 +291,7 @@ package starlingbuilder.editor.ui
             var target:DisplayObjectContainer;
             var index:int;
 
-            if (_data.obj === UIEditorApp.instance.documentManager.root)
+            if (_data.obj === _documentManager.root)
             {
                 dropPosition = DROP_INSIDE;
             }
@@ -309,6 +329,9 @@ package starlingbuilder.editor.ui
                 alpha = 1;
                 target = _data.obj.parent;
                 index = target.getChildIndex(_data.obj);
+
+                if (_documentManager.inverseLayer())
+                    ++index;
             }
             else if (dropPosition == DROP_INSIDE)
             {
@@ -323,6 +346,9 @@ package starlingbuilder.editor.ui
                 _dropLine.y = height;
                 target = _data.obj.parent;
                 index = target.getChildIndex(_data.obj) + 1;
+
+                if (_documentManager.inverseLayer())
+                    --index;
             }
 
             dragData.setDataForFormat(TARGET, target);
@@ -353,6 +379,35 @@ package starlingbuilder.editor.ui
             image.alpha = alpha;
             return image;
         }
+
+        protected function itemRenderer_triggeredHandler(event:Event):void
+        {
+            var watcher:KeyboardWatcher = UIEditorApp.instance.documentManager.keyboardWatcher;
+
+            if (watcher.hasKeyPressed(Keyboard.CONTROL) || watcher.hasKeyPressed(Keyboard.COMMAND))
+            {
+                //multiple selection
+            }
+            else if (watcher.hasKeyPressed(Keyboard.SHIFT))
+            {
+                //shift selection
+                var minIndex:int = Math.min(owner.selectedIndex, this.index);
+                var maxIndex:int = Math.max(owner.selectedIndex, this.index);
+
+                var indices:Vector.<int> = new Vector.<int>();
+                for (var i:int = minIndex; i <= maxIndex; ++i)
+                {
+                    indices.push(i);
+                }
+                this.owner.selectedIndices = indices;
+            }
+            else
+            {
+                //single selection
+                this.owner.selectedIndex = this.index;
+            }
+        }
+
 
     }
 }

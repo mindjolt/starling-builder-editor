@@ -485,7 +485,7 @@
             "cls":"starling.filters.DropShadowFilter",
             "params":[
                 {"name":"color", "component":"colorPicker", "default_value":16776960},
-                {"name":"alpha", "default_value":1},
+                {"name":"alpha", "default_value":0.5},
                 {"name":"distance", "default_value":4},
                 {"name":"angle", "default_value":0.785},
                 {"name":"blur", "default_value":1},
@@ -571,6 +571,6 @@
 
     "version":1.0,
 
-    "revision":10004
+    "revision":10005
 
 }
