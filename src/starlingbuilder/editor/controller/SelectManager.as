@@ -105,7 +105,7 @@ package starlingbuilder.editor.controller
         {
             for (var obj:DisplayObject in paramsDict)
             {
-                if (!allParentsTrue(obj, "touchable") || !allParentsTrue(obj, "visible")) continue;
+                if (!obj.stage || !allParentsTrue(obj, "touchable") || !allParentsTrue(obj, "visible")) continue;
 
                 var bound:Rectangle = obj.getBounds(Starling.current.stage);
 
