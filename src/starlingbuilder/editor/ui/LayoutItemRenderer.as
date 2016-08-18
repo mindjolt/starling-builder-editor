@@ -94,6 +94,8 @@ package starlingbuilder.editor.ui
             addEventListener(DragDropEvent.DRAG_MOVE, onDragMove);
             addEventListener(DragDropEvent.DRAG_EXIT, onDragExit);
             addEventListener(DragDropEvent.DRAG_DROP, onDragDrop);
+
+            addEventListener(Event.TRIGGERED, itemRenderer_triggeredHandler);
         }
 
         private function onTrigger(event:Event):void
@@ -378,14 +380,13 @@ package starlingbuilder.editor.ui
             return image;
         }
 
-        override protected function itemRenderer_triggeredHandler(event:Event):void
+        protected function itemRenderer_triggeredHandler(event:Event):void
         {
             var watcher:KeyboardWatcher = UIEditorApp.instance.documentManager.keyboardWatcher;
 
             if (watcher.hasKeyPressed(Keyboard.CONTROL) || watcher.hasKeyPressed(Keyboard.COMMAND))
             {
                 //multiple selection
-                super.itemRenderer_triggeredHandler(event);
             }
             else if (watcher.hasKeyPressed(Keyboard.SHIFT))
             {
