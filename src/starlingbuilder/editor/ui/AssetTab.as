@@ -205,9 +205,8 @@ package starlingbuilder.editor.ui
             anchorLayoutData.bottomAnchorDisplayObject = _bottomContainer;
             _list.layoutData = anchorLayoutData;
 
-            assetList = getTextureNames();
+            refreshAsset();
 
-            refreshAssets();
             _list.addEventListener(Event.CHANGE, onListChange);
             addChild(_list);
         }
@@ -289,7 +288,7 @@ package starlingbuilder.editor.ui
         }
 
 
-        private function refreshAssets():void
+        private function refreshList():void
         {
             _list.dataProvider = getGroupAssets();
         }
@@ -443,7 +442,13 @@ package starlingbuilder.editor.ui
 
         private function onSearch(event:Event):void
         {
-            refreshAssets();
+            refreshList();
+        }
+
+        public function refreshAsset():void
+        {
+            assetList = getTextureNames();
+            refreshList();
         }
     }
 }
