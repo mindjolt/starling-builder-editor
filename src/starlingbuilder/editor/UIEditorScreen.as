@@ -20,6 +20,7 @@ package starlingbuilder.editor
     import starlingbuilder.editor.helper.CustomThemeHelper;
     import starlingbuilder.editor.helper.CustomThemeHelper;
     import starlingbuilder.editor.helper.FileListingHelper;
+    import starlingbuilder.editor.helper.FilesMonitor;
     import starlingbuilder.editor.helper.KeyboardHelper;
     import starlingbuilder.editor.helper.LoadSwfHelper;
     import starlingbuilder.editor.helper.TemplateLoader;
@@ -75,6 +76,8 @@ package starlingbuilder.editor
         private var _setting:Setting;
 
         private var _workspaceSetting:WorkspaceSetting;
+
+        private var _filesMonitor:FilesMonitor;
 
         private static var _instance:UIEditorScreen;
 
@@ -231,8 +234,6 @@ package starlingbuilder.editor
                     dir.createDirectory();
                 }
             }
-
-
         }
 
         private function createDefaultSettings():void
@@ -277,6 +278,9 @@ package starlingbuilder.editor
             var libFiles:Array = FileListingHelper.getFileList(_workspaceDir, _workspaceSetting.libraryPath, ["swf"]);
             LoadSwfHelper.loads(libFiles, _assetManager, onComplete);
 
+            _filesMonitor = new FilesMonitor(_workspaceSetting, _workspaceDir);
+            _filesMonitor.addEventListener(Event.CHANGE, onFilesChange);
+
             function onComplete():void
             {
                 TemplateLoader.load(_workspaceDir, "ui_builder", UIBuilderTemplate);
@@ -294,9 +298,44 @@ package starlingbuilder.editor
                 initUI();
                 initTests();
             }
+        }
 
+        private function onFilesChange(event:Event):void
+        {
+            var files:Array = event.data.files as Array;
+
+            _filesMonitor.stop();
+
+            var loadingPopup:LoadingPopup = new LoadingPopup();
+            PopUpManager.addPopUp(loadingPopup);
+
+            var t:int = getTimer();
+
+            _assetManager.enqueue.apply(null, files);
+            _assetManager.loadQueue(function(ratio:Number):void{
+
+               loadingPopup.ratio = ratio;
+               if (ratio == 1)
+               {
+                   var duration:int = getTimer() - t;
+                   if (duration < 500)
+                   {
+                       setTimeout(function():void{
+                           PopUpManager.removePopUp(loadingPopup);
+                       }, 500 - duration);
+                   }
+                   else
+                   {
+                       PopUpManager.removePopUp(loadingPopup);
+                   }
+
+                   _leftPanel.assetTab.refreshAsset();
+                   _filesMonitor.start();
+               }
+            });
 
         }
+
 
         private function initUI():void
         {

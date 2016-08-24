@@ -50,16 +50,23 @@ package starlingbuilder.editor
 
         public function getAssetManagerPaths():Array
         {
+            var paths:Array = getAssetPaths();
+
+            paths.push(libraryPath);
+            paths.push(backgroundPath);
+            paths.push(localizationPath);
+
+            return paths;
+        }
+
+        public function getAssetPaths():Array
+        {
             var paths:Array = [];
 
             for each (var path:String in assetPath.split(":"))
             {
                 paths.push(path);
             }
-
-            paths.push(libraryPath);
-            paths.push(backgroundPath);
-            paths.push(localizationPath);
 
             return paths;
         }
