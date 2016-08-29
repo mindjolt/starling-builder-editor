@@ -63,6 +63,7 @@ package starlingbuilder.editor
 
         private var _stage:Stage;
         private var _assetManager:AssetManager;
+        private var _assetLoader:AssetLoaderWithOptions;
 
         private var _toolbar:Toolbar;
         private var _positionToolbar:PositionToolbar;
@@ -149,13 +150,13 @@ package starlingbuilder.editor
 
             assetManager.purge();
 
-            var assetLoader:AssetLoaderWithOptions = new AssetLoaderWithOptions(assetManager, _workspaceDir);
+            _assetLoader = new AssetLoaderWithOptions(assetManager, _workspaceDir);
 
             var t:int = getTimer();
 
             for each (var path:String in _workspaceSetting.getAssetManagerPaths())
             {
-                assetLoader.enqueue(_workspaceDir.resolvePath(path));
+                _assetLoader.enqueue(_workspaceDir.resolvePath(path));
             }
 
             trace("Enqueue time: ", getTimer() - t);
@@ -311,7 +312,7 @@ package starlingbuilder.editor
 
             var t:int = getTimer();
 
-            _assetManager.enqueue.apply(null, files);
+            _assetLoader.enqueue.apply(null, files);
             _assetManager.loadQueue(function(ratio:Number):void{
 
                loadingPopup.ratio = ratio;
