@@ -504,6 +504,11 @@ package starlingbuilder.editor
             return _workspaceSetting;
         }
 
+        public function get assetLoader():AssetLoaderWithOptions
+        {
+            return _assetLoader;
+        }
+
         protected function initTests():void
         {
 
