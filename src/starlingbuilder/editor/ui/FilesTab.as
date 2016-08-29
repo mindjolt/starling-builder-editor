@@ -137,7 +137,7 @@ package starlingbuilder.editor.ui
 
             for each (var name:String in files)
             {
-                if (!assetLoader.shouldIgnoreAssets(name))
+                if (!assetLoader.shouldIgnoreAssets(layoutPath + "/" + name))
                     data.push({label:name});
             }
 
