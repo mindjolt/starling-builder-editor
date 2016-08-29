@@ -112,7 +112,7 @@ package starlingbuilder.editor.helper
             return textureOptions;
         }
 
-        private function shouldIgnoreAssets(url:String):Boolean
+        public function shouldIgnoreAssets(url:String):Boolean
         {
             if (IGNORE_ASSETS in _options)
             {
