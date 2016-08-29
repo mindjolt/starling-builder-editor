@@ -1159,6 +1159,7 @@ package starlingbuilder.editor.controller
         public function cut():void
         {
             var obj:DisplayObject;
+            var newDict:Dictionary;
 
             var objects:Array = selectedObjects.concat();
 
@@ -1178,7 +1179,7 @@ package starlingbuilder.editor.controller
                 }
 
                 copy();
-                var newDict:Dictionary = new Dictionary();
+                newDict = new Dictionary();
                 recreateFromParam(obj, _extraParamsDict, newDict);
                 _historyManager.add(new CutOperation(obj, newDict, obj.parent));
                 removeTree(obj);
@@ -1197,7 +1198,7 @@ package starlingbuilder.editor.controller
 
                 for each (obj in objects)
                 {
-                    var newDict:Dictionary = new Dictionary();
+                    newDict = new Dictionary();
                     recreateFromParam(obj, _extraParamsDict, newDict);
                     ops.push(new CutOperation(obj, newDict, obj.parent));
                     removeTree(obj);
