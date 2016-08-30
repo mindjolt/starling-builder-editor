@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?> 
      <update xmlns="http://ns.adobe.com/air/framework/update/description/2.5"> 
-       <versionNumber>2.1.3</versionNumber>
-       <url>http://starlingbuilder.github.io/download/2.x/v2.1.3/starling-builder.air</url>
+       <versionNumber>2.1.4</versionNumber>
+       <url>http://starlingbuilder.github.io/download/2.x/v2.1.4/starling-builder.air</url>
        <description>
-[engine] Modify UIBuilder.copy() to support multiple items copy/paste
-[editor] Implement multiple items copy/paste
-[editor] Monitor file changes and auto refresh assets
-[editor] Add ignore_assets to texture_options.json
-[editor] Error handling improvement
+[editor] Migration fix pull request
        </description>
     </update>
