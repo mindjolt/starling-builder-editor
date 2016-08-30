@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?> 
      <update xmlns="http://ns.adobe.com/air/framework/update/description/2.5"> 
-       <versionNumber>0.9.2</versionNumber>
-       <url>http://starlingbuilder.github.io/download/1.x/v0.9.2/starling-builder.air</url>
+       <versionNumber>0.9.3</versionNumber>
+       <url>http://starlingbuilder.github.io/download/1.x/v0.9.3/starling-builder.air</url>
        <description>
-[editor] Add inverse layer order option (click on menu File->Setting->Layer order->Photoshop
-[editor] Hit shift or control to select multiple items in layout tab
-[editor] Implement group and ungroup operation (Click on menu Edit -> Group with Sprite / Group with LayoutGroup / Ungroup)
-[editor] When a texture is missing, it will load the default empty texture and show errors in a popup
-[editor] Drag objects in layout tab will keep them in the same position
-[editor] While holding space key, DocumentManager will enter dragMode
-[editor] Add tooltip support
-[editor] Fix duplicate should copy and paste not in place
-[template] Fix DropShaderFilter alpha not being saved when alpha=1
+[engine] Modify UIBuilder.copy() to support multiple items copy/paste
+[editor] Implement multiple items copy/paste
+[editor] Monitor file changes and auto refresh assets
+[editor] Add ignore_assets to texture_options.json
+[editor] Error handling improvement
        </description>
     </update>
