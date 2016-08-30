@@ -1,5 +1,16 @@
 # Starling Builder Release Notes:
 
+## 0.9.2
+* [editor] Add inverse layer order option (click on menu File->Setting->Layer order->Photoshop
+* [editor] Hit shift or control to select multiple items in layout tab
+* [editor] Implement group and ungroup operation (Click on menu Edit -> Group with Sprite / Group with LayoutGroup / Ungroup)
+* [editor] When a texture is missing, it will load the default empty texture and show errors in a popup
+* [editor] Drag objects in layout tab will keep them in the same position
+* [editor] While holding space key, DocumentManager will enter dragMode
+* [editor] Add tooltip support
+* [editor] Fix duplicate should copy and paste not in place
+* [template] Fix DropShaderFilter alpha not being saved when alpha=1
+
 ## 0.9.0
 * [engine] Add IAssetMediator.getCustomData()
 * [editor] Improve load time

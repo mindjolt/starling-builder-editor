@@ -1158,10 +1158,20 @@ package starlingbuilder.editor.controller
 
         public function cut():void
         {
-            var obj:DisplayObject = singleSelectedObject;
+            var obj:DisplayObject;
+            var newDict:Dictionary;
 
-            if (obj)
+            var objects:Array = selectedObjects.concat();
+
+            if (objects.length == 0)
             {
+                info("Please select some objects");
+                return;
+            }
+            else if (objects.length == 1)
+            {
+                obj = objects[0];
+
                 if (_root === obj)
                 {
                     info("Can't remove root");
@@ -1169,52 +1179,124 @@ package starlingbuilder.editor.controller
                 }
 
                 copy();
-                var newDict:Dictionary = new Dictionary();
+                newDict = new Dictionary();
                 recreateFromParam(obj, _extraParamsDict, newDict);
                 _historyManager.add(new CutOperation(obj, newDict, obj.parent));
                 removeTree(obj);
             }
             else
             {
-                info("Please select 1 item");
+                if (!canGroup(objects))
+                {
+                    InfoPopup.show("Can't cut display objects with different parents");
+                    return;
+                }
+
+                copy();
+
+                var ops:Array = [];
+
+                for each (obj in objects)
+                {
+                    newDict = new Dictionary();
+                    recreateFromParam(obj, _extraParamsDict, newDict);
+                    ops.push(new CutOperation(obj, newDict, obj.parent));
+                    removeTree(obj);
+                }
+
+                _historyManager.add(new CompositeHistoryOperation(ops));
             }
         }
 
         public function copy():void
         {
-            var obj:DisplayObject = singleSelectedObject;
+            var obj:DisplayObject;
 
-            if (obj)
-                Clipboard.generalClipboard.setData(ClipboardFormats.TEXT_FORMAT, _uiBuilder.copy(obj, _extraParamsDict));
+            var objects:Array = selectedObjects.concat();
+            objects.sort(groupSortFunc);
+
+            var data:Object;
+
+            if (objects.length == 0)
+            {
+                info("Please select some objects");
+                return;
+            }
+            else if (objects.length == 1)
+            {
+                obj = objects[0];
+                data = _uiBuilder.copy(obj, _extraParamsDict);
+            }
             else
-                info("Please select 1 item");
+            {
+                if (!canGroup(objects))
+                {
+                    InfoPopup.show("Can't copy display objects with different parents");
+                    return;
+                }
+
+                data = _uiBuilder.copy(objects, _extraParamsDict);
+            }
+
+            Clipboard.generalClipboard.setData(ClipboardFormats.TEXT_FORMAT, data);
+        }
+
+        private function createClipboardDataWrapper(obj:Object):Object
+        {
+            if (obj is Array)
+            {
+                return {layout:{
+                    children:obj,
+                    cls:"starling.display.Sprite",
+                    customParams:{}
+                }, multiple:true}
+            }
+            else
+            {
+                return {layout:obj};
+            }
         }
 
         public function paste():void
         {
             try
             {
-                var data:Object = _uiBuilder.paste(Clipboard.generalClipboard.getData(ClipboardFormats.TEXT_FORMAT) as String);
+                var data:Object = createClipboardDataWrapper(_uiBuilder.paste(Clipboard.generalClipboard.getData(ClipboardFormats.TEXT_FORMAT) as String));
 
                 if (data)
                 {
-//                    var result:Object = _uiBuilder.createUIElement(data);
-//                    result.object.x = result.object.y = 0;
-//                    add(result.object, result.params);
+                    var parent:DisplayObjectContainer = getParent();
 
                     var result:Object = _uiBuilder.load(data, false);
                     var root:DisplayObject = result.object;
                     var paramDict:Dictionary = result.params;
 
                     var p:Point = getNewObjectPosition();
-                    root.x = p.x;
-                    root.y = p.y;
 
-                    var parent:DisplayObjectContainer = getParent();
-                    _historyManager.add(new PasteOperation(root, paramDict, parent));
+                    if (data.multiple)
+                    {
+                        var container:DisplayObjectContainer = root as DisplayObjectContainer;
 
-                    addTree(root, paramDict, parent);
+                        var ops:Array = [];
 
+                        while (container.numChildren > 0)
+                        {
+                            var obj:DisplayObject = container.getChildAt(0);
+                            ops.push(new PasteOperation(obj, paramDict, parent));
+                            addTree(obj, paramDict, parent);
+                        }
+
+                        _historyManager.add(new CompositeHistoryOperation(ops));
+                    }
+                    else
+                    {
+                        root.x = p.x;
+                        root.y = p.y;
+
+                        _historyManager.add(new PasteOperation(root, paramDict, parent));
+
+                        addTree(root, paramDict, parent);
+                    }
                 }
             }
             catch(e:Error)
@@ -1228,6 +1310,12 @@ package starlingbuilder.editor.controller
             if (selectedObject === _root)
             {
                 info("Can't duplicate root");
+                return;
+            }
+
+            if (!canGroup(selectedObjects))
+            {
+                InfoPopup.show("Can't duplicate display objects with different parents")
                 return;
             }
 

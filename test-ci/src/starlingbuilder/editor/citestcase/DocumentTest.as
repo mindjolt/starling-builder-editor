@@ -179,7 +179,66 @@ package starlingbuilder.editor.citestcase
                 assertEquals(documentManager.root.numChildren, 3);
                 redo();
                 assertEquals(documentManager.root.numChildren, 2);
-            }
+            },
+
+            function():void{
+                documentManager.clear();
+                selectTab("asset");
+                selectPickerListComponent(Image);
+                selectGroupList(0, 0);
+                selectGroupList(0, 1);
+            },
+
+            //multiple-cut
+            function():void{
+                var indices:Vector.<int> = new Vector.<int>();
+                indices.push(1, 2);
+                documentManager.selectObjectAtIndices(indices);
+                selectTab("layout");
+                clickButton("cut");
+                assertEquals(documentManager.root.numChildren, 0);
+
+
+                //Cut Operation
+                undo();
+                assertEquals(documentManager.root.numChildren, 2);
+                redo();
+                assertEquals(documentManager.root.numChildren, 0);
+            },
+
+            //multiple-paste
+            function():void{
+                clickButton("paste");
+                assertEquals(documentManager.root.numChildren, 2);
+
+                //Paste Operation
+                undo();
+                assertEquals(documentManager.root.numChildren, 0);
+                redo();
+                assertEquals(documentManager.root.numChildren, 2);
+            },
+
+            //multiple-copy
+            function():void{
+                var indices:Vector.<int> = new Vector.<int>();
+                indices.push(2, 1);
+                documentManager.selectObjectAtIndices(indices);
+                clickButton("copy");
+            },
+
+            //multiple-paste
+            function():void{
+                clickButton("paste");
+                assertEquals(documentManager.root.numChildren, 4);
+                assertEquals(documentManager.root.getChildAt(0).name, documentManager.root.getChildAt(2).name);
+                assertEquals(documentManager.root.getChildAt(1).name, documentManager.root.getChildAt(3).name);
+
+                //Paste Operation
+                undo();
+                assertEquals(documentManager.root.numChildren, 2);
+                redo();
+                assertEquals(documentManager.root.numChildren, 4);
+            },
         ];
 
         public static var renderer:LayoutItemRenderer;

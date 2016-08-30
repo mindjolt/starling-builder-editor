@@ -11,6 +11,8 @@ package starlingbuilder.editor.data
     import flash.filesystem.FileMode;
     import flash.filesystem.FileStream;
 
+    import starlingbuilder.util.feathers.popup.InfoPopup;
+
     public class TemplateData
     {
         public function TemplateData()
@@ -58,11 +60,19 @@ package starlingbuilder.editor.data
             var file:File = dir.resolvePath("editor_template.json");
             if (file.exists)
             {
-                var fs2:FileStream = new FileStream();
-                fs2.open(file, FileMode.READ);
-                var data:String = fs2.readUTFBytes(fs2.bytesAvailable);
-                fs2.close();
-                var template:Object = JSON.parse(data);
+                try
+                {
+                    var fs2:FileStream = new FileStream();
+                    fs2.open(file, FileMode.READ);
+                    var data:String = fs2.readUTFBytes(fs2.bytesAvailable);
+                    fs2.close();
+                    var template:Object = JSON.parse(data);
+                }
+                catch (e:Error)
+                {
+                    InfoPopup.show("Invalid editor_template.json. Default template loaded.");
+                    return;
+                }
             }
 
             //if file not exist or revision property not exists or external template older than the default template, then overwrite it

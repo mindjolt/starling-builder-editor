@@ -1,6 +1,7 @@
 out/
 bin-debug/
 .idea/workspace.xml
+.idea/uiDesigner.xml
 .settings/
 .project
 .actionScriptProperties

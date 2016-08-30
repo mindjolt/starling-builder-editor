@@ -12,6 +12,7 @@ package starlingbuilder.editor
     import flash.filesystem.FileStream;
 
     import starlingbuilder.engine.format.StableJSONEncoder;
+    import starlingbuilder.util.feathers.popup.InfoPopup;
 
     import starlingbuilder.util.persist.DefaultPersistableObject;
 
@@ -42,13 +43,31 @@ package starlingbuilder.editor
 
         override protected function recover():void
         {
-            var file:File = UIEditorScreen.instance.workspaceDir.resolvePath(PATH);
-            var fs:FileStream = new FileStream();
-            fs.open(file, FileMode.READ);
-            load(JSON.parse(fs.readUTFBytes(fs.bytesAvailable)));
+            try
+            {
+                var file:File = UIEditorScreen.instance.workspaceDir.resolvePath(PATH);
+                var fs:FileStream = new FileStream();
+                fs.open(file, FileMode.READ);
+                load(JSON.parse(fs.readUTFBytes(fs.bytesAvailable)));
+            }
+            catch (e:Error)
+            {
+                throw new Error("Invalid workspace_setting.json.");
+            }
         }
 
         public function getAssetManagerPaths():Array
+        {
+            var paths:Array = getAssetPaths();
+
+            paths.push(libraryPath);
+            paths.push(backgroundPath);
+            paths.push(localizationPath);
+
+            return paths;
+        }
+
+        public function getAssetPaths():Array
         {
             var paths:Array = [];
 
@@ -56,10 +75,6 @@ package starlingbuilder.editor
             {
                 paths.push(path);
             }
-
-            paths.push(libraryPath);
-            paths.push(backgroundPath);
-            paths.push(localizationPath);
 
             return paths;
         }

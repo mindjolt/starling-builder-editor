@@ -14,9 +14,12 @@ package starlingbuilder.editor.helper
     import starling.textures.TextureOptions;
     import starling.utils.AssetManager;
 
+    import starlingbuilder.util.feathers.popup.InfoPopup;
+
     public class AssetLoaderWithOptions
     {
         public static const DEFAULT_OPTION:String = "default_option";
+        public static const IGNORE_ASSETS:String = "ignore_assets";
 
         private var _assetManager:AssetManager;
         private var _workspace:File;
@@ -25,7 +28,7 @@ package starlingbuilder.editor.helper
         public function AssetLoaderWithOptions(assetManager:AssetManager, workspace:File)
         {
             _assetManager = assetManager;
-            _workspace = workspace
+            _workspace = workspace;
 
             loadOptions();
         }
@@ -36,9 +39,17 @@ package starlingbuilder.editor.helper
 
             if (file.exists)
             {
-                var fs:FileStream = new FileStream();
-                fs.open(file, FileMode.READ);
-                _options = JSON.parse(fs.readUTFBytes(fs.bytesAvailable));
+                try
+                {
+                    var fs:FileStream = new FileStream();
+                    fs.open(file, FileMode.READ);
+                    _options = JSON.parse(fs.readUTFBytes(fs.bytesAvailable));
+                }
+                catch (e:Error)
+                {
+                    _options = {};
+                    InfoPopup.show("Invalid texture_options.json");
+                }
             }
             else
             {
@@ -55,6 +66,9 @@ package starlingbuilder.editor.helper
                     var file:File = rawAsset as File;
 
                     rawAsset = unescape(file.url);
+
+                    if (shouldIgnoreAssets(file.url))
+                        continue;
 
                     if (file.isDirectory)
                     {
@@ -76,6 +90,9 @@ package starlingbuilder.editor.helper
         {
             for (var key:String in _options)
             {
+                if (key == DEFAULT_OPTION || key == IGNORE_ASSETS)
+                    continue;
+
                 var re:RegExp = new RegExp(key);
 
                 var res:Array = url.match(re);
@@ -103,6 +120,22 @@ package starlingbuilder.editor.helper
             }
 
             return textureOptions;
+        }
+
+        public function shouldIgnoreAssets(url:String):Boolean
+        {
+            if (IGNORE_ASSETS in _options)
+            {
+                for each (var key:String in _options[IGNORE_ASSETS])
+                {
+                    var re:RegExp = new RegExp(key);
+                    var res:Array = url.match(re);
+                    if (res && res.length > 0)
+                        return true;
+                }
+            }
+
+            return false;
         }
     }
 }
