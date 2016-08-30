@@ -1,5 +1,12 @@
 # Starling Builder Release Notes:
 
+## 0.9.3
+* [engine] Modify UIBuilder.copy() to support multiple items copy/paste
+* [editor] Implement multiple items copy/paste
+* [editor] Monitor file changes and auto refresh assets
+* [editor] Add ignore_assets to texture_options.json
+* [editor] Error handling improvement
+
 ## 0.9.2
 * [editor] Add inverse layer order option (click on menu File->Setting->Layer order->Photoshop
 * [editor] Hit shift or control to select multiple items in layout tab
