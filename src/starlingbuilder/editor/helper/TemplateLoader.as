@@ -12,6 +12,7 @@ package starlingbuilder.editor.helper
     import flash.filesystem.FileStream;
 
     import starlingbuilder.editor.data.EmbeddedData;
+    import starlingbuilder.util.feathers.popup.InfoPopup;
 
     public class TemplateLoader
     {
@@ -23,21 +24,31 @@ package starlingbuilder.editor.helper
 
             if (file.exists)
             {
-                var fs:FileStream = new FileStream();
-                fs.open(file, FileMode.READ);
-                data = fs.readUTFBytes(fs.bytesAvailable);
+                try
+                {
+                    var fs:FileStream = new FileStream();
+                    fs.open(file, FileMode.READ);
+                    data = fs.readUTFBytes(fs.bytesAvailable);
+                    cls.template = JSON.parse(data);
+                }
+                catch (e:Error)
+                {
+                    InfoPopup.show("Invalid " + fileName + ".json. Default template loaded.");
+
+                    data = new EmbeddedData[fileName]();
+                    cls.template = JSON.parse(data);
+                }
             }
             else
             {
                 data = new EmbeddedData[fileName]();
+                cls.template = JSON.parse(data);
 
                 var fs2:FileStream = new FileStream();
                 fs2.open(file, FileMode.WRITE);
                 fs2.writeUTFBytes(data);
                 fs2.close();
             }
-
-            cls.template = JSON.parse(data);
         }
     }
 }

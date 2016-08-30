@@ -4,6 +4,7 @@
 package starlingbuilder.util.ui.inspector
 {
     import feathers.controls.LayoutGroup;
+    import feathers.controls.ScrollContainer;
     import feathers.layout.FlowLayout;
 
     import starlingbuilder.engine.UIElementFactory;
@@ -13,7 +14,7 @@ package starlingbuilder.util.ui.inspector
     import starling.display.DisplayObjectContainer;
     import starling.events.Event;
 
-    public class BasePropertyUIMapper extends LayoutGroup implements IUIMapper
+    public class BasePropertyUIMapper extends ScrollContainer implements IUIMapper
     {
         public static const DEFAULT_COLUMN_GAP:int = 10;
 

@@ -1,3 +1,4 @@
 {
-	"YOUR_2X_ASSET": {"scale":2}
+	"YOUR_2X_ASSET": {"scale":2},
+    "ignore_assets": []
 }

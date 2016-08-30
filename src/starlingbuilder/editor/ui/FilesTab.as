@@ -20,6 +20,7 @@ package starlingbuilder.editor.ui
     import starling.events.Event;
 
     import starlingbuilder.editor.UIEditorScreen;
+    import starlingbuilder.editor.helper.AssetLoaderWithOptions;
     import starlingbuilder.editor.helper.FileListingHelper;
     import starlingbuilder.util.feathers.FeathersUIUtil;
 
@@ -132,9 +133,12 @@ package starlingbuilder.editor.ui
 
             var data:ListCollection = new ListCollection();
 
+            var assetLoader:AssetLoaderWithOptions = UIEditorScreen.instance.assetLoader;
+
             for each (var name:String in files)
             {
-                data.push({label:name});
+                if (!assetLoader.shouldIgnoreAssets(layoutPath + "/" + name))
+                    data.push({label:name});
             }
 
             _list.dataProvider = data;
