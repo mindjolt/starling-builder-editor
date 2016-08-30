@@ -65,8 +65,12 @@ package starlingbuilder.util.history
 
             if (file.exists)
             {
-                fs.open(file, FileMode.READ);
-                _recentFiles = JSON.parse(fs.readUTFBytes(fs.bytesAvailable)) as Array;
+                try
+                {
+                    fs.open(file, FileMode.READ);
+                    _recentFiles = JSON.parse(fs.readUTFBytes(fs.bytesAvailable)) as Array;
+                }
+                catch (e:Error) {}
             }
         }
 

@@ -166,16 +166,23 @@ package starlingbuilder.util.serialize
 
         public function read():void
         {
-            var fs:FileStream = new FileStream();
-            fs.open(_file, FileMode.READ);
-            var data:Object = fs.readUTFBytes(fs.bytesAvailable);
-            fs.close();
+            try
+            {
+                var fs:FileStream = new FileStream();
+                fs.open(_file, FileMode.READ);
+                var data:Object = fs.readUTFBytes(fs.bytesAvailable);
+                fs.close();
 
-            _mediator.read(data, _file);
+                _mediator.read(data, _file);
 
-            _isDirty = false;
+                _isDirty = false;
 
-            setChange(_file.url);
+                setChange(_file.url);
+            }
+            catch (e:Error)
+            {
+                InfoPopup.show("Invalid layout " + _file.url);
+            }
         }
 
         public function readWithFile():void

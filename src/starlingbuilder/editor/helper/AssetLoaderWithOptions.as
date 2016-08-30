@@ -14,6 +14,8 @@ package starlingbuilder.editor.helper
     import starling.textures.TextureOptions;
     import starling.utils.AssetManager;
 
+    import starlingbuilder.util.feathers.popup.InfoPopup;
+
     public class AssetLoaderWithOptions
     {
         public static const DEFAULT_OPTION:String = "default_option";
@@ -37,9 +39,17 @@ package starlingbuilder.editor.helper
 
             if (file.exists)
             {
-                var fs:FileStream = new FileStream();
-                fs.open(file, FileMode.READ);
-                _options = JSON.parse(fs.readUTFBytes(fs.bytesAvailable));
+                try
+                {
+                    var fs:FileStream = new FileStream();
+                    fs.open(file, FileMode.READ);
+                    _options = JSON.parse(fs.readUTFBytes(fs.bytesAvailable));
+                }
+                catch (e:Error)
+                {
+                    _options = {};
+                    InfoPopup.show("Invalid texture_options.json");
+                }
             }
             else
             {
