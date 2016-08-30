@@ -18,7 +18,9 @@ package starlingbuilder.editor.upgrade
             "feathers.display.Scale3Image":convertScale3Image,
             "feathers.display.Scale9Image":convertScale9Image,
             "feathers.display.TiledImage":convertTiledImage,
-            "starling.display.Button":convertStarlingButton
+            "starling.display.Button":convertStarlingButton,
+            "starlingbuilder.extensions.filters.DropShadowFilter":convertFiltersDropShadow,
+            "starlingbuilder.extensions.filters.GlowFilter":convertFiltersGlowFilter
         };
 
         override public function getCurrentVersion():String
@@ -126,6 +128,16 @@ package starlingbuilder.editor.upgrade
             delete params.fontName;
             delete params.fontColor;
             delete params.fontSize;
+        }
+
+        private static function convertFiltersDropShadow(data:Object):void
+        {
+            data.cls = "starling.filters.DropShadowFilter";
+        }
+
+        private static function convertFiltersGlowFilter(data:Object):void
+        {
+            data.cls = "starling.filters.GlowFilter";
         }
     }
 }
