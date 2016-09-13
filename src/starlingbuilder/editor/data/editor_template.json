@@ -32,9 +32,10 @@
             ],
             "constructorParams":
             [
-                {"type":"Number", "value":50},
-                {"type":"Number", "value":50}
+                {"type":"Number", "value":50, "name":"width"},
+                {"type":"Number", "value":50, "name":"height"}
             ],
+            "createComponentClass":"starlingbuilder.editor.ui.DefaultCreateComponentPopup",
             "createButton":true,
             "tag":"asset"
         },
@@ -571,6 +572,6 @@
 
     "version":1.0,
 
-    "revision":10005
+    "revision":10006
 
 }
