@@ -18,7 +18,7 @@ package starlingbuilder.editor.helper
             try
             {
                 var cls:Class = getDefinitionByName(NAME) as Class;
-                var template:String = new cls["custom_component_template"]().toString();
+                var template:Object = JSON.parse(new cls["custom_component_template"]().toString());
                 TemplateData.load(template, workspace);
             }
             catch (e:Error)

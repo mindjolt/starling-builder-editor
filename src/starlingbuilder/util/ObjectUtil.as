@@ -9,6 +9,7 @@ package starlingbuilder.util
 {
     import flash.utils.ByteArray;
     import flash.utils.Dictionary;
+    import flash.utils.getQualifiedClassName;
 
     import org.as3commons.reflect.Method;
     import org.as3commons.reflect.Type;
@@ -254,6 +255,11 @@ package starlingbuilder.util
                 return null;
             var idx:int = Math.floor(Math.random() * array.length);
             return array[idx];
+        }
+
+        public static function isObject(value:Object):Boolean
+        {
+            return getQualifiedClassName(value) == "Object";
         }
     }
 }

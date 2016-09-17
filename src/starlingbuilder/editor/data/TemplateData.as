@@ -11,6 +11,9 @@ package starlingbuilder.editor.data
     import flash.filesystem.FileMode;
     import flash.filesystem.FileStream;
 
+    import starlingbuilder.engine.format.StableJSONEncoder;
+    import starlingbuilder.util.ObjectUtil;
+
     import starlingbuilder.util.feathers.popup.InfoPopup;
 
     public class TemplateData
@@ -21,23 +24,46 @@ package starlingbuilder.editor.data
 
         public static const ALWAYS_OVERRIDE:Boolean = false;
 
-        public static var editor_template_string:String;
-
         public static var editor_template:Object;
 
-        public static function load(customTemplate:String = null, workspace:File = null):void
-        {
-            editor_template_string = mergeCustomTemplate(customTemplate);
-            parseToTemplate(editor_template_string);
+        private static var original_template:Object;
 
-            loadExternalTemplate(workspace);
+        private static var external_template:Object;
+
+        private static var shouldOverride:Boolean;
+
+        public static function load(customTemplate:Object = null, workspace:File = null):void
+        {
+            if (!editor_template)
+            {
+                original_template = JSON.parse(new EmbeddedData.editor_template());
+                editor_template = ObjectUtil.cloneObject(original_template);
+
+                loadExternalTemplate(workspace);
+
+                //if file not exist or revision property not exists or external template older than the default template, then overwrite it
+                //otherwise use the external template
+                shouldOverride = ALWAYS_OVERRIDE || !external_template || !external_template.hasOwnProperty('revision') || !original_template.hasOwnProperty('revision') || external_template.revision < original_template.revision;
+
+                if (!shouldOverride)
+                {
+                    editor_template = ObjectUtil.cloneObject(external_template);
+                }
+            }
+
+            mergeCustomTemplate(customTemplate);
+
+            saveExternalTemplate(workspace);
         }
 
         public static function getSupportedComponent(tag:String = null):Array
         {
             var array:Array = [];
 
-            for each (var item:Object in editor_template.supported_components)
+            var components:Array = editor_template.supported_components;
+            if (editor_template.custom_components) components = components.concat(editor_template.custom_components);
+
+            for each (var item:Object in components)
             {
                 if (tag == null || item.tag == tag)
                 {
@@ -57,72 +83,86 @@ package starlingbuilder.editor.data
             if (!dir.exists)
                 dir.createDirectory();
 
-            var file:File = dir.resolvePath("editor_template.json");
-            if (file.exists)
+            if (!external_template)
             {
-                try
+                var file:File = dir.resolvePath("editor_template.json");
+                if (file.exists)
                 {
-                    var fs2:FileStream = new FileStream();
-                    fs2.open(file, FileMode.READ);
-                    var data:String = fs2.readUTFBytes(fs2.bytesAvailable);
-                    fs2.close();
-                    var template:Object = JSON.parse(data);
-                }
-                catch (e:Error)
-                {
-                    InfoPopup.show("Invalid editor_template.json. Default template loaded.");
-                    return;
+                    try
+                    {
+                        var fs2:FileStream = new FileStream();
+                        fs2.open(file, FileMode.READ);
+                        var data:String = fs2.readUTFBytes(fs2.bytesAvailable);
+                        fs2.close();
+                        external_template = JSON.parse(data);
+                    }
+                    catch (e:Error)
+                    {
+                        InfoPopup.show("Invalid editor_template.json. Default template loaded.");
+                        return;
+                    }
                 }
             }
+        }
 
-            //if file not exist or revision property not exists or external template older than the default template, then overwrite it
-            //otherwise use the external template
-            if (ALWAYS_OVERRIDE || !file.exists || !template.hasOwnProperty('revision') || !editor_template.hasOwnProperty('revision') || template.revision < editor_template.revision)
+        private static function mergeCustomTemplate(customTemplate:Object):void
+        {
+            if (customTemplate && shouldOverride)
+                applyOverlay(editor_template, customTemplate);
+        }
+
+        /**
+         * Apply an overlay to a base value
+         *
+         * Loop through every key/value pair of the overlay object:
+         * If both the base and overlay property is an Array, then concat overlay array with base array
+         * If both the base and overlay property is an Object, then call mergeObject to the property recursively
+         * Otherwise the base property will set to the overlay property
+         *
+         * @param base base value
+         * @param overlay overlay value
+         */
+        private static function applyOverlay(base:Object, overlay:Object):void
+        {
+            for (var id:String in overlay)
             {
+                var overlayValue:Object = overlay[id];
+
+                if (id in base)
+                {
+                    var baseValue:Object = base[id];
+
+                    if (baseValue is Array && overlayValue is Array)
+                    {
+                        base[id] = baseValue.concat(overlayValue);
+                    }
+                    else if (ObjectUtil.isObject(baseValue) && ObjectUtil.isObject(overlayValue))
+                    {
+                        applyOverlay(baseValue, overlayValue);
+                    }
+                    else
+                    {
+                        base[id] = overlayValue;
+                    }
+                }
+                else
+                {
+                    base[id] = overlayValue;
+                }
+            }
+        }
+
+        private static function saveExternalTemplate(workspace:File):void
+        {
+            if (shouldOverride)
+            {
+                var file:File = workspace.resolvePath("settings/editor_template.json");
+
                 var fs:FileStream = new FileStream();
                 fs.open(file, FileMode.WRITE);
-                fs.writeUTFBytes(editor_template_string);
+                fs.writeUTFBytes(StableJSONEncoder.stringify(editor_template));
                 fs.close();
             }
-            else
-            {
-                parseToTemplate(data);
-            }
         }
-
-        private static function mergeCustomTemplate(customTemplate:String):String
-        {
-            var data:String = new EmbeddedData.editor_template();
-
-            if (customTemplate == null)
-            {
-                return data;
-            }
-            else
-            {
-                customTemplate = stripCustomTemplate(customTemplate);
-                var index:int = data.lastIndexOf("}") - 1;
-                return data.substring(0, index) + ",\n" + customTemplate + data.substring(index);
-            }
-        }
-
-        private static function stripCustomTemplate(customTemplate:String):String
-        {
-            var start:int = customTemplate.indexOf('{') + 1;
-            var end:int = customTemplate.lastIndexOf('}');
-            return customTemplate.substring(start, end);
-        }
-
-        private static function parseToTemplate(data:String):void
-        {
-            editor_template = JSON.parse(data);
-
-            for each (var item:Object in editor_template.custom_components)
-            {
-                editor_template.supported_components.push(item);
-            }
-        }
-
-
     }
 }
