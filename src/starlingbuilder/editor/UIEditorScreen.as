@@ -285,7 +285,10 @@ package starlingbuilder.editor
             function onComplete():void
             {
                 TemplateLoader.load(_workspaceDir, "ui_builder", UIBuilderTemplate);
-                CustomComponentHelper.load(_workspaceDir);
+
+                TemplateData.load(null, _workspaceDir);
+                for each (var lib:String in libFiles)
+                    CustomComponentHelper.load(_workspaceDir, lib);
 
                 UIEditorApp.instance.init();
 
