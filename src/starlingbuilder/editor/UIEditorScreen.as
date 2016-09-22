@@ -22,6 +22,7 @@ package starlingbuilder.editor
     import starlingbuilder.editor.helper.FileListingHelper;
     import starlingbuilder.editor.helper.FilesMonitor;
     import starlingbuilder.editor.helper.KeyboardHelper;
+    import starlingbuilder.editor.helper.LibsMonitor;
     import starlingbuilder.editor.helper.LoadSwfHelper;
     import starlingbuilder.editor.helper.TemplateLoader;
     import starlingbuilder.editor.ui.CenterPanel;
@@ -54,6 +55,8 @@ package starlingbuilder.editor
     import starling.events.Event;
     import starling.events.ResizeEvent;
     import starling.utils.AssetManager;
+
+    import starlingbuilder.util.feathers.popup.InfoPopup;
 
     public class UIEditorScreen extends LayoutGroup
     {
@@ -276,6 +279,8 @@ package starlingbuilder.editor
 
             menu.unregisterAll();
 
+            var libsMonitor:LibsMonitor = new LibsMonitor(_workspaceDir);
+
             var libFiles:Array = FileListingHelper.getFileList(_workspaceDir, _workspaceSetting.libraryPath, ["swf"]);
             LoadSwfHelper.loads(libFiles, _assetManager, onComplete);
 
@@ -288,7 +293,11 @@ package starlingbuilder.editor
 
                 TemplateData.load(null, _workspaceDir);
                 for each (var lib:String in libFiles)
-                    CustomComponentHelper.load(_workspaceDir, lib);
+                    CustomComponentHelper.load(_workspaceDir, lib, libsMonitor);
+
+                libsMonitor.saveChange();
+
+                checkLibs(libsMonitor);
 
                 UIEditorApp.instance.init();
 
@@ -301,6 +310,26 @@ package starlingbuilder.editor
 
                 initUI();
                 initTests();
+            }
+        }
+
+        private function checkLibs(libsMonitor:LibsMonitor):void
+        {
+            if (libsMonitor.hasChange())
+            {
+                var popup:InfoPopup = InfoPopup.show("Your lib template have changes.\nWould you like to delete template override and reload the editor?", ["Yes", "No"]);
+                popup.addEventListener(Event.COMPLETE, onComplete);
+
+                function onComplete(event:Event):void
+                {
+                    popup.removeEventListener(Event.COMPLETE, onComplete);
+                    var index:int = int(event.data);
+                    if (index == 0)
+                    {
+                        _toolbar.deleteTemplate(false);
+                        reboot();
+                    }
+                }
             }
         }
 
