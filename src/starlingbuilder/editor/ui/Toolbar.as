@@ -403,6 +403,11 @@ package starlingbuilder.editor.ui
 
         private function onDeleteTemplate():void
         {
+            deleteTemplate(true);
+        }
+
+        public function deleteTemplate(showPopup:Boolean):void
+        {
             var file:File = UIEditorScreen.instance.workspaceDir;
 
             if (file)
@@ -412,16 +417,19 @@ package starlingbuilder.editor.ui
                 if (template.exists)
                 {
                     template.deleteFile();
-                    InfoPopup.show("Template deleted. Reload the editor to take effect.");
+                    if (showPopup)
+                        InfoPopup.show("Template deleted. Reload the editor to take effect.");
                 }
                 else
                 {
-                    InfoPopup.show("Template not found!");
+                    if (showPopup)
+                        InfoPopup.show("Template not found!");
                 }
             }
             else
             {
-                InfoPopup.show("Workspace not found!");
+                if (showPopup)
+                    InfoPopup.show("Workspace not found!");
             }
         }
 
