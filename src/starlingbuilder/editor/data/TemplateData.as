@@ -30,6 +30,8 @@ package starlingbuilder.editor.data
 
         private static var external_template:Object;
 
+        private static var merged_template:Object;
+
         private static var shouldOverride:Boolean;
 
         public static function load(customTemplate:Object = null, workspace:File = null):void
@@ -38,6 +40,7 @@ package starlingbuilder.editor.data
             {
                 original_template = JSON.parse(new EmbeddedData.editor_template());
                 editor_template = ObjectUtil.cloneObject(original_template);
+                merged_template = ObjectUtil.cloneObject(original_template);
 
                 loadExternalTemplate(workspace);
 
@@ -60,10 +63,7 @@ package starlingbuilder.editor.data
         {
             var array:Array = [];
 
-            var components:Array = editor_template.supported_components;
-            if (editor_template.custom_components) components = components.concat(editor_template.custom_components);
-
-            for each (var item:Object in components)
+            for each (var item:Object in editor_template.supported_components)
             {
                 if (tag == null || item.tag == tag)
                 {
@@ -105,10 +105,25 @@ package starlingbuilder.editor.data
             }
         }
 
+        private static function concatCustomComponents(origin:Object, from:Object):void
+        {
+            var supportedComponents:Array = origin.supported_components;
+            var customComponents:Array = from.custom_components;
+
+            for each (var component:Object in customComponents)
+            {
+                if (supportedComponents.indexOf(component) == -1)
+                    supportedComponents.push(component);
+            }
+        }
+
         private static function mergeCustomTemplate(customTemplate:Object):void
         {
             if (customTemplate && shouldOverride)
-                applyOverlay(editor_template, customTemplate);
+            {
+                applyOverlay(merged_template, customTemplate);
+                concatCustomComponents(editor_template, merged_template);
+            }
         }
 
         /**
@@ -160,7 +175,7 @@ package starlingbuilder.editor.data
 
                 var fs:FileStream = new FileStream();
                 fs.open(file, FileMode.WRITE);
-                fs.writeUTFBytes(StableJSONEncoder.stringify(editor_template));
+                fs.writeUTFBytes(StableJSONEncoder.stringify(merged_template));
                 fs.close();
             }
         }
