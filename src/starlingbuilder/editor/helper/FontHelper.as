@@ -14,7 +14,7 @@ package starlingbuilder.editor.helper
     public class FontHelper
     {
         // the name container with the registered bitmap fonts
-        private static const BITMAP_FONT_DATA_NAME:String = "starling.display.TextField.BitmapFonts";
+        private static const BITMAP_FONT_DATA_NAME:String = "starling.display.TextField.compositors";
 
         public static function getBitmapFontNames():Array
         {
