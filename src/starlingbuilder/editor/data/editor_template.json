@@ -13,7 +13,8 @@
                     "supportedClasses":["null", "flash.geom.Rectangle"]},
                 {"name":"tileGrid", "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"starlingbuilder.editor.ui.ImageGridPopup",
             "supportedClasses":["null", "flash.geom.Rectangle"]},
-                {"name":"texture", "read_only":true, "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"starlingbuilder.editor.ui.TextureConstructorPopup"}
+                {"name":"texture", "read_only":true, "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"starlingbuilder.editor.ui.TextureConstructorPopup"},
+                {"name":"style", "component":"popup", "cls":true, "disable":true, "default_value":{"cls":"starling.styles.MeshStyle"}, "editPropertyClass":"starlingbuilder.editor.ui.DefaultEditPropertyPopup", "supportedGroup":"style"}
             ],
             "constructorParams":
             [
@@ -70,7 +71,8 @@
                 {"name":"autoSize", "component":"pickerList", "options":["none", "horizontal", "vertical", "bothDirections"], "default_value":"none"},
                 {"name":"format", "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"starlingbuilder.editor.ui.DefaultEditPropertyPopup",
                     "supportedClasses":["starling.text.TextFormat"]},
-                {"name":"batchable", "component":"check", "default_value":false}
+                {"name":"batchable", "component":"check", "default_value":false},
+                {"name":"style", "component":"popup", "cls":true, "disable":true, "default_value":{"cls":"starling.styles.MeshStyle"}, "editPropertyClass":"starlingbuilder.editor.ui.DefaultEditPropertyPopup", "supportedGroup":"style"}
             ],
             "constructorParams":
             [
@@ -513,8 +515,24 @@
                 {"name":"height", "default_value":0}
             ],
             "tag":"ignore_default"
-        }
+        },
 
+        {
+            "cls": "starling.styles.DistanceFieldStyle",
+            "params":[
+                {"name":"mode", "component":"pickerList", "options":["basic", "outline", "glow", "shadow"]},
+                {"name":"softness", "component":"slider", "min":0, "max":1, "step":0.01, "default_value":0.125},
+                {"name":"threshold", "component":"slider", "min":0, "max":1, "step":0.01, "default_value":0.5},
+                {"name":"alpha", "component":"slider", "default_value":1, "min":0, "max":1, "step":0.01},
+                {"name":"outerColor", "component":"colorPicker", "default_value":0},
+                {"name":"outerThreshold", "component":"slider", "min":0, "max":1, "step":0.01, "default_value":0},
+                {"name":"outerAlphaStart", "component":"slider", "min":0, "max":1, "step":0.01, "default_value":0},
+                {"name":"outerAlphaEnd", "component":"slider", "min":0, "max":1, "step":0.01, "default_value":0},
+                {"name":"shadowOffsetX", "component":"slider", "min":-8, "max":8, "step":1, "default_value":0},
+                {"name":"shadowOffsetY", "component":"slider", "min":-8, "max":8, "step":1, "default_value":0}
+            ],
+            "tag":"ignore_default"
+        }
     ],
 
 
@@ -574,7 +592,8 @@
     {
         "filter":[null, "starling.filters.BlurFilter", "starling.filters.DropShadowFilter", "starling.filters.GlowFilter", "starlingbuilder.extensions.filters.ColorFilter"],
         "layout":[null, "feathers.layout.HorizontalLayout", "feathers.layout.VerticalLayout", "feathers.layout.AnchorLayout", "feathers.layout.FlowLayout", "feathers.layout.TiledRowsLayout", "feathers.layout.TiledColumnsLayout", "feathers.layout.WaterfallLayout"],
-        "layoutData":[null, "feathers.layout.AnchorLayoutData"]
+        "layoutData":[null, "feathers.layout.AnchorLayoutData"],
+        "style":[null, "starling.styles.DistanceFieldStyle"]
     },
 
     "version":1.0,

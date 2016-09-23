@@ -26,6 +26,7 @@ package starlingbuilder.editor
     import starling.filters.BlurFilter;
     import starling.filters.DropShadowFilter;
     import starling.filters.GlowFilter;
+    import starling.styles.DistanceFieldStyle;
     import starling.text.TextField;
 
     import starlingbuilder.extensions.filters.ColorFilter;
@@ -103,7 +104,9 @@ package starlingbuilder.editor
             BlurFilter,
             GlowFilter,
             DropShadowFilter,
-            ColorFilter
+            ColorFilter,
+
+            DistanceFieldStyle,
         ]
 
         public static const DEFAULT_SCALE3_RATIO:Array = [0.49, 0.02, "horizontal"];
