@@ -30,8 +30,6 @@ package starlingbuilder.editor.data
 
         private static var external_template:Object;
 
-        private static var merged_template:Object;
-
         private static var shouldOverride:Boolean;
 
         public static function load(customTemplate:Object = null, workspace:File = null):void
@@ -40,7 +38,6 @@ package starlingbuilder.editor.data
             {
                 original_template = JSON.parse(new EmbeddedData.editor_template());
                 editor_template = ObjectUtil.cloneObject(original_template);
-                merged_template = ObjectUtil.cloneObject(original_template);
 
                 loadExternalTemplate(workspace);
 
@@ -119,8 +116,8 @@ package starlingbuilder.editor.data
         {
             if (customTemplate && shouldOverride)
             {
-                applyOverlay(merged_template, customTemplate);
-                concatCustomComponents(editor_template, merged_template);
+                handleLegacyField(customTemplate);
+                applyOverlay(editor_template, customTemplate);
             }
         }
 
@@ -173,8 +170,17 @@ package starlingbuilder.editor.data
 
                 var fs:FileStream = new FileStream();
                 fs.open(file, FileMode.WRITE);
-                fs.writeUTFBytes(StableJSONEncoder.stringify(merged_template));
+                fs.writeUTFBytes(StableJSONEncoder.stringify(editor_template));
                 fs.close();
+            }
+        }
+
+        private static function handleLegacyField(customTemplate):void
+        {
+            if ("custom_components" in customTemplate)
+            {
+                customTemplate.supported_components = customTemplate.custom_components;
+                delete customTemplate.custom_components;
             }
         }
     }
