@@ -212,6 +212,7 @@ package starlingbuilder.editor.citestcase
                 selectTab("asset");
                 selectPickerListComponent(Quad);
                 selectGroupList(0, 0);
+                clickButton("OK");
             },
 
             //Button
