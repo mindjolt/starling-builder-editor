@@ -294,6 +294,7 @@ package starlingbuilder.editor
                 TemplateData.load(null, _workspaceDir);
                 for each (var lib:String in libFiles)
                     CustomComponentHelper.load(_workspaceDir, lib, libsMonitor);
+                TemplateData.saveExternalTemplate(_workspaceDir);
 
                 libsMonitor.saveChange();
 

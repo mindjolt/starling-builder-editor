@@ -55,8 +55,6 @@ package starlingbuilder.editor.data
             }
 
             mergeCustomTemplate(customTemplate);
-
-            saveExternalTemplate(workspace);
         }
 
         public static function getSupportedComponent(tag:String = null):Array
@@ -167,7 +165,7 @@ package starlingbuilder.editor.data
             }
         }
 
-        private static function saveExternalTemplate(workspace:File):void
+        public static function saveExternalTemplate(workspace:File):void
         {
             if (shouldOverride)
             {
