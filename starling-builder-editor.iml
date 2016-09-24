@@ -20,6 +20,9 @@
             <entry library-id="d497df1d-f97c-4ed2-b068-bc4e343f25b9">
               <dependency linkage="Merged" />
             </entry>
+            <entry library-id="d3e16a22-04ac-4c93-8670-61006b567f60">
+              <dependency linkage="Merged" />
+            </entry>
           </entries>
           <sdk name="AIRSDK" />
         </dependencies>
@@ -99,9 +102,6 @@
   </component>
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
-    <content url="file://$USER_HOME$/projects/Starling-Framework">
-      <sourceFolder url="file://$USER_HOME$/projects/Starling-Framework/starling/src" isTestSource="false" />
-    </content>
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/starling-builder-engine/src" isTestSource="false" />
@@ -240,6 +240,16 @@
         <properties id="d497df1d-f97c-4ed2-b068-bc4e343f25b9" />
         <CLASSES>
           <root url="jar://$MODULE_DIR$/libs/as3corelib.swc!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library type="flex">
+        <properties id="d3e16a22-04ac-4c93-8670-61006b567f60" />
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/libs/starling.swc!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
