@@ -41,9 +41,10 @@ package starlingbuilder.editor.data
 
                 loadExternalTemplate(workspace);
 
-                //if file not exist or revision property not exists or external template older than the default template, then overwrite it
+                //if file not exist or revision property not exists or external template older than the default template or version mismatch, then overwrite it
                 //otherwise use the external template
-                shouldOverride = ALWAYS_OVERRIDE || !external_template || !external_template.hasOwnProperty('revision') || !original_template.hasOwnProperty('revision') || external_template.revision < original_template.revision;
+                shouldOverride = ALWAYS_OVERRIDE || !external_template || !external_template.hasOwnProperty('revision') || !original_template.hasOwnProperty('revision') || external_template.revision < original_template.revision
+                || external_template.version != original_template.version;
 
                 if (!shouldOverride)
                 {
