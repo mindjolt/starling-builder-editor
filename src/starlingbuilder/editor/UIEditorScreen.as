@@ -316,9 +316,9 @@ package starlingbuilder.editor
 
         private function checkLibs(libsMonitor:LibsMonitor):void
         {
-            if (libsMonitor.hasChange())
+            if (libsMonitor.hasChange() && !TemplateData.shouldOverride)
             {
-                var popup:InfoPopup = InfoPopup.show("Your lib template have changes.\nWould you like to delete template override and reload the editor?", ["Yes", "No"]);
+                var popup:InfoPopup = InfoPopup.show("Your lib template is changed but your editor template isn't updated.\nWould you like to delete template override and reload the editor?", ["Yes", "No"]);
                 popup.addEventListener(Event.COMPLETE, onComplete);
 
                 function onComplete(event:Event):void

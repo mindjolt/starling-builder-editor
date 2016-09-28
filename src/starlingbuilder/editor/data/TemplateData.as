@@ -30,7 +30,7 @@ package starlingbuilder.editor.data
 
         private static var external_template:Object;
 
-        private static var shouldOverride:Boolean;
+        public static var shouldOverride:Boolean;
 
         public static function load(customTemplate:Object = null, workspace:File = null):void
         {
