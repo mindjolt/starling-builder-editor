@@ -548,7 +548,9 @@
             {"name":"alpha", "component":"slider", "min":0, "max":1, "step":0.01, "default_value":1},
             {"name":"blendMode", "component":"pickerList", "options":["auto", "add", "below", "erase", "mask", "multiply", "none", "normal", "screen"], "default_value":"auto"},
             {"name":"filter", "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"starlingbuilder.editor.ui.DefaultEditPropertyPopup",
-                "supportedGroup":"filter"}
+                "supportedGroup":"filter"},
+            {"name":"mask", "component":"popup", "cls":true, "disable":true, "default_value":null, "editPropertyClass":"starlingbuilder.editor.ui.DefaultEditPropertyPopup",
+                "supportedGroup":"mask"}
         ],
 
         "customParams":[
@@ -593,7 +595,8 @@
         "filter":[null, "starling.filters.BlurFilter", "starling.filters.DropShadowFilter", "starling.filters.GlowFilter", "starlingbuilder.extensions.filters.ColorFilter"],
         "layout":[null, "feathers.layout.HorizontalLayout", "feathers.layout.VerticalLayout", "feathers.layout.AnchorLayout", "feathers.layout.FlowLayout", "feathers.layout.TiledRowsLayout", "feathers.layout.TiledColumnsLayout", "feathers.layout.WaterfallLayout"],
         "layoutData":[null, "feathers.layout.AnchorLayoutData"],
-        "style":[null, "starling.styles.DistanceFieldStyle"]
+        "style":[null, "starling.styles.DistanceFieldStyle"],
+        "mask":[null, "starling.display.Quad", "starling.display.Image"]
     },
 
     "version":2.0,
