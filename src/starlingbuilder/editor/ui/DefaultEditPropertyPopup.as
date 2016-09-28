@@ -125,18 +125,14 @@ package starlingbuilder.editor.ui
             if (index == 0)
             {
                 if (hasEmptyTexture())
-                {
                     InfoPopup.show("Please select a texture", ["OK"]);
-                }
-                else
-                {
-                    _onComplete(_target);
-                    return;
-                }
+                _onComplete(_target);
             }
-
-            _owner[_targetParam.name] = _oldTarget;
-            _onComplete = null;
+            else
+            {
+                _owner[_targetParam.name] = _oldTarget;
+                _onComplete = null;
+            }
         }
 
         private function createNewComponent(cls:String):void
