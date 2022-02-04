@@ -58,7 +58,7 @@ package starlingbuilder.editor
 
             Starling.handleLostContext = true;
 
-            _starling = new Starling(getApp(), stage, _viewport, null, Context3DRenderMode.AUTO, Context3DProfile.BASELINE);
+            _starling = new Starling(getApp(), stage, _viewport, null, Context3DRenderMode.AUTO, Context3DProfile.BASELINE_EXTENDED);
 
             _starling.simulateMultitouch  = false;
             _starling.enableErrorChecking = false;
